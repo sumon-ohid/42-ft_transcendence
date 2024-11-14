@@ -30,8 +30,7 @@ body {
     justify-content: center;
     align-items: center;
     overflow: hidden;
-    backdrop-filter: blur(var(--background-blur)); /* Apply full background blur */
-    -webkit-backdrop-filter: blur(var(--background-blur)); /* Apply full background blur for Safari */
+    backdrop-filter: blur(var(--background-blur));
     color: var(--text-color);
 }
 
@@ -71,14 +70,14 @@ body {
     border-radius: 20px;
     border: 1px solid var(--container-border);
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-    margin-top: 10px; /* Adjust this value based on the height of the header */
+    margin-top: 10px;
     padding: 20px;
     text-align: center;
     display: flex;
     justify-content: center;
     align-items: center;
     width: 60%;
-    height: 65%; /* Ensure the container takes full height */
+    height: 65%;
     z-index: 2;
 }
 
@@ -86,7 +85,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-direction: column; /* Stack buttons vertically */
+    flex-direction: column;
 }
 
 .button-container .button {
@@ -99,10 +98,10 @@ body {
     color: var(--text-color);
     text-decoration: none;
     transition: background 0.3s ease;
-    width: 200px; /* Fixed width */
-    height: auto; /* Fixed height */
-    line-height: auto; /* Center text vertically */
-    text-align: center; /* Center text horizontally */
+    width: 200px;
+    height: auto;
+    line-height: auto;
+    text-align: center;
     font-size: .7em;
 }
 
@@ -132,7 +131,7 @@ body {
     border-radius: 20px 20px 20px 20px;
     border: 1px solid var(--container-border);
     box-shadow: 0 1px 12px 0 rgba(0, 0, 0, 0.37);
-    margin-top: 100px; /* Adjust this value based on the height of the header */
+    margin-top: 100px;
     padding: 20px;
     text-align: center;
     display: flex;
