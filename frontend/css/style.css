@@ -246,3 +246,58 @@ body {
 .mode-switch:hover {
     background: var(--button-hover-bg);
 }
+
+
+/* Add this to your CSS file */
+.blur-background {
+    --background-blur: 50px
+}
+
+#home-container {
+    background: linear-gradient(135deg, var(--container-bg), rgba(255, 255, 255, 0));
+    backdrop-filter: blur(100px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 20px;
+    border: 1px solid var(--container-border);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    padding: 20px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    height: 350px;
+    width: 50vw;
+    max-width: 40vw;
+    min-width: 20vw;
+    position: relative;
+    left: 30%;
+    top: 22vh;
+    z-index: 2;
+    flex-direction: column;
+}
+
+.option-container {
+    margin: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.option-button {
+    padding: 10px 20px;
+    font-size: clamp(5px, 12px, 15px);
+    background: var(--button-bg);
+    border: 1px solid rgba(24, 20, 20, 0.18);
+    border-radius: 15px;
+    color: var(--text-color);
+    text-decoration: none;
+    transition: background 0.3s ease;
+    width: 20vw;
+    height: auto;
+    line-height: auto;
+    text-align: center;
+}
+
+.option-button:hover {
+    background: var(--button-hover-bg);
+}
