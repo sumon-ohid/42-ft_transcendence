@@ -12,8 +12,8 @@
 body.light-mode {
     --background-image: url('light.gif');
     /*--background-blur: 10px;*/
-    --text-color: #000000;
-    --button-bg: rgba(255, 255, 255, 0.3);
+    --text-color: #ffffff;
+    --button-bg: rgba(0, 0, 0, 0.3);
     --button-hover-bg: rgba(0, 166, 255, 0.7);
     --container-bg: rgba(0, 0, 0, 0.1);
     --container-border: rgba(0, 0, 0, 0.18);
@@ -80,12 +80,12 @@ body {
     justify-content: center;
     align-items: center;
     height: 350px;
-    width: 20vw;
+    width: 25vw;
     max-width: 40vw;
     min-width: 20vw;
     position: absolute;
     left: 110px;
-    top: 210px;
+    top: 22vh;
     z-index: 2;
 }
 
