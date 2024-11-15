@@ -8,45 +8,69 @@ function runHomePageScript() {
   // Clear the current content
   document.body.innerHTML = '';
 
-  // Create a new container for the options
-  const container = document.createElement('div');
-  container.id = 'home-container';
+  // play container
+  const buttonContainer = document.createElement('div');
+  const button = document.createElement('button');
+  button.className = 'play-container';
+  button.textContent = "play";
+  button.onclick = () => handleOptionClick("play");
+  buttonContainer.appendChild(button);
+  document.body.appendChild(buttonContainer);
+  //--------------------------------------
 
-  // Create the options
-  const options = ['Play', 'Profile', 'Leaderboard'];
-  options.forEach(option => {
-    // Create a container for each button
-    const buttonContainer = document.createElement('div');
-    buttonContainer.className = 'option-container';
+  // settings container
+  const buttonContainer2 = document.createElement('div');
+  const button2 = document.createElement('button');
+  button2.className = 'settings-container';
+  button2.textContent = "settings";
+  button2.onclick = () => handleOptionClick("settings");
+  buttonContainer2.appendChild(button2);
+  document.body.appendChild(buttonContainer2);
+  //--------------------------------------
 
-    // Create the button
-    const button = document.createElement('button');
-    button.className = 'option-button';
-    button.textContent = option;
-    button.onclick = () => handleOptionClick(option);
+  // leaderboard container
+  const buttonContainer3 = document.createElement('div');
+  const button3 = document.createElement('button');
+  button3.className = 'leader-container';
+  button3.textContent = "leaderboard";
+  button3.onclick = () => handleOptionClick("leaderboard");
+  buttonContainer3.appendChild(button3);
+  document.body.appendChild(buttonContainer3);
+  //--------------------------------------
 
-    // Append the button to the container
-    buttonContainer.appendChild(button);
+  // chat container
+  const buttonContainer4 = document.createElement('div');
+  const button4 = document.createElement('button');
+  button4.className = 'chat-container';
+  button4.textContent = "chat";
+  button4.onclick = () => handleOptionClick("chat");
+  buttonContainer4.appendChild(button4);
+  document.body.appendChild(buttonContainer4);
+  //--------------------------------------
 
-    // Append the container to the main container
-    container.appendChild(buttonContainer);
-  });
-
-  // Append the container to the body
-  document.body.appendChild(container);
 
   // Create the navigation container
   const navContainer = document.createElement('div');
   navContainer.className = 'nav_container';
   navContainer.innerHTML = `
-    <a href="index.html">
+    <a href="/">
       <button id="nav-toggle" class="nav-toggle">
         <i class="fa-solid fa-house"></i>
       </button>
     </a>
-    <a href="">
+    <a href="#">
       <button id="nav-toggle" class="nav-toggle">
         <i class="fa-solid fa-user"></i>
+      </button>
+    </a>
+    <a href="#">
+      <button id="nav-toggle" class="nav-toggle">
+        <i class="fa-solid fa-message"></i>
+      </button>
+    </a>
+     <a href="#">
+      <button id="nav-toggle" class="nav-toggle">
+        <i class="fa-solid fa-gear"></i>
       </button>
     </a>
     <a href="#" onclick="logout()">
@@ -54,11 +78,12 @@ function runHomePageScript() {
         <i class="fa-solid fa-right-from-bracket"></i>
       </button>
     </a>
-    <!-- Mode switch -->
-    <button id="mode-switch" class="nav-toggle">
-      <i class="fas fa-moon"></i>
-    </button>
-  `;
+    `;
+
+    // <!-- Mode switch -->
+    // <button id="mode-switch" class="nav-toggle">
+    //   <i class="fas fa-moon"></i>
+    // </button>
 
   // Append the navigation container to the body
   document.body.appendChild(navContainer);

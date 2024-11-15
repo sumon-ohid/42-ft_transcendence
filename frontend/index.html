@@ -3,95 +3,39 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- <script>
-      document.addEventListener("DOMContentLoaded", function() {
-        // Check if the user is logged in
-        const isLoggedIn = localStorage.getItem("isLoggedIn");
-    
-        //If not logged in, redirect to the login page
-        if (!isLoggedIn) {
-          window.location.href = "./account/login.html";
-        }
-      });
-    </script> -->
     <title>42-Transcendance</title>
     <link rel="stylesheet" href="./css/style.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Modak&display=swap" rel="stylesheet">
   </head>
   <body>
-    <!-- Navigation bar -->
-    <div class="nav_container">
-      <a href="index.html">
-        <button id="nav-toggle" class="nav-toggle">
-          <i class="fa-solid fa-house"></i>
-        </button>
-      </a>
-      <a href="">
-        <button id="nav-toggle" class="nav-toggle">
-          <i class="fa-solid fa-user"></i>
-        </button>
-      </a>
-      <a href="#" onclick="logout()">
-          <button id="nav-toggle" class="nav-toggle">
-              <i class="fa-solid fa-right-from-bracket"></i>
-          </button>
-      </a>
-      
-      <!-- <script>
-          function logout() {
-              // Clear the session and localStorage
-              localStorage.removeItem("isLoggedIn");
-              localStorage.removeItem("username");
-              document.cookie = "session=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-              // Redirect to the login page
-              window.location.href = "./account/login.html";
-          }
-      </script> -->
-
-      <!-- Mode switch -->
-      <button id="mode-switch" class="nav-toggle">
-        <i class="fas fa-moon"></i>
-      </button>
-    </div>
-    <!-- small texts -->
-    <div class="small-text"></div>
-    <!-- Header -->
-    <!-- <div>
-      <a href="index.html" class="logo">
-        <h1 class="highlight">POng</h1>
-      </a>
-    </div> -->
     <!-- 42 icon -->
     <div class="icon">
       <img src="https://simpleicons.org/icons/42.svg" alt="42" />
     </div>
-
+    </nav>
     <!-- Main container -->
     <div class="container">
-      <div class="button-container"></div>
-        <!-- Login form -->
-        <h1 class="highlight">WELCOME</h1>
-        <form action="" method="POST" class="button-container">
-          <input
-            type="text"
-            class="button-form"
-            name="login"
-            placeholder="username"
-            required
-          />
-          <input
-            type="password"
-            class="button-form"
-            name="passwd"
-            placeholder="password"
-            required
-          />
-          <button class="button" type="submit" id="homepage" onclick="runHomePageScript()">Login</button>
-        </form>
-        <button class="button42">login with 42</button>
+      <!-- Login form -->
+      <h1 class="highlight">WELCOME</h1>
+      <form action="" method="POST" class="button-container">
+        <input
+          type="text"
+          class="button-form"
+          name="login"
+          placeholder="username"
+          required
+        />
+        <input
+          type="password"
+          class="button-form"
+          name="passwd"
+          placeholder="password"
+          required
+        />
+        <!-- NOTE: add sign up and forget password -->
+        <button class="button" type="submit" id="homepage" onclick="runHomePageScript()">Login</button>
+      </form>
+      <button class="button42">login with 42</button>
     </div> 
    
     <!--Js Scripts-->
@@ -104,9 +48,9 @@
     <div class="footer">
       <p>
         © 2024
-        <a href="https://profile.intra.42.fr/users/msumon" class="footer-link"
-          >msumon</a
-        >
+        <a href="https://profile.intra.42.fr/users/msumon" class="footer-link">
+          msumon
+        </a>
       </p>
     </div>
   </footer>
