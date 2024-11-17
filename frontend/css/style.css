@@ -10,8 +10,9 @@
     --white-color: #ffffff;
     --black-color: #000000;
     --icon-color: rgba(255, 252, 252, 0.877);
+    --glow-color: rgba(147, 16, 228, 0.742);
     --bacground-image: url('../images/image2.png');
-    --background-blur: 160px;
+    --background-blur: 250px;
 }
 
 body {
@@ -25,15 +26,15 @@ body {
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
-    /*background-position: center;*/
+    background-position: center;
     backdrop-filter: blur(var(--background-blur));
     z-index: -1;
 }
 
+/*--------------NAV BAR START------------------*/
 .navbar {
     background-color: rgba(3, 3, 3, 0.206); /* Semi transparent */
     backdrop-filter: blur(10px); /* Frosted glass effect */
-    -webkit-backdrop-filter: blur(10px); /* For Safari */
     position: fixed;
     z-index: 1;
     width: 700px;
@@ -46,7 +47,7 @@ body {
 }
 
 /* Put nav bar to rightside when screen size is small */
-@media (max-width: 600px) {
+@media (max-width: 700px) {
     .navbar {
         top: 10vh;
         left: 4vw;
@@ -63,7 +64,7 @@ body {
     display: flex;
     gap: 20px;
     position: absolute;
-    left: 6%;
+    left: 8%;
 }
 
 .nav-menu a span {
@@ -87,7 +88,7 @@ body {
     display: none;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 700px) {
     .nav-menu {
         top: 8vh;
         left: 0;
@@ -147,3 +148,138 @@ body {
         opacity: 1;
     }    
 }
+
+/*--------------NAV BAR END------------------*/
+
+/*--------------MAIN CONTENT START------------------*/
+.main {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    width: 900px;
+    height: 700px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.wel-container {
+    position: fixed;
+    top: 375px;
+    left: 70%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    background-color: rgba(3, 3, 3, 0.206);
+    backdrop-filter: blur(10px);
+    width: 400px;
+    height: 550px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.567);
+    display: flex;
+    flex-direction: column;
+}
+
+.play-container {
+    position: fixed;
+    top: 160px;
+    left: 27%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    background-color: rgba(3, 3, 3, 0.206);
+    backdrop-filter: blur(10px);
+    width: 300px;
+    height: 120px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.567);
+    display: flex;
+    flex-direction: column;
+}
+
+.account-container {
+    position: fixed;
+    top: 580px;
+    left: 27%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    background-color: rgba(3, 3, 3, 0.206);
+    backdrop-filter: blur(10px);
+    width: 300px;
+    height: 120px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.567);
+    display: flex;
+    flex-direction: column;
+}
+
+.leader-container {
+    position: fixed;
+    top: 440px;
+    left: 27%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    background-color: rgba(3, 3, 3, 0.206);
+    backdrop-filter: blur(10px);
+    width: 300px;
+    height: 120px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.567);
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-container {
+    position: fixed;
+    top: 300px;
+    left: 27%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    background-color: rgba(3, 3, 3, 0.206);
+    backdrop-filter: blur(10px);
+    width: 300px;
+    height: 120px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.567);
+    display: flex;
+    flex-direction: column;
+}
+
+@media (max-width: 840px) {
+    .wel-container {
+        display: none;
+    }
+
+    .play-container {
+        top: 160px;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 300px;
+        height: 120px;
+    }
+
+    .account-container {
+        top: 580px;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 300px;
+        height: 120px;
+    }
+
+    .leader-container {
+        top: 440px;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 300px;
+        height: 120px;
+    }
+
+    .chat-container {
+        top: 300px;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 300px;
+        height: 120px;
+    }
+}
+/*--------------MAIN CONTENT END------------------*/
