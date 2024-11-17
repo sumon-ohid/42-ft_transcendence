@@ -9,10 +9,10 @@
     --dark-color: #343a40;
     --white-color: #ffffff;
     --black-color: #000000;
-    --icon-color: rgba(255, 252, 252, 0.877);
+    --icon-color: rgba(0, 170, 255, 0.877);
     --glow-color: rgba(147, 16, 228, 0.742);
-    --bacground-image: url('../images/image2.png');
-    --background-blur: 250px;
+    --background-blur: 100px;
+    --container-background: #4c7fce;
 }
 
 body {
@@ -22,7 +22,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: var(--bacground-image);
+    background: linear-gradient(135deg, #2a66c6, #114394);
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
@@ -33,8 +33,8 @@ body {
 
 /*--------------NAV BAR START------------------*/
 .navbar {
-    background-color: rgba(3, 3, 3, 0.206); /* Semi transparent */
-    backdrop-filter: blur(10px); /* Frosted glass effect */
+    background: linear-gradient(135deg, #2a66c6, #114394);
+    backdrop-filter: blur(10px);
     position: fixed;
     z-index: 1;
     width: 700px;
@@ -70,16 +70,16 @@ body {
 .nav-menu a span {
     display: inline-block;
     font-size: 12px;
-    color: rgb(233, 233, 233);
+    color: rgb(241, 241, 241);
     transition: color 0.3s;
-    background-color: rgba(111, 21, 202, 0.984);
+    background-color: #4c7fce;
     padding: 5px 10px;
     border-radius: 5px;
 }
 
 .nav-menu a:hover span {
-    color: white;
-    background-color: rgba(70, 10, 129, 0.984);
+    color: rgb(29, 29, 29);
+    background-color: #2cbeef;
     padding: 5px 10px;
     border-radius: 5px;
 }
@@ -133,8 +133,8 @@ body {
         bottom: -30px;
         left: 50%;
         transform: translateX(-50%);
-        background-color: rgba(111, 21, 202, 0.984);
-        color: white;
+        background-color: rgba(249, 249, 249, 0.984);
+        color: rgb(0, 0, 0);
         padding: 5px 10px;
         border-radius: 5px;
         opacity: 0;
@@ -152,9 +152,10 @@ body {
 /*--------------NAV BAR END------------------*/
 
 /*--------------MAIN CONTENT START------------------*/
-.main {
+
+.main { /* this container is invisible */
     position: fixed;
-    top: 50%;
+    top: 375px;
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
@@ -171,7 +172,7 @@ body {
     left: 70%;
     transform: translate(-50%, -50%);
     text-align: center;
-    background-color: rgba(3, 3, 3, 0.206);
+    background-color: var(--container-background);
     backdrop-filter: blur(10px);
     width: 400px;
     height: 550px;
@@ -187,7 +188,7 @@ body {
     left: 27%;
     transform: translate(-50%, -50%);
     text-align: center;
-    background-color: rgba(3, 3, 3, 0.206);
+    background-color: var(--container-background);
     backdrop-filter: blur(10px);
     width: 300px;
     height: 120px;
@@ -203,7 +204,7 @@ body {
     left: 27%;
     transform: translate(-50%, -50%);
     text-align: center;
-    background-color: rgba(3, 3, 3, 0.206);
+    background-color: var(--container-background);
     backdrop-filter: blur(10px);
     width: 300px;
     height: 120px;
@@ -219,7 +220,7 @@ body {
     left: 27%;
     transform: translate(-50%, -50%);
     text-align: center;
-    background-color: rgba(3, 3, 3, 0.206);
+    background-color: var(--container-background);
     backdrop-filter: blur(10px);
     width: 300px;
     height: 120px;
@@ -235,7 +236,7 @@ body {
     left: 27%;
     transform: translate(-50%, -50%);
     text-align: center;
-    background-color: rgba(3, 3, 3, 0.206);
+    background-color: var(--container-background);
     backdrop-filter: blur(10px);
     width: 300px;
     height: 120px;
