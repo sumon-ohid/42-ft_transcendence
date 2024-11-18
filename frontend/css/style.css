@@ -366,6 +366,27 @@ body {
     z-index: 1;
 }
 
+.temp {
+    background-image: url("../images/About\ me-bro.png");
+    background-size: cover;
+    height: 250px;
+    width: 250px;
+    position: fixed;
+    bottom: 15%;
+    right: 13%;
+    display: inline-block;
+}
+
+.temp p {
+    position: fixed;
+    bottom: 0%;
+    left: 35%;
+    color: #b3daff;
+    font-weight: 700;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    letter-spacing: 2px;
+}
+
 /* ------ WELCOME SECTION END ------*/
 
 
