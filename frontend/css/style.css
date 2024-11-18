@@ -64,7 +64,7 @@ body {
     display: flex;
     gap: 20px;
     position: absolute;
-    left: 18%;
+    left: 10%;
 }
 
 .nav-menu a span {
@@ -314,6 +314,7 @@ body {
 
 .ball-bat{
     font-size: 8em;
+    text-shadow: 0px 5px 10px rgba(0, 0, 0, 0.5);
     display: flex;
     margin-top: -35%;
     margin-left: -20%;
@@ -370,16 +371,19 @@ body {
 .leaderboard{
     font-family: "Modak";
     color: var(--white-color);
-    margin-top: -12%;
+    margin-top: 2%;
     font-size: xx-large;
 }
 
-.trophy {
-    font-size: 5em;
-    display: flex;
-    margin-top: -2%;
-    margin-left: 80%;
-    rotate: 10deg;
+.leader-pic {
+    background-image: url("../images/leadership-cuate.png");
+    background-size: cover;
+    height: 130px;
+    width: 240px;
+    position: fixed;
+    display: inline-block;
+    top: -8%;
+    left: 6%;
 }
 
 .leader-container p {
@@ -396,9 +400,9 @@ body {
     height: 50px;
     width: 50px;
     position: fixed;
-    top: 11%;
-    left: 8%;
-    rotate: -10deg;
+    bottom: 10%;
+    right: 0%;
+    rotate: 30deg;
 }
 
 /* ------ LEADERBOARD SECTION END ------*/
@@ -407,26 +411,30 @@ body {
 
 .settings{
     font-family: "Modak";
-    color: var(--white-color);
-    margin-top: 5%;
+    color: rgb(255, 255, 255);
+    margin-top: 2%;
 }
 
 .settings-pic {
     background-image: url("../images/settings.png");
     background-size: cover;
-    height: 120px;
-    width: 240px;
+    height: 130px;
+    width: 230px;
     position: fixed;
     display: inline-block;
+    left: 11%;
+    top: -9%;
+    z-index: -1;
 }
 
 .settings-3d {
     background-image: url("../images/3d-setting.png");
     background-size: cover;
-    height: 100px;
-    width: 100px;
+   
+    height: 80px;
+    width: 80px;
     position: fixed;
-    top: 30%;
+    top: 50%;
     right: -25px;
     rotate: -80deg
 }
