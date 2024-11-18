@@ -79,10 +79,10 @@ body {
 }
 
 .nav-menu a:hover span {
-    color: rgb(29, 29, 29);
+    color: rgb(247, 247, 247);
     background-color: #0084ff;
     padding: 5px 10px;
-    border-radius: 5px;
+    border-radius: 15px;
 }
 
 .nav-menu a i {
@@ -294,31 +294,14 @@ body {
     }
 }
 
+/* ------ PLAY SECTION START ------*/
 .play{
     font-family: "Modak";
     color: var(--white-color);
     margin-top: -18%;
+    margin-left: -20%;
+    z-index: 2;
 }
-
-.chat{
-    font-family: "Modak";
-    color: var(--white-color);
-    margin-top: auto;
-}
-
-.leaderboard{
-    font-family: "Modak";
-    color: var(--white-color);
-    margin-top: auto;
-    font-size: xx-large;
-}
-
-.settings{
-    font-family: "Modak";
-    color: var(--white-color);
-    margin-top: auto;
-}
-
 .yellow-badge {
     margin-top: 2%;
     margin-left: 60%;
@@ -336,4 +319,118 @@ body {
     margin-left: -20%;
     rotate: -15deg;
 }
+
+.play-pic {
+    background-image: url("../images/play.png");
+    background-size: cover;
+    height: 100px;
+    width: 160px;
+    position: fixed;
+    top:17%;
+    right: 1%;
+    display: inline-block;
+    z-index: -1;
+}
+
+/* ------ PLAY SECTION END ------*/
+
+
+/* ------ CHAT SECTION START ------*/
+
+.chat{
+    font-family: "Modak";
+    color: var(--white-color);
+    margin-top: 30px;
+    margin-left: 140px;
+    z-index: 1;
+}
+
+.chat-pic {
+    background-image: url("../images/chat.png");
+    background-size: cover;
+    height: 120px;
+    width: 180px;
+    position: fixed;
+    display: inline-block;
+}
+
+.chat-container p {
+    color:#b3daff;
+    font-size: .7em;
+    margin-left: 50%;
+    margin-top: -4%;
+    line-height: 1;
+}
+
+
+/* ------ CHAT SECTION END ------*/
+
+/* ------ LEADERBOARD SECTION START ------*/
+
+.leaderboard{
+    font-family: "Modak";
+    color: var(--white-color);
+    margin-top: -12%;
+    font-size: xx-large;
+}
+
+.trophy {
+    font-size: 5em;
+    display: flex;
+    margin-top: -2%;
+    margin-left: 80%;
+    rotate: 10deg;
+}
+
+.leader-container p {
+    color: rgb(255, 255, 255);
+    margin-top: -35%;
+    line-height: 1;
+    font-weight: 200;
+    font-style: italic;
+}
+
+.leader-div {
+    background-image: url("../images/king.png");
+    background-size: cover;
+    height: 50px;
+    width: 50px;
+    position: fixed;
+    top: 11%;
+    left: 8%;
+    rotate: -10deg;
+}
+
+/* ------ LEADERBOARD SECTION END ------*/
+
+/* ------ SETTINGS SECTION START ------*/
+
+.settings{
+    font-family: "Modak";
+    color: var(--white-color);
+    margin-top: 5%;
+}
+
+.settings-pic {
+    background-image: url("../images/settings.png");
+    background-size: cover;
+    height: 120px;
+    width: 240px;
+    position: fixed;
+    display: inline-block;
+}
+
+.settings-3d {
+    background-image: url("../images/3d-setting.png");
+    background-size: cover;
+    height: 100px;
+    width: 100px;
+    position: fixed;
+    top: 30%;
+    right: -25px;
+    rotate: -80deg
+}
+
+/* ------ SETTINGS SECTION END------*/
+
 /*--------------MAIN CONTENT END------------------*/
