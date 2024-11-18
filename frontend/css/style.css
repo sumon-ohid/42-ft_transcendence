@@ -9,7 +9,7 @@
     --dark-color: #343a40;
     --white-color: #ffffff;
     --black-color: #000000;
-    --icon-color: rgba(0, 170, 255, 0.877);
+    --icon-color: rgba(145, 224, 255, 0.877);
     --glow-color: rgba(147, 16, 228, 0.742);
     --background-blur: 100px;
     --container-background: #4c7fce;
@@ -22,7 +22,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, #2a66c6, #114394);
+    background-image: url(../images/bgg.png);
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
@@ -37,10 +37,10 @@ body {
     backdrop-filter: blur(10px);
     position: fixed;
     z-index: 1;
-    width: 700px;
+    width: 740px;
     height: 50px;
     top: 4vh;
-    left: 50%;
+    left: 51%;
     transform: translateX(-50%);
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0.5, 0, 0, 0.51); /* shadow */
@@ -64,22 +64,23 @@ body {
     display: flex;
     gap: 20px;
     position: absolute;
-    left: 8%;
+    left: 18%;
 }
 
 .nav-menu a span {
     display: inline-block;
     font-size: 12px;
+    font-weight: bold;
     color: rgb(241, 241, 241);
     transition: color 0.3s;
-    background-color: #4c7fce;
+    background-color: var(--container-background);
     padding: 5px 10px;
-    border-radius: 5px;
+    border-radius: 15px;
 }
 
 .nav-menu a:hover span {
     color: rgb(29, 29, 29);
-    background-color: #2cbeef;
+    background-color: #0084ff;
     padding: 5px 10px;
     border-radius: 5px;
 }
@@ -141,15 +142,16 @@ body {
         bottom: -30px;
         left: 50%;
         transform: translateX(-50%);
-        background-color: rgba(249, 249, 249, 0.984);
+        background-color:  #b3daff;;
         color: rgb(0, 0, 0);
         padding: 5px 10px;
-        border-radius: 5px;
+        border-radius: 15px;
         opacity: 0;
         white-space: nowrap;
         transition: opacity 0.3s;
         pointer-events: none;
         font-size: 12px;
+        font-weight: bold;
     }
     
     .nav-menu a:hover::after {
@@ -290,5 +292,48 @@ body {
         width: 300px;
         height: 120px;
     }
+}
+
+.play{
+    font-family: "Modak";
+    color: var(--white-color);
+    margin-top: -18%;
+}
+
+.chat{
+    font-family: "Modak";
+    color: var(--white-color);
+    margin-top: auto;
+}
+
+.leaderboard{
+    font-family: "Modak";
+    color: var(--white-color);
+    margin-top: auto;
+    font-size: xx-large;
+}
+
+.settings{
+    font-family: "Modak";
+    color: var(--white-color);
+    margin-top: auto;
+}
+
+.yellow-badge {
+    margin-top: 2%;
+    margin-left: 60%;
+}
+
+.rocket {
+    margin-top: -8%;
+    margin-left: -5%;
+}
+
+.ball-bat{
+    font-size: 8em;
+    display: flex;
+    margin-top: -35%;
+    margin-left: -20%;
+    rotate: -15deg;
 }
 /*--------------MAIN CONTENT END------------------*/
