@@ -89,6 +89,14 @@ body {
 }
 
 @media (max-width: 700px) {
+       .pong {
+        font-size: 6em;
+        color: var(--icon-color);
+        font-weight: bolder;
+        position: relative;
+        bottom: 1px;
+        /*text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);*/
+    }
     .nav-menu {
         top: 8vh;
         left: 0;
