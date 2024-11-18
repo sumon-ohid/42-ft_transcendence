@@ -256,6 +256,8 @@ body {
     flex-direction: column;
 }
 
+/* Put it in rightside when screen size is big */
+
 @media (max-width: 840px) {
     .wel-container {
         display: none;
@@ -293,6 +295,79 @@ body {
         height: 120px;
     }
 }
+
+/* ------ WELCOME SECTION START ------*/
+
+.wel-user {
+    font-family: "Modak";
+    color: var(--white-color);
+    margin-top: 2%;
+    font-size: 3em;
+}
+
+.wel-user h1{
+    background: url(//s2.svgbox.net/pen-brushes.svg?ic=brush-1&color=ffff43);
+    background-position: 50% 50%;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 8px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 50px;
+    width: 200px;
+    color: #000000d1;
+    position: fixed;
+    right: 10%;
+    top: 70px;
+}
+
+.wel-user p {
+    position: fixed;
+    right: 10%;
+}
+
+.round {
+    background-color: #b3daff;
+    height: 110px;
+    width: 110px;
+    border-radius: 100%;
+    position: fixed;
+    top: 3%;
+    left: 7%;
+}
+
+.profile-pic {
+    background-image: url(../images/11475215.jpg);
+    background-size: 110px;
+    height: 100px;
+    width: 100px;
+    border-radius: 100%;
+    position: fixed;
+    top: 4%;
+    left: 8.2%;
+    z-index: 2;
+}
+
+.inside-wel {
+    background-color: rgba(0, 0, 0, 0.156);
+    backdrop-filter: blur(10px);
+    height: 360px;
+    width: 350px;
+    position: fixed;
+    bottom: 40px;
+    left: 25px;
+    border-radius: 20px;
+}
+
+.edit-pic {
+    position: fixed;
+    top: 110px;
+    left: 55px;
+    z-index: 1;
+}
+
+/* ------ WELCOME SECTION END ------*/
+
 
 /* ------ PLAY SECTION START ------*/
 .play{
