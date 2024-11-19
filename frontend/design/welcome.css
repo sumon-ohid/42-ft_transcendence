@@ -1,0 +1,102 @@
+:root {
+    --primary-color: #007bff;
+    --secondary-color: #6c757d;
+    --success-color: #28a745;
+    --info-color: #17a2b8;
+    --warning-color: #ffc107;
+    --danger-color: #dc3545;
+    --light-color: #f8f9fa;
+    --dark-color: #343a40;
+    --white-color: #ffffff;
+    --black-color: #000000;
+    --icon-color: rgba(145, 224, 255, 0.877);
+    --glow-color: rgba(147, 16, 228, 0.742);
+    --background-blur: 0px;
+    --container-background: #4c7fce;
+    --pong-color: #4868f3;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-image: url('../images/bgg.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    backdrop-filter: blur(var(--background-blur));
+    z-index: -1;
+    overflow: hidden;
+}
+
+.pong-container {
+    background-color: var(--pong-color);
+    background-size: 100%;
+    background-repeat: no-repeat;
+    height: 215px;
+    width: 320px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 340px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0.5, 0, 0, 0.51); /* shadow */
+}
+
+.pong {
+    background-image: url('pong.gif');
+    background-size: 100%;
+    background-repeat: no-repeat;
+    height: 300px;
+    width: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 390px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.title {
+    font-family: "Modak";
+    font-size: 7em;
+    z-index: -1;
+    color: var(--pong-color);
+    position: fixed;
+    top: 100px;
+}
+
+.button {
+    font-family: "Modak";
+    z-index: -1;
+    position: fixed;
+    top: 480px;
+    z-index: 1;
+    background-color: var(--pong-color);
+    background-size: cover;
+    height: 60px;
+    width: 170px;
+    border-radius: 30px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    box-shadow: 0 10px 6px rgba(0.5, 0, 0, 0.51); /* shadow */
+    border: 2px solid #0043af;
+}
+
+.button h1 {
+    margin: 0;
+    font-size: 2em;
+    color: rgb(27, 36, 130);
+}
+
+.button:hover {
+    background-color: #007bff;
+}
