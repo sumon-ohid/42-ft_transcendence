@@ -68,7 +68,7 @@ body {
     font-family: "Modak";
     font-size: 7em;
     z-index: -1;
-    color: var(--pong-color);
+    color: rgba(255, 255, 255, 0.84);
     position: fixed;
     top: 100px;
 }
@@ -79,7 +79,7 @@ body {
     position: fixed;
     top: 480px;
     z-index: 1;
-    background-color: var(--pong-color);
+    background-color: rgba(246, 246, 246, 0.775);
     background-size: cover;
     height: 60px;
     width: 170px;
@@ -92,9 +92,9 @@ body {
 }
 
 .button h1 {
-    margin: 0;
+    margin-top: 12px;
     font-size: 2em;
-    color: rgb(27, 36, 130);
+    color:rgba(0, 0, 0, 0.837);
 }
 
 .button:hover {
