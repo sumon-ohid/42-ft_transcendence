@@ -1,142 +1,75 @@
-function runHomePageScript() {
-  // Save the current content
-  const previousContent = document.body.innerHTML;
+function homepage() {
+  const body = document.body;
 
-  // Add blur effect to the body
-  document.body.classList.add('blur-background');
-
-  // Clear the current content
-  document.body.innerHTML = '';
-
-  // play container
-  const buttonContainer = document.createElement('div');
-  const button = document.createElement('button');
-  button.className = 'play-container';
-  button.textContent = "play";
-  button.onclick = () => handleOptionClick("play");
-  buttonContainer.appendChild(button);
-  document.body.appendChild(buttonContainer);
-  //--------------------------------------
-
-  // settings container
-  const buttonContainer2 = document.createElement('div');
-  const button2 = document.createElement('button');
-  button2.className = 'settings-container';
-  button2.textContent = "settings";
-  button2.onclick = () => handleOptionClick("settings");
-  buttonContainer2.appendChild(button2);
-  document.body.appendChild(buttonContainer2);
-  //--------------------------------------
-
-  // leaderboard container
-  const buttonContainer3 = document.createElement('div');
-  const button3 = document.createElement('button');
-  button3.className = 'leader-container';
-  button3.textContent = "leaderboard";
-  button3.onclick = () => handleOptionClick("leaderboard");
-  buttonContainer3.appendChild(button3);
-  document.body.appendChild(buttonContainer3);
-  //--------------------------------------
-
-  // chat container
-  const buttonContainer4 = document.createElement('div');
-  const button4 = document.createElement('button');
-  button4.className = 'chat-container';
-  button4.textContent = "chat";
-  button4.onclick = () => handleOptionClick("chat");
-  buttonContainer4.appendChild(button4);
-  document.body.appendChild(buttonContainer4);
-  //--------------------------------------
-
-
-  // Create the navigation container
-  const navContainer = document.createElement('div');
-  navContainer.className = 'nav_container';
-  navContainer.innerHTML = `
-    <a href="/">
-      <button id="nav-toggle" class="nav-toggle">
-        <i class="fa-solid fa-house"></i>
-      </button>
-    </a>
-    <a href="#">
-      <button id="nav-toggle" class="nav-toggle">
-        <i class="fa-solid fa-user"></i>
-      </button>
-    </a>
-    <a href="#">
-      <button id="nav-toggle" class="nav-toggle">
-        <i class="fa-solid fa-message"></i>
-      </button>
-    </a>
-     <a href="#">
-      <button id="nav-toggle" class="nav-toggle">
-        <i class="fa-solid fa-gear"></i>
-      </button>
-    </a>
-    <a href="#" onclick="logout()">
-      <button id="nav-toggle" class="nav-toggle">
-        <i class="fa-solid fa-right-from-bracket"></i>
-      </button>
-    </a>
-    `;
-
-    // <!-- Mode switch -->
-    // <button id="mode-switch" class="nav-toggle">
-    //   <i class="fas fa-moon"></i>
-    // </button>
-
-  // Append the navigation container to the body
-  document.body.appendChild(navContainer);
-
-  // Push the new state to the history
-  history.pushState({ page: 'options', previousContent: previousContent }, '', '/options');
-
-  // mode  switch
-    document.getElementById('mode-switch').addEventListener('click', function() {
-      document.body.classList.toggle('light-mode');
-      const icon = this.querySelector('i');
-      if (document.body.classList.contains('light-mode')) {
-          icon.classList.remove('fa-sun');
-          icon.classList.add('fa-moon');
-          localStorage.setItem('mode', 'light');
-      } else {
-          icon.classList.remove('fa-moon');
-          icon.classList.add('fa-sun');
-          localStorage.setItem('mode', 'dark');
-      }
-  });
-
-  // Set initial mode based on localStorage
-  document.addEventListener('DOMContentLoaded', function() {
-      const savedMode = localStorage.getItem('mode');
-      const modeSwitchIcon = document.getElementById('mode-switch').querySelector('i');
-      if (savedMode === 'light') {
-          document.body.classList.add('light-mode');
-          modeSwitchIcon.classList.remove('fa-sun');
-          modeSwitchIcon.classList.add('fa-moon');
-      } else {
-          document.body.classList.remove('light-mode');
-          modeSwitchIcon.classList.remove('fa-moon');
-          modeSwitchIcon.classList.add('fa-sun');
-      }
-  });
-
-  document.getElementById('nav-toggle').addEventListener('click', function() {
-      const navList = document.getElementById('nav-list');
-      navList.style.display = navList.style.display === 'flex' ? 'none' : 'flex';
-  });
-
-}
-
-function handleOptionClick(option) {
-  console.log(`${option} button clicked`);
-  // Add your logic here to handle each option
-}
-
-window.onpopstate = function(event) {
-  if (event.state && event.state.page === 'options') {
-    // Restore the previous content
-    document.body.innerHTML = event.state.previousContent;
-    document.body.classList.remove('blur-background');
+  // Remove all child elements of the body
+  while (body.firstChild) {
+      body.removeChild(body.firstChild);
   }
-};
+
+  // Create nav bar and add content
+  const nav = document.createElement("nav");
+  nav.className = "navbar";
+  nav.innerHTML = ` 
+    <ul class="nav-menu">
+      <li><a href="./index.html" title="Home"><i class="fa-solid fa-house"></i><span>Home</span></a></li>
+      <li><a href="#" title="Account"><i class="fa-solid fa-user-plus"></i><span>Account</span></a></li>
+      <li><a href="#" title="Settings"><i class="fa-solid fa-gear"></i><span>Settings</span></a></li>
+      <li><a href="#" title="Game"><i class="fa-solid fa-gamepad"></i><span>Game</span></a></li>
+      <li><a href="#" title="Leaderboard"><i class="fa-solid fa-trophy"></i><span>Leaderboard</span></a></li>
+      <li><a href="#" title="Github Star"><i class="fa-solid fa-star"></i><span>Github Star</span></a></li>
+      <li><a href="#" title="Chat"><i class="fa-solid fa-message"></i><span>Chat</span></a></li>
+    </ul>
+  `;
+  body.appendChild(nav);
+
+  // Create a new div element and add content
+  const div = document.createElement("div");
+  div.className = "main";
+  div.innerHTML = ` 
+    <div class="wel-container">
+      <div class="edit-pic">
+        <span class="badge text-bg-primary">change</span>
+      </div>
+      <div class="wel-user">
+        <p>welcome</p>
+        <h1>Sumon</h1>
+      </div>
+      <div class="round">
+        <div class="profile-pic"></div>
+      </div>
+      <div class="inside-wel">
+        <div class="temp">
+          <p>coming soon..</p>
+        </div>
+      </div>
+    </div>
+    <div class="play-container">
+      <div class="yellow-badge">
+        <span class="badge rounded-pill text-bg-warning">🔥 popular</span>
+      </div >
+      <div class="rocket">
+        <span class="badge text-bg-light">🚀 42k+ played</span>
+      </div>
+      <div class="ball-bat">🏓</div>
+      <h1 class="play">PLAY</h1>
+      <div class="play-pic"></div>
+    </div>
+    <div class="account-container">
+      <h1 class="settings">SETTINGS</h1>
+      <div class="settings-pic"></div>
+      <div class="settings-3d"></div>
+    </div>
+    <div class="leader-container">
+      <div class="leader-pic"></div>
+      <h1 class="leaderboard">LEADERBOARD</h1>
+      <div class="leader-div"></div>
+    </div>
+    <div class="chat-container">
+      <div class="in-chat"> </div>
+      <h1 class="chat">CHAT</h1>
+      <div class="chat-pic"></div>
+      <p>with <br> friends</p>
+    </div>
+  `;
+  body.appendChild(div);
+}

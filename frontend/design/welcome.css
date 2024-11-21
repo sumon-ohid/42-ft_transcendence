@@ -17,11 +17,13 @@
 }
 
 body {
+    content: "";
+    position: absolute;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
+    /* justify-content: center;
+    align-items: center; */
+    width: 100%;
+    height: 100%;
     background-image: url('../images/bgg.png');
     background-size: cover;
     background-repeat: no-repeat;
@@ -29,8 +31,520 @@ body {
     background-position: center;
     backdrop-filter: blur(var(--background-blur));
     overflow: hidden;
+    top: 0;
+    left: 0;
+    z-index: -1;
 }
 
+/*--------------NAV BAR START------------------*/
+.navbar {
+    background: linear-gradient(135deg, #2a66c6, #114394);
+    backdrop-filter: blur(10px);
+    position: fixed;
+    z-index: 1;
+    width: 740px;
+    height: 50px;
+    top: 35px;
+    left: 51%;
+    transform: translateX(-50%);
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0.5, 0, 0, 0.51); /* shadow */
+}
+
+/* Put nav bar to rightside when screen size is small */
+@media (max-width: 700px) {
+    .navbar {
+        top: 90px;
+        left: 4vw;
+        transform: none;
+        height: 600px;
+        width: 50px;
+    }
+}
+
+.nav-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 20px;
+    position: absolute;
+    left: 10%;
+}
+
+.nav-menu a span {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: bold;
+    color: rgb(241, 241, 241);
+    transition: color 0.3s;
+    background-color: var(--container-background);
+    padding: 5px 10px;
+    border-radius: 15px;
+}
+
+.nav-menu a:hover span {
+    color: rgb(247, 247, 247);
+    background-color: #0084ff;
+    padding: 5px 10px;
+    border-radius: 15px;
+}
+
+.nav-menu a i {
+    display: none;
+}
+
+@media (max-width: 700px) {
+       .pong {
+        font-size: 6em;
+        color: var(--icon-color);
+        font-weight: bolder;
+        position: relative;
+        bottom: 1px;
+        /*text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);*/
+    }
+    .nav-menu {
+        top: 8vh;
+        left: 0;
+        transform: none;
+        height: 600px;
+        width: 50px;
+        flex-direction: column;
+    }
+
+    .nav-menu a span {
+        display: none;
+    }
+
+    .nav-menu a i {
+        display: inline-block;
+    }
+
+    .nav-menu li {
+        position: relative;
+    }
+    
+    .nav-menu a {
+        text-decoration: none;
+        color: var(--icon-color);
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        transition: background-color 0.3s;
+    }
+    
+    .nav-menu a:hover {
+        background-color: rgba(206, 206, 206, 0.11);
+    }
+    
+    .nav-menu a::after {
+        content: attr(title);
+        position: absolute;
+        bottom: -30px;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color:  #b3daff;;
+        color: rgb(0, 0, 0);
+        padding: 5px 10px;
+        border-radius: 15px;
+        opacity: 0;
+        white-space: nowrap;
+        transition: opacity 0.3s;
+        pointer-events: none;
+        font-size: 12px;
+        font-weight: bold;
+    }
+    
+    .nav-menu a:hover::after {
+        opacity: 1;
+    }    
+}
+
+/*--------------NAV BAR END------------------*/
+
+/*--------------MAIN CONTENT START------------------*/
+
+.main { /* this container is invisible */
+    position: fixed;
+    top: 375px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    width: 900px;
+    height: 700px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.wel-container {
+    position: fixed;
+    top: 375px;
+    left: 70%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    background-color: var(--container-background);
+    backdrop-filter: blur(10px);
+    width: 400px;
+    height: 550px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.567);
+    display: flex;
+    flex-direction: column;
+}
+
+.play-container {
+    position: fixed;
+    top: 160px;
+    left: 27%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    background-color: var(--container-background);
+    backdrop-filter: blur(10px);
+    width: 300px;
+    height: 120px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.567);
+    display: flex;
+    flex-direction: column;
+}
+
+.account-container {
+    position: fixed;
+    top: 580px;
+    left: 27%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    background-color: var(--container-background);
+    backdrop-filter: blur(10px);
+    width: 300px;
+    height: 120px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.567);
+    display: flex;
+    flex-direction: column;
+}
+
+.leader-container {
+    position: fixed;
+    top: 440px;
+    left: 27%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    background-color: var(--container-background);
+    backdrop-filter: blur(10px);
+    width: 300px;
+    height: 120px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.567);
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-container {
+    position: fixed;
+    top: 300px;
+    left: 27%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    background-color: var(--container-background);
+    backdrop-filter: blur(10px);
+    width: 300px;
+    height: 120px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.567);
+    display: flex;
+    flex-direction: column;
+}
+
+/* Put it in rightside when screen size is big */
+
+@media (max-width: 840px) {
+    .wel-container {
+        display: none;
+    }
+
+    .play-container {
+        top: 160px;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 300px;
+        height: 120px;
+    }
+
+    .account-container {
+        top: 580px;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 300px;
+        height: 120px;
+    }
+
+    .leader-container {
+        top: 440px;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 300px;
+        height: 120px;
+    }
+
+    .chat-container {
+        top: 300px;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 300px;
+        height: 120px;
+    }
+}
+
+/* ------ WELCOME SECTION START ------*/
+
+.wel-user {
+    font-family: "Modak";
+    color: var(--white-color);
+    margin-top: 2%;
+    font-size: 3em;
+}
+
+.wel-user h1{
+    background: url(//s2.svgbox.net/pen-brushes.svg?ic=brush-1&color=ffff43);
+    background-position: 50% 50%;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 8px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 50px;
+    width: 200px;
+    color: #000000d1;
+    position: fixed;
+    right: 10%;
+    top: 70px;
+}
+
+.wel-user p {
+    position: fixed;
+    right: 10%;
+}
+
+.round {
+    background-color: #b3daff;
+    height: 110px;
+    width: 110px;
+    border-radius: 100%;
+    position: fixed;
+    top: 3%;
+    left: 7%;
+}
+
+.profile-pic {
+    background-image: url(../images/11475215.jpg);
+    background-size: 110px;
+    height: 100px;
+    width: 100px;
+    border-radius: 100%;
+    position: fixed;
+    top: 4%;
+    left: 8.2%;
+    z-index: 2;
+}
+
+.inside-wel {
+    background-color: rgba(0, 0, 0, 0.156);
+    backdrop-filter: blur(10px);
+    height: 360px;
+    width: 350px;
+    position: fixed;
+    bottom: 40px;
+    left: 25px;
+    border-radius: 20px;
+}
+
+.edit-pic {
+    position: fixed;
+    top: 110px;
+    left: 55px;
+    z-index: 1;
+}
+
+.temp {
+    background-image: url("../images/About\ me-bro.png");
+    background-size: cover;
+    height: 250px;
+    width: 250px;
+    position: fixed;
+    bottom: 15%;
+    right: 13%;
+    display: inline-block;
+}
+
+.temp p {
+    position: fixed;
+    bottom: 0%;
+    left: 35%;
+    color: #b3daff;
+    font-weight: 700;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    letter-spacing: 2px;
+}
+
+/* ------ WELCOME SECTION END ------*/
+
+
+/* ------ PLAY SECTION START ------*/
+.play{
+    font-family: "Modak";
+    color: var(--white-color);
+    margin-top: -18%;
+    margin-left: -20%;
+    z-index: 2;
+}
+.yellow-badge {
+    margin-top: 2%;
+    margin-left: 60%;
+}
+
+.rocket {
+    margin-top: -8%;
+    margin-left: -5%;
+}
+
+.ball-bat{
+    font-size: 8em;
+    text-shadow: 0px 5px 10px rgba(0, 0, 0, 0.5);
+    display: flex;
+    margin-top: -35%;
+    margin-left: -20%;
+    rotate: -15deg;
+}
+
+.play-pic {
+    background-image: url("../images/play.png");
+    background-size: cover;
+    height: 100px;
+    width: 160px;
+    position: fixed;
+    top:17%;
+    right: 1%;
+    display: inline-block;
+    z-index: -1;
+}
+
+/* ------ PLAY SECTION END ------*/
+
+
+/* ------ CHAT SECTION START ------*/
+
+.chat{
+    font-family: "Modak";
+    color: var(--white-color);
+    margin-top: 30px;
+    margin-left: 140px;
+    z-index: 1;
+}
+
+.chat-pic {
+    background-image: url("../images/chat.png");
+    background-size: cover;
+    height: 120px;
+    width: 180px;
+    position: fixed;
+    display: inline-block;
+}
+
+.chat-container p {
+    color:#b3daff;
+    font-size: .7em;
+    margin-left: 50%;
+    margin-top: -4%;
+    line-height: 1;
+}
+
+
+/* ------ CHAT SECTION END ------*/
+
+/* ------ LEADERBOARD SECTION START ------*/
+
+.leaderboard{
+    font-family: "Modak";
+    color: var(--white-color);
+    margin-top: 2%;
+    font-size: xx-large;
+}
+
+.leader-pic {
+    background-image: url("../images/leadership-cuate.png");
+    background-size: cover;
+    height: 130px;
+    width: 240px;
+    position: fixed;
+    display: inline-block;
+    top: -8%;
+    left: 6%;
+}
+
+.leader-container p {
+    color: rgb(255, 255, 255);
+    margin-top: -35%;
+    line-height: 1;
+    font-weight: 200;
+    font-style: italic;
+}
+
+.leader-div {
+    background-image: url("../images/king.png");
+    background-size: cover;
+    height: 50px;
+    width: 50px;
+    position: fixed;
+    bottom: 10%;
+    right: 0%;
+    rotate: 30deg;
+}
+
+/* ------ LEADERBOARD SECTION END ------*/
+
+/* ------ SETTINGS SECTION START ------*/
+
+.settings{
+    font-family: "Modak";
+    color: rgb(255, 255, 255);
+    margin-top: 2%;
+}
+
+.settings-pic {
+    background-image: url("../images/settings.png");
+    background-size: cover;
+    height: 130px;
+    width: 230px;
+    position: fixed;
+    display: inline-block;
+    left: 11%;
+    top: -9%;
+    z-index: -1;
+}
+
+.settings-3d {
+    background-image: url("../images/3d-setting.png");
+    background-size: cover;
+   
+    height: 80px;
+    width: 80px;
+    position: fixed;
+    top: 50%;
+    right: -25px;
+    rotate: -80deg
+}
+
+/* ------ SETTINGS SECTION END------*/
+
+/*--------------MAIN CONTENT END------------------*/
+
+/* ------ START ENTRY PAGE ------ */
 .pong-container {
     background-color: var(--pong-color);
     background-size: 100%;
@@ -69,12 +583,16 @@ body {
     color: rgba(255, 255, 255, 0.84);
     position: fixed;
     top: 100px;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 .button {
     font-family: "Modak";
     position: fixed;
     top: 480px;
+    left: 50%;
+    transform: translateX(-50%);
     z-index: 1;
     background-color: rgba(246, 246, 246, 0.775);
     background-size: cover;
@@ -98,11 +616,16 @@ body {
     background-color: #007bff;
 }
 
+/* ------ END ENTRY PAGE ------ */
+
 /*-------- LOGIN START ---------*/
 
 .login-container {
     background-color: var(--container-background);
     position: fixed;
+    top: 150px;
+    left: 50%;
+    transform: translateX(-50%);
     height: 450px;
     width: 400px;
     align-items: center;
@@ -144,7 +667,8 @@ body {
     border-radius: 10px;
     padding: 0;
     box-sizing: border-box;
-    font-family: "Cutive Mono";
+    font-family: "Share Tech Mono";
+    font-weight: lighter;
     opacity: .8;
 }
 
@@ -166,14 +690,13 @@ form .login-button:hover {
 }
 
 .intra-login {
-    font-family: "Cutive Mono";
+    font-family: "Share Tech Mono";
     background-color: white;
     border-radius: 10px;
     border: 2px solid rgb(189, 189, 189);
     box-shadow: 0 6px 6px rgba(0.5, 0, 0, 0.3); /* shadow */
     height: 30px;
     width: 160px;
-    font-weight: bold;
     position: relative;
     top: 140px;
     align-items: center;
@@ -194,18 +717,16 @@ form .login-button:hover {
 }
 
 .forgot-passwd {
-    font-family: "Cutive Mono";
+    font-family: "Monomaniac One";
     position: relative;
     top: 20px;
-    font-family: "Cutive Mono";
     font-size: .8em;
 }
 
 .signup {
-    font-family: "Cutive Mono";
     position: relative;
     top: 140px;
-    font-family: "Cutive Mono";
+    font-family: "Monomaniac One";
     font-size: .8em;
 } 
 
@@ -225,7 +746,7 @@ form .login-button:hover {
     z-index: 1;
     position: absolute;
     top: 160px;
-    left: -230px;
+    left: -200px;
     transform: translate(50%, 50%);
 }
 /*-------- LOGIN END ---------*/
