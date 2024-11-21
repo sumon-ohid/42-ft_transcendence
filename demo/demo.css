@@ -1,0 +1,39 @@
+/* Root variables for colors and fonts */
+:root {
+    --background-color: #00eeff;
+    --text-color: #333;
+    --primary-color: #007bff;
+    --font-family: 'Arial', sans-serif;
+}
+
+/* Apply background color and font to the body */
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    font-family: var(--font-family);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+h1 {
+    color: #000000;
+    font-size: 5em;
+}
+
+.test {
+    background-color: #ffffff;
+    height: 30px;
+    width: 200px;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+}
+
+.test p {
+    position: relative;
+    margin-top: 5px;
+    margin-left: 30px;
+}

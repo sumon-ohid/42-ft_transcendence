@@ -28,7 +28,6 @@ body {
     background-attachment: fixed;
     background-position: center;
     backdrop-filter: blur(var(--background-blur));
-    z-index: -1;
     overflow: hidden;
 }
 
@@ -67,7 +66,6 @@ body {
 .title {
     font-family: "Modak";
     font-size: 7em;
-    z-index: -1;
     color: rgba(255, 255, 255, 0.84);
     position: fixed;
     top: 100px;
@@ -75,7 +73,6 @@ body {
 
 .button {
     font-family: "Modak";
-    z-index: -1;
     position: fixed;
     top: 480px;
     z-index: 1;
@@ -100,3 +97,135 @@ body {
 .button:hover {
     background-color: #007bff;
 }
+
+/*-------- LOGIN START ---------*/
+
+.login-container {
+    background-color: var(--container-background);
+    position: fixed;
+    height: 450px;
+    width: 400px;
+    align-items: center;
+    justify-items: center;
+    display: flex;
+    flex-direction: column;
+    border-radius: 15px;
+    box-shadow: 0 10px 6px rgba(0.5, 0, 0, 0.51); /* shadow */
+}
+
+.login-text {
+    font-family: "Modak";
+    color: var(--light-color);
+    font-size: 3em;
+    margin-top: 50px;
+    z-index: 2;
+}
+
+.form-box {
+    position: relative;
+    left: -50px;
+    border-radius: 10px;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 30px;
+    width: 300px;
+}
+
+.form {
+    height: 30px;
+    width: 200px;
+}
+
+.form input{
+    text-align: center;
+    border: 2px solid rgb(189, 189, 189);
+    border-radius: 10px;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Cutive Mono";
+    opacity: .8;
+}
+
+
+form .login-button {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 6px 6px rgba(0.5, 0, 0, 0.3); /* shadow */
+    height: 30px;
+    width: 140px;
+    font-weight: bold;
+    position: relative;
+    left: 30px;
+}
+
+form .login-button:hover {
+    background-color: #ffffff;
+    border: 2px solid rgb(0, 128, 255);
+}
+
+.intra-login {
+    font-family: "Cutive Mono";
+    background-color: white;
+    border-radius: 10px;
+    border: 2px solid rgb(189, 189, 189);
+    box-shadow: 0 6px 6px rgba(0.5, 0, 0, 0.3); /* shadow */
+    height: 30px;
+    width: 160px;
+    font-weight: bold;
+    position: relative;
+    top: 140px;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    opacity: .8;
+}
+
+.intra-login:hover {
+    background-color: #ffffff;
+    border: 2px solid rgb(0, 128, 255);
+}
+
+.icon {
+    margin-left: 6px;
+    height: 18px;
+    width: 18px;
+}
+
+.forgot-passwd {
+    font-family: "Cutive Mono";
+    position: relative;
+    top: 20px;
+    font-family: "Cutive Mono";
+    font-size: .8em;
+}
+
+.signup {
+    font-family: "Cutive Mono";
+    position: relative;
+    top: 140px;
+    font-family: "Cutive Mono";
+    font-size: .8em;
+} 
+
+.or {
+    font-family: "Cutive Mono";
+    position: relative;
+    top: 136px;
+    font-size: .7em;
+}
+
+.image {
+    background-image: url("login.png");
+    background-size: cover;
+    display: inline-block;
+    height: 200px;
+    width: 200px;
+    z-index: 1;
+    position: absolute;
+    top: 160px;
+    left: -230px;
+    transform: translate(50%, 50%);
+}
+/*-------- LOGIN END ---------*/
