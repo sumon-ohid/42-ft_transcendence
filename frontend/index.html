@@ -1,85 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>42-Transcendance</title>
-    <link rel="stylesheet" href="./css/style.css" />
-    <!--FONT AWESOME ICONS-->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Pong</title>
+    <link rel="stylesheet" href="./css/style.css"> <!-- Link to your CSS file -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <!-- Font Awesome for icons -->
     <!--GOOGLE FONT-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Modak&family=Pacifico&family=Rubik Mono One&family=Cookie&&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Modak&family=Pacifico&family=Cutive Mono&family=Cookie&family=Sour Gummy&family=Monomaniac One&family=Share Tech Mono&display=swap" rel="stylesheet">
     <!--using boostrap-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-  </head>
-  <body>
-    <!--NAV BAR-->
-    <nav class="navbar">
-      <ul class="nav-menu">
-        <li><a href="./index.html" title="Home"><i class="fa-solid fa-house"></i><span>Home</span></a></li>
-        <li><a href="#" title="Account"><i class="fa-solid fa-user-plus"></i><span>Account</span></a></li>
-        <li><a href="#" title="Settings"><i class="fa-solid fa-gear"></i><span>Settings</span></a></li>
-        <li><a href="#" title="Game"><i class="fa-solid fa-gamepad"></i><span>Game</span></a></li>
-        <li><a href="#" title="Leaderboard"><i class="fa-solid fa-trophy"></i><span>Leaderboard</span></a></li>
-        <li><a href="#" title="Github Star"><i class="fa-solid fa-star"></i><span>Github Star</span></a></li>
-        <li><a href="#" title="Chat"><i class="fa-solid fa-message"></i><span>Chat</span></a></li>
-      </ul>
-    </nav>
-    
-    <!--Main Content-->
-    <div class="main">
-      <div class="wel-container">
-        <div class="edit-pic">
-          <span class="badge text-bg-primary">change</span>
-        </div>
-        <div class="wel-user">
-          <p>welcome</p>
-          <h1>Sumon</h1>
-        </div>
-        <div class="round">
-          <div class="profile-pic"></div>
-        </div>
-        <div class="inside-wel">
-          <div class="temp">
-            <p>coming soon..</p>
-          </div>
-        </div>
-      </div>
-      <div class="play-container">
-        <div class="yellow-badge">
-          <span class="badge rounded-pill text-bg-warning">🔥 popular</span>
-        </div >
-        <div class="rocket">
-          <span class="badge text-bg-light">🚀 42k+ played</span>
-        </div>
-        <div class="ball-bat">🏓</div>
-        <h1 class="play">PLAY</h1>
-        <div class="play-pic"></div>
-      </div>
-      <div class="account-container">
-        <h1 class="settings">SETTINGS</h1>
-        <div class="settings-pic"></div>
-        <div class="settings-3d"></div>
-      </div>
-      <div class="leader-container">
-        <div class="leader-pic"></div>
-        <h1 class="leaderboard">LEADERBOARD</h1>
-        <div class="leader-div"></div>
-      </div>
-      <div class="chat-container">
-        <div class="in-chat"> </div>
-        <h1 class="chat">CHAT</h1>
-        <div class="chat-pic"></div>
-        <p>with <br> friends</p>
-      </div>  
-    </div>
-    <!--Js Scripts-->
-    <script src="./scripts/mode.js"></script>
-    <script src="./scripts/homePage.js"></script>
-
-  </body>
-  <footer>    
-  </footer>
+</head>
+<body>
+    <!-- Main Content -->
+    <div class="pong-container"></div>
+    <div class="pong"></div>
+    <div class="title">PONG</div>
+    <button class="button" onclick="login()">
+        <h1>continue</h1>
+    </button>
+    <script src="./scripts/login.js" defer></script>
+    <script src="./scripts/homePage.js" defer></script>
+</body>
 </html>
