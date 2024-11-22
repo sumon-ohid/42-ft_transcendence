@@ -14,8 +14,8 @@ function login() {
             <p>login</p>
         </div>
         <form action="#" class="form">
-            <input type="text" id="username" name="username" value="username" class="form-box"><br>
-            <input type="text" id="password" name="password" value="password" class="form-box"><br><br>
+            <input type="text" id="username" name="username" placeholder="username" class="form-box"><br>
+            <input type="text" id="password" name="password" placeholder="password" class="form-box"><br><br>
             <input type="submit" value="login" class="login-button" onclick="homepage(event)">
         </form>
         <div class="or">or</div>
@@ -23,7 +23,12 @@ function login() {
             <img src="https://simpleicons.org/icons/42.svg" alt="42" class="icon"/>
         </div>
         <div class="forgot-passwd">Forgot Password?</div>
-        <div class="signup">Don't have an account?<strong> Register</strong></div>
+        <div class="signup">
+            Don't have an account?
+            <button onclick="signup()" class="signup-button">
+                <strong id="register"> Register</strong>
+            </button>
+        </div>
         <div class="image"></div>
     `;
     body.appendChild(div);

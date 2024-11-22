@@ -728,7 +728,22 @@ form .login-button:hover {
     top: 140px;
     font-family: "Monomaniac One";
     font-size: .8em;
-} 
+}
+
+.signup-button {
+    background: none;
+    border: none;
+    color: rgb(25, 25, 25);
+    text-decoration: underline;
+    cursor: pointer;
+    font-size: 1em;
+    padding: 0;
+    margin: 0;
+}
+
+.signup-button strong {
+    font-weight: normal;
+}
 
 .or {
     font-family: "Cutive Mono";
