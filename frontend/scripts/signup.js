@@ -16,7 +16,7 @@ function signup() {
         <form action="#" class="form">
             <input type="text" id="email" name="email" placeholder="email" class="form-box"><br>
             <input type="text" id="username" name="username" placeholder="username" class="form-box"><br>
-            <input type="text" id="password" name="password" placeholder="password" class="form-box"><br><br>
+            <input type="password" id="password" name="password" placeholder="password" class="form-box"><br><br>
             <input type="submit" value="signup" class="login-button" onclick="homepage(event)">
         </form>
         <div class="image"></div>
