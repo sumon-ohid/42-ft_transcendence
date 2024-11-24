@@ -33,6 +33,8 @@ function gamePage() {
         <div class="ready">
             <button class="gamepage-button" onclick="startGame()">Ready</button>
         </div>
+        <div class="quit-game" onclick="homepage()">
+            <h1>BACK</h1>
     `;
     body.appendChild(div);
 }
