@@ -1,4 +1,4 @@
-function homepage() {
+function homePage() {
   const body = document.body;
 
   // Remove all child elements of the body
