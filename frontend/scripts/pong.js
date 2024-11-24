@@ -40,6 +40,7 @@ function startGame() {
     const div = document.createElement("div");
     div.className = "maingame-container";
     div.innerHTML = `
+        <div class="middle-line"></div>
         <canvas id="pongCanvas" width="700" height="400"></canvas>
     `;
     body.appendChild(div);

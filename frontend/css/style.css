@@ -884,4 +884,14 @@ form .login-button:hover {
     box-shadow: 0 10px 6px rgba(0.5, 0, 0, 0.51); /* shadow */
 }
 
+.middle-line {
+    background-color: var(--black-color);
+    transform: translateX(-50%);
+    height: 360px;
+    width: 1px;
+    position: fixed;
+    top: 20px;
+    opacity: .5;
+}
+
 /*------- MAIN GAME END -------*/
