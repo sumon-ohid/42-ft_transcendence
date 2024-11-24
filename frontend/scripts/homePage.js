@@ -43,7 +43,7 @@ function homepage() {
         </div>
       </div>
     </div>
-    <div class="play-container">
+    <div class="play-container" onclick="gamePage()">
       <div class="yellow-badge">
         <span class="badge rounded-pill text-bg-warning">🔥 popular</span>
       </div >

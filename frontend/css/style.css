@@ -765,3 +765,123 @@ form .login-button:hover {
     transform: translate(50%, 50%);
 }
 /*-------- LOGIN END ---------*/
+
+
+/*------- GAME PAGE START -------*/
+
+.gamepage-container {
+    background-color: var(--container-background);
+    position: fixed;
+    top: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 550px;
+    width: 400px;
+    align-items: center;
+    justify-items: center;
+    display: flex;
+    flex-direction: column;
+    border-radius: 15px;
+    box-shadow: 0 10px 6px rgba(0.5, 0, 0, 0.51); /* shadow */
+}
+
+.choose-avatar, .choose-nickname, .ready {
+    margin-bottom: 20px;
+}
+
+.choose-avatar h2 {
+    position: relative;
+    top: 50px;
+    color: white;
+    font-family: "Sour Gummy";
+}
+
+.choose-nickname h2 {
+    position: relative;
+    top: 250px;
+    left: 90px;
+    color: white;
+    font-family: "Sour Gummy";
+}
+
+.avatar-options {
+    position: fixed;
+    top: 100px;
+    left: 40px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 columns */
+    gap: 10px;
+}
+
+.avatar-options img {
+    background-color: #ffffff;
+    width: 70%;
+    height: auto;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.2s;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.avatar-options img:hover {
+    transform: scale(1.1);
+}
+
+.gamepage-input[type="text"] {
+    text-align: center;
+    position: relative;
+    top: 250px;
+    width: 300px;
+    padding: 10px;
+    border: 1px solid #000000;
+    border-radius: 15px;
+    box-shadow: 0 5px 6px rgba(0.5, 0, 0, 0.21); /* shadow */
+}
+
+.gamepage-button {
+    font-family: "Modak";
+    font-size: 2em;
+    color: #111111c0;
+    position: fixed;
+    top: 430px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+    background-color: rgb(255, 255, 255);
+    background-size: cover;
+    height: 60px;
+    width: 170px;
+    border-radius: 30px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    box-shadow: 0 5px 6px rgba(0.5, 0, 0, 0.51); /* shadow */
+    border: 2px solid #00a6ff;
+}
+
+.gamepage-button:hover {
+    background-color: #007bffd3;
+    color: rgb(255, 255, 255);
+}
+
+/*------- GAME PAGE END -------*/
+
+/*------- MAIN GAME START -------*/
+
+.maingame-container {
+    background-color: var(--pong-color);
+    position: fixed;
+    top: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 400px;
+    width: 740px;
+    align-items: center;
+    justify-items: center;
+    display: flex;
+    flex-direction: column;
+    border-radius: 15px;
+    box-shadow: 0 10px 6px rgba(0.5, 0, 0, 0.51); /* shadow */
+}
+
+/*------- MAIN GAME END -------*/
