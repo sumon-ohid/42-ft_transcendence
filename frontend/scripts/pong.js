@@ -41,6 +41,19 @@ function startGame() {
     div.className = "maingame-container";
     div.innerHTML = `
         <div class="middle-line"></div>
+        <div class="score-board">
+            <div class="left-player">
+                <img id="left-player" src="./avatars/avatar4.png" alt="player1">
+                <h3>player 1</h3>
+                <h1 id="left-score">0</h1>
+            </div>
+            <div class="right-player">
+                <img id="right-player" src="./avatars/avatar5.png" alt="player2">
+                <h3>player 2</h3>
+                <h1 id="right-score">0</h1>
+            </div>
+            <div class="score-line"></div>
+        </div>
         <canvas id="pongCanvas" width="700" height="400"></canvas>
     `;
     body.appendChild(div);

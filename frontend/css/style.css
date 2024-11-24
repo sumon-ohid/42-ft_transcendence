@@ -894,4 +894,93 @@ form .login-button:hover {
     opacity: .5;
 }
 
+/* game scoreboard during game*/
+.score-board {
+    font-family: "Sour Gummy";
+    background-color: var(--container-background);
+    position: fixed;
+    bottom: -150px;
+    left: 50%;
+    transform: translate(-50%);
+    height: 100px;
+    width: 740px;
+    align-items: center;
+    justify-items: center;
+    display: flex;
+    flex-direction: column;
+    border-radius: 15px;
+    box-shadow: 0 10px 6px rgba(0.5, 0, 0, 0.51); /* shadow */
+}
+
+/* Player in the left player1*/
+.left-player {
+    align-items: center;
+    justify-items: center;
+    display: flex;
+}
+
+.left-player img {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    height: 80px;
+    width: auto;
+    border-radius: 50%;
+    border: 1px solid white;
+}
+
+.left-player h3 {
+    position: fixed;
+    left: 110px;
+    top: 33px;
+}
+
+.left-player h1 {
+    position: fixed;
+    left: 280px;
+    top: 20px;
+    font-size: 3em;
+}
+
+/* line in the middle */
+.score-line {
+    background-color: var(--black-color);
+    transform: translateX(-50%);
+    height: 80px;
+    width: 1px;
+    position: fixed;
+    top: 10px;
+    opacity: .5;
+}
+
+/* Player in the right player2*/
+.right-player {
+    align-items: center;
+    justify-items: center;
+    display: flex;
+}
+
+.right-player img {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    height: 80px;
+    width: auto;
+    border-radius: 50%;
+    border: 1px solid white;
+}
+
+.right-player h3 {
+    position: fixed;
+    right: 110px;
+    top: 33px;
+}
+
+.right-player h1 {
+    position: fixed;
+    right: 280px;
+    top: 20px;
+    font-size: 3em;
+}
+
 /*------- MAIN GAME END -------*/
