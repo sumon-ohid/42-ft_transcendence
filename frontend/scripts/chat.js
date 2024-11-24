@@ -13,6 +13,16 @@ function chatPage() {
         <div class="chat-title">
             <h1>chat</h1>
         </div>
+            <div class="chat-top-bar">
+                <div class="chating-with">
+                    <div class="friend-name">Sumon
+                        <span class="badge rounded-pill text-bg-success">active now</span>
+                    </div>
+                    <div class="p-pic-back"></div>
+                    <img src="./avatars/avatar4.png" alt="user">
+
+                </div>
+            </div>
             <div class="friends">
             <div class="active-friends">
                 <div class="friend">
@@ -49,6 +59,8 @@ function chatPage() {
         <div class="send-button">
             <i class="fa-solid fa-paper-plane"></i>
         </div>
+        <div class="quit-game" onclick="homePage()">
+            <h1>BACK</h1>
     `;
     body.appendChild(div);
 }

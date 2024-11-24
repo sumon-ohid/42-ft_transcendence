@@ -1113,6 +1113,53 @@ form .login-button:hover {
     box-shadow: 0 10px 6px rgba(0.5, 0, 0, 0.51); /* shadow */
 }
 
+.chat-top-bar {
+    background-color: var(--container-background);
+    height: 60px;
+    width: 250px;
+    position: relative;
+    top: -60px;
+    border-radius: 10px;
+    box-shadow: 0 1px 6px rgba(0.5, 0, 0, 0.51); /* shadow */
+    border: 1px solid rgba(249, 249, 249, 0.563);
+}
+
+.chating-with img {
+    height: 50px;
+    width: 50px;
+    position: relative;
+    top: 5px;
+    left: 176px;
+}
+
+.p-pic-back {
+    background-color: #0056b3;
+    height: 55px;
+    width: 55px;
+    position: absolute;
+    border-radius: 50%;
+    right: 20px;
+    border: 2px solid beige;
+    margin-top: 3px;
+}
+
+.friend-name {
+    position: absolute;
+    font-family:'Courier New', Courier, monospace;
+    font-size: 1.5em;
+    color: white;
+    left: 50px;
+    font-weight: bold;
+    top: 5px;
+}
+
+.friend-name span {
+    font-size: .3em;
+    position: absolute;
+    left: 0;
+    top: 30px;
+}
+
 .chat-box-holder {
     position: fixed;
     bottom: 30px;
