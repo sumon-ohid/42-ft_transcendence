@@ -1016,7 +1016,7 @@ form .login-button:hover {
 .quit-game:hover {
     background-color: #007bff;
     font-family: "Modak";
-    color: rgba(255, 255, 255, 0.736);
+    color: rgba(255, 255, 255, 0.884);
     letter-spacing: 2px;
     margin-top: 5px;
 }
@@ -1034,6 +1034,44 @@ form .login-button:hover {
     color: white;
     font-family: "Sour Gummy";
     z-index: 10;
+}
+
+.hidden {
+    display: none;
+}
+
+.confirmation-to-quit {
+    font-family: "Sour Gummy";
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    text-align: center;
+}
+
+.confirmation-to-quit p {
+    margin-bottom: 20px;
+    font-size: 1.2em;
+}
+
+.confirmation-to-quit button {
+    margin: 0 10px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+.confirmation-to-quit button:hover {
+    background-color: #0056b3;
 }
 /*------- MAIN GAME END -------*/
 

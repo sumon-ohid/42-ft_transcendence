@@ -74,12 +74,17 @@ function startGame() {
             </div>
             <div class="score-line"></div>
             <div class="score-line"></div>
-                <div class="quit-game" onclick="quitGame()">
+                <div class="quit-game" onclick="showQuitConfirmation()">
                     <h1>QUIT</h1>
             </div>
         </div>
         <canvas id="pongCanvas" width="700" height="400"></canvas>
         <div id="countdown" class="countdown"></div>
+        <div id="quit-confirmation" class="confirmation-to-quit hidden">
+            <p>Are you sure you want to quit?</p>
+            <button onclick="confirmQuit()">Yes</button>
+            <button onclick="cancelQuit()">No</button>
+        </div>
     `;
     body.appendChild(div);
 
@@ -206,9 +211,17 @@ function initializeGame() {
     gameInterval = setInterval(draw, 20);
 }
 
-function quitGame() {
-    if (confirm("Are you sure you want to quit?")) {
-        clearInterval(gameInterval);
-        gamePage();
-    }
+function showQuitConfirmation() {
+    const confirmationDialog = document.getElementById("quit-confirmation");
+    confirmationDialog.classList.remove("hidden");
+}
+
+function confirmQuit() {
+    clearInterval(gameInterval);
+    gamePage();
+}
+
+function cancelQuit() {
+    const confirmationDialog = document.getElementById("quit-confirmation");
+    confirmationDialog.classList.add("hidden");
 }
