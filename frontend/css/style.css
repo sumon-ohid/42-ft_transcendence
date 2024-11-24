@@ -752,7 +752,7 @@ form .login-button:hover {
     font-size: .7em;
 }
 
-.image {
+/* .image {
     background-image: url("../images/login.png");
     background-size: cover;
     display: inline-block;
@@ -763,7 +763,8 @@ form .login-button:hover {
     top: 160px;
     left: -200px;
     transform: translate(50%, 50%);
-}
+} */
+
 /*-------- LOGIN END ---------*/
 
 
