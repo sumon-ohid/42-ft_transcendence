@@ -13,17 +13,16 @@ function chatPage() {
         <div class="chat-title">
             <h1>chat</h1>
         </div>
-            <div class="chat-top-bar">
-                <div class="chating-with">
-                    <div class="friend-name">Sumon
-                        <span class="badge rounded-pill text-bg-success">active now</span>
-                    </div>
-                    <div class="p-pic-back"></div>
-                    <img src="./avatars/avatar4.png" alt="user">
-
+        <div class="chat-top-bar">
+            <div class="chating-with">
+                <div class="friend-name">Sumon
+                    <span class="badge rounded-pill text-bg-success">active now</span>
                 </div>
+                <div class="p-pic-back"></div>
+                <img src="./avatars/avatar4.png" alt="user">
             </div>
-            <div class="friends">
+        </div>
+        <div class="friends">
             <div class="active-friends">
                 <div class="friend">
                     <img src="./avatars/avatar1.png" alt="Avatar 1">
@@ -51,16 +50,55 @@ function chatPage() {
                 </div>
             </div>
         </div>
+        <div class="chat-messages" id="chat-messages"></div>
         <div class="chat-box-holder">
             <i class="fa-solid fa-face-smile"></i>
-            <input type="text" class="chat-box" placeholder="type a message"> </input>
+            <input type="text" class="chat-box" id="chat-input" placeholder="type a message">
             <div class="attachment"><i class="fa-solid fa-paperclip"></i></div>
         </div>
-        <div class="send-button">
+        <div class="send-button" id="send-button">
             <i class="fa-solid fa-paper-plane"></i>
         </div>
         <div class="quit-game" onclick="homePage()">
             <h1>BACK</h1>
+        </div>
     `;
     body.appendChild(div);
+
+    // Add event listeners for sending messages
+    const chatInput = document.getElementById("chat-input");
+    const sendButton = document.getElementById("send-button");
+    const chatMessages = document.getElementById("chat-messages");
+
+    sendButton.addEventListener("click", function() {
+        sendMessage();
+    });
+
+    chatInput.addEventListener("keypress", function(event) {
+        if (event.key === "Enter") {
+            sendMessage();
+        }
+    });
+
+    function sendMessage() {
+        const messageText = chatInput.value.trim();
+        if (messageText !== "") {
+            const messageElement = document.createElement("div");
+            messageElement.classList.add("chat-message");
+    
+            const profilePic = document.createElement("img");
+            profilePic.src = "./images/11475215.jpg"; // Should change later, put user picture
+            profilePic.alt = "Profile Picture";
+    
+            const messageContent = document.createElement("span");
+            messageContent.textContent = messageText;
+    
+            messageElement.appendChild(profilePic);
+            messageElement.appendChild(messageContent);
+    
+            chatMessages.appendChild(messageElement);
+            chatInput.value = "";
+            chatMessages.scrollTop = chatMessages.scrollHeight; // Scroll to the bottom
+        }
+    }
 }
