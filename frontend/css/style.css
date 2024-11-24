@@ -892,6 +892,7 @@ form .login-button:hover {
     position: fixed;
     top: 20px;
     opacity: .5;
+    z-index: -1;
 }
 
 /* game scoreboard during game*/

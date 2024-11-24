@@ -1,3 +1,8 @@
+let player1Name = "Player 1";
+let player2Name = "Player 2";
+let player1Avatar = "./avatars/avatar4.png";
+let player2Avatar = "./avatars/avatar5.png";
+
 function gamePage() {
     const body = document.body;
 
@@ -11,17 +16,17 @@ function gamePage() {
         <div class="choose-avatar">
             <h2>Choose Your Avatar</h2>
             <div class="avatar-options">
-                <img src="./avatars/avatar1.png" alt="Avatar 1">
-                <img src="./avatars/avatar2.png" alt="Avatar 2">
-                <img src="./avatars/avatar3.png" alt="Avatar 3">
-                <img src="./avatars/avatar4.png" alt="Avatar 4">
-                <img src="./avatars/avatar5.png" alt="Avatar 5">
-                <img src="./avatars/avatar6.png" alt="Avatar 6">
+                <img src="./avatars/avatar1.png" alt="Avatar 1" onclick="selectAvatar(1)">
+                <img src="./avatars/avatar2.png" alt="Avatar 2" onclick="selectAvatar(2)">
+                <img src="./avatars/avatar3.png" alt="Avatar 3" onclick="selectAvatar(3)">
+                <img src="./avatars/avatar4.png" alt="Avatar 4" onclick="selectAvatar(4)">
+                <img src="./avatars/avatar5.png" alt="Avatar 5" onclick="selectAvatar(5)">
+                <img src="./avatars/avatar6.png" alt="Avatar 6" onclick="selectAvatar(6)">
             </div>
         </div>
         <div class="choose-nickname">
             <h2>Nickname</h2>
-            <input class="gamepage-input" type="text" placeholder="Enter your nickname">
+            <input class="gamepage-input" type="text" id="nickname" placeholder="Enter your nickname">
         </div>
         <div class="ready">
             <button class="gamepage-button" onclick="startGame()">Ready</button>
@@ -30,7 +35,14 @@ function gamePage() {
     body.appendChild(div);
 }
 
+function selectAvatar(avatarNumber) {
+    player1Avatar = `./avatars/avatar${avatarNumber}.png`;
+}
+
 function startGame() {
+    const nicknameInput = document.getElementById("nickname");
+    player1Name = nicknameInput.value || "Player 1";
+
     const body = document.body;
 
     while (body.firstChild) {
@@ -43,13 +55,13 @@ function startGame() {
         <div class="middle-line"></div>
         <div class="score-board">
             <div class="left-player">
-                <img id="left-player" src="./avatars/avatar4.png" alt="player1">
-                <h3>player 1</h3>
+                <img id="left-player" src="${player1Avatar}" alt="player1">
+                <h3>${player1Name}</h3>
                 <h1 id="left-score">0</h1>
             </div>
             <div class="right-player">
-                <img id="right-player" src="./avatars/avatar5.png" alt="player2">
-                <h3>player 2</h3>
+                <img id="right-player" src="${player2Avatar}" alt="player2">
+                <h3>${player2Name}</h3>
                 <h1 id="right-score">0</h1>
             </div>
             <div class="score-line"></div>
@@ -78,6 +90,9 @@ function initializeGame() {
     let ballSpeedY = 5;
 
     const paddleSpeed = 20;
+
+    let leftScore = 0;
+    let rightScore = 0;
 
     function drawPaddle(x, y) {
         ctx.fillStyle = "#FFFFFF";
@@ -109,12 +124,16 @@ function initializeGame() {
             if (ballY > paddle2Y && ballY < paddle2Y + paddleHeight) {
                 ballSpeedX = -ballSpeedX;
             } else {
+                leftScore++;
+                document.getElementById("left-score").innerText = leftScore;
                 resetBall();
             }
         } else if (ballX + ballSpeedX < ballRadius) {
             if (ballY > paddle1Y && ballY < paddle1Y + paddleHeight) {
                 ballSpeedX = -ballSpeedX;
             } else {
+                rightScore++;
+                document.getElementById("right-score").innerText = rightScore;
                 resetBall();
             }
         }
