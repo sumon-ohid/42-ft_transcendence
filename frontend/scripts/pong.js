@@ -2,6 +2,7 @@ let player1Name = "Player 1";
 let player2Name = "Player 2";
 let player1Avatar = "./avatars/avatar4.png";
 let player2Avatar = "./avatars/avatar5.png";
+let gameInterval;
 
 // *** NOTE ****
 // Change later: Nickname can be max 8 character other wise truncate to 8 chars.
@@ -73,11 +74,12 @@ function startGame() {
             </div>
             <div class="score-line"></div>
             <div class="score-line"></div>
-                <div class="quit-game" onclick="gamePage()">
+                <div class="quit-game" onclick="quitGame()">
                     <h1>QUIT</h1>
             </div>
         </div>
         <canvas id="pongCanvas" width="700" height="400"></canvas>
+        <div id="countdown" class="countdown"></div>
     `;
     body.appendChild(div);
 
@@ -86,8 +88,34 @@ function startGame() {
     rightScore = 0;
     document.getElementById("left-score").innerText = leftScore;
     document.getElementById("right-score").innerText = rightScore;
-    // Initialize the game after the canvas is added to the DOM
-    initializeGame();
+
+    // Show count down before starting game.
+    showCountdown();
+}
+
+function showCountdown() {
+    const countdownElement = document.getElementById("countdown");
+    const middleLineElement = document.querySelector(".middle-line");
+    middleLineElement.classList.add("hidden");
+
+    let countdown = 3;
+
+    const countdownInterval = setInterval(() => {
+        if (countdown > 0) {
+            countdownElement.innerHTML = countdown;
+            countdown--;
+        } else {
+            countdownElement.innerHTML = "GO!";
+            clearInterval(countdownInterval);
+            setTimeout(() => {
+                countdownElement.style.display = "none";
+                middleLineElement.classList.remove("hidden");
+                leftScore = 0;
+                rightScore = 0;
+                initializeGame();
+            }, 1000);
+        }
+    }, 1000);
 }
 
 function initializeGame() {
@@ -175,5 +203,12 @@ function initializeGame() {
 
     document.addEventListener("keydown", keyDownHandler);
 
-    setInterval(draw, 20);
+    gameInterval = setInterval(draw, 20);
+}
+
+function quitGame() {
+    if (confirm("Are you sure you want to quit?")) {
+        clearInterval(gameInterval);
+        gamePage();
+    }
 }

@@ -11,12 +11,12 @@ function homePage() {
   nav.className = "navbar";
   nav.innerHTML = ` 
     <ul class="nav-menu">
-      <li><a href="./index.html" title="Home"><i class="fa-solid fa-house"></i><span>Home</span></a></li>
+      <li><a href="#" title="Home" onclick="homePage()"><i class="fa-solid fa-house"></i><span>Home</span></a></li>
       <li><a href="#" title="Account"><i class="fa-solid fa-user-plus"></i><span>Account</span></a></li>
       <li><a href="#" title="Settings"><i class="fa-solid fa-gear"></i><span>Settings</span></a></li>
       <li><a href="#" title="Game" onclick="gamePage()"><i class="fa-solid fa-gamepad"></i><span>Game</span></a></li>
       <li><a href="#" title="Leaderboard"><i class="fa-solid fa-trophy"></i><span>Leaderboard</span></a></li>
-      <li><a href="#" title="Github Star"><i class="fa-solid fa-star"></i><span>Github Star</span></a></li>
+      <li><a href="https://github.com/sumon-ohid/42-Ft_transcendence" title="Github Star"><i class="fa-solid fa-star"></i><span>Github Star</span></a></li>
       <li><a href="#" title="Chat"><i class="fa-solid fa-message"></i><span>Chat</span></a></li>
     </ul>
   `;
