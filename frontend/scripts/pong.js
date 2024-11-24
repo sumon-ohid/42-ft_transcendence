@@ -70,11 +70,20 @@ function startGame() {
                 <h1 id="right-score">0</h1>
             </div>
             <div class="score-line"></div>
+            <div class="score-line"></div>
+                <div class="quit-game" onclick="gamePage()">
+                    <h1>QUIT</h1>
+            </div>
         </div>
         <canvas id="pongCanvas" width="700" height="400"></canvas>
     `;
     body.appendChild(div);
 
+    // Reset scores
+    leftScore = 0;
+    rightScore = 0;
+    document.getElementById("left-score").innerText = leftScore;
+    document.getElementById("right-score").innerText = rightScore;
     // Initialize the game after the canvas is added to the DOM
     initializeGame();
 }
@@ -87,6 +96,9 @@ function initializeGame() {
     const paddleHeight = 100;
     const ballRadius = 10;
 
+    let leftScore = 0;
+    let rightScore = 0;
+
     let paddle1Y = (canvas.height - paddleHeight) / 2;
     let paddle2Y = (canvas.height - paddleHeight) / 2;
     let ballX = canvas.width / 2;
@@ -95,9 +107,6 @@ function initializeGame() {
     let ballSpeedY = 5;
 
     const paddleSpeed = 20;
-
-    let leftScore = 0;
-    let rightScore = 0;
 
     function drawPaddle(x, y) {
         ctx.fillStyle = "#FFFFFF";

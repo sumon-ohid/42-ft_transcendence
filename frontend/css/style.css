@@ -989,4 +989,35 @@ form .login-button:hover {
     font-size: 3em;
 }
 
+.quit-game {
+    font-family: "Sour Gummy";
+    background-color: var(--container-background);
+    position: fixed;
+    bottom: -80px;
+    left: 50%;
+    transform: translate(-50%);
+    height: 50px;
+    width: 140px;
+    align-items: center;
+    justify-items: center;
+    display: flex;
+    flex-direction: column;
+    border-radius: 15px;
+    box-shadow: 0 10px 6px rgba(0.5, 0, 0, 0.51); /* shadow */
+}
+
+.quit-game h1 {
+    font-family: "Modak";
+    color: rgba(255, 255, 255, 0.736);
+    letter-spacing: 2px;
+    margin-top: 5px;
+}
+
+.quit-game:hover {
+    background-color: #007bff;
+    font-family: "Modak";
+    color: rgba(255, 255, 255, 0.736);
+    letter-spacing: 2px;
+    margin-top: 5px;
+}
 /*------- MAIN GAME END -------*/
