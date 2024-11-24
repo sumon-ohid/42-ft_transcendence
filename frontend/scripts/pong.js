@@ -3,6 +3,8 @@ let player2Name = "Player 2";
 let player1Avatar = "./avatars/avatar4.png";
 let player2Avatar = "./avatars/avatar5.png";
 
+// *** NOTE ****
+// Change later: Nickname can be max 8 character other wise truncate to 8 chars.
 function gamePage() {
     const body = document.body;
 
@@ -16,12 +18,12 @@ function gamePage() {
         <div class="choose-avatar">
             <h2>Choose Your Avatar</h2>
             <div class="avatar-options">
-                <img src="./avatars/avatar1.png" alt="Avatar 1" onclick="selectAvatar(1)">
-                <img src="./avatars/avatar2.png" alt="Avatar 2" onclick="selectAvatar(2)">
-                <img src="./avatars/avatar3.png" alt="Avatar 3" onclick="selectAvatar(3)">
-                <img src="./avatars/avatar4.png" alt="Avatar 4" onclick="selectAvatar(4)">
-                <img src="./avatars/avatar5.png" alt="Avatar 5" onclick="selectAvatar(5)">
-                <img src="./avatars/avatar6.png" alt="Avatar 6" onclick="selectAvatar(6)">
+                <img src="./avatars/avatar1.png" alt="Avatar 1" onclick="selectAvatar(1, this)">
+                <img src="./avatars/avatar2.png" alt="Avatar 2" onclick="selectAvatar(2, this)">
+                <img src="./avatars/avatar3.png" alt="Avatar 3" onclick="selectAvatar(3, this)">
+                <img src="./avatars/avatar4.png" alt="Avatar 4" onclick="selectAvatar(4, this)">
+                <img src="./avatars/avatar5.png" alt="Avatar 5" onclick="selectAvatar(5, this)">
+                <img src="./avatars/avatar6.png" alt="Avatar 6" onclick="selectAvatar(6, this)">
             </div>
         </div>
         <div class="choose-nickname">
@@ -35,8 +37,11 @@ function gamePage() {
     body.appendChild(div);
 }
 
-function selectAvatar(avatarNumber) {
+function selectAvatar(avatarNumber, element) {
     player1Avatar = `./avatars/avatar${avatarNumber}.png`;
+    const avatars = document.querySelectorAll('.avatar-options img');
+    avatars.forEach(avatar => avatar.classList.remove('selected-avatar'));
+    element.classList.add('selected-avatar');
 }
 
 function startGame() {

@@ -864,6 +864,11 @@ form .login-button:hover {
     color: rgb(255, 255, 255);
 }
 
+.selected-avatar {
+    border: 3px solid #FFD700;
+    border-radius: 50%;
+}
+
 /*------- GAME PAGE END -------*/
 
 /*------- MAIN GAME START -------*/
