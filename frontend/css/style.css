@@ -1725,4 +1725,119 @@ form .login-button:hover {
     color: white;
 }
 
+.change-username{
+    background-color: var(--container-background);
+    height: 40px;
+    width: 250px;
+    position: fixed;
+    top: 220px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 2px 6px rgba(0.2, 0, 0, 0.31); /* shadow */
+    color: white;
+    font-family: "Sour Gummy";
+}
+
+.change-username p {
+    position: relative;
+    top: 6px;
+}
+
+.change-username i {
+    margin-left: 190px;
+    position: relative;
+    top: -32px;
+}
+
+.change-username:hover {
+    background-color: var(--pong-color);
+}
+
+.change-password {
+    background-color: var(--container-background);
+    height: 40px;
+    width: 250px;
+    position: fixed;
+    bottom: 100px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 2px 6px rgba(0.2, 0, 0, 0.31); /* shadow */
+    color: white;
+    font-family: "Sour Gummy";
+}
+
+.change-password p {
+    margin-top: 6px;
+    position: relative;
+    bottom: 108px;
+}
+
+.change-password i {
+    margin-left: 190px;
+    position: relative;
+    bottom: 146px;
+}
+
+.change-password:hover {
+    background-color: var(--pong-color);
+}
+
+.settings-container .wel-user p {
+    margin-right: 50px;
+}
+
+.change-username input {
+    border: none;
+    border-radius: 10px;
+    text-align: center;
+    position: fixed;
+    top: 176px;
+    left: 110px;
+    opacity: .7;
+}
+
+.change-username input:focus {
+    outline: none;
+    border: none;
+}
+
+.change-password input {
+    border: none;
+    border-radius: 10px;
+    text-align: center;
+    position: relative;
+    bottom: 130px;
+    left: 0px;
+    margin-top: 10px;
+    opacity: .7;
+}
+
+.change-password input:focus {
+    outline: none;
+    border: none;
+}
+
+.save-change {
+    background-color: rgba(193, 255, 6, 0.456);
+    height: 35px;
+    width: 200px;
+    position: fixed;
+    bottom: 50px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 2px 6px rgba(0.2, 0, 0, 0.31); /* shadow */
+    color: white;
+    font-family: "Sour Gummy";
+}
+
+.save-change p {
+    margin-top: 5px;
+}
+
+.save-change:hover {
+    height: 38px;
+    width: 210px;
+    border: 1px solid rgba(255, 255, 255, 0.358);
+}
+
 /*------- SETTINGS PAGE END -------*/
