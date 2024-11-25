@@ -28,23 +28,31 @@ function leaderboard() {
     div.className = "leaderboard-container";
     div.innerHTML = `
         <div class="top-player">
-            <h2>Top Player</h2>
+            <div class="top-badge"></div>
+            <h2>Rank 1</h2>
             <div class="player">
                 <img src="${players[0].avatar}" alt="${players[0].name}'s avatar">
-                <span>${players[0].name}</span>
-                <span>${players[0].score}</span>
+                <span class="badge text-bg-warning">${players[0].name}</span>
+                <span class="badge text-bg-light">${players[0].score}</span>
             </div>
         </div>
+        <div class="title-all-rank">
+            <h2>All Ranking</h2>
+        </div>
         <div class="all-players">
-            <h2>All Players</h2>
             ${players.map((player, index) => `
                 <div class="player">
-                    <span>${index + 1}</span>
+                    <span class="rank-number">Rank ${index + 1}</span>
                     <img src="${player.avatar}" alt="${player.name}'s avatar">
-                    <span>${player.name}</span>
-                    <span>${player.score}</span>
+                    <span class="badge text-bg-warning">${player.name}</span>
+                    <span class="badge text-bg-light">${player.score}</span>
                 </div>
             `).join('')}
+        </div>
+            <div class="quit-game" onclick="homePage()">
+                <h1>BACK</h1>
+            </div>
+            </div>
         </div>
     `;
     body.appendChild(div);

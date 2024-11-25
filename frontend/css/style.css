@@ -1543,11 +1543,11 @@ form .login-button:hover {
 .leaderboard-container {
     background-color: var(--container-background);
     position: fixed;
-    top: 10px;
+    top: 50px;
     left: 50%;
     transform: translateX(-50%);
     height: 700px;
-    width: 800px;
+    width: 600px;
     align-items: center;
     justify-items: center;
     display: flex;
@@ -1558,20 +1558,36 @@ form .login-button:hover {
     padding: 20px;
 }
 
+.top-badge {
+    background-image: url(../images/rewards.png);
+    height: 100px;
+    width: 100px;
+    background-size: cover;
+    position: absolute;
+    margin-left: -210px;
+}
+
 .top-player {
-    width: 100%;
+    width: 40%;
+    height: 240px;
     display: flex;
     flex-direction: column;
     align-items: center;
     background-color: var(--pong-color);
     padding: 20px;
-    border-radius: 10px;
+    border-radius: 30px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     color: white;
 }
 
+.rank-number {
+    font-size: 2em;
+}
+
 .top-player h2 {
     margin-bottom: 10px;
+    font-family: "Modak";
+    letter-spacing: 2px;
 }
 
 .top-player .player {
@@ -1596,8 +1612,26 @@ form .login-button:hover {
     overflow-y: auto; /* Enable vertical scrolling */
 }
 
+.title-all-rank {
+    background-color: var(--pong-color);
+    width: 100%;
+    height: 40px;
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.253);
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+
+.title-all-rank h2 {
+    font-family: "modak";
+    color: white;
+    margin-top: 12px;
+}
+
 .all-players h2 {
-    grid-column: span 4; /* Make the heading span all columns */
+    grid-column: span 3; /* Make the heading span all columns */
     text-align: center;
     margin-bottom: 10px;
 }
@@ -1614,25 +1648,33 @@ form .login-button:hover {
 }
 
 .player {
+    font-family: "Sour Gummy";
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 10px;
     background-color: var(--pong-color);
-    border-radius: 5px;
+    border-radius: 15px;
     color: white;
+    gap: 10px;
 }
 
 .player img {
-    width: 40px;
-    height: 40px;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
     margin-bottom: 10px;
+    position: relative;
 }
 
 .player span {
     font-size: 1.2em;
     text-align: center;
+    margin-top: -10px;
+}
+
+.all-players::-webkit-scrollbar {
+    display: none;
 }
 
 /*------- LEADERBOARD PAGE END -------*/
