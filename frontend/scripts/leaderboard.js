@@ -30,14 +30,14 @@ function leaderboard() {
         <div class="top-player">
             <div class="top-badge"></div>
             <h2>Rank 1</h2>
-            <div class="player">
+            <div class="player-top">
                 <img src="${players[0].avatar}" alt="${players[0].name}'s avatar">
                 <span class="badge text-bg-warning">${players[0].name}</span>
                 <span class="badge text-bg-light">${players[0].score}</span>
             </div>
         </div>
         <div class="title-all-rank">
-            <h2>All Ranking</h2>
+            <h2>All Rankings</h2>
         </div>
         <div class="all-players">
             ${players.map((player, index) => `
@@ -57,10 +57,3 @@ function leaderboard() {
     `;
     body.appendChild(div);
 }
-
-// <div class="player-header">
-//     <span>Rank</span>
-//     <span>Photo</span>
-//     <span>Name</span>
-//     <span>Score</span>
-// </div>
