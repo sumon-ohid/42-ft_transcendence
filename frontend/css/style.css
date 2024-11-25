@@ -1537,3 +1537,102 @@ form .login-button:hover {
 }
 
 /*------- CHAT PAGE END -------*/
+
+/*------- LEADERBOARD PAGE START -------*/
+
+.leaderboard-container {
+    background-color: var(--container-background);
+    position: fixed;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 700px;
+    width: 800px;
+    align-items: center;
+    justify-items: center;
+    display: flex;
+    flex-direction: column;
+    border-radius: 15px;
+    box-shadow: 0 10px 6px rgba(0.5, 0, 0, 0.51); /* shadow */
+    gap: 20px;
+    padding: 20px;
+}
+
+.top-player {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: var(--pong-color);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    color: white;
+}
+
+.top-player h2 {
+    margin-bottom: 10px;
+}
+
+.top-player .player {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.top-player .player img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+.all-players {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 20px;
+    max-height: 400px; /* Set a fixed height */
+    overflow-y: auto; /* Enable vertical scrolling */
+}
+
+.all-players h2 {
+    grid-column: span 4; /* Make the heading span all columns */
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.player-header {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 10px;
+    background-color: var(--pong-color);
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+}
+
+.player {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    background-color: var(--pong-color);
+    border-radius: 5px;
+    color: white;
+}
+
+.player img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+.player span {
+    font-size: 1.2em;
+    text-align: center;
+}
+
+/*------- LEADERBOARD PAGE END -------*/
