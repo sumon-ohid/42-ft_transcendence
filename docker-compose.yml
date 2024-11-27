@@ -20,11 +20,21 @@ services:
       POSTGRES_USER: msumon
       POSTGRES_PASSWORD: msumon1234
       POSTGRES_DB: pongdb
-
     ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+
+  django: 
+    build: ./backend
+    container_name: django_container
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./backend:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres
 
 volumes:
   postgres_data:

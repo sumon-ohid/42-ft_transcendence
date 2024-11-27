@@ -18,7 +18,7 @@ logs:
 	${DOCKER_COMPOSE} logs nginx
 
 restart:
-	${DOCKER_COMPOSE} restart nginx_conatiner postgre_container
+	${DOCKER_COMPOSE} restart nginx_conatiner postgre_container django_container
 
 clean: down
 	${DOCKER_COMPOSE} down -v --rmi all --remove-orphans

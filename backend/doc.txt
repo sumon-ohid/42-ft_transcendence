@@ -1,0 +1,12 @@
+# This command will create a django-admin project 
+
+django-admin startproject pong
+cd pong
+django-admin startapp users
+
+# install requirements
+pip install -r requirements.txt
+
+# To create a virtual environtment
+/opt/homebrew/bin/python3.11 -m venv venv
+source venv/bin/activate
