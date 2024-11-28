@@ -69,7 +69,7 @@ body {
     display: flex;
     gap: 20px;
     position: absolute;
-    left: 10%;
+    left: 5%;
 }
 
 .nav-menu a span {
