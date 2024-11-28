@@ -18,6 +18,7 @@ function homePage() {
       <li><a href="#" title="Leaderboard" onclick="leaderboard()"><i class="fa-solid fa-trophy"></i><span>Leaderboard</span></a></li>
       <li><a href="https://github.com/sumon-ohid/42-Ft_transcendence" title="Github Star"><i class="fa-solid fa-star"></i><span>Github Star</span></a></li>
       <li><a href="#" title="Chat" onclick="chatPage()"><i class="fa-solid fa-message"></i><span>Chat</span></a></li>
+      <li><a href="#" title="logout" onclick="handleLogout(event)"><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a></li>
     </ul>
   `;
   body.appendChild(nav);
@@ -72,4 +73,35 @@ function homePage() {
     </div>
   `;
   body.appendChild(div);
+}
+
+
+function handleLogout(event) {
+  event.preventDefault(); // Prevent the default anchor behavior
+
+  // Fetch the CSRF token from the meta tag
+  const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+
+  // Send a logout request to the backend
+  fetch('/users/api/logout/', {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': csrfToken,
+      },
+  })
+      .then(response => {
+          if (response.ok) {
+              alert("You have been logged out.");
+              login(); // Redirect to the chat page or another page
+          } else {
+              return response.json().then(data => {
+                  alert("Logout failed: " + (data.error || "Unknown error."));
+              });
+          }
+      })
+      .catch(error => {
+          console.error("Error during logout:", error);
+          alert("An error occurred while logging out.");
+      });
 }

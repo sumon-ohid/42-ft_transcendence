@@ -2,7 +2,7 @@ import json
 from django.contrib import messages
 from django.http import JsonResponse
 from .forms import UserRegistrationForm
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, logout
 from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.forms import UserCreationForm
@@ -55,4 +55,12 @@ def api_login(request):
         except json.JSONDecodeError:
             return JsonResponse({'status': 'error', 'error': 'Invalid JSON data.'}, status=400)
 
+    return JsonResponse({'status': 'error', 'message': 'Invalid request method.'}, status=405)
+
+
+@csrf_exempt
+def api_logout(request):
+    if request.method == 'POST':
+        logout(request)
+        return JsonResponse({'status': 'success', 'message': 'Logged out successfully.'})
     return JsonResponse({'status': 'error', 'message': 'Invalid request method.'}, status=405)

@@ -17,7 +17,8 @@ function signup() {
             <input type="text" id="email" name="email" placeholder="email" class="form-box"><br>
             <input type="text" id="username" name="username" placeholder="username" class="form-box"><br>
             <input type="password" id="password" name="password" placeholder="password" class="form-box"><br><br>
-            <button type="button" class="login-button" id="signup-button">Signup</button>
+            <button type="button" id="signup-button" class="login-button">Signup</button>
+            <button type="button" id="login-button" class="login-button2" onclick="login()"><i class="fa-solid fa-arrow-left-long"></i> back</button>
         </form>
         <div class="image"></div>
     `;
@@ -38,16 +39,8 @@ function handleSignup() {
         return;
     }
 
-    // Fetch CSRF token from the cookie (Django-specific)
-    const getCsrfToken = () => {
-        const cookieValue = document.cookie
-            .split('; ')
-            .find(row => row.startsWith('csrftoken='))
-            ?.split('=')[1];
-        return cookieValue || '';
-    };
-
-    const csrfToken = getCsrfToken();
+    // Fetch the CSRF token
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
 
     // Send the POST request to the Django API
     fetch('/users/api/signup/', {

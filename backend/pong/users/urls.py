@@ -1,5 +1,5 @@
 from django.urls import path, include
-from .views import index, api_signup, api_login
+from .views import index, api_signup, api_login, api_logout
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -7,6 +7,7 @@ urlpatterns = [
     path("", index, name="index"),
     path('api/signup/', api_signup, name='api_signup'),
     path('api/login/', api_login, name='api_login'),
+    path('api/logout/', api_logout, name='api_logout'),
 ]
 
 if settings.DEBUG:
