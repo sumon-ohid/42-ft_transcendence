@@ -1,4 +1,4 @@
-#!/home/msumon/42-Ft_transcendence/backend/venv/bin/python3
+#!/Users/sumon/42-Ft_transcendence/backend/venv/bin/python3.11
 # -*- coding: utf-8 -*-
 import re
 import sys

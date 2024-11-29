@@ -15,3 +15,6 @@ source venv/bin/activate
 
 #to view datashell in django container
 docker-compose exec django python manage.py dbshell
+# data migrate
+python manage.py makemigrations
+python manage.py migrate
