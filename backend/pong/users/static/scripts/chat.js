@@ -19,33 +19,33 @@ function chatPage() {
                     <span class="badge rounded-pill text-bg-success">active now</span>
                 </div>
                 <div class="p-pic-back"></div>
-                <img src="./avatars/avatar4.png" alt="user">
+                <img src="../static/avatars/avatar4.png" alt="user">
             </div>
         </div>
         <div class="friends">
             <div class="active-friends">
                 <div class="friend">
-                    <img src="./avatars/avatar1.png" alt="Avatar 1">
+                    <img src="../static/avatars/avatar1.png" alt="Avatar 1">
                     <span class="badge text-bg-light">Friend 1</span>
                 </div>
                 <div class="friend">
-                    <img src="./avatars/avatar2.png" alt="Avatar 2">
+                    <img src="../static/avatars/avatar2.png" alt="Avatar 2">
                     <span class="badge text-bg-light">Friend 2</span>
                 </div>
                 <div class="friend">
-                    <img src="./avatars/avatar3.png" alt="Avatar 3">
+                    <img src="../static/avatars/avatar3.png" alt="Avatar 3">
                     <span class="badge text-bg-light">Friend 3</span>
                 </div>
                 <div class="friend">
-                    <img src="./avatars/avatar4.png" alt="Avatar 4">
+                    <img src="../static/avatars/avatar4.png" alt="Avatar 4">
                     <span class="badge text-bg-light">Friend 4</span>
                 </div>
                 <div class="friend">
-                    <img src="./avatars/avatar5.png" alt="Avatar 5">
+                    <img src="../static/avatars/avatar5.png" alt="Avatar 5">
                     <span class="badge text-bg-light">Friend 5</span>
                 </div>
                 <div class="friend">
-                    <img src="./avatars/avatar6.png" alt="Avatar 6">
+                    <img src="../static/avatars/avatar6.png" alt="Avatar 6">
                     <span class="badge text-bg-light">Friend 6</span>
                 </div>
             </div>
@@ -87,7 +87,7 @@ function chatPage() {
             messageElement.classList.add("chat-message");
     
             const profilePic = document.createElement("img");
-            profilePic.src = "./images/11475215.jpg"; // Should change later, put user picture
+            profilePic.src = "../static/images/11475215.jpg"; // Should change later, put user picture
             profilePic.alt = "Profile Picture";
     
             const messageContent = document.createElement("span");

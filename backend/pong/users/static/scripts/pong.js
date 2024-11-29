@@ -19,12 +19,12 @@ function gamePage() {
         <div class="choose-avatar">
             <h2>Choose Your Avatar</h2>
             <div class="avatar-options">
-                <img src="./avatars/avatar1.png" alt="Avatar 1" onclick="selectAvatar(1, this)">
-                <img src="./avatars/avatar2.png" alt="Avatar 2" onclick="selectAvatar(2, this)">
-                <img src="./avatars/avatar3.png" alt="Avatar 3" onclick="selectAvatar(3, this)">
-                <img src="./avatars/avatar4.png" alt="Avatar 4" onclick="selectAvatar(4, this)">
-                <img src="./avatars/avatar5.png" alt="Avatar 5" onclick="selectAvatar(5, this)">
-                <img src="./avatars/avatar6.png" alt="Avatar 6" onclick="selectAvatar(6, this)">
+                <img src="../static/avatars/avatar1.png" alt="Avatar 1" onclick="selectAvatar(1, this)">
+                <img src="../static/avatars/avatar2.png" alt="Avatar 2" onclick="selectAvatar(2, this)">
+                <img src="../static/avatars/avatar3.png" alt="Avatar 3" onclick="selectAvatar(3, this)">
+                <img src="../static/avatars/avatar4.png" alt="Avatar 4" onclick="selectAvatar(4, this)">
+                <img src="../static/avatars/avatar5.png" alt="Avatar 5" onclick="selectAvatar(5, this)">
+                <img src="../static/avatars/avatar6.png" alt="Avatar 6" onclick="selectAvatar(6, this)">
             </div>
         </div>
         <div class="choose-nickname">
@@ -63,12 +63,12 @@ function startGame() {
         <div class="middle-line"></div>
         <div class="score-board">
             <div class="left-player">
-                <img id="left-player" src="${player1Avatar}" alt="player1">
+                <img id="left-player" src="../static/${player1Avatar}" alt="player1">
                 <h3>${player1Name}</h3>
                 <h1 id="left-score">0</h1>
             </div>
             <div class="right-player">
-                <img id="right-player" src="${player2Avatar}" alt="player2">
+                <img id="right-player" src="../static/${player2Avatar}" alt="player2">
                 <h3>${player2Name}</h3>
                 <h1 id="right-score">0</h1>
             </div>
