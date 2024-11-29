@@ -10,6 +10,8 @@ services:
       - ./frontend:/usr/share/nginx/html:ro
     depends_on:
       - postgres
+    networks:
+      - pong
 
 
   postgres:
@@ -24,6 +26,8 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    networks:
+      - pong
 
   django: 
     build: ./backend
@@ -35,6 +39,11 @@ services:
       - "8000:8000"
     depends_on:
       - postgres
+    networks:
+      - pong
 
 volumes:
   postgres_data:
+
+networks:
+  pong:
