@@ -1,0 +1,37 @@
+# This command will create a django-admin project 
+
+django-admin startproject pong
+cd pong
+django-admin startapp users
+or 
+python manage.py startapp users
+
+# install requirements
+pip install -r requirements.txt
+
+# To create a virtual environtment
+/opt/homebrew/bin/python3.11 -m venv venv
+source venv/bin/activate
+
+#to view datashell in django container
+docker-compose exec django python manage.py dbshell
+# data migrate
+python manage.py makemigrations
+python manage.py migrate
+
+# to view database in django container
+docker-compose exec django python manage.py dbshell
+
+docker-compose exec postgres psql -U msumon -d pongdb
+SELECT * FROM auth_user;
+\dt #data tables
+\du #data users
+
+
+
+# to run it
+docker-compose run web django-admin startproject pong .
+docker-compose run web python manage.py makemigrations
+docker-compose run web python manage.py migrate
+docker-compose up
+docker-compose down

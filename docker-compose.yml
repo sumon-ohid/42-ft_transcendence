@@ -2,7 +2,7 @@
 services:
   nginx:
     image: nginx:latest
-    container_name: nginx_container
+    container_name: nginx
     ports:
       - "8090:80"
     volumes:
@@ -14,20 +14,18 @@ services:
 
   postgres:
     image: postgres:latest
-    container_name: postgres_container
+    container_name: postgres
     environment:
       #change it to .env later
       POSTGRES_USER: msumon
       POSTGRES_PASSWORD: msumon1234
       POSTGRES_DB: pongdb
-    ports:
-      - "5432:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - ./postgres_data:/var/lib/postgresql/data
 
   django: 
     build: ./backend
-    container_name: django_container
+    container_name: django
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - ./backend:/app

@@ -17,7 +17,7 @@ def index(request):
     context = {'data': 'Hello from Django'}
     return render(request, 'index.html', context)
 
-@csrf_exempt  # Use only if CSRF token is not included in the frontend request
+# @csrf_exempt  # Use only if CSRF token is not included in the frontend request
 def api_signup(request):
     if request.method == 'POST':
         try:
@@ -36,7 +36,7 @@ def api_signup(request):
     return JsonResponse({'status': 'error', 'message': 'Invalid request method.'}, status=405)
 
 
-@csrf_exempt
+# @csrf_exempt
 def api_login(request):
     if request.method == 'POST':
         try:
@@ -58,7 +58,7 @@ def api_login(request):
     return JsonResponse({'status': 'error', 'message': 'Invalid request method.'}, status=405)
 
 
-@csrf_exempt
+# @csrf_exempt
 def api_logout(request):
     if request.method == 'POST':
         logout(request)

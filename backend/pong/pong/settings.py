@@ -88,23 +88,14 @@ WSGI_APPLICATION = 'pong.wsgi.application'
 DATABASES = {
 
     'default': {
-
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-
+        'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'pongdb',
-
         'USER': 'msumon',
-
         'PASSWORD': 'msumon1234',
-
         'HOST': 'postgres',
-
         'PORT': '5432',
-
     }
-
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
