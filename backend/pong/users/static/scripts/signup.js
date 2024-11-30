@@ -55,7 +55,7 @@ function handleSignup() {
         .then(data => {
             if (data.status === 'success') {
                 alert(data.message);
-                login(); // Redirect to the login
+                login();
             } else if (data.errors) {
                 alert("Errors: " + JSON.stringify(data.errors));
             } else {

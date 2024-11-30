@@ -73,6 +73,29 @@ function homePage() {
     </div>
   `;
   body.appendChild(div);
+
+    // GET USERNAME
+  fetch('/users/api/get-username/', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-CSRFToken': document.querySelector('meta[name="csrf-token"]').content
+    }
+  })
+    .then(response => response.json())
+    .then(data => {
+      const usernameElement = document.querySelector('.wel-user h1');
+      if (usernameElement) {
+        let username = data.username || "Guest";
+        if (username.length > 6) {
+          username = username.substring(0, 6) + '.';
+        }
+        usernameElement.textContent = username;
+      }
+    })
+    .catch(error => {
+      console.error('Error fetching username:', error);
+    });
 }
 
 
