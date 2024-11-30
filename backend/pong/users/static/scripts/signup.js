@@ -55,7 +55,7 @@ function handleSignup() {
         .then(data => {
             if (data.status === 'success') {
                 alert(data.message);
-                homePage(); // Redirect to the home page
+                login();
             } else if (data.errors) {
                 alert("Errors: " + JSON.stringify(data.errors));
             } else {

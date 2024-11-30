@@ -2,7 +2,7 @@ import json
 from django.contrib import messages
 from django.http import JsonResponse
 from .forms import UserRegistrationForm
-from django.contrib.auth import authenticate, logout
+from django.contrib.auth import authenticate, logout, login
 from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.forms import UserCreationForm
@@ -49,6 +49,7 @@ def api_login(request):
 
             user = authenticate(username=username, password=password)
             if user is not None:
+                login(request, user)
                 return JsonResponse({'status': 'success', 'message': 'Login successful!'})
             else:
                 return JsonResponse({'status': 'error', 'error': 'Invalid username or password.'}, status=401)
@@ -64,3 +65,9 @@ def api_logout(request):
         logout(request)
         return JsonResponse({'status': 'success', 'message': 'Logged out successfully.'})
     return JsonResponse({'status': 'error', 'message': 'Invalid request method.'}, status=405)
+
+def get_username(request):
+    if request.user.is_authenticated:
+        return JsonResponse({'username': request.user.username})
+    else:
+        return JsonResponse({'username': 'Guest'})
