@@ -4,6 +4,8 @@ all: build up
 
 build:
 	${DOCKER_COMPOSE} build
+	docker-compose run django python manage.py makemigrations
+	docker-compose run django python manage.py migrate
 
 up:
 	${DOCKER_COMPOSE} up -d
