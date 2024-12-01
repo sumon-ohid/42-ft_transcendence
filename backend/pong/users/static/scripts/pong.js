@@ -204,6 +204,29 @@ function initializeGame() {
                     confirmationElement.innerHTML = `<span">Game Over</span><br><span style="font-size: 2em; color: #007bff">${winner} Wins!</span><br>Returning to game page in ${countdown}s...`;
                     if (countdown === 0) {
                         clearInterval(countdownInterval);
+                        // Send the scores to the server
+                        const csrfToken = getCSRFToken();
+                        fetch('/users/api/save-score/', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRFToken': csrfToken,
+                            },
+                            body: JSON.stringify({
+                                score: 5
+                            })
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.status === 'success') {
+                                console.log('Score saved successfully');
+                            } else {
+                                console.error('Error saving score');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                        });
                         gamePage();
                     }
                 }, 1000);

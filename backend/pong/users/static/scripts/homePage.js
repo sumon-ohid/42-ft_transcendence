@@ -1,3 +1,5 @@
+let loggedInUser = "Guest";
+
 function homePage() {
   const body = document.body;
 
@@ -87,6 +89,7 @@ function homePage() {
       const usernameElement = document.querySelector('.wel-user h1');
       if (usernameElement) {
         let username = data.username || "Guest";
+        loggedInUser = username;
         if (username.length > 6) {
           username = username.substring(0, 6) + '.';
         }
@@ -139,4 +142,8 @@ function handleLogout(event) {
           console.error("Error during logout:", error);
           alert("An error occurred while logging out.");
       });
+}
+
+function getLoggedInUser () {
+  return loggedInUser;
 }

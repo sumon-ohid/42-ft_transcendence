@@ -1,4 +1,5 @@
 import json
+from .models import PlayerScore
 from django.contrib import messages
 from django.http import JsonResponse
 from .forms import UserRegistrationForm
@@ -71,3 +72,14 @@ def get_username(request):
         return JsonResponse({'username': request.user.username})
     else:
         return JsonResponse({'username': 'Guest'})
+
+
+# @csrf_exempt
+def save_score(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        player_name = request.user.username if request.user.is_authenticated else data.get('player_name')
+        score = data.get('score')
+        PlayerScore.objects.create(player_name=player_name, score=score)
+        return JsonResponse({'status': 'success'})
+    return JsonResponse({'status': 'error'}, status=400)

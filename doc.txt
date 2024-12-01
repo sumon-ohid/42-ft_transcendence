@@ -35,3 +35,14 @@ docker-compose run web python manage.py makemigrations
 docker-compose run web python manage.py migrate
 docker-compose up
 docker-compose down
+
+
+# to view player score in database 
+python manage.py shell
+from users.models import PlayerScore
+scores = PlayerScore.objects.all()
+for score in scores:
+    print(score)
+player_scores = PlayerScore.objects.filter(player_name='sumon_oahid')
+for score in player_scores:
+    print(score)
