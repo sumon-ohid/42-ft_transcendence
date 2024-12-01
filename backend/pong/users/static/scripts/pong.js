@@ -198,10 +198,10 @@ function initializeGame() {
             if (confirmationElement) {
                 confirmationElement.classList.remove('hidden');
                 let countdown = 10;
-                confirmationElement.innerHTML = `<span style="font-size: 2em;">Game Over</span><br><span>${winner} Wins!</span><br>Returning to game page in ${countdown}s...`;
+                confirmationElement.innerHTML = `<span>Game Over</span><br><span style="font-size: 2em; color: #007bff">${winner} Wins!</span><br>Returning to game page in ${countdown}s...`;
                 const countdownInterval = setInterval(() => {
                     countdown -= 1;
-                    confirmationElement.innerHTML = `<span style="font-size: 2em;">Game Over</span><br><span>${winner} Wins!</span><br>Returning to game page in ${countdown}s...`;
+                    confirmationElement.innerHTML = `<span">Game Over</span><br><span style="font-size: 2em; color: #007bff">${winner} Wins!</span><br>Returning to game page in ${countdown}s...`;
                     if (countdown === 0) {
                         clearInterval(countdownInterval);
                         gamePage();
