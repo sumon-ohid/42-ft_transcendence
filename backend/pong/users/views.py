@@ -108,3 +108,21 @@ def get_profile_picture(request):
         photo_url = profile.photo.url if profile.photo else None
         return JsonResponse({'photo': photo_url})
     return JsonResponse({'photo': None})
+
+
+def leaderboard(request):
+    scores = PlayerScore.objects.all().order_by('-score')[:10]  # Get top 10 scores
+    data = []
+    for score in scores:
+        try:
+            profile = Profile.objects.get(user__username=score.player_name)
+            avatar_url = profile.photo.url if profile.photo else None
+        except Profile.DoesNotExist:
+            avatar_url = '/media/11475215.jpg'
+        
+        data.append({
+            'name': score.player_name,
+            'score': score.score,
+            'avatar': avatar_url
+        })
+    return JsonResponse(data, safe=False)

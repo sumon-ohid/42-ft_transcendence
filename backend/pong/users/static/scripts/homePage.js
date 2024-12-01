@@ -116,7 +116,7 @@ function homePage() {
     if (data.photo) {
       profilePicture.src = "/users" + data.photo;
     } else {
-      profilePicture.src = '../static/images/11475215.jpg';
+      profilePicture.src = '/users/../static/images/11475215.jpg';
     }
   })
   .catch(error => {
