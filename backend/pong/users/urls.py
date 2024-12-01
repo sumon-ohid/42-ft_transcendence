@@ -1,6 +1,6 @@
 from django.urls import path, include
 from .views import index, api_signup, api_login, api_logout, get_username, save_score, \
-    upload_profile_picture, get_profile_picture, leaderboard
+    upload_profile_picture, get_profile_picture, leaderboard, get_play_history
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -14,6 +14,7 @@ urlpatterns = [
     path('api/upload-profile-picture/', upload_profile_picture, name='upload_profile_picture'),
     path('api/get-profile-picture/', get_profile_picture, name='get_profile_picture'),
     path('api/leaderboard/', leaderboard, name='leaderboard'),
+    path('api/get-play-history/', get_play_history, name='get_play_history'),
 ]
 
 if settings.DEBUG:

@@ -26,32 +26,29 @@ function leaderboard() {
             data.sort((a, b) => b.score - a.score);
             const topPlayer = data[0];
             div.innerHTML = `
-                <div class="top-player">
-                    <div class="top-badge"></div>
-                    <h2>Rank 1</h2>
-                    <div class="player-top">
-                        <img src="/users${topPlayer.avatar}" alt="${topPlayer.name}'s avatar">
-                        <span class="badge text-bg-warning">${topPlayer.name}</span>
-                        <span class="badge text-bg-light">${topPlayer.score}</span>
-                    </div>
-                </div>
-                <div class="title-all-rank">
-                    <h2>All Rankings</h2>
-                </div>
-                <div class="all-players">
-                    ${data.map((player, index) => `
-                        <div class="player">
-                            <span class="rank-number">Rank ${index + 1}</span>
-                            <img src="/users${player.avatar}" alt="${player.name}'s avatar">
-                            <span class="badge text-bg-warning">${player.name}</span>
-                            <span class="badge text-bg-light">${player.score}</span>
+                 <div class="top-player">
+                        <div class="top-badge"></div>
+                        <h2>Rank 1</h2>
+                        <div class="player-top">
+                            <img src="/users${topPlayer.avatar}" alt="${topPlayer.name}'s avatar">
+                            <span class="badge text-bg-warning">${formatPlayerName(topPlayer.name)}</span>
+                            <span class="badge text-bg-light">${topPlayer.score}</span>
                         </div>
-                    `).join('')}
-                </div>
-                <div class="quit-game" onclick="homePage()">
-                    <h1>BACK</h1>
-                </div>
-            `;
+                    </div>
+                    <div class="title-all-rank">
+                        <h2>All Rankings</h2>
+                    </div>
+                    <div class="all-players">
+                        ${data.map((player, index) => `
+                            <div class="player">
+                                <span class="rank-number">Rank ${index + 1}</span>
+                                <img src="/users${player.avatar}" alt="${player.name}'s avatar">
+                                <span class="badge text-bg-warning">${formatPlayerName(player.name)}</span>
+                                <span class="badge text-bg-light">${player.score}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
             body.appendChild(div);
         })
         .catch(error => {
@@ -59,4 +56,13 @@ function leaderboard() {
             div.innerHTML = `<p>Failed to load leaderboard data. Please try again later.</p>`;
             body.appendChild(div);
         });
+}
+
+
+function formatPlayerName(name) {
+    if (name.length > 11) {
+        return name.substring(0, 11) + '.';
+    } else {
+        return name.padEnd(11, ' ');
+    }
 }

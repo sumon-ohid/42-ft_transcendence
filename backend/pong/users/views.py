@@ -124,7 +124,7 @@ def leaderboard(request):
     for score in scores:
         try:
             profile = Profile.objects.get(user__username=score.player_name)
-            avatar_url = profile.photo.url if profile.photo else None
+            avatar_url = profile.photo.url if profile.photo else '/media/profile_pictures/11475215.jpg'
         except Profile.DoesNotExist:
             avatar_url = '/media/11475215.jpg'
         
@@ -133,4 +133,18 @@ def leaderboard(request):
             'score': score.score,
             'avatar': avatar_url
         })
+    return JsonResponse(data, safe=False)
+
+def get_play_history(request):
+    player_name = request.user.username
+    scores = PlayerScore.objects.filter(player_name=player_name).order_by('-date')
+    data = [
+        {
+            'score': score.score,
+            'date': score.date,
+            'win': score.score >= 5,
+            'lose': score.score < 5
+        }
+        for score in scores
+    ]
     return JsonResponse(data, safe=False)

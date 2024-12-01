@@ -44,11 +44,11 @@ function homePage() {
           </div>
       </div>
       <input type="file" id="profile-picture-input" name="profile_picture" accept="image/*" style="display: none;">
-      <div class="inside-wel">
-        <div class="temp">
-          <p>coming soon..</p>
+    <div class="inside-wel">
+        <div class="history-record">
+            <p>Loading play history...</p>
         </div>
-      </div>
+    </div>
     </div>
     <div class="play-container" onclick="gamePage()">
       <div class="yellow-badge">
@@ -159,6 +159,35 @@ function homePage() {
         });
     }
   });
+
+  // Player history
+  document.addEventListener('DOMContentLoaded', () => {
+    // Fetch play history data
+    fetch('/users/api/get-play-history/')
+        .then(response => response.json())
+        .then(data => {
+            const historyContainer = document.querySelector('.inside-wel .temp');
+            historyContainer.innerHTML = ''; // Clear any existing content
+
+            if (data.length === 0) {
+                historyContainer.innerHTML = '<p>No play history available.</p>';
+            } else {
+                data.forEach(record => {
+                    const recordElement = document.createElement('div');
+                    recordElement.className = 'history-record';
+                    recordElement.innerHTML = `
+                        <p>Date: ${new Date(record.date).toLocaleDateString()}</p>
+                        <p>Score: ${record.score}</p>
+                        <p>Result: ${record.win ? 'Win' : 'Lose'}</p>
+                    `;
+                    historyContainer.appendChild(recordElement);
+                });
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching play history:', error);
+        });
+    });
 }
 
 
