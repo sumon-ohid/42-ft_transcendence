@@ -7,6 +7,7 @@ let gameInterval;
 // *** NOTE ****
 // Change later: Nickname can be max 8 character other wise truncate to 8 chars.
 function gamePage() {
+    saveCurrentPage('gamePage');
     const body = document.body;
 
     while (body.firstChild) {
@@ -87,7 +88,6 @@ function startGame() {
         </div>
     `;
     body.appendChild(div);
-
     // Reset scores
     leftScore = 0;
     rightScore = 0;

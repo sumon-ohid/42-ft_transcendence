@@ -342,15 +342,22 @@ body {
 }
 
 .profile-pic {
-    background-image: url(../images/11475215.jpg);
-    background-size: 110px;
     height: 100px;
     width: 100px;
     border-radius: 100%;
     position: fixed;
     top: 4%;
     left: 8.2%;
-    z-index: 2;
+}
+
+.profile-pic img {
+    height: 100px;
+    width: 100px;
+    border-radius: 100%;
+    position: fixed;
+    top: 4%;
+    left: 8.2%;
+    z-index: 4;
 }
 
 .inside-wel {

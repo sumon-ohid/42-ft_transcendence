@@ -1,5 +1,5 @@
 import json
-from .models import PlayerScore
+from .models import PlayerScore, Profile
 from django.contrib import messages
 from django.http import JsonResponse
 from .forms import UserRegistrationForm
@@ -8,6 +8,8 @@ from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
+from django.core.files.storage import default_storage
+from django.contrib.auth.models import User
 
 
 @login_required
@@ -83,3 +85,26 @@ def save_score(request):
         PlayerScore.objects.create(player_name=player_name, score=score)
         return JsonResponse({'status': 'success'})
     return JsonResponse({'status': 'error'}, status=400)
+
+# @csrf_exempt
+def upload_profile_picture(request):
+    if request.method == 'POST' and request.FILES.get('profile_picture'):
+        profile_picture = request.FILES['profile_picture']
+        file_path = default_storage.save(f'profile_pictures/{profile_picture.name}', profile_picture)
+        
+        # Save the file path to the user's profile
+        if request.user.is_authenticated:
+            user = request.user
+            profile, created = Profile.objects.get_or_create(user=user)
+            profile.photo = file_path
+            profile.save()
+        
+        return JsonResponse({'status': 'success', 'file_path': file_path})
+    return JsonResponse({'status': 'error', 'message': 'Invalid request'}, status=400)
+
+def get_profile_picture(request):
+    if request.user.is_authenticated:
+        profile = Profile.objects.get(user=request.user)
+        photo_url = profile.photo.url if profile.photo else None
+        return JsonResponse({'photo': photo_url})
+    return JsonResponse({'photo': None})

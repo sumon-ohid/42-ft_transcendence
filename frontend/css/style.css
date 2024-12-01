@@ -353,6 +353,17 @@ body {
     z-index: 2;
 }
 
+.profile-pic img {
+    height: 100px;
+    width: 100px;
+    border-radius: 100%;
+    position: fixed;
+    top: 4%;
+    left: 8.2%;
+    z-index: 3;
+}
+
+
 .inside-wel {
     background-color: rgba(0, 0, 0, 0.156);
     backdrop-filter: blur(10px);

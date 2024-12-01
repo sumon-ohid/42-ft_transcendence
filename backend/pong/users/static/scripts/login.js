@@ -1,4 +1,5 @@
 function login() {
+    saveCurrentPage('login');
     const body = document.body;
 
     // Remove all child elements of the body

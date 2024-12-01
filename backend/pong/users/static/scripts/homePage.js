@@ -1,6 +1,7 @@
 let loggedInUser = "Guest";
 
 function homePage() {
+  saveCurrentPage('homePage');
   const body = document.body;
 
   // Remove all child elements of the body
@@ -38,8 +39,11 @@ function homePage() {
         <h1>Guest</h1>
       </div>
       <div class="round">
-        <div class="profile-pic"></div>
+          <div class="profile-pic" onclick="document.getElementById('profile-picture-input').click();">
+              <img id="profile-picture" src="../static/images/11475215.jpg" alt="Picture">
+          </div>
       </div>
+      <input type="file" id="profile-picture-input" name="profile_picture" accept="image/*" style="display: none;">
       <div class="inside-wel">
         <div class="temp">
           <p>coming soon..</p>
@@ -99,6 +103,62 @@ function homePage() {
     .catch(error => {
       console.error('Error fetching username:', error);
     });
+
+  fetch('/users/api/get-profile-picture/')
+  .then(response => {
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    return response.json();
+  })
+  .then(data => {
+    const profilePicture = document.getElementById('profile-picture');
+    if (data.photo) {
+      profilePicture.src = "/users" + data.photo;
+    } else {
+      profilePicture.src = '../static/images/11475215.jpg';
+    }
+  })
+  .catch(error => {
+    console.error('Error fetching profile picture:', error);
+    const profilePicture = document.getElementById('profile-picture');
+    profilePicture.src = '../static/images/11475215.jpg';
+  });
+
+  document.getElementById('profile-picture-input').addEventListener('change', function(event) {
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            document.querySelector('.profile-pic').style.backgroundImage = `url(${e.target.result})`;
+        };
+        reader.readAsDataURL(file);
+
+        const formData = new FormData();
+        formData.append('profile_picture', file);
+
+        const csrfToken = getCSRFToken();
+
+        fetch('/users/api/upload-profile-picture/', {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': csrfToken,
+            },
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                alert('Profile picture uploaded successfully');
+            } else {
+                alert('Error uploading profile picture');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+  });
 }
 
 
@@ -147,3 +207,88 @@ function handleLogout(event) {
 function getLoggedInUser () {
   return loggedInUser;
 }
+
+// Reload should keep on the same page
+function saveCurrentPage(page) {
+  localStorage.setItem('currentPage', page);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const currentPage = localStorage.getItem('currentPage');
+  if (currentPage) {
+    switch (currentPage) {
+      case 'homePage':
+        homePage();
+        break;
+      case 'settingsPage':
+        settingsPage();
+        break;
+      case 'gamePage':
+        gamePage();
+        break;
+      case 'leaderboard':
+        leaderboard();
+        break;
+      case 'chatPage':
+        chatPage();
+        break;
+      case 'login':
+        login();
+        break;
+      case 'signup':
+        signup();
+        break;
+      default:
+        login();
+      }
+  }
+
+  fetch('/users/api/get-profile-picture/')
+    .then(response => response.json())
+    .then(data => {
+      const profilePicture = document.getElementById('profile-picture');
+      if (data.photo) {
+        profilePicture.src = data.photo;
+      } else {
+        profilePicture.src = "";
+      }
+    })
+    .catch(error => {
+      console.error('Error fetching profile picture:', error);
+    });
+});
+
+document.getElementById('profile-picture-input').addEventListener('change', function(event) {
+  const file = event.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      document.querySelector('.profile-pic').style.backgroundImage = `url(${e.target.result})`;
+    };
+    reader.readAsDataURL(file);
+
+    const formData = new FormData();
+    formData.append('profile_picture', file);
+
+    const csrfToken = getCSRFToken();
+
+    fetch('/users/api/upload-profile-picture/', {
+      method: 'POST',
+      headers: {
+        'X-CSRFToken': csrfToken,
+      },
+      body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.status === 'success') {
+        alert('Profile picture uploaded successfully');
+      } else {
+        alert('Error uploading profile picture');
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+  }
+});

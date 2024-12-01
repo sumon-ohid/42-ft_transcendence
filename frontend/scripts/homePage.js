@@ -36,7 +36,9 @@ function homePage() {
         <h1>Sumon</h1>
       </div>
       <div class="round">
-        <div class="profile-pic"></div>
+          <div class="profile-pic" onclick="document.getElementById('profile-picture-input').click();">
+              <img id="profile-picture" src="./images/11475215.jpg" alt="Profile Picture">
+          </div>
       </div>
       <div class="inside-wel">
         <div class="temp">
