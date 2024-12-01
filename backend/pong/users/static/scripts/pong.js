@@ -134,6 +134,7 @@ function initializeGame() {
     let leftScore = 0;
     let rightScore = 0;
 
+    // Position of paddles and balls
     let paddle1Y = (canvas.height - paddleHeight) / 2;
     let paddle2Y = (canvas.height - paddleHeight) / 2;
     let ballX = canvas.width / 2;
@@ -184,6 +185,28 @@ function initializeGame() {
                 rightScore++;
                 document.getElementById("right-score").innerText = rightScore;
                 resetBall();
+            }
+        }
+        // Check if the game has ended
+        const leftPlayerNickname = player1Name;
+        const rightPlayerNickname = player2Name;
+
+        if (leftScore === 5 || rightScore === 5) {
+            clearInterval(gameInterval); // Stop the game loop
+            const winner = leftScore === 5 ? leftPlayerNickname : rightPlayerNickname;
+            const confirmationElement = document.querySelector('.confirmation-to-quit');
+            if (confirmationElement) {
+                confirmationElement.classList.remove('hidden');
+                let countdown = 10;
+                confirmationElement.innerHTML = `<span style="font-size: 2em;">Game Over</span><br><span>${winner} Wins!</span><br>Returning to game page in ${countdown}s...`;
+                const countdownInterval = setInterval(() => {
+                    countdown -= 1;
+                    confirmationElement.innerHTML = `<span style="font-size: 2em;">Game Over</span><br><span>${winner} Wins!</span><br>Returning to game page in ${countdown}s...`;
+                    if (countdown === 0) {
+                        clearInterval(countdownInterval);
+                        gamePage();
+                    }
+                }, 1000);
             }
         }
     }
