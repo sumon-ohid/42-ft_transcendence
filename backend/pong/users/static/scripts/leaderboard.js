@@ -48,6 +48,9 @@ function leaderboard() {
                             </div>
                         `).join('')}
                     </div>
+                     <div class="quit-game" onclick="homePage()">
+                        <h1>BACK</h1>
+                    </div>
                 `;
             body.appendChild(div);
         })

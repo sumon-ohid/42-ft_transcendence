@@ -45,8 +45,8 @@ function homePage() {
       </div>
       <input type="file" id="profile-picture-input" name="profile_picture" accept="image/*" style="display: none;">
     <div class="inside-wel">
-        <div class="history-record">
-            <p>Loading play history...</p>
+        <div class="temp">
+            <p>Coming soon...</p>
         </div>
     </div>
     </div>
