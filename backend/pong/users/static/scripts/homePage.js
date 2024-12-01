@@ -12,7 +12,7 @@ function homePage() {
   nav.innerHTML = ` 
     <ul class="nav-menu">
       <li><a href="#" title="Home" onclick="homePage()"><i class="fa-solid fa-house"></i><span>Home</span></a></li>
-      <li><a href="#" title="Account"><i class="fa-solid fa-user-plus"></i><span>Account</span></a></li>
+      <li><a href="#" title="Account"><i class="fa-solid fa-clock-rotate-left"></i><span>History</span></a></li>
       <li><a href="#" title="Settings" onclick="settingsPage()"><i class="fa-solid fa-gear"></i><span>Settings</span></a></li>
       <li><a href="#" title="Game" onclick="gamePage()"><i class="fa-solid fa-gamepad"></i><span>Game</span></a></li>
       <li><a href="#" title="Leaderboard" onclick="leaderboard()"><i class="fa-solid fa-trophy"></i><span>Leaderboard</span></a></li>
@@ -99,12 +99,24 @@ function homePage() {
 }
 
 
+function getCSRFToken() {
+  // Retrieve the CSRF token from cookies
+  const csrfCookie = document.cookie
+      .split('; ')
+      .find(row => row.startsWith('csrftoken='));
+  return csrfCookie ? csrfCookie.split('=')[1] : null;
+}
+
+
 function handleLogout(event) {
-  event.preventDefault(); // Prevent the default anchor behavior
+  event.preventDefault();
+  // Get the CSRF token from the cookie
+  const csrfToken = getCSRFToken();
 
-  // Fetch the CSRF token from the meta tag
-  const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
-
+  if (!csrfToken) {
+      alert("CSRF token not found. Logout request cannot be sent.");
+      return;
+  }
   // Send a logout request to the backend
   fetch('/users/api/logout/', {
       method: 'POST',
@@ -116,7 +128,7 @@ function handleLogout(event) {
       .then(response => {
           if (response.ok) {
               alert("You have been logged out.");
-              login(); // Redirect to the chat page or another page
+              login();
           } else {
               return response.json().then(data => {
                   alert("Logout failed: " + (data.error || "Unknown error."));

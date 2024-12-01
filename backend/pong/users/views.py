@@ -61,7 +61,7 @@ def api_login(request):
 
 # @csrf_exempt
 def api_logout(request):
-    if request.method == 'POST':
+    if request.user.is_authenticated:
         logout(request)
         return JsonResponse({'status': 'success', 'message': 'Logged out successfully.'})
     return JsonResponse({'status': 'error', 'message': 'Invalid request method.'}, status=405)

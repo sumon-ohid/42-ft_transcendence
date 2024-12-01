@@ -50,7 +50,7 @@ function handleLogin(event) {
     }
 
     // Fetch the CSRF token
-    const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+    const csrfToken = getCSRFToken();
 
     // Send the POST request to the Django login API
     fetch('/users/api/login/', {
