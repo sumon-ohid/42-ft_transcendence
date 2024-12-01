@@ -40,7 +40,7 @@ function homePage() {
       </div>
       <div class="round">
           <div class="profile-pic" onclick="document.getElementById('profile-picture-input').click();">
-              <img id="profile-picture" src="../static/images/11475215.jpg" alt="Picture">
+              <img id="profile-picture" src="/users/../static/images/11475215.jpg" alt="Picture">
           </div>
       </div>
       <input type="file" id="profile-picture-input" name="profile_picture" accept="image/*" style="display: none;">
@@ -122,7 +122,7 @@ function homePage() {
   .catch(error => {
     console.error('Error fetching profile picture:', error);
     const profilePicture = document.getElementById('profile-picture');
-    profilePicture.src = '../static/images/11475215.jpg';
+    profilePicture.src = '/users/../static/images/11475215.jpg';
   });
 
   document.getElementById('profile-picture-input').addEventListener('change', function(event) {
@@ -241,54 +241,5 @@ document.addEventListener('DOMContentLoaded', () => {
       default:
         login();
       }
-  }
-
-  fetch('/users/api/get-profile-picture/')
-    .then(response => response.json())
-    .then(data => {
-      const profilePicture = document.getElementById('profile-picture');
-      if (data.photo) {
-        profilePicture.src = data.photo;
-      } else {
-        profilePicture.src = "";
-      }
-    })
-    .catch(error => {
-      console.error('Error fetching profile picture:', error);
-    });
-});
-
-document.getElementById('profile-picture-input').addEventListener('change', function(event) {
-  const file = event.target.files[0];
-  if (file) {
-    const reader = new FileReader();
-    reader.onload = function(e) {
-      document.querySelector('.profile-pic').style.backgroundImage = `url(${e.target.result})`;
-    };
-    reader.readAsDataURL(file);
-
-    const formData = new FormData();
-    formData.append('profile_picture', file);
-
-    const csrfToken = getCSRFToken();
-
-    fetch('/users/api/upload-profile-picture/', {
-      method: 'POST',
-      headers: {
-        'X-CSRFToken': csrfToken,
-      },
-      body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-      if (data.status === 'success') {
-        alert('Profile picture uploaded successfully');
-      } else {
-        alert('Error uploading profile picture');
-      }
-    })
-    .catch(error => {
-      console.error('Error:', error);
-    });
   }
 });
