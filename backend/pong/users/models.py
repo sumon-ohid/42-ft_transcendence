@@ -2,9 +2,11 @@ from django.db import models
 from django.contrib.auth.models import User
 
 # Create your models here.
+
+# For score board
 class PlayerScore(models.Model):
-    player_name = models.CharField(max_length=100)
-    score = models.IntegerField()
+    player_name = models.CharField(max_length=100, unique=True)
+    score = models.IntegerField(default=0)
     date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

@@ -46,3 +46,6 @@ for score in scores:
 player_scores = PlayerScore.objects.filter(player_name='sumon_oahid')
 for score in player_scores:
     print(score)
+
+# In case of duplicate scores
+python manage.py remove_duplicate_scores

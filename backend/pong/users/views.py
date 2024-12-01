@@ -82,9 +82,17 @@ def save_score(request):
         data = json.loads(request.body)
         player_name = request.user.username if request.user.is_authenticated else data.get('player_name')
         score = data.get('score')
-        PlayerScore.objects.create(player_name=player_name, score=score)
+        
+        # Check if the player already has a score entry
+        player_score, created = PlayerScore.objects.get_or_create(player_name=player_name)
+        
+        # Append the new score to the existing score
+        player_score.score += score
+        player_score.save()
+        
         return JsonResponse({'status': 'success'})
     return JsonResponse({'status': 'error'}, status=400)
+
 
 # @csrf_exempt
 def upload_profile_picture(request):
