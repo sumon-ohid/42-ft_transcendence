@@ -3,7 +3,8 @@ DOCKER_COMPOSE = docker-compose -f docker-compose.yml
 all: build up
 
 build:
-	${DOCKER_COMPOSE} build
+	${DOCKER_COMPOSE} build 
+	sleep 3
 	docker-compose run django python manage.py makemigrations
 	docker-compose run django python manage.py migrate
 
@@ -19,9 +20,6 @@ rm_images:
 logs:
 	${DOCKER_COMPOSE} logs nginx
 
-restart:
-	${DOCKER_COMPOSE} restart nginx_conatiner postgre_container django_container
-
 clean: down
 	${DOCKER_COMPOSE} down -v --rmi all --remove-orphans
 
@@ -30,7 +28,7 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: build up down logs restart rm_images re fclean clean
+.PHONY: build up down logs rm_images re fclean clean
 
 # docker stop $(docker ps -a -q)
 # docker rm $(docker ps -a -q)

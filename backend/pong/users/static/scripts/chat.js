@@ -15,7 +15,8 @@ function chatPage() {
         </div>
         <div class="chat-top-bar">
             <div class="chating-with">
-                <div class="friend-name">Sumon
+                <div class="friend-name">
+                    <h1>Guest</h1>
                     <span class="badge rounded-pill text-bg-success">active now</span>
                 </div>
                 <div class="p-pic-back"></div>
@@ -101,4 +102,27 @@ function chatPage() {
             chatMessages.scrollTop = chatMessages.scrollHeight; // Scroll to the bottom
         }
     }
+
+    // // GET USERNAME
+    // fetch('/users/api/get-username/', {
+    //     method: 'GET',
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //       'X-CSRFToken': document.querySelector('meta[name="csrf-token"]').content
+    //     }
+    //   })
+    //     .then(response => response.json())
+    //     .then(data => {
+    //       const usernameElement = document.querySelector('.friend-name h1');
+    //       if (usernameElement) {
+    //         let username = data.username || "Guest";
+    //         if (username.length > 6) {
+    //           username = username.substring(0, 6) + '.';
+    //         }
+    //         usernameElement.textContent = username;
+    //       }
+    //     })
+    //     .catch(error => {
+    //       console.error('Error fetching username:', error);
+    //     });
 }

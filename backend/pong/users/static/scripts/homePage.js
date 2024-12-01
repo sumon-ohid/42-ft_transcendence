@@ -33,7 +33,7 @@ function homePage() {
       </div>
       <div class="wel-user">
         <p>welcome</p>
-        <h1>Sumon</h1>
+        <h1>Guest</h1>
       </div>
       <div class="round">
         <div class="profile-pic"></div>
@@ -74,7 +74,7 @@ function homePage() {
   `;
   body.appendChild(div);
 
-    // GET USERNAME
+  // GET USERNAME
   fetch('/users/api/get-username/', {
     method: 'GET',
     headers: {

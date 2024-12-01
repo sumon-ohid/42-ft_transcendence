@@ -1179,6 +1179,14 @@ form .login-button:hover {
     top: 5px;
 }
 
+.friend-name h1{
+    position: absolute;
+    font-family:'Courier New', Courier, monospace;
+    font-size: 1.2em;
+    color: white;
+    font-weight: bold;
+}
+
 .friend-name span {
     font-size: .3em;
     position: absolute;
