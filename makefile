@@ -3,9 +3,11 @@ DOCKER_COMPOSE = docker-compose -f docker-compose.yml
 all: build up
 
 build:
+	sleep 3
 	${DOCKER_COMPOSE} build 
 	sleep 3
 	docker-compose run django python manage.py makemigrations
+	sleep 3
 	docker-compose run django python manage.py migrate
 
 up:

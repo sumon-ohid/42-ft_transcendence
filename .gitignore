@@ -1,2 +1,21 @@
+# Ignore PostgreSQL data directory
 postgres_data/
+
+# Ignore environment variable files
 .env
+
+# Ignore Python bytecode files
+*.pyc
+__pycache__/
+
+# Ignore Django migrations
+*/migrations/*
+
+# Ignore media files
+media/
+
+# Ignore static files
+staticfiles/
+
+# Ignore virtual environment directory
+venv/
