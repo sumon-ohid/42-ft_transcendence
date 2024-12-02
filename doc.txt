@@ -49,3 +49,4 @@ for score in player_scores:
 
 # In case of duplicate scores
 python manage.py remove_duplicate_scores
+
