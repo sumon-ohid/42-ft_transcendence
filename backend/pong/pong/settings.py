@@ -10,7 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 from pathlib import Path
 import os
 
@@ -91,7 +91,7 @@ WSGI_APPLICATION = 'pong.wsgi.application'
 
 # cat myproject/settings.py
 
-load_dotenv()
+# load_dotenv()
 
 # change it before pusing to intra
 # DATABASES = {
