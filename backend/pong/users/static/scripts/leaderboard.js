@@ -19,7 +19,12 @@ function leaderboard() {
         })
         .then(data => {
             if (!data || data.length === 0) {
-                div.innerHTML = `<p>No leaderboard data available.</p>`;
+                div.innerHTML = `
+                    <p>No leaderboard data available.</p>
+                    <div class="quit-game" onclick="homePage()">
+                        <h1>BACK</h1>
+                    </div>
+                `;
                 body.appendChild(div);
                 return;
             }
@@ -48,7 +53,7 @@ function leaderboard() {
                             </div>
                         `).join('')}
                     </div>
-                     <div class="quit-game" onclick="homePage()">
+                    <div class="quit-game" onclick="homePage()">
                         <h1>BACK</h1>
                     </div>
                 `;
