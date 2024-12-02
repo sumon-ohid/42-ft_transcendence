@@ -24,3 +24,9 @@ jobs:
     - name: Build and Run Docker Compose
       run: |
         make
+
+    - name: Retry Database Migrations
+      run: |
+        for i in {1..5}; do
+          docker-compose exec django python manage.py migrate && break || sleep 5;
+        done
