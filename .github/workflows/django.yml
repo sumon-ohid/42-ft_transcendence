@@ -1,0 +1,25 @@
+name: Django CI with Docker
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out the code
+      uses: actions/checkout@v4
+
+    - name: Set up Docker
+      uses: docker/setup-buildx-action@v2
+
+    - name: Build and Run Docker Compose
+      run: |
+        docker-compose up -d --build
+        docker-compose exec web python manage.py migrate
+        docker-compose exec web python manage.py test
