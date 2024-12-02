@@ -15,8 +15,11 @@ services:
   postgres:
     image: postgres:latest
     container_name: postgres
-    env_file:
-      - .env
+    environment:
+      #change it to .env later
+      POSTGRES_USER: msumon
+      POSTGRES_PASSWORD: msumon1234
+      POSTGRES_DB: pongdb
     volumes:
       - ./postgres_data:/var/lib/postgresql/data
     ports:
@@ -32,8 +35,6 @@ services:
       - "8000:8000"
     depends_on:
       - postgres
-    env_file:
-      - .env
 
 volumes:
   postgres_data:
