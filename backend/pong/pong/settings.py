@@ -23,8 +23,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-load_dotenv()
-SECRET_KEY = os.getenv('SECRET_KEY')
+# load_dotenv()
+# SECRET_KEY = os.getenv('SECRET_KEY')
+
+#Change it before pushing to intra
+SECRET_KEY = 'django-insecure-pw))z=9qc-_2ci8ai8u(5()@e@c2vxyhxl-_2oa8rqq2p1o705'
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -89,12 +93,25 @@ WSGI_APPLICATION = 'pong.wsgi.application'
 
 load_dotenv()
 
+# change it before pusing to intra
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': os.getenv('POSTGRES_NAME'),
+#         'USER': os.getenv('POSTGRES_USER'),
+#         'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
+#         'HOST': 'postgres',
+#         'PORT': '5432',
+#     }
+# }
+
 DATABASES = {
+
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('POSTGRES_NAME'),
-        'USER': os.getenv('POSTGRES_USER'),
-        'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
+        'NAME': 'pongdb',
+        'USER': 'msumon',
+        'PASSWORD': 'msumon1234',
         'HOST': 'postgres',
         'PORT': '5432',
     }
