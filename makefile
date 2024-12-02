@@ -1,14 +1,15 @@
 DOCKER_COMPOSE = docker-compose -f docker-compose.yml
 
-all: build up
+all: build
 
 build:
-	sleep 3
 	${DOCKER_COMPOSE} build 
 	sleep 3
-	docker-compose run django python manage.py makemigrations
+	${DOCKER_COMPOSE} up -d
 	sleep 3
-	docker-compose run django python manage.py migrate
+	${DOCKER_COMPOSE} exec django python manage.py makemigrations
+	sleep 3
+	${DOCKER_COMPOSE} exec django python manage.py migrate
 
 up:
 	${DOCKER_COMPOSE} up -d
@@ -17,7 +18,7 @@ down:
 	${DOCKER_COMPOSE} down --rmi all
 
 rm_images:
-	${DOCKER_COMPOSE} --rmi all
+	${DOCKER_COMPOSE} down --rmi all
 
 logs:
 	${DOCKER_COMPOSE} logs nginx

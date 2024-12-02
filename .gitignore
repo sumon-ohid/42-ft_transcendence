@@ -12,7 +12,7 @@ __pycache__/
 */migrations/*
 
 # Ignore media files
-media/
+# media/
 
 # Ignore static files
 staticfiles/

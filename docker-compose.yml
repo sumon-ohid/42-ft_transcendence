@@ -15,13 +15,12 @@ services:
   postgres:
     image: postgres:latest
     container_name: postgres
-    environment:
-      #change it to .env later
-      POSTGRES_USER: msumon
-      POSTGRES_PASSWORD: msumon1234
-      POSTGRES_DB: pongdb
+    env_file:
+      - .env
     volumes:
       - ./postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
 
   django: 
     build: ./backend
@@ -33,6 +32,8 @@ services:
       - "8000:8000"
     depends_on:
       - postgres
+    env_file:
+      - .env
 
 volumes:
   postgres_data:
