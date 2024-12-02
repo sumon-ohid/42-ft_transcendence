@@ -30,6 +30,16 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+
+      - name: Wait for Database
+        run: |
+          echo "Waiting for database to be ready..."
+          until nc -z -v -w30 $DB_HOST $DB_PORT; do
+            echo "Waiting for database connection..."
+            sleep 1
+          done
+          echo "Database is ready!"
+          
       - name: Run Django migrate
         working-directory: backend/pong
         run: python manage.py migrate
