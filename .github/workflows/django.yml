@@ -1,0 +1,32 @@
+name: Django CI with Docker
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out the code
+      uses: actions/checkout@v4
+
+    - name: Set up Docker
+      uses: docker/setup-buildx-action@v2
+   
+    - name: Install Docker Compose
+      run: sudo apt-get install -y docker-compose
+
+    - name: Build and Run Docker Compose
+      run: |
+        make
+
+    - name: Retry Database Migrations
+      run: |
+        for i in {1..5}; do
+          docker-compose exec django python manage.py migrate && break || sleep 5;
+        done
