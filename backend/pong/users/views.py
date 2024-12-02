@@ -126,7 +126,7 @@ def leaderboard(request):
             profile = Profile.objects.get(user__username=score.player_name)
             avatar_url = profile.photo.url if profile.photo else '/media/profile_pictures/11475215.jpg'
         except Profile.DoesNotExist:
-            avatar_url = '/media/11475215.jpg'
+            avatar_url = '/media/profile_pictures/11475215.jpg'
         
         data.append({
             'name': score.player_name,
