@@ -43,10 +43,6 @@ To access from browser:
   http://localhost:8000/users/
 ```
 
-## Contributors
-
-- [Sumon Md Ohiduzzaman](https://github.com/sumon-ohid)
-
 ## License
 
 Feel free to use and distribute. Don't copy for 42 project.
