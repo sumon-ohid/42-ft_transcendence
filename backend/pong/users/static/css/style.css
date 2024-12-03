@@ -1802,6 +1802,7 @@ form .login-button:hover {
 .change-username p {
     position: relative;
     top: 6px;
+    margin-left: -40px;
 }
 
 .change-username i {
@@ -1831,6 +1832,7 @@ form .login-button:hover {
     margin-top: 6px;
     position: relative;
     bottom: 108px;
+    margin-right: 50px;
 }
 
 .change-password i {
@@ -1878,10 +1880,10 @@ form .login-button:hover {
     border: none;
 }
 
-.save-change {
-    background-color: rgba(193, 255, 6, 0.456);
-    height: 35px;
-    width: 200px;
+.authentication {
+    background-color: var(--container-background);
+    height: 40px;
+    width: 250px;
     position: fixed;
     bottom: 50px;
     border-radius: 20px;
@@ -1891,14 +1893,15 @@ form .login-button:hover {
     font-family: "Sour Gummy";
 }
 
-.save-change p {
-    margin-top: 5px;
+.authentication input {
+    position: fixed;
+    right: 100px;
+    margin-top: 10px;
 }
 
-.save-change:hover {
-    height: 38px;
-    width: 210px;
-    border: 1px solid rgba(255, 255, 255, 0.358);
+.authentication label {
+    margin-left: -100px;
+    margin-top: 7px;
 }
 
 /*------- SETTINGS PAGE END -------*/

@@ -12,16 +12,19 @@ function settingsPage() {
     div.className = "settings-container";
     div.innerHTML = `
         <h2>Settings</h2>
-        <div class="edit-pic">
-            <span class="badge text-bg-primary">change</span>
-        </div>
-        <div class="wel-user">
-            <p>Hello</p>
-            <h1>Sumon</h1>
-        </div>
-        <div class="round">
-            <div class="profile-pic"></div>
-        </div>
+              <div class="edit-pic">
+        <span class="badge text-bg-primary">change</span>
+      </div>
+      <div class="wel-user">
+        <p>Hello</p>
+        <h1>Guest</h1>
+      </div>
+      <div class="round">
+          <div class="profile-pic" onclick="document.getElementById('profile-picture-input').click();">
+              <img id="profile-picture" src="/users/../static/images/11475215.jpg" alt="Picture">
+          </div>
+      </div>
+      <input type="file" id="profile-picture-input" name="profile_picture" accept="image/*" style="display: none;">
         <div class="inside-wel"></div>
         <div class="quit-game" onclick="homePage()">
                <h1>BACK</h1>
@@ -38,10 +41,93 @@ function settingsPage() {
             <p>change password</p>
             <i class="fa-solid fa-circle-arrow-right"></i>
         </div>
-        <div class="save-change">
-            <p>save changes</p>
+        <div class="authentication">
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                <label class="form-check-label" for="flexSwitchCheckDefault">2FA Authentication</label>
+            </div>
         </div>
     `;
     body.appendChild(div);
+
+    // GET USERNAME
+  fetch('/users/api/get-username/', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-CSRFToken': document.querySelector('meta[name="csrf-token"]').content
+    }
+  })
+    .then(response => response.json())
+    .then(data => {
+      const usernameElement = document.querySelector('.wel-user h1');
+      if (usernameElement) {
+        let username = data.username || "Guest";
+        loggedInUser = username;
+        if (username.length > 6) {
+          username = username.substring(0, 6) + '.';
+        }
+        usernameElement.textContent = username;
+      }
+    })
+    .catch(error => {
+      console.error('Error fetching username:', error);
+    });
+
+  fetch('/users/api/get-profile-picture/')
+  .then(response => {
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    return response.json();
+  })
+  .then(data => {
+    const profilePicture = document.getElementById('profile-picture');
+    if (data.photo) {
+      profilePicture.src = "/users" + data.photo;
+    } else {
+      profilePicture.src = '/users/../static/images/11475215.jpg';
+    }
+  })
+  .catch(error => {
+    console.error('Error fetching profile picture:', error);
+    const profilePicture = document.getElementById('profile-picture');
+    profilePicture.src = '/users/../static/images/11475215.jpg';
+  });
+
+  document.getElementById('profile-picture-input').addEventListener('change', function(event) {
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            document.querySelector('.profile-pic').style.backgroundImage = `url(${e.target.result})`;
+        };
+        reader.readAsDataURL(file);
+
+        const formData = new FormData();
+        formData.append('profile_picture', file);
+
+        const csrfToken = getCSRFToken();
+
+        fetch('/users/api/upload-profile-picture/', {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': csrfToken,
+            },
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                alert('Profile picture uploaded successfully');
+            } else {
+                alert('Error uploading profile picture');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+  });
 }
 
