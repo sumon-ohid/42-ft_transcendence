@@ -172,3 +172,28 @@ def change_username(request):
             return JsonResponse({'status': 'error', 'error': 'Invalid JSON data.'}, status=400)
 
     return JsonResponse({'status': 'error', 'message': 'Invalid request method.'}, status=405)
+
+
+@csrf_exempt
+def change_password(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            current_password = data.get('current_password')
+            new_password = data.get('new_password')
+
+            if not current_password or not new_password:
+                return JsonResponse({'status': 'error', 'error': 'Both current and new passwords are required.'}, status=400)
+
+            user = authenticate(username=request.user.username, password=current_password)
+            if user is not None:
+                user.set_password(new_password)
+                user.save()
+                return JsonResponse({'status': 'success', 'message': 'Password changed successfully!'})
+            else:
+                return JsonResponse({'status': 'error', 'error': 'Current password is incorrect.'}, status=400)
+
+        except json.JSONDecodeError:
+            return JsonResponse({'status': 'error', 'error': 'Invalid JSON data.'}, status=400)
+
+    return JsonResponse({'status': 'error', 'message': 'Invalid request method.'}, status=405)

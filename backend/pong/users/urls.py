@@ -1,7 +1,7 @@
 from django.urls import path, include
 from .views import index, api_signup, api_login, api_logout, get_username, save_score, \
     upload_profile_picture, get_profile_picture, leaderboard, get_play_history, \
-    change_username
+    change_username, change_password
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -17,6 +17,7 @@ urlpatterns = [
     path('api/leaderboard/', leaderboard, name='leaderboard'),
     path('api/get-play-history/', get_play_history, name='get_play_history'),
     path('api/change-username/', change_username, name='change_username'),
+    path('api/change-password/', change_password, name='change_password'),
 ]
 
 if settings.DEBUG:

@@ -40,7 +40,7 @@ function settingsPage() {
             <input type="password" id="current-password" placeholder="current password">
             <input type="password" id="new-password" placeholder="new password">
             <input type="password" id="confirm-password" placeholder="confirm password">
-            <div class="change-password">
+            <div class="change-password" onclick="changePassword()">
                 <p>change password</p>
                 <i class="fa-solid fa-circle-arrow-right"></i>
             </div>
@@ -140,36 +140,80 @@ function settingsPage() {
 function changeUserName() {
     const newUsername = document.getElementById('username').value;
     const currentUsername = loggedInUser;
-  
+
     if (!newUsername) {
-      alert('Please enter a new username.');
+        alert('Please enter a new username.');
+        return;
+    }
+
+    const csrfToken = getCSRFToken();
+
+    fetch('/users/api/change-username/', {
+        method: 'POST',
+        headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': csrfToken
+        },
+        body: JSON.stringify({
+        current_username: currentUsername,
+        new_username: newUsername
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+    if (data.status === 'success') {
+        alert('Username changed successfully!');
+        loggedInUser = newUsername;
+    } else {
+        alert(`Error: ${data.error}`);
+    }
+    })
+    .catch(error => {
+    console.error('Error:', error);
+    alert('An error occurred while changing the username.');
+    });
+}
+
+
+function changePassword() {
+    const currentPassword = document.getElementById('current-password').value;
+    const newPassword = document.getElementById('new-password').value;
+    const confirmPassword = document.getElementById('confirm-password').value;
+  
+    if (!currentPassword || !newPassword || !confirmPassword) {
+      alert('Please fill in all password fields.');
+      return;
+    }
+  
+    if (newPassword !== confirmPassword) {
+      alert('New password and confirm password do not match.');
       return;
     }
   
     const csrfToken = getCSRFToken();
   
-    fetch('/users/api/change-username/', {
+    fetch('/users/api/change-password/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'X-CSRFToken': csrfToken
       },
       body: JSON.stringify({
-        current_username: currentUsername,
-        new_username: newUsername
+        current_password: currentPassword,
+        new_password: newPassword
       })
     })
       .then(response => response.json())
       .then(data => {
         if (data.status === 'success') {
-          alert('Username changed successfully!');
-          loggedInUser = newUsername;
+          alert('Password changed successfully!');
+          login();
         } else {
           alert(`Error: ${data.error}`);
         }
       })
       .catch(error => {
         console.error('Error:', error);
-        alert('An error occurred while changing the username.');
+        alert('An error occurred while changing the password.');
       });
-  }
+ }

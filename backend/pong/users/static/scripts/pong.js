@@ -52,6 +52,10 @@ function startGame() {
     const nicknameInput = document.getElementById("nickname");
     player1Name = nicknameInput.value || "Player 1";
 
+    if (player1Name.length > 8) {
+        player1Name = player1Name.substring(0, 8) + '.';
+    }
+
     const body = document.body;
 
     while (body.firstChild) {
