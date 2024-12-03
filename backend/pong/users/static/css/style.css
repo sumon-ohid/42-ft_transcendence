@@ -1896,7 +1896,7 @@ form .login-button:hover {
 .authentication input {
     position: fixed;
     right: 100px;
-    margin-top: 10px;
+    margin-top: 12px;
 }
 
 .authentication label {
