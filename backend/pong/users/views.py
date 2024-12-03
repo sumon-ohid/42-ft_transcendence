@@ -148,3 +148,52 @@ def get_play_history(request):
         for score in scores
     ]
     return JsonResponse(data, safe=False)
+
+@csrf_exempt
+def change_username(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            new_username = data.get('new_username')
+            current_username = data.get('current_username')
+
+            if not new_username or not current_username:
+                return JsonResponse({'status': 'error', 'error': 'Both current and new usernames are required.'}, status=400)
+
+            try:
+                user = User.objects.get(username=current_username)
+                user.username = new_username
+                user.save()
+                return JsonResponse({'status': 'success', 'message': 'Username changed successfully!'})
+            except User.DoesNotExist:
+                return JsonResponse({'status': 'error', 'error': 'User does not exist.'}, status=404)
+
+        except json.JSONDecodeError:
+            return JsonResponse({'status': 'error', 'error': 'Invalid JSON data.'}, status=400)
+
+    return JsonResponse({'status': 'error', 'message': 'Invalid request method.'}, status=405)
+
+
+@csrf_exempt
+def change_password(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            current_password = data.get('current_password')
+            new_password = data.get('new_password')
+
+            if not current_password or not new_password:
+                return JsonResponse({'status': 'error', 'error': 'Both current and new passwords are required.'}, status=400)
+
+            user = authenticate(username=request.user.username, password=current_password)
+            if user is not None:
+                user.set_password(new_password)
+                user.save()
+                return JsonResponse({'status': 'success', 'message': 'Password changed successfully!'})
+            else:
+                return JsonResponse({'status': 'error', 'error': 'Current password is incorrect.'}, status=400)
+
+        except json.JSONDecodeError:
+            return JsonResponse({'status': 'error', 'error': 'Invalid JSON data.'}, status=400)
+
+    return JsonResponse({'status': 'error', 'message': 'Invalid request method.'}, status=405)

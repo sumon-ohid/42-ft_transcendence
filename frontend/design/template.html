@@ -30,20 +30,27 @@
         <div class="quit-game" onclick="homePage()">
                <h1>BACK</h1>
             </div>
-        <div class="change-username">
+        <div class="username-container">
             <input type="text" id="username" placeholder="new username">
-            <p>change username</p>
-            <i class="fa-solid fa-circle-arrow-right"></i>
+            <div class="change-username">
+                <p>change username</p>
+                <i class="fa-solid fa-circle-arrow-right"></i>
+            </div>
         </div>
-        <div class="change-password">
+        <div class="password-container">
             <input type="password" id="current-password" placeholder="current password">
             <input type="password" id="new-password" placeholder="new password">
             <input type="password" id="confirm-password" placeholder="confirm password">
-            <p>change password</p>
-            <i class="fa-solid fa-circle-arrow-right"></i>
+            <div class="change-password">
+                <p>change password</p>
+                <i class="fa-solid fa-circle-arrow-right"></i>
+            </div>
         </div>
-        <div class="save-change">
-            <p>save changes</p>
+        <div class="authentication">
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                <label class="form-check-label" for="flexSwitchCheckDefault">2FA Authentication</label>
+            </div>
         </div>
     </div>
 </body>
