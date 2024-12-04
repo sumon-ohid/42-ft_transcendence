@@ -279,7 +279,10 @@ document.addEventListener('DOMContentLoaded', () => {
   if (currentPage) {
     switch (currentPage) {
       case 'homePage':
-        homePage();
+        if (loggedInUser != "Guest")
+          homePage();
+        else
+          login();
         break;
       case 'settingsPage':
         settingsPage();

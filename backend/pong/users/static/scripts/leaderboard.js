@@ -36,10 +36,10 @@ function leaderboard() {
                     tempElement.style.display = 'flex';
                     tempElement.style.justifyContent = 'center';
                     tempElement.style.alignItems = 'center';
-                    tempElement.style.height = '50vh';
-                    tempElement.style.width = '50vw';
+                    tempElement.style.height = '450px';
+                    tempElement.style.width = '400px';
                     tempElement.style.position = 'fixed';
-                    tempElement.style.left = '70px';
+                    tempElement.style.left = '90px';
                     tempElement.style.top = '150px';
                 }
 
