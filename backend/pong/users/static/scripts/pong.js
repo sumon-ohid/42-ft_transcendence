@@ -203,44 +203,47 @@ function initializeGame() {
                 confirmationElement.classList.remove('hidden');
                 let countdown = 10;
                 confirmationElement.innerHTML = `<span>Game Over</span><br><span style="font-size: 2em; color: #007bff">${winner} Wins!</span><br>Returning to game page in ${countdown}s...`;
+                
                 const countdownInterval = setInterval(() => {
                     countdown -= 1;
-                    confirmationElement.innerHTML = `<span">Game Over</span><br><span style="font-size: 2em; color: #007bff">${winner} Wins!</span><br>Returning to game page in ${countdown}s...`;
+                    confirmationElement.innerHTML = `<span>Game Over</span><br><span style="font-size: 2em; color: #007bff">${winner} Wins!</span><br>Returning to game page in ${countdown}s...`;
+        
                     if (countdown === 0) {
                         clearInterval(countdownInterval);
-                        if (winner === leftPlayerNickname) {
-                            // Send the scores to the server
-                            // If registered player wins
-                            const csrfToken = getCSRFToken();
-                            fetch('/api/save-score/', {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                    'X-CSRFToken': csrfToken,
-                                },
-                                body: JSON.stringify({
-                                    score: 5
-                                })
+        
+                        const csrfToken = getCSRFToken();
+                        const result = winner === leftPlayerNickname ? 'win' : 'lose';
+                        
+                        fetch('/api/save-score/', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRFToken': csrfToken,
+                            },
+                            body: JSON.stringify({
+                                score: leftScore, // Always send player 1's score
+                                result: result 
                             })
-                            .then(response => response.json())
-                            .then(data => {
-                                if (data.status === 'success') {
-                                    console.log('Score saved successfully');
-                                } else {
-                                    console.error('Error saving score');
-                                }
-                            })
-                            .catch(error => {
-                                console.error('Error:', error);
-                            });
-                        }
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.status === 'success') {
+                                console.log('Score saved successfully');
+                            } else {
+                                console.error('Error saving score:', data.message);
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                        });
+        
                         gamePage();
                     }
                 }, 1000);
             }
         }
     }
-
+    
     function resetBall() {
         ballX = canvas.width / 2;
         ballY = canvas.height / 2;

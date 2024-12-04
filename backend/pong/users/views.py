@@ -76,22 +76,26 @@ def get_username(request):
         return JsonResponse({'username': 'Guest'})
 
 
-# @csrf_exempt
 def save_score(request):
     if request.method == 'POST':
         data = json.loads(request.body)
         player_name = request.user.username if request.user.is_authenticated else data.get('player_name')
         score = data.get('score')
-        
-        # Check if the player already has a score entry
+
+        if score is None or player_name is None:
+            return JsonResponse({'status': 'error', 'message': 'Invalid data'}, status=400)
+
+        # Get or create the player's score entry
         player_score, created = PlayerScore.objects.get_or_create(player_name=player_name)
-        
-        # Append the new score to the existing score
-        player_score.score += score
+
+        # Append the new score to the scores list
+        player_score.scores.append(score)
+        player_score.total_score += score  # Update the total score
         player_score.save()
-        
-        return JsonResponse({'status': 'success'})
-    return JsonResponse({'status': 'error'}, status=400)
+
+        return JsonResponse({'status': 'success', 'player_name': player_name, 'total_score': player_score.total_score, 'scores': player_score.scores})
+
+    return JsonResponse({'status': 'error', 'message': 'Invalid request method'}, status=400)
 
 
 # @csrf_exempt
@@ -119,8 +123,10 @@ def get_profile_picture(request):
 
 
 def leaderboard(request):
-    scores = PlayerScore.objects.all().order_by('-score')[:10]  # Get top 10 scores
+    # Get the top 10 scores ordered by total_score in descending order
+    scores = PlayerScore.objects.all().order_by('-total_score')[:10]
     data = []
+    
     for score in scores:
         try:
             profile = Profile.objects.get(user__username=score.player_name)
@@ -130,24 +136,35 @@ def leaderboard(request):
         
         data.append({
             'name': score.player_name,
-            'score': score.score,
+            'score': score.total_score,
             'avatar': avatar_url
         })
+
+    # Return the leaderboard data as JSON
     return JsonResponse(data, safe=False)
 
+
 def get_play_history(request):
+    if not request.user.is_authenticated:
+        return JsonResponse({'error': 'Authentication required'}, status=401)
+
     player_name = request.user.username
-    scores = PlayerScore.objects.filter(player_name=player_name).order_by('-date')
-    data = [
+    try:
+        player_score = PlayerScore.objects.get(player_name=player_name)
+    except PlayerScore.DoesNotExist:
+        return JsonResponse([], safe=False)
+
+    scores_with_dates = [
         {
-            'score': score.score,
-            'date': score.date,
-            'win': score.score >= 5,
-            'lose': score.score < 5
+            'score': score,
+            'date': player_score.last_updated,
+            'win': score >= 5,
+            'lose': score < 5
         }
-        for score in scores
+        for score in player_score.scores
     ]
-    return JsonResponse(data, safe=False)
+    return JsonResponse(sorted(scores_with_dates, key=lambda x: x['date'], reverse=True), safe=False)
+
 
 @csrf_exempt
 def change_username(request):

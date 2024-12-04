@@ -20,12 +20,40 @@ function leaderboard() {
         .then(data => {
             if (!data || data.length === 0) {
                 div.innerHTML = `
-                    <p>No leaderboard data available.</p>
+                    <div class="inside-wel">
+                        <div class="temp">
+                            <p>No data available...</p>
+                        </div>
+                    </div>
                     <div class="quit-game" onclick="homePage()">
                         <h1>BACK</h1>
                     </div>
                 `;
                 body.appendChild(div);
+
+                const tempElement = document.querySelector('.inside-wel');
+                if (tempElement) {
+                    tempElement.style.display = 'flex';
+                    tempElement.style.justifyContent = 'center';
+                    tempElement.style.alignItems = 'center';
+                    tempElement.style.height = '50vh';
+                    tempElement.style.width = '50vw';
+                    tempElement.style.position = 'fixed';
+                    tempElement.style.left = '70px';
+                    tempElement.style.top = '150px';
+                }
+
+                const tempElement2 = document.querySelector('.temp');
+                if (tempElement2) {
+                    tempElement2.style.position = 'fixed';
+                    tempElement2.style.right = '20%';
+                }
+                
+                const tempElement3 = document.querySelector('.temp p');
+                if (tempElement3) {
+                    tempElement3.style.position = 'fixed';
+                    tempElement3.style.right = '20%';
+                }  
                 return;
             }
             data.sort((a, b) => b.score - a.score);

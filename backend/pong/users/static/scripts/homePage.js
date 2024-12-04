@@ -44,9 +44,9 @@ function homePage() {
           </div>
       </div>
       <input type="file" id="profile-picture-input" name="profile_picture" accept="image/*" style="display: none;">
-    <div class="inside-wel">
+      <div class="inside-wel">
         <div class="temp">
-            <p>Coming soon...</p>
+            <p>No history...</p>
         </div>
     </div>
     </div>
@@ -161,33 +161,65 @@ function homePage() {
   });
 
   // Player history
-  document.addEventListener('DOMContentLoaded', () => {
-    // Fetch play history data
-    fetch('/api/get-play-history/')
-        .then(response => response.json())
-        .then(data => {
-            const historyContainer = document.querySelector('.inside-wel .temp');
-            historyContainer.innerHTML = ''; // Clear any existing content
+  fetch('/api/get-play-history/')
+    .then(response => response.json())
+    .then(data => {
+        const historyContainer = document.querySelector('.inside-wel');
+        
+        if (data.length != 0) {
+          historyContainer.innerHTML = '';
+          data.slice(-5).forEach(record => {
+              const recordElement = document.createElement('div');
+              recordElement.className = 'history-record';
+              let result = record.win ? 'Win' : 'Lose';
+              const resultClass = result === 'Win' ? 'badge text-bg-info' : 'badge text-bg-warning';
+              recordElement.innerHTML = `
+              <div>
+                <span class="badge text-bg-light">
+                  <p>Date: ${new Date(record.date).toLocaleDateString()}</p>
+                </span>
+              </div>
+              <div>
+                <span class="badge text-bg-primary">
+                  <p>Score: ${record.score}</p>
+                </span>
+              </div>
+              <div>
+                <span class="${resultClass}">
+                  <p>Result: ${result}</p>
+                </span>
+              </div>
+              `;
+              historyContainer.appendChild(recordElement);
+            });
 
-            if (data.length === 0) {
-                historyContainer.innerHTML = '<p>No play history available.</p>';
-            } else {
-                data.forEach(record => {
-                    const recordElement = document.createElement('div');
-                    recordElement.className = 'history-record';
-                    recordElement.innerHTML = `
-                        <p>Date: ${new Date(record.date).toLocaleDateString()}</p>
-                        <p>Score: ${record.score}</p>
-                        <p>Result: ${record.win ? 'Win' : 'Lose'}</p>
-                    `;
-                    historyContainer.appendChild(recordElement);
-                });
-            }
-        })
-        .catch(error => {
-            console.error('Error fetching play history:', error);
-        });
+            // const imgContainer = document.createElement('div');
+            // imgContainer.className = 'img-container';
+            // for (let i = 0; i < 3; i++) {
+            //     const imgElement = document.createElement('div');
+            //     imgElement.className = 'img-record';
+            //     imgElement.innerHTML = `<img src="../static/images/aloe.png" alt="aloe">`;
+            //     imgContainer.appendChild(imgElement);
+            // }
+            // historyContainer.appendChild(imgContainer);
+
+            const welContainer = document.querySelector('.wel-container');
+            const recent = document.createElement('h2');
+            recent.innerText = "recent history";
+            welContainer.appendChild(recent);
+        }
+
+
+        // const recordElement = document.createElement('div');
+        // recordElement.className = 'img-record';
+        // recordElement.innerHTML = `<img src="../static/images/aloe.png" alt="aloe">`;
+        // historyContainer.appendChild(recordElement);
+    })
+    .catch(error => {
+        console.error('Error fetching play history:', error);
     });
+
+
 }
 
 

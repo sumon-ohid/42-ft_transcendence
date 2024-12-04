@@ -26,6 +26,7 @@ clean: down
 
 fclean: clean
 	docker system prune -f
+	rm -rf postgres_data
 
 re: fclean all
 

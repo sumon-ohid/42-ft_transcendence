@@ -3,6 +3,7 @@ from .models import PlayerScore
 
 # Register your models here.
 
-@admin.register(PlayerScore)
 class PlayerScoreAdmin(admin.ModelAdmin):
-    list_display = ('player_name', 'score', 'date')
+    list_display = ('player_name', 'total_score', 'latest_score', 'last_updated')
+
+admin.site.register(PlayerScore, PlayerScoreAdmin)
