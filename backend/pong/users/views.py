@@ -145,18 +145,26 @@ def leaderboard(request):
 
 
 def get_play_history(request):
+    if not request.user.is_authenticated:
+        return JsonResponse({'error': 'Authentication required'}, status=401)
+
     player_name = request.user.username
-    scores = PlayerScore.objects.filter(player_name=player_name).order_by('-date')
-    data = [
+    try:
+        player_score = PlayerScore.objects.get(player_name=player_name)
+    except PlayerScore.DoesNotExist:
+        return JsonResponse([], safe=False)
+
+    scores_with_dates = [
         {
-            'score': score.score,
-            'date': score.date,
-            'win': score.score >= 5,
-            'lose': score.score < 5
+            'score': score,
+            'date': player_score.last_updated,
+            'win': score >= 5,
+            'lose': score < 5
         }
-        for score in scores
+        for score in player_score.scores
     ]
-    return JsonResponse(data, safe=False)
+    return JsonResponse(sorted(scores_with_dates, key=lambda x: x['date'], reverse=True), safe=False)
+
 
 @csrf_exempt
 def change_username(request):

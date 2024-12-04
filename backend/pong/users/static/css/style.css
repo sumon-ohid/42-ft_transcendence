@@ -197,6 +197,16 @@ body {
     flex-direction: column;
 }
 
+.wel-container h2 {
+    font-family: "modak";
+    font-size: 2.5em;
+    position: fixed;
+    bottom: 20px;
+    left: 60px;
+    color: rgba(255, 255, 255, 0.948);
+    z-index: 2;
+}
+
 .play-container {
     position: fixed;
     top: 160px;
@@ -369,6 +379,7 @@ body {
     bottom: 40px;
     left: 25px;
     border-radius: 20px;
+    z-index: 1;
 }
 
 .edit-pic {
@@ -400,23 +411,38 @@ body {
 }
 
 .history-record {
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 5px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
     padding: 10px;
-    margin: 10px 0;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    gap: 15px;
+    font-family: "Share Tech Mono";
+    border: 1px solid rgba(0, 0, 0, 0.299);
+    font-size: .41em;
+    margin-top: 15px;
+    border-radius: 30px;
+    background-color: var(--container-background);
 }
 
 .history-record p {
     margin: 5px 0;
     font-size: 14px;
-    color: #333;
+    color: #000000d7;
+    opacity: .8;
 }
 
-.history-record p:first-child {
-    font-weight: bold;
-    color: #007bff;
+.img-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    z-index: -1;
+}
+
+.img-record {
+    display: flex;
+    height: 120px;
+    width: 130px;
+    margin-top: -25px;
 }
 
 /* ------ WELCOME SECTION END ------*/
