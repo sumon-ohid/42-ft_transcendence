@@ -21,7 +21,7 @@ function settingsPage() {
         </div>
         <div class="round">
             <div class="profile-pic" onclick="document.getElementById('profile-picture-input').click();">
-                <img id="profile-picture" src="/users/../static/images/11475215.jpg" alt="Picture">
+                <img id="profile-picture" src="/../static/images/11475215.jpg" alt="Picture">
             </div>
         </div>
         <input type="file" id="profile-picture-input" name="profile_picture" accept="image/*" style="display: none;">
@@ -57,7 +57,7 @@ function settingsPage() {
     document.querySelector('.wel-user').style.textAlign = 'center';
 
     // GET USERNAME
-    fetch('/users/api/get-username/', {
+    fetch('/api/get-username/', {
         method: 'GET',
         headers: {
         'Content-Type': 'application/json',
@@ -80,7 +80,7 @@ function settingsPage() {
         console.error('Error fetching username:', error);
         });
 
-    fetch('/users/api/get-profile-picture/')
+    fetch('/api/get-profile-picture/')
     .then(response => {
         if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
@@ -90,15 +90,15 @@ function settingsPage() {
     .then(data => {
         const profilePicture = document.getElementById('profile-picture');
         if (data.photo) {
-        profilePicture.src = "/users" + data.photo;
+        profilePicture.src = "" + data.photo;
         } else {
-        profilePicture.src = '/users/../static/images/11475215.jpg';
+        profilePicture.src = '/../static/images/11475215.jpg';
         }
     })
     .catch(error => {
         console.error('Error fetching profile picture:', error);
         const profilePicture = document.getElementById('profile-picture');
-        profilePicture.src = '/users/../static/images/11475215.jpg';
+        profilePicture.src = '/../static/images/11475215.jpg';
     });
 
     document.getElementById('profile-picture-input').addEventListener('change', function(event) {
@@ -115,7 +115,7 @@ function settingsPage() {
 
             const csrfToken = getCSRFToken();
 
-            fetch('/users/api/upload-profile-picture/', {
+            fetch('/api/upload-profile-picture/', {
                 method: 'POST',
                 headers: {
                     'X-CSRFToken': csrfToken,
@@ -148,7 +148,7 @@ function changeUserName() {
 
     const csrfToken = getCSRFToken();
 
-    fetch('/users/api/change-username/', {
+    fetch('/api/change-username/', {
         method: 'POST',
         headers: {
         'Content-Type': 'application/json',
@@ -192,7 +192,7 @@ function changePassword() {
   
     const csrfToken = getCSRFToken();
   
-    fetch('/users/api/change-password/', {
+    fetch('/api/change-password/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

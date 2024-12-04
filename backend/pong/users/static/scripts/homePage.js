@@ -40,7 +40,7 @@ function homePage() {
       </div>
       <div class="round">
           <div class="profile-pic" onclick="document.getElementById('profile-picture-input').click();">
-              <img id="profile-picture" src="/users/../static/images/11475215.jpg" alt="Picture">
+              <img id="profile-picture" src="/../static/images/11475215.jpg" alt="Picture">
           </div>
       </div>
       <input type="file" id="profile-picture-input" name="profile_picture" accept="image/*" style="display: none;">
@@ -81,7 +81,7 @@ function homePage() {
   body.appendChild(div);
 
   // GET USERNAME
-  fetch('/users/api/get-username/', {
+  fetch('/api/get-username/', {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -104,7 +104,7 @@ function homePage() {
       console.error('Error fetching username:', error);
     });
 
-  fetch('/users/api/get-profile-picture/')
+  fetch('/api/get-profile-picture/')
   .then(response => {
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
@@ -114,15 +114,15 @@ function homePage() {
   .then(data => {
     const profilePicture = document.getElementById('profile-picture');
     if (data.photo) {
-      profilePicture.src = "/users" + data.photo;
+      profilePicture.src = "" + data.photo;
     } else {
-      profilePicture.src = '/users/../static/images/11475215.jpg';
+      profilePicture.src = '/../static/images/11475215.jpg';
     }
   })
   .catch(error => {
     console.error('Error fetching profile picture:', error);
     const profilePicture = document.getElementById('profile-picture');
-    profilePicture.src = '/users/../static/images/11475215.jpg';
+    profilePicture.src = '/../static/images/11475215.jpg';
   });
 
   document.getElementById('profile-picture-input').addEventListener('change', function(event) {
@@ -139,7 +139,7 @@ function homePage() {
 
         const csrfToken = getCSRFToken();
 
-        fetch('/users/api/upload-profile-picture/', {
+        fetch('/api/upload-profile-picture/', {
             method: 'POST',
             headers: {
                 'X-CSRFToken': csrfToken,
@@ -163,7 +163,7 @@ function homePage() {
   // Player history
   document.addEventListener('DOMContentLoaded', () => {
     // Fetch play history data
-    fetch('/users/api/get-play-history/')
+    fetch('/api/get-play-history/')
         .then(response => response.json())
         .then(data => {
             const historyContainer = document.querySelector('.inside-wel .temp');
@@ -210,7 +210,7 @@ function handleLogout(event) {
       return;
   }
   // Send a logout request to the backend
-  fetch('/users/api/logout/', {
+  fetch('/api/logout/', {
       method: 'POST',
       headers: {
           'Content-Type': 'application/json',

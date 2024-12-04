@@ -212,7 +212,7 @@ function initializeGame() {
                             // Send the scores to the server
                             // If registered player wins
                             const csrfToken = getCSRFToken();
-                            fetch('/users/api/save-score/', {
+                            fetch('/api/save-score/', {
                                 method: 'POST',
                                 headers: {
                                     'Content-Type': 'application/json',

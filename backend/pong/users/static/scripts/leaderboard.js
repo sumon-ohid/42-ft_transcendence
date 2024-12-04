@@ -10,7 +10,7 @@ function leaderboard() {
     div.className = "leaderboard-container";
 
     // Fetch leaderboard data
-    fetch('/users/api/leaderboard/')
+    fetch('/api/leaderboard/')
         .then(response => {
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
@@ -35,7 +35,7 @@ function leaderboard() {
                         <div class="top-badge"></div>
                         <h2>Rank 1</h2>
                         <div class="player-top">
-                            <img src="/users${topPlayer.avatar}" alt="${topPlayer.name}'s avatar">
+                            <img src="${topPlayer.avatar}" alt="${topPlayer.name}'s avatar">
                             <span class="badge text-bg-warning">${formatPlayerName(topPlayer.name)}</span>
                             <span class="badge text-bg-light">${topPlayer.score}</span>
                         </div>
@@ -47,7 +47,7 @@ function leaderboard() {
                         ${data.map((player, index) => `
                             <div class="player">
                                 <span class="rank-number">Rank ${index + 1}</span>
-                                <img src="/users${player.avatar}" alt="${player.name}'s avatar">
+                                <img src="${player.avatar}" alt="${player.name}'s avatar">
                                 <span class="badge text-bg-warning">${formatPlayerName(player.name)}</span>
                                 <span class="badge text-bg-light">${player.score}</span>
                             </div>

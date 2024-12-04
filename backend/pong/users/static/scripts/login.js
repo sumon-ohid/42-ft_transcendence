@@ -54,7 +54,7 @@ function handleLogin(event) {
     const csrfToken = getCSRFToken();
 
     // Send the POST request to the Django login API
-    fetch('/users/api/login/', {
+    fetch('/api/login/', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

@@ -44,7 +44,7 @@ function handleSignup() {
     const csrfToken = getCSRFToken();
 
     // Send the POST request to the Django API
-    fetch('/users/api/signup/', {
+    fetch('/api/signup/', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
