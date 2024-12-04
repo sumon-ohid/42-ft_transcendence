@@ -105,7 +105,7 @@ function chatPage() {
     }
 
     // // GET USERNAME
-    // fetch('/users/api/get-username/', {
+    // fetch('/api/get-username/', {
     //     method: 'GET',
     //     headers: {
     //       'Content-Type': 'application/json',
