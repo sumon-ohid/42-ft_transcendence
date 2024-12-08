@@ -186,8 +186,8 @@ function authentication() {
 
 function setup2FA() {
     fetch('/api/setup-2fa/', {
-        method: 'POST',
-        headers: { 'X-CSRFToken': getCSRFToken() }
+        method: 'POST'
+        // headers: { 'X-CSRFToken': getCSRFToken() }
     })
         .then(response => response.json())
         .then(data => {
@@ -227,31 +227,35 @@ function verify2FA() {
         alert('Please enter the verification code.');
         return;
     }
-
-    fetch('/api/verify-2fa/', {
+    const csrfToken = getCSRFToken();
+    fetch('api/verify-2fa/', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'X-CSRFToken': getCSRFToken()
+            'X-CSRFToken': csrfToken
         },
         body: JSON.stringify({ code })
     })
         .then(response => response.json())
         .then(data => {
+            console.log(data);
             if (data.status === 'success') {
                 alert('2FA successfully enabled.');
                 document.getElementById('2fa-status').textContent = 'Status: Enabled';
                 document.getElementById('enable-2fa-btn').style.display = 'none';
                 document.getElementById('disable-2fa-btn').style.display = 'inline-block';
-
+                document.getElementById('qr-code-container').remove();
+                document.getElementById('2fa-code-input').style.display = 'none';
+                
                 // Go to the settings page
-                settingsPage();
+                // settingsPage();
             } else {
                 alert('Error verifying 2FA: ' + data.error);
             }
         })
         .catch(error => console.error('Error verifying 2FA:', error));
 }
+
 
 function disable2FA() {
     fetch('/api/disable-2fa/', {

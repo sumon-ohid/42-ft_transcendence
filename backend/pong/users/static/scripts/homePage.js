@@ -227,7 +227,10 @@ function homePage() {
 
 
 function getCSRFToken() {
-  // Retrieve the CSRF token from cookies
+  const metaToken = document.querySelector('meta[name="csrf-token"]');
+  if (metaToken) {
+      return metaToken.content;
+  }
   const csrfCookie = document.cookie
       .split('; ')
       .find(row => row.startsWith('csrftoken='));
@@ -237,7 +240,6 @@ function getCSRFToken() {
 
 function handleLogout(event) {
   event.preventDefault();
-  // Get the CSRF token from the cookie
   const csrfToken = getCSRFToken();
 
   if (!csrfToken) {

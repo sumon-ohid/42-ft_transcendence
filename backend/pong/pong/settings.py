@@ -177,3 +177,4 @@ DOMAIN = 'http://localhost:8000'
 # OTP Settings
 OTP_TOTP_ISSUER = 'Pong Game'
 OTP_TOTP_NAME = 'Pong Game'
+

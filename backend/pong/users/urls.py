@@ -19,9 +19,9 @@ urlpatterns = [
     path('api/change-username/', change_username, name='change_username'),
     path('api/change-password/', change_password, name='change_password'),
     path('api/disable-2fa/', disable_2fa, name='disable_2fa'),
-    path('api/verify-2fa/', verify_2fa, name='verify_2fa'),
     path('api/setup-2fa/', setup_2fa, name='setup_2fa'),
     path('api/get-2fa-status/', get_2fa_status, name='get_2fa_status'),
+    path('api/verify-2fa/', verify_2fa, name='verify_2fa'),
 ]
 
 if settings.DEBUG:

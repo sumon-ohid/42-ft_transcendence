@@ -1,9 +1,10 @@
 asgiref==3.8.1
 Django==3.2.25
+django-otp==1.5.4
 pillow==11.0.0
 psycopg2==2.9.10
 psycopg2-binary==2.9.10
 pytz==2024.2
+qrcode==8.0
 sqlparse==0.5.2
-django-otp
-qrcode
+qrcode[pil]
