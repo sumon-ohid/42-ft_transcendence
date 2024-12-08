@@ -161,33 +161,58 @@ function authentication() {
             <button id="disable-2fa-btn" onclick="disable2FA()" style="display: none;">Disable 2FA</button>
         </div>
     `;
+    
     document.querySelector('.settings-container').appendChild(div);
+    fetch2FAStatus();
+}
 
-    // Fetch the 2FA status on page load
+function fetch2FAStatus() {
     fetch('/api/get-2fa-status/', { method: 'GET', headers: { 'X-CSRFToken': getCSRFToken() } })
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
     .then(data => {
         const statusElement = document.getElementById('2fa-status');
         const enableBtn = document.getElementById('enable-2fa-btn');
         const disableBtn = document.getElementById('disable-2fa-btn');
+        const codeInput = document.getElementById('2fa-code-input');
+        const verifyBtn = document.getElementById('verify-2fa-btn');
+        const qrCodeContainer = document.getElementById('qr-code-container');
 
-        if (data.status === 'enabled') {
+        if (data.enabled === true) {
+            console.log('2FA is enabled');
             statusElement.textContent = 'Status: Enabled';
             enableBtn.style.display = 'none';
             disableBtn.style.display = 'inline-block';
+            codeInput.style.display = 'none';
+            verifyBtn.style.display = 'none';
+            if (qrCodeContainer) {
+                qrCodeContainer.remove();
+            }
         } else {
+            console.log('2FA is not enabled');
             statusElement.textContent = 'Status: Not Enabled';
             enableBtn.style.display = 'inline-block';
             disableBtn.style.display = 'none';
         }
     })
-    .catch(error => console.error('Error fetching 2FA status:', error));
+    .catch(error => {
+        console.error('Error fetching 2FA status:', error);
+        const statusElement = document.getElementById('2fa-status');
+        if (statusElement) {
+            statusElement.textContent = 'Error: Unable to fetch 2FA status';
+        }
+    });
 }
+
 
 function setup2FA() {
     fetch('/api/setup-2fa/', {
-        method: 'POST'
-        // headers: { 'X-CSRFToken': getCSRFToken() }
+        method: 'POST',
+        headers: { 'X-CSRFToken': getCSRFToken() }
     })
         .then(response => response.json())
         .then(data => {
@@ -238,7 +263,6 @@ function verify2FA() {
     })
         .then(response => response.json())
         .then(data => {
-            console.log(data);
             if (data.status === 'success') {
                 alert('2FA successfully enabled.');
                 document.getElementById('2fa-status').textContent = 'Status: Enabled';

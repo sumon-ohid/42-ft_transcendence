@@ -287,6 +287,8 @@ def verify_2fa(request):
 
             # Verify the code using the TOTP device
             if totp_device.verify_token(code):
+                request.user.profile.two_factor_enabled = True
+                request.user.profile.save()
                 return JsonResponse({'status': 'success', 'message': '2FA verification successful'})
             else:
                 return JsonResponse({'error': 'Invalid verification code'}, status=400)
@@ -306,5 +308,9 @@ def disable_2fa(request):
 
 def get_2fa_status(request):
     if request.user.is_authenticated:
-        return JsonResponse({'enabled': request.user.profile.two_factor_enabled})
-    return JsonResponse({'enabled': False})
+        if request.method == 'GET':
+            if request.user.profile.two_factor_enabled == True:
+                return JsonResponse({'enabled': True})
+            return JsonResponse({'enabled': False})
+        return JsonResponse({'error': 'Invalid method'}, status=400)
+    return JsonResponse({'error': 'Authentication required'}, status=401)
