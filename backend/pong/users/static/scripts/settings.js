@@ -46,10 +46,10 @@ function settingsPage() {
                 <i class="fa-solid fa-circle-arrow-right"></i>
             </div>
         </div>
-        <div class="authentication">
-            <div class="form-check form-switch">
-                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
-                <label class="form-check-label" for="flexSwitchCheckDefault">2FA Authentication</label>
+        <div class="auth-hold">
+            <div class="authentication" onclick="authentication()">
+                <label>two factor authentication</label>
+                <i class="fa-solid fa-circle-arrow-right"></i>
             </div>
         </div>
     `;
@@ -136,6 +136,140 @@ function settingsPage() {
             });
         }
     });
+}
+
+function authentication() {
+    const usernameContainer = document.querySelector('.username-container');
+    const passwordContainer = document.querySelector('.password-container');
+    const authenticationContainer = document.querySelector('.auth-hold');
+
+    usernameContainer.innerHTML = '';
+    passwordContainer.innerHTML = '';
+    authenticationContainer.innerHTML = '';
+
+    const div = document.createElement('div');
+    div.className = 'authentication-page';
+    div.innerHTML = `
+        <div class="authentication-Inpage">
+            <h3>Authentication</h3>
+            <p id="2fa-status">Status: Not Enabled</p>
+            <div id="2fa-setup-container">
+                <button id="enable-2fa-btn" onclick="setup2FA()">Enable 2FA</button>
+                <input type="text" id="2fa-code-input" placeholder="Enter 2FA code" style="display: none;">
+                <button id="verify-2fa-btn" onclick="verify2FA()" style="display: none;">Verify</button>
+            </div>
+            <button id="disable-2fa-btn" onclick="disable2FA()" style="display: none;">Disable 2FA</button>
+        </div>
+    `;
+    document.querySelector('.settings-container').appendChild(div);
+
+    // Fetch the 2FA status on page load
+    fetch('/api/get-2fa-status/', { method: 'GET', headers: { 'X-CSRFToken': getCSRFToken() } })
+    .then(response => response.json())
+    .then(data => {
+        const statusElement = document.getElementById('2fa-status');
+        const enableBtn = document.getElementById('enable-2fa-btn');
+        const disableBtn = document.getElementById('disable-2fa-btn');
+
+        if (data.status === 'enabled') {
+            statusElement.textContent = 'Status: Enabled';
+            enableBtn.style.display = 'none';
+            disableBtn.style.display = 'inline-block';
+        } else {
+            statusElement.textContent = 'Status: Not Enabled';
+            enableBtn.style.display = 'inline-block';
+            disableBtn.style.display = 'none';
+        }
+    })
+    .catch(error => console.error('Error fetching 2FA status:', error));
+}
+
+function setup2FA() {
+    fetch('/api/setup-2fa/', {
+        method: 'POST',
+        headers: { 'X-CSRFToken': getCSRFToken() }
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.qr_code_url) {
+                // Create or update the QR code display
+                let qrCodeContainer = document.getElementById('qr-code-container');
+                if (!qrCodeContainer) {
+                    qrCodeContainer = document.createElement('div');
+                    qrCodeContainer.id = 'qr-code-container';
+                    qrCodeContainer.style.textAlign = 'center';
+                    qrCodeContainer.style.margin = '20px 0';
+                    qrCodeContainer.style.zIndex = '2';
+                    qrCodeContainer.style.position = 'fixed';
+                    qrCodeContainer.style.top = '52%';
+                    qrCodeContainer.style.left = '50%';
+                    qrCodeContainer.style.transform = 'translate(-50%, -50%)';
+                    document.body.appendChild(qrCodeContainer);
+                }
+                qrCodeContainer.innerHTML = `
+                    <img src="${data.qr_code_url}" alt="2FA QR Code" style="width: 150px; height: 150px;">
+                    <p style="color: white; ">Scan in authenticator app!</p>
+                `;
+
+                document.getElementById('2fa-code-input').style.display = 'inline-block';
+                document.getElementById('verify-2fa-btn').style.display = 'inline-block';
+            } else {
+                alert('Error setting up 2FA: ' + data.error);
+            }
+        })
+        .catch(error => console.error('Error setting up 2FA:', error));
+}
+
+function verify2FA() {
+    const code = document.getElementById('2fa-code-input').value;
+
+    if (!code) {
+        alert('Please enter the verification code.');
+        return;
+    }
+
+    fetch('/api/verify-2fa/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCSRFToken()
+        },
+        body: JSON.stringify({ code })
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                alert('2FA successfully enabled.');
+                document.getElementById('2fa-status').textContent = 'Status: Enabled';
+                document.getElementById('enable-2fa-btn').style.display = 'none';
+                document.getElementById('disable-2fa-btn').style.display = 'inline-block';
+
+                // Go to the settings page
+                settingsPage();
+            } else {
+                alert('Error verifying 2FA: ' + data.error);
+            }
+        })
+        .catch(error => console.error('Error verifying 2FA:', error));
+}
+
+function disable2FA() {
+    fetch('/api/disable-2fa/', {
+        method: 'POST',
+        headers: { 'X-CSRFToken': getCSRFToken() }
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                alert('2FA successfully disabled.');
+                document.getElementById('2fa-status').textContent = 'Status: Not Enabled';
+                document.getElementById('enable-2fa-btn').style.display = 'inline-block';
+                document.getElementById('disable-2fa-btn').style.display = 'none';
+            } else {
+                alert('Error disabling 2FA: ' + data.error);
+            }
+        })
+        .catch(error => console.error('Error disabling 2FA:', error));
 }
 
 function changeUserName() {

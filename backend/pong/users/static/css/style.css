@@ -1945,6 +1945,7 @@ form .login-button:hover {
     height: 40px;
     width: 250px;
     position: fixed;
+    left: 75px;
     bottom: 50px;
     border-radius: 20px;
     text-align: center;
@@ -1953,16 +1954,79 @@ form .login-button:hover {
     font-family: "Sour Gummy";
 }
 
-.authentication input {
-    position: fixed;
-    right: 100px;
-    margin-top: 10px;
+.authentication label {
+    margin-left: -20px;
+    margin-top: 7px;
 }
 
-.authentication label {
-    margin-left: -100px;
-    margin-top: 7px;
+.authentication i {
+    margin-left: 200px;
+    position: relative;
+    bottom: 22px;
+}
+
+.authentication:hover {
+    background-color: var(--pong-color);
 }
 
 /*------- SETTINGS PAGE END -------*/
  
+
+/*------- AUTHENTICATION PAGE START -------*/
+.authentication-page {
+    position: fixed;
+    top: 200px;
+    left: 50%;
+    transform: translateX(-50%);
+    align-items: center;
+    justify-items: center;
+    display: flex;
+    flex-direction: column;
+    border-radius: 15px;
+    color: white;
+    font-family: "Sour Gummy";
+}
+
+.authentication-page h3 {
+    font-family: "Sour Gummy";
+    font-size: 2em;
+    margin-top: -30px;
+    color: white;
+}
+
+.authentication-page input {
+    border-radius: 10px;
+    border: none;
+    font-family: "sour gummy";
+    text-align: center;
+    position: fixed;
+    top: 210px;
+    left: 10px;
+    opacity: .8;
+}
+
+.authentication-page p {
+    position: relative;
+    margin-left: 30px;
+}
+
+.authentication-page button {
+    background-color: var(--container-background);
+    height: 40px;
+    width: 250px;
+    position: fixed;
+    top: 250px;
+    left: -20px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 2px 6px rgba(0.2, 0, 0, 0.31); /* shadow */
+    color: white;
+    font-family: "Sour Gummy";
+    border: solid 1px white;
+}
+
+.authentication-page button:hover {
+    background-color: var(--pong-color);
+}
+
+/*------- AUTHENTICATION PAGE END -------*/

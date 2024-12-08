@@ -1,7 +1,7 @@
 from django.urls import path, include
 from .views import index, api_signup, api_login, api_logout, get_username, save_score, \
     upload_profile_picture, get_profile_picture, leaderboard, get_play_history, \
-    change_username, change_password
+    change_username, change_password, disable_2fa, verify_2fa, setup_2fa, get_2fa_status
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -18,6 +18,10 @@ urlpatterns = [
     path('api/get-play-history/', get_play_history, name='get_play_history'),
     path('api/change-username/', change_username, name='change_username'),
     path('api/change-password/', change_password, name='change_password'),
+    path('api/disable-2fa/', disable_2fa, name='disable_2fa'),
+    path('api/verify-2fa/', verify_2fa, name='verify_2fa'),
+    path('api/setup-2fa/', setup_2fa, name='setup_2fa'),
+    path('api/get-2fa-status/', get_2fa_status, name='get_2fa_status'),
 ]
 
 if settings.DEBUG:

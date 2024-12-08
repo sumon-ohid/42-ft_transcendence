@@ -24,6 +24,7 @@ class PlayerScore(models.Model):
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     photo = models.ImageField(upload_to='profile_pictures/', null=True, blank=True)
+    two_factor_enabled = models.BooleanField(default=False)
 
     def __str__(self):
         return self.user.username
