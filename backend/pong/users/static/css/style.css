@@ -2029,4 +2029,68 @@ form .login-button:hover {
     background-color: var(--pong-color);
 }
 
+.two-fa-container {
+    background-color: var(--container-background);
+    position: fixed;
+    top: 150px;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 450px;
+    width: 400px;
+    align-items: center;
+    justify-items: center;
+    display: flex;
+    flex-direction: column;
+    border-radius: 15px;
+    box-shadow: 0 10px 6px rgba(0.5, 0, 0, 0.51); /* shadow */
+    font-family: "Sour Gummy";
+}
+
+.two-fa-container p {
+    font-size: 1em;
+    margin-top: -30px;
+    color: white;
+    position: relative;
+    top : 120px;
+    left: 16px;
+}
+
+.two-fa-container h1 {
+    font-family: "Modak";
+    font-size: 2em;
+    margin-top: -30px;
+    color: white;
+    position: relative;
+    top : 100px;
+}
+
+.two-fa-container input {
+    border-radius: 10px;
+    border: none;
+    font-family: "sour gummy";
+    text-align: center;
+    position: fixed;
+    top: 200px;
+    left: 50px;
+    opacity: .8;
+}
+
+.two-fa-container button {
+    background-color: var(--container-background);
+    height: 40px;
+    width: 250px;
+    position: fixed;
+    top: 270px;
+    left: 80px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 2px 6px rgba(0.2, 0, 0, 0.31); /* shadow */
+    color: white;
+    font-family: "Sour Gummy";
+    border: solid 1px white;
+}
+
+.two-fa-container button:hover {
+    background-color: var(--pong-color);
+}
 /*------- AUTHENTICATION PAGE END -------*/

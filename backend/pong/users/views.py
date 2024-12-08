@@ -67,14 +67,25 @@ def api_login(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                return JsonResponse({'status': 'success', 'message': 'Login successful!'})
+                # Check if 2FA is enabled for the user
+                two_factor_enabled = False
+                try:
+                    profile = user.profile
+                    two_factor_enabled = profile.two_factor_enabled
+                except Profile.DoesNotExist:
+                    pass
+
+                return JsonResponse({
+                    'status': 'success',
+                    'message': 'Login successful!',
+                    'two_factor_enabled': two_factor_enabled
+                })
             else:
                 return JsonResponse({'status': 'error', 'error': 'Invalid username or password.'}, status=401)
         except json.JSONDecodeError:
             return JsonResponse({'status': 'error', 'error': 'Invalid JSON data.'}, status=400)
 
     return JsonResponse({'status': 'error', 'message': 'Invalid request method.'}, status=405)
-
 
 @csrf_exempt
 def api_logout(request):
@@ -298,7 +309,7 @@ def verify_2fa(request):
 
     return JsonResponse({'error': 'Invalid method'}, status=400)
 
-
+@csrf_exempt
 def disable_2fa(request):
     if request.method == 'POST':
         request.user.profile.two_factor_enabled = False
