@@ -8,6 +8,7 @@ let gameInterval;
 // Change later: Nickname can be max 8 character other wise truncate to 8 chars.
 function gamePage() {
     saveCurrentPage('gamePage');
+    history.pushState({ page: 'gamePage' }, '', '#gamePage');
     const body = document.body;
 
     while (body.firstChild) {

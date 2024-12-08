@@ -1,5 +1,7 @@
 function leaderboard() {
     saveCurrentPage('leaderboard');
+    history.pushState({ page: 'leaderboard' }, '', '#leaderboard');
+
     const body = document.body;
 
     while (body.firstChild) {

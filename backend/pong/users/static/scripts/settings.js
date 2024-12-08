@@ -1,5 +1,6 @@
 function settingsPage() {
     saveCurrentPage('settingsPage');
+    history.pushState({ page: 'settingsPage' }, '', '#settingsPage');
     const body = document.body;
 
     // Remove all child elements of the body

@@ -1,5 +1,7 @@
 function chatPage() {
     saveCurrentPage('chatPage');
+    history.pushState({ page: 'chatPage' }, '', '#chatPage');
+
     const body = document.body;
 
     // Remove all child elements of the body
