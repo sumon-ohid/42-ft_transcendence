@@ -1,5 +1,6 @@
 function login() {
     saveCurrentPage('login');
+    history.pushState({ page: 'login' }, '', '#login');
     const body = document.body;
 
     // Remove all child elements of the body

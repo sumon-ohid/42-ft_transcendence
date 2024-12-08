@@ -1,5 +1,6 @@
 function signup() {
     saveCurrentPage('signup');
+    history.pushState({ page: 'signup' }, '', '#signup');
     const body = document.body;
 
     // Remove all child elements of the body

@@ -2,6 +2,9 @@ let loggedInUser = "Guest";
 
 function homePage() {
   saveCurrentPage('homePage');
+  history.replaceState({ page: 'homePage' }, '', '#homePage');
+  // history.pushState({ page: 'homePage' }, '', '#homePage');
+  
   const body = document.body;
 
   // Remove all child elements of the body
@@ -224,7 +227,10 @@ function homePage() {
 
 
 function getCSRFToken() {
-  // Retrieve the CSRF token from cookies
+  const metaToken = document.querySelector('meta[name="csrf-token"]');
+  if (metaToken) {
+      return metaToken.content;
+  }
   const csrfCookie = document.cookie
       .split('; ')
       .find(row => row.startsWith('csrftoken='));
@@ -234,7 +240,6 @@ function getCSRFToken() {
 
 function handleLogout(event) {
   event.preventDefault();
-  // Get the CSRF token from the cookie
   const csrfToken = getCSRFToken();
 
   if (!csrfToken) {
@@ -279,10 +284,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (currentPage) {
     switch (currentPage) {
       case 'homePage':
-        if (loggedInUser != "Guest")
-          homePage();
-        else
-          login();
+        homePage();
         break;
       case 'settingsPage':
         settingsPage();
@@ -302,8 +304,36 @@ document.addEventListener('DOMContentLoaded', () => {
       case 'signup':
         signup();
         break;
-      default:
-        login();
       }
   }
 });
+
+// Handle back and forward button
+window.addEventListener('popstate', (event) => {
+  if (event.state && event.state.page) {
+    switch (event.state.page) {
+      case 'homePage':
+        homePage();
+        break;
+      case 'settingsPage':
+        settingsPage();
+        break;
+      case 'gamePage':
+        gamePage();
+        break;
+      case 'leaderboard':
+        leaderboard();
+        break;
+      case 'chatPage':
+        chatPage();
+        break;
+      case 'login':
+        login();
+        break;
+      case 'signup':
+        signup();
+        break;
+    }
+  }
+});
+

@@ -10,6 +10,20 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.core.files.storage import default_storage
 from django.contrib.auth.models import User
+from django_otp.plugins.otp_totp.models import TOTPDevice
+from django_otp.oath import totp
+from django_otp.util import random_hex
+import base64
+import qrcode
+from io import BytesIO
+from django.views.decorators.csrf import csrf_protect
+from django_otp import devices_for_user
+from django.utils.crypto import get_random_string
+from django.views.decorators.cache import never_cache
+from time import time
+import random
+import string
+
 
 
 @login_required
@@ -39,7 +53,7 @@ def api_signup(request):
     return JsonResponse({'status': 'error', 'message': 'Invalid request method.'}, status=405)
 
 
-# @csrf_exempt
+@csrf_exempt
 def api_login(request):
     if request.method == 'POST':
         try:
@@ -62,7 +76,7 @@ def api_login(request):
     return JsonResponse({'status': 'error', 'message': 'Invalid request method.'}, status=405)
 
 
-# @csrf_exempt
+@csrf_exempt
 def api_logout(request):
     if request.user.is_authenticated:
         logout(request)
@@ -214,3 +228,89 @@ def change_password(request):
             return JsonResponse({'status': 'error', 'error': 'Invalid JSON data.'}, status=400)
 
     return JsonResponse({'status': 'error', 'message': 'Invalid request method.'}, status=405)
+
+
+# 2Factor Authentication
+def random_hex(length):
+    return get_random_string(length * 2, allowed_chars='0123456789abcdef')
+
+
+@csrf_exempt
+def setup_2fa(request):
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            try:
+                # Check if a TOTP device already exists for the user
+                otp_device = TOTPDevice.objects.get(user=request.user, name="default")
+            except TOTPDevice.DoesNotExist:
+                # Generate a random secret key
+                secret = random_hex(20)
+                
+                # Create a TOTP device for the user
+                otp_device = TOTPDevice(user=request.user, name="default")
+                otp_device.key = secret
+                otp_device.save()
+
+            otp_key = base64.b32encode(otp_device.bin_key).decode()
+            label = f"Pong%20Game%3A{request.user.username}"
+            qr_code_url = f"otpauth://totp/{label}?secret={otp_key}&algorithm=SHA1&digits=6&period=30&issuer=Pong%20Game&_={int(time())}"
+
+            # Generate the QR code
+            qr = qrcode.make(qr_code_url)
+            buffer = BytesIO()
+            qr.save(buffer, format='PNG')
+            qr_code_image = base64.b64encode(buffer.getvalue()).decode()
+            
+            # Return the QR code as a data URL
+            response = JsonResponse({'qr_code_url': f'data:image/png;base64,{qr_code_image}'})
+            response['Cache-Control'] = 'no-store, no-cache, must-revalidate, proxy-revalidate'
+            response['Pragma'] = 'no-cache'
+            response['Expires'] = '0'
+            return response
+        return JsonResponse({'error': 'Invalid method'}, status=400)
+    
+    return JsonResponse({'error': 'Authentication required'}, status=401)
+
+@csrf_exempt
+def verify_2fa(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            code = data.get('code')
+            if not code:
+                return JsonResponse({'error': 'Code is required'}, status=400)
+
+            # Get the user's TOTP device
+            totp_device = TOTPDevice.objects.filter(user=request.user).first()
+            if not totp_device:
+                return JsonResponse({'error': 'No 2FA device found for this user'}, status=400)
+
+            # Verify the code using the TOTP device
+            if totp_device.verify_token(code):
+                request.user.profile.two_factor_enabled = True
+                request.user.profile.save()
+                return JsonResponse({'status': 'success', 'message': '2FA verification successful'})
+            else:
+                return JsonResponse({'error': 'Invalid verification code'}, status=400)
+
+        except json.JSONDecodeError:
+            return JsonResponse({'error': 'Invalid JSON in request'}, status=400)
+
+    return JsonResponse({'error': 'Invalid method'}, status=400)
+
+
+def disable_2fa(request):
+    if request.method == 'POST':
+        request.user.profile.two_factor_enabled = False
+        request.user.profile.save()
+        return JsonResponse({'status': 'success'})
+    return JsonResponse({'error': 'Invalid method'}, status=400)
+
+def get_2fa_status(request):
+    if request.user.is_authenticated:
+        if request.method == 'GET':
+            if request.user.profile.two_factor_enabled == True:
+                return JsonResponse({'enabled': True})
+            return JsonResponse({'enabled': False})
+        return JsonResponse({'error': 'Invalid method'}, status=400)
+    return JsonResponse({'error': 'Authentication required'}, status=401)
