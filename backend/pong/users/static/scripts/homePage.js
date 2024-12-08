@@ -304,6 +304,11 @@ document.addEventListener('DOMContentLoaded', () => {
       case 'signup':
         signup();
         break;
+      case '2fa':
+        show2FAPage();
+        break;
+      // default:
+      //   window.location.href = '/index.html';
       }
   }
 });
@@ -333,6 +338,11 @@ window.addEventListener('popstate', (event) => {
       case 'signup':
         signup();
         break;
+      case '2fa':
+        show2FAPage();
+        break;
+      // default:
+      //   window.location.href = '/index.html';
     }
   }
 });

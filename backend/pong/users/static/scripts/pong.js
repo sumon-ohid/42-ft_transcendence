@@ -40,6 +40,16 @@ function gamePage() {
             <h1>BACK</h1>
     `;
     body.appendChild(div);
+
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Enter') {
+            // clear previous game interval if exists
+            if (gameInterval) {
+                clearInterval(gameInterval);
+            }
+            startGame();
+        }
+    });
 }
 
 function selectAvatar(avatarNumber, element) {
