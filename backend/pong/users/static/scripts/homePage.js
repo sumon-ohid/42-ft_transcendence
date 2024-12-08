@@ -307,6 +307,8 @@ document.addEventListener('DOMContentLoaded', () => {
       case '2fa':
         show2FAPage();
         break;
+      // default:
+      //   window.location.href = '/index.html';
       }
   }
 });
