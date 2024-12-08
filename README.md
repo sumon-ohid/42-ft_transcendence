@@ -40,7 +40,7 @@ Simply copy commands
 ```
 To access from browser:
 ```bash
-  http://localhost:8000/users/
+  http://localhost:8000/
 ```
 
 ## License
