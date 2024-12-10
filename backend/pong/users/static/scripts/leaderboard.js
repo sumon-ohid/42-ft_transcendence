@@ -78,7 +78,7 @@ function leaderboard() {
                             <div class="player">
                                 <span class="rank-number">Rank ${index + 1}</span>
                                 <img src="${player.avatar}" alt="${player.name}'s avatar">
-                                <span class="badge text-bg-warning">${formatPlayerName(player.name)}</span>
+                                <span class="player-name">${formatPlayerName(player.name)}</span>
                                 <span class="badge text-bg-light">${player.score}</span>
                             </div>
                         `).join('')}
