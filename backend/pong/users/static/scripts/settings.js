@@ -226,7 +226,7 @@ function setup2FA() {
                     qrCodeContainer.style.margin = '20px 0';
                     qrCodeContainer.style.zIndex = '2';
                     qrCodeContainer.style.position = 'fixed';
-                    qrCodeContainer.style.top = '52%';
+                    qrCodeContainer.style.top = '390px';
                     qrCodeContainer.style.left = '50%';
                     qrCodeContainer.style.transform = 'translate(-50%, -50%)';
                     document.body.appendChild(qrCodeContainer);
