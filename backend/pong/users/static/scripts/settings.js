@@ -31,16 +31,16 @@ function settingsPage() {
             <h1>BACK</h1>
             </div>
         <div class="username-container">
-            <input type="text" id="username" placeholder="new username">
+            <input type="text" id="username" placeholder="new username" required>
             <div class="change-username" onclick="changeUserName()">
                 <p>change username</p>
                 <i class="fa-solid fa-circle-arrow-right"></i>
             </div>
         </div>
         <div class="password-container">
-            <input type="password" id="current-password" placeholder="current password">
-            <input type="password" id="new-password" placeholder="new password">
-            <input type="password" id="confirm-password" placeholder="confirm password">
+            <input type="password" id="current-password" placeholder="current password" required>
+            <input type="password" id="new-password" placeholder="new password" required>
+            <input type="password" id="confirm-password" placeholder="confirm password" required>
             <div class="change-password" onclick="changePassword()">
                 <p>change password</p>
                 <i class="fa-solid fa-circle-arrow-right"></i>

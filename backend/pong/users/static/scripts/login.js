@@ -16,8 +16,8 @@ function login() {
             <p>Login</p>
         </div>
         <form class="form" id="login-form">
-            <input type="text" id="username" name="username" placeholder="Username" class="form-box" autocomplete="username"><br>
-            <input type="password" id="password" name="password" placeholder="Password" class="form-box" autocomplete="current-password"><br><br>
+            <input type="text" id="username" name="username" placeholder="Username" class="form-box" autocomplete="username" required><br>
+            <input type="password" id="password" name="password" placeholder="Password" class="form-box" autocomplete="current-password" required><br><br>
             <button type="submit" class="login-button">Login</button>
         </form>
         <div class="or">or</div>

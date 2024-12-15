@@ -10,8 +10,8 @@ async function fetchUsername() {
             }
         });
         const data = await response.json();
-        if (data.username.length > 7)
-          data.username = data.username.substring(0, 7);
+        if (data.username.length > 6)
+          data.username = data.username.substring(0, 6);
         return data.username || "Guest";
     } catch (error) {
         console.error('Error fetching username:', error);

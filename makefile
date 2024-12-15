@@ -4,10 +4,6 @@ all: build up
 
 build:
 	${DOCKER_COMPOSE} build 
-	sleep 3
-	docker-compose run django python manage.py makemigrations
-	sleep 3
-	docker-compose run django python manage.py migrate
 
 up:
 	${DOCKER_COMPOSE} up -d
@@ -26,7 +22,7 @@ clean: down
 
 fclean: clean
 	docker system prune -f
-	rm -rf postgres_data
+	# rm -rf postgres_data
 
 re: fclean all
 

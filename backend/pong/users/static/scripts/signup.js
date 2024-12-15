@@ -16,9 +16,9 @@ function signup() {
             <p>Register</p>
         </div>
         <form id="signup-form" class="form">
-            <input type="text" id="email" name="email" placeholder="email" class="form-box"><br>
-            <input type="text" id="username" name="username" placeholder="username" class="form-box"><br>
-            <input type="password" id="password" name="password" placeholder="password" class="form-box"><br><br>
+            <input type="text" id="email" name="email" placeholder="email" class="form-box" required><br>
+            <input type="text" id="username" name="username" placeholder="username" class="form-box" required><br>
+            <input type="password" id="password" name="password" placeholder="password" class="form-box" required><br><br>
             <button type="button" id="signup-button" class="login-button">Signup</button>
             <button type="button" id="login-button" class="login-button2" onclick="login()"><i class="fa-solid fa-arrow-left-long"></i> back</button>
         </form>
