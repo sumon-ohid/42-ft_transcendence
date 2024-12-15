@@ -126,9 +126,9 @@ function settingsPage() {
             .then(response => response.json())
             .then(data => {
                 if (data.status === 'success') {
-                    alert('Profile picture uploaded successfully');
+                    error('Profile picture uploaded successfully');
                 } else {
-                    alert('Error uploading profile picture');
+                    error('Error uploading profile picture');
                 }
             })
             .catch(error => {
@@ -239,7 +239,7 @@ function setup2FA() {
                 document.getElementById('2fa-code-input').style.display = 'inline-block';
                 document.getElementById('verify-2fa-btn').style.display = 'inline-block';
             } else {
-                alert('Error setting up 2FA: ' + data.error);
+                error('Error setting up 2FA: ' + data.error);
             }
         })
         .catch(error => console.error('Error setting up 2FA:', error));
@@ -249,7 +249,7 @@ function verify2FA() {
     const code = document.getElementById('2fa-code-input').value;
 
     if (!code) {
-        alert('Please enter the verification code.');
+        error('Please enter the verification code.');
         return;
     }
     const csrfToken = getCSRFToken();
@@ -264,7 +264,7 @@ function verify2FA() {
         .then(response => response.json())
         .then(data => {
             if (data.status === 'success') {
-                alert('2FA successfully enabled.');
+                error('2FA successfully enabled.');
                 document.getElementById('2fa-status').textContent = 'Status: Enabled';
                 document.getElementById('enable-2fa-btn').style.display = 'none';
                 document.getElementById('disable-2fa-btn').style.display = 'inline-block';
@@ -274,7 +274,7 @@ function verify2FA() {
                 // Go to the settings page
                 // settingsPage();
             } else {
-                alert('Error verifying 2FA: ' + data.error);
+                error('Error verifying 2FA: ' + data.error);
             }
         })
         .catch(error => console.error('Error verifying 2FA:', error));
@@ -289,12 +289,12 @@ function disable2FA() {
         .then(response => response.json())
         .then(data => {
             if (data.status === 'success') {
-                alert('2FA successfully disabled.');
+                error('2FA successfully disabled.');
                 document.getElementById('2fa-status').textContent = 'Status: Not Enabled';
                 document.getElementById('enable-2fa-btn').style.display = 'inline-block';
                 document.getElementById('disable-2fa-btn').style.display = 'none';
             } else {
-                alert('Error disabling 2FA: ' + data.error);
+                error('Error disabling 2FA: ' + data.error);
             }
         })
         .catch(error => console.error('Error disabling 2FA:', error));
@@ -305,7 +305,7 @@ function changeUserName() {
     const currentUsername = loggedInUser;
 
     if (!newUsername) {
-        alert('Please enter a new username.');
+        error('Please enter a new username.');
         return;
     }
 
@@ -325,15 +325,15 @@ function changeUserName() {
     .then(response => response.json())
     .then(data => {
     if (data.status === 'success') {
-        alert('Username changed successfully!');
+        error('Username changed successfully!');
         loggedInUser = newUsername;
     } else {
-        alert(`Error: ${data.error}`);
+        error(`Error: ${data.error}`);
     }
     })
     .catch(error => {
     console.error('Error:', error);
-    alert('An error occurred while changing the username.');
+    error('An error occurred while changing the username.');
     });
 }
 
@@ -344,12 +344,12 @@ function changePassword() {
     const confirmPassword = document.getElementById('confirm-password').value;
   
     if (!currentPassword || !newPassword || !confirmPassword) {
-      alert('Please fill in all password fields.');
+      error('Please fill in all password fields.');
       return;
     }
   
     if (newPassword !== confirmPassword) {
-      alert('New password and confirm password do not match.');
+      error('New password and confirm password do not match.');
       return;
     }
   
@@ -369,14 +369,14 @@ function changePassword() {
       .then(response => response.json())
       .then(data => {
         if (data.status === 'success') {
-          alert('Password changed successfully!');
+          error('Password changed successfully!');
           login();
         } else {
-          alert(`Error: ${data.error}`);
+          error(`Error: ${data.error}`);
         }
       })
       .catch(error => {
         console.error('Error:', error);
-        alert('An error occurred while changing the password.');
+        error('An error occurred while changing the password.');
       });
  }
