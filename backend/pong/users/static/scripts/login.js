@@ -16,8 +16,8 @@ function login() {
             <p>Login</p>
         </div>
         <form class="form" id="login-form">
-            <input type="text" id="username" name="username" placeholder="Username" class="form-box" autocomplete="username"><br>
-            <input type="password" id="password" name="password" placeholder="Password" class="form-box" autocomplete="current-password"><br><br>
+            <input type="text" id="username" name="username" placeholder="Username" class="form-box" autocomplete="username" required><br>
+            <input type="password" id="password" name="password" placeholder="Password" class="form-box" autocomplete="current-password" required><br><br>
             <button type="submit" class="login-button">Login</button>
         </form>
         <div class="or">or</div>
@@ -47,7 +47,7 @@ function handleLogin(event) {
     const password = document.getElementById("password").value.trim();
 
     if (!username || !password) {
-        alert("Username and password are required!");
+        error("Username and password are required!");
         return;
     }
 
@@ -69,18 +69,18 @@ function handleLogin(event) {
                 if (data.two_factor_enabled) {
                     show2FAPage(); // Show the 2FA page if 2FA is enabled
                 } else {
-                    alert(data.message);
+                    error(data.message);
                     homePage(); // Redirect to the home page
                 }
             } else if (data.error) {
-                alert("Error: " + data.error);
+                error("Error: " + data.error);
             } else {
-                alert("Something went wrong!");
+                error("Something went wrong!");
             }
         })
         .catch(error => {
             console.error('Error:', error);
-            alert("An error occurred. Please try again.");
+            error("An error occurred. Please try again.");
         });
 }
 
@@ -119,7 +119,7 @@ function handle2FAVerification(event) {
     const code = document.getElementById("2fa-code").value.trim();
 
     if (!code) {
-        alert("2FA code is required!");
+        error("2FA code is required!");
         return;
     }
 
@@ -138,16 +138,16 @@ function handle2FAVerification(event) {
         .then(response => response.json())
         .then(data => {
             if (data.status === 'success') {
-                alert("2FA verification successful!");
+                error("2FA verification successful!");
                 homePage(); // Redirect to the home page
             } else if (data.error) {
-                alert("Error: " + data.error);
+                error("Error: " + data.error);
             } else {
-                alert("Something went wrong!");
+                error("Something went wrong!");
             }
         })
         .catch(error => {
             console.error('Error:', error);
-            alert("An error occurred. Please try again.");
+            error("An error occurred. Please try again.");
         });
 }

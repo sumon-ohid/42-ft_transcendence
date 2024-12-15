@@ -10,8 +10,8 @@ async function fetchUsername() {
             }
         });
         const data = await response.json();
-        if (data.username.length > 7)
-          data.username = data.username.substring(0, 7);
+        if (data.username.length > 6)
+          data.username = data.username.substring(0, 6);
         return data.username || "Guest";
     } catch (error) {
         console.error('Error fetching username:', error);
@@ -144,9 +144,9 @@ async function homePage() {
             .then(response => response.json())
             .then(data => {
                 if (data.status === 'success') {
-                    alert('Profile picture uploaded successfully');
+                    error('Profile picture uploaded successfully');
                 } else {
-                    alert('Error uploading profile picture');
+                    error('Error uploading profile picture');
                 }
             })
             .catch(error => {
@@ -215,7 +215,7 @@ function handleLogout(event) {
     const csrfToken = getCSRFToken();
 
     if (!csrfToken) {
-        alert("CSRF token not found. Logout request cannot be sent.");
+        error("CSRF token not found. Logout request cannot be sent.");
         return;
     }
     // Send a logout request to the backend
@@ -228,17 +228,17 @@ function handleLogout(event) {
     })
         .then(response => {
             if (response.ok) {
-                alert("You have been logged out.");
+                error("You have been logged out.");
                 login();
             } else {
                 return response.json().then(data => {
-                    alert("Logout failed: " + (data.error || "Unknown error."));
+                    error("Logout failed: " + (data.error || "Unknown error."));
                 });
             }
         })
         .catch(error => {
             console.error("Error during logout:", error);
-            alert("An error occurred while logging out.");
+            error("An error occurred while logging out.");
         });
 }
 

@@ -1,17 +1,5 @@
 
 services:
-  nginx:
-    image: nginx:latest
-    container_name: nginx
-    ports:
-      - "8090:80"
-    volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf:ro
-      - ./frontend:/usr/share/nginx/html:ro
-    depends_on:
-      - postgres
-
-
   postgres:
     image: postgres:latest
     container_name: postgres
@@ -28,7 +16,6 @@ services:
   django: 
     build: ./backend
     container_name: django
-    command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - ./backend:/app
     ports:
@@ -38,3 +25,4 @@ services:
 
 volumes:
   postgres_data:
+  
