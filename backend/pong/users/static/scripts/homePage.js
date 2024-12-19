@@ -55,7 +55,7 @@ async function homePage() {
     nav.innerHTML = ` 
         <ul class="nav-menu">
             <li><a href="#" title="Home" onclick="homePage()"><i class="fa-solid fa-house"></i><span>Home</span></a></li>
-            <li><a href="#" title="Account"><i class="fa-solid fa-clock-rotate-left"></i><span>History</span></a></li>
+            <li><a href="#" title="Account" onclick="userList()" ><i class="fa-solid fa-clock-rotate-left"></i><span>Users</span></a></li>
             <li><a href="#" title="Settings" onclick="settingsPage()"><i class="fa-solid fa-gear"></i><span>Settings</span></a></li>
             <li><a href="#" title="Game" onclick="gamePage()"><i class="fa-solid fa-gamepad"></i><span>Game</span></a></li>
             <li><a href="#" title="Leaderboard" onclick="leaderboard()"><i class="fa-solid fa-trophy"></i><span>Leaderboard</span></a></li>
@@ -278,6 +278,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 break;
             case '2fa':
                 show2FAPage();
+                break;
+            case 'userProfile':
+                userProfile();
+                break;
+            case 'userList':
+                userList();
                 break;
             // default:
             //   window.location.href = '/index.html';

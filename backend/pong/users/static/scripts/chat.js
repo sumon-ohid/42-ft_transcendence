@@ -28,7 +28,7 @@ function chatPage() {
         </div>
         <div class="friends">
             <div class="active-friends">
-                <div class="friend">
+                <div class="friend" onclick="userProfile()">
                     <img src="../static/avatars/avatar1.png" alt="Avatar 1">
                     <span class="badge text-bg-light">Friend 1</span>
                 </div>
