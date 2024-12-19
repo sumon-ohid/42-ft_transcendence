@@ -10,8 +10,9 @@ async function fetchUsername() {
             }
         });
         const data = await response.json();
+        loggedInUser = data.username;
         if (data.username.length > 6)
-          data.username = data.username.substring(0, 6);
+          data.username = data.username.substring(0, 6) + '.';
         return data.username || "Guest";
     } catch (error) {
         console.error('Error fetching username:', error);
@@ -156,7 +157,7 @@ async function homePage() {
     });
 
     // Player history
-    fetch('/api/get-play-history/')
+    fetch(`/api/get-play-history/${loggedInUser}`)
         .then(response => response.json())
         .then(data => {
             const historyContainer = document.querySelector('.inside-wel');
@@ -284,7 +285,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 break;
             case 'userList':
                 userList();
-                break;
+                break;                
             // default:
             //   window.location.href = '/index.html';
         }

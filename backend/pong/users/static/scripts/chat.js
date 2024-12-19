@@ -17,41 +17,11 @@ function chatPage() {
             <h1>chat</h1>
         </div>
         <div class="chat-top-bar">
-            <div class="chating-with">
-                <div class="friend-name">
-                    <h1>Guest</h1>
-                    <span class="badge rounded-pill text-bg-success">active now</span>
-                </div>
-                <div class="p-pic-back"></div>
-                <img src="../static/avatars/avatar4.png" alt="user">
-            </div>
+            <!-- This will be dynamically generated depending on click -->
         </div>
         <div class="friends">
             <div class="active-friends">
-                <div class="friend" onclick="userProfile()">
-                    <img src="../static/avatars/avatar1.png" alt="Avatar 1">
-                    <span class="badge text-bg-light">Friend 1</span>
-                </div>
-                <div class="friend">
-                    <img src="../static/avatars/avatar2.png" alt="Avatar 2">
-                    <span class="badge text-bg-light">Friend 2</span>
-                </div>
-                <div class="friend">
-                    <img src="../static/avatars/avatar3.png" alt="Avatar 3">
-                    <span class="badge text-bg-light">Friend 3</span>
-                </div>
-                <div class="friend">
-                    <img src="../static/avatars/avatar4.png" alt="Avatar 4">
-                    <span class="badge text-bg-light">Friend 4</span>
-                </div>
-                <div class="friend">
-                    <img src="../static/avatars/avatar5.png" alt="Avatar 5">
-                    <span class="badge text-bg-light">Friend 5</span>
-                </div>
-                <div class="friend">
-                    <img src="../static/avatars/avatar6.png" alt="Avatar 6">
-                    <span class="badge text-bg-light">Friend 6</span>
-                </div>
+                <!-- User list will be dynamically generated here -->
             </div>
         </div>
         <div class="chat-messages" id="chat-messages"></div>
@@ -68,6 +38,27 @@ function chatPage() {
         </div>
     `;
     body.appendChild(div);
+
+    // Fetch and display users
+    fetch('/api/users/')
+        .then(response => response.json())
+        .then(users => {
+            const friendsContainer = document.querySelector('.active-friends');
+            friendsContainer.innerHTML = ''; // Clear existing content
+
+            users.forEach(user => {
+                const friendDiv = document.createElement('div');
+                friendDiv.className = 'friend';
+                const avatarUrl = user.profile__photo ? `/media/${user.profile__photo}` : '/../static/images/11475215.jpg';
+                friendDiv.innerHTML = `
+                    <img onclick="startChat('${user.username}', '${avatarUrl}')" src="${avatarUrl}" alt="${user.username}">
+                    <span onclick="userProfile('${user.username}')" class="badge text-bg-light">${formatPlayerName(user.username)}</span>
+                    <p id="last-action" class="badge rounded-pill text-bg-info">Last Active: active</p>
+                `;
+                friendsContainer.appendChild(friendDiv);
+            });
+        })
+        .catch(error => console.error('Error fetching users:', error));
 
     // Add event listeners for sending messages
     const chatInput = document.getElementById("chat-input");
@@ -105,27 +96,39 @@ function chatPage() {
             chatMessages.scrollTop = chatMessages.scrollHeight; // Scroll to the bottom
         }
     }
+}
 
-    // // GET USERNAME
-    // fetch('/api/get-username/', {
-    //     method: 'GET',
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //       'X-CSRFToken': document.querySelector('meta[name="csrf-token"]').content
-    //     }
-    //   })
-    //     .then(response => response.json())
-    //     .then(data => {
-    //       const usernameElement = document.querySelector('.friend-name h1');
-    //       if (usernameElement) {
-    //         let username = data.username || "Guest";
-    //         if (username.length > 6) {
-    //           username = username.substring(0, 6) + '.';
-    //         }
-    //         usernameElement.textContent = username;
-    //       }
-    //     })
-    //     .catch(error => {
-    //       console.error('Error fetching username:', error);
-    //     });
+function startChat(username, avatarUrl) {
+    // Fetch user profile
+    fetch(`/api/user-profile/${username}/`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                console.error(data.error);
+                return;
+            }
+
+            const isFriend = data.is_friend;
+            if (!isFriend) {
+                error("You can't chat with the user.");
+                // console.error("You can't chat with the user.");
+                return;
+            }
+
+            const chatTopBar = document.querySelector('.chat-top-bar');
+
+            chatTopBar.innerHTML = `
+                <div onclick="userProfile('${username}')" class="chating-with">
+                    <div class="friend-name">
+                        <h1>${username.substring(0, 6)}.</h1>
+                        <span id="active-now" class="badge rounded-pill text-bg-warning">active now</span>
+                    </div>
+                    <div class="p-pic-back"></div>
+                    <img src="${avatarUrl}" alt="${username}">
+                </div>
+            `;
+        })
+        .catch(error => {
+            console.error('Error fetching user profile:', error);
+        });
 }

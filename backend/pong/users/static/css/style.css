@@ -1216,6 +1216,7 @@ form .login-button:hover {
     position: relative;
     top: 5px;
     left: 176px;
+    border-radius: 50%;
 }
 
 .p-pic-back {
@@ -1241,6 +1242,7 @@ form .login-button:hover {
 
 .friend-name h1{
     position: absolute;
+    margin-left: -20px;
     font-family:'Courier New', Courier, monospace;
     font-size: 1.2em;
     color: white;
@@ -1376,11 +1378,16 @@ form .login-button:hover {
 .friend span{
     position: relative;
     top: -15px;
+    left: -5px;
     text-align: center;
     font-size: .6em;
     color: white;
     z-index: 3;
 }
+
+.friend p{
+    display: none;
+} 
 
 @media (min-width: 880px) {
     .chatpage-container {
@@ -1437,9 +1444,21 @@ form .login-button:hover {
     
     .friend span{
         position: relative;
-        top: 0px;
+        top: -5px;
+        left: 5px;
         text-align: center;
         font-size: .6em;
+        color: white;
+        z-index: 3;
+    }
+
+    .friend p{
+        display: inline;
+        position: relative;
+        top: -25px;
+        left: 70px;
+        text-align: center;
+        font-size: .4em;
         color: white;
         z-index: 3;
     }
@@ -1784,7 +1803,7 @@ form .login-button:hover {
 }
 
 .player span {
-    font-size: 1.2em;
+    font-size: 1em;
     text-align: center;
 }
 
@@ -2116,12 +2135,18 @@ form .login-button:hover {
 
 #block {
     top: 80px;
-    left: 250px;
+    left: 270px;
 }
 
 #user-name {
     top: 40px;
     font-size: 1em;
+    left: 160px;
+}
+
+
+#active-now, #last-action {
+    font-size: .4em;
 }
 
 /*------- PROFILE PAGE END -------*/
