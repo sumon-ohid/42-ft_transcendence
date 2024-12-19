@@ -2102,3 +2102,26 @@ form .login-button:hover {
     background-color: var(--pong-color);
 }
 /*------- AUTHENTICATION PAGE END -------*/
+
+/*------- PROFILE PAGE START -------*/
+
+#add-friend, #user-name, #block {
+    size: 1em;
+    position: fixed;
+}
+
+#add-friend {
+    top: 80px;
+}
+
+#block {
+    top: 80px;
+    left: 250px;
+}
+
+#user-name {
+    top: 40px;
+    font-size: 1em;
+}
+
+/*------- PROFILE PAGE END -------*/

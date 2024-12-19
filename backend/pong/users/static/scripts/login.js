@@ -70,7 +70,9 @@ function handleLogin(event) {
                     show2FAPage(); // Show the 2FA page if 2FA is enabled
                 } else {
                     error(data.message);
-                    homePage(); // Redirect to the home page
+                    setTimeout(function() {
+                        homePage(); // Redirect to the home page
+                    }, 1000);
                 }
             } else if (data.error) {
                 error("Error: " + data.error);

@@ -57,7 +57,9 @@ function handleSignup() {
         .then(data => {
             if (data.status === 'success') {
                 error(data.message);
-                login();
+                setTimeout(function() {
+                    login();
+                }, 1000);
             } else if (data.errors) {
                 error("Errors: " + JSON.stringify(data.errors));
             } else {
