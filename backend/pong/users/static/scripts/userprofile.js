@@ -1,38 +1,12 @@
+let username = 'Guest'
 
-async function fetchUsername() {
-    try {
-        const response = await fetch('/api/get-username/', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRFToken': document.querySelector('meta[name="csrf-token"]').content
-            }
-        });
-        const data = await response.json();
-        if (data.username.length > 6)
-          data.username = data.username.substring(0, 6);
-        return data.username || "Guest";
-    } catch (error) {
-        console.error('Error fetching username:', error);
-        return "Guest";
+function userProfile(userName) {
+    if (userName) {
+        username = userName;
+        localStorage.setItem('currentUsername', username);
+    } else {
+        username = localStorage.getItem('currentUsername') || 'Guest';
     }
-}
-
-async function fetchProfilePicture() {
-    try {
-        const response = await fetch('/api/get-profile-picture/');
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        const data = await response.json();
-        return data.photo || '/../static/images/11475215.jpg';
-    } catch (error) {
-        console.error('Error fetching profile picture:', error);
-        return '/../static/images/11475215.jpg';
-    }
-}
-
-async function userProfile() {
     saveCurrentPage('userProfile');
     history.replaceState({ page: 'userProfile' }, '', '#userProfile');
   
@@ -42,19 +16,34 @@ async function userProfile() {
     while (body.firstChild) {
         body.removeChild(body.firstChild);
     }
+    
+    let avatarUrl = '/../static/images/11475215.jpg'; // default avatar
 
-    // Fetch username and profile picture asynchronously
-    // This solves the reload problem which was showing 
-    // default value first the fetch value from user.
-    const [username, profilePicture] = await Promise.all([fetchUsername(), fetchProfilePicture()]);
+    // Fetch and display users
+    fetch('/api/users/')
+        .then(response => response.json())
+        .then(users => {
+            // Find the user and set the avatarUrl
+            const user = users.find(user => user.username === username);
+            if (user) {
+                if (user.profile__photo)
+                    avatarUrl = "media/" + user.profile__photo; // Set avatarUrl if username matches
+            }
+            
+            // After fetching the user info and avatarUrl, proceed to render the profile page
+            renderProfilePage(username, avatarUrl);
+        })
+        .catch(error => console.error('Error fetching users:', error));
 
-    // Create a new div element and add content
-    const div = document.createElement("div");
-    div.className = "settings-container";
-    div.innerHTML = ` 
+    // Function to render the profile page
+    function renderProfilePage(username, avatarUrl) {
+
+        const div = document.createElement("div");
+        div.className = "settings-container";
+        div.innerHTML = ` 
             <div class="round">
                 <div class="profile-pic">
-                    <img id="profile-picture" src="${profilePicture}" alt="Picture">
+                    <img id="profile-picture" src="${avatarUrl}" alt="Picture">
                 </div>
             </div>
             <div class="inside-wel">
@@ -65,61 +54,53 @@ async function userProfile() {
             <div class="quit-game" onclick="homePage()">
                 <h1>BACK</h1>
             </div>
-            <span id="user-name" class="badge text-bg-secondary">${username}</span>
+            <span id="user-name" class="badge text-bg-secondary">${username.substring(0, 15)}</span>
             <span id="add-friend" class="badge text-bg-primary">Add Friend</span>
             <span id="block" class="badge text-bg-danger">Block</span>
-    `;
-    body.appendChild(div);
+        `;
+        body.appendChild(div);
 
-    // Player history
-    fetch('/api/get-play-history/')
-        .then(response => response.json())
-        .then(data => {
-            const historyContainer = document.querySelector('.inside-wel');
-            
-            if (data.length != 0) {
-                historyContainer.innerHTML = '';
-                data.slice(-5).forEach(record => {
-                    const recordElement = document.createElement('div');
-                    recordElement.className = 'history-record';
-                    let result = record.win ? 'Win' : 'Lose';
-                    const resultClass = result === 'Win' ? 'badge text-bg-info' : 'badge text-bg-warning';
-                    recordElement.innerHTML = `
-                    <div>
-                        <span class="badge text-bg-light">
-                            <p>Date: ${new Date(record.date).toLocaleDateString()}</p>
-                        </span>
-                    </div>
-                    <div>
-                        <span class="badge text-bg-primary">
-                            <p>Score: ${record.score}</p>
-                        </span>
-                    </div>
-                    <div>
-                        <span class="${resultClass}">
-                            <p>Result: ${result}</p>
-                        </span>
-                    </div>
-                    `;
-                    historyContainer.appendChild(recordElement);
-                });
-
-                const welContainer = document.querySelector('.wel-container');
-                const recent = document.createElement('h2');
-                recent.innerText = "recent history";
-                welContainer.appendChild(recent);
-            }
-        })
-        .catch(error => {
-            console.error('Error fetching play history:', error);
-        });
+        // Player history
+        fetch(`/api/get-play-history/${username}`)
+            .then(response => response.json())
+            .then(data => {
+                const historyContainer = document.querySelector('.inside-wel');
+                
+                if (data.length !== 0) {
+                    historyContainer.innerHTML = '';
+                    data.slice(-5).forEach(record => {
+                        const recordElement = document.createElement('div');
+                        recordElement.className = 'history-record';
+                        let result = record.win ? 'Win' : 'Lose';
+                        const resultClass = result === 'Win' ? 'badge text-bg-info' : 'badge text-bg-warning';
+                        recordElement.innerHTML = `
+                        <div>
+                            <span class="badge text-bg-light">
+                                <p>Date: ${new Date(record.date).toLocaleDateString()}</p>
+                            </span>
+                        </div>
+                        <div>
+                            <span class="badge text-bg-primary">
+                                <p>Score: ${record.score}</p>
+                            </span>
+                        </div>
+                        <div>
+                            <span class="${resultClass}">
+                                <p>Result: ${result}</p>
+                            </span>
+                        </div>
+                        `;
+                        historyContainer.appendChild(recordElement);
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching play history:', error);
+            });
+    }
 }
 
 function getCSRFToken() {
-    // const metaToken = document.querySelector('meta[name="csrf-token"]');
-    // if (metaToken) {
-    //     return metaToken.content;
-    // }
     const csrfCookie = document.cookie
         .split('; ')
         .find(row => row.startsWith('csrftoken='));

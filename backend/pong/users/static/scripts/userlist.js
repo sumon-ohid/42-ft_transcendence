@@ -59,7 +59,6 @@ function userList() {
                 return;
             }
             data.sort((a, b) => b.score - a.score);
-            const topPlayer = data[0];
             div.innerHTML = `
                     <div class="title-all-rank">
                         <h2>User List</h2>
@@ -67,8 +66,8 @@ function userList() {
                     <div class="all-players">
                         ${data.map((player, index) => `
                             <div class="player">
-                                <img onclick="userProfile(player)" src="${player.avatar}" alt="${player.name}'s avatar">
-                                <span class="player-name">${formatPlayerName(player.name)}</span>
+                                <img onclick="userProfile('${player.name}')" src="${player.avatar}" alt="${player.name}'s avatar">
+                                <span class="player-name">${formatPlayerName(player.name, 11)}</span>
                                 <span class="badge text-bg-light">Add friend</span>
                                 <span class="badge text-bg-danger">Block</span>
                                 <span class="badge text-bg-info">Chat</span>

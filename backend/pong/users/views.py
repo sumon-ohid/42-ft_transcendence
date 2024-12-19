@@ -169,13 +169,17 @@ def leaderboard(request):
     return JsonResponse(data, safe=False)
 
 
-def get_play_history(request):
+def get_play_history(request, username):
     if not request.user.is_authenticated:
         return JsonResponse({'error': 'Authentication required'}, status=401)
 
-    player_name = request.user.username
     try:
-        player_score = PlayerScore.objects.get(player_name=player_name)
+        user = User.objects.get(username=username)
+    except User.DoesNotExist:
+        return JsonResponse({'error': 'User does not exist'}, status=404)
+
+    try:
+        player_score = PlayerScore.objects.get(player_name=user.username)
     except PlayerScore.DoesNotExist:
         return JsonResponse([], safe=False)
 
@@ -189,7 +193,6 @@ def get_play_history(request):
         for score in player_score.scores
     ]
     return JsonResponse(sorted(scores_with_dates, key=lambda x: x['date'], reverse=True), safe=False)
-
 
 @csrf_exempt
 def change_username(request):
@@ -328,3 +331,10 @@ def get_2fa_status(request):
             return JsonResponse({'enabled': False})
         return JsonResponse({'error': 'Invalid method'}, status=400)
     return JsonResponse({'error': 'Authentication required'}, status=401)
+
+
+def get_users(request):
+    current_user = request.user
+    users = User.objects.exclude(id=current_user.id).select_related('profile').values('id', 'username', 'profile__photo')
+    users_list = list(users)
+    return JsonResponse(users_list, safe=False)

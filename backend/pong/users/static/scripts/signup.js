@@ -87,10 +87,11 @@ function error(msg) {
     errorDiv.style.color = 'white';
     errorDiv.style.borderRadius = '5px';
     errorDiv.style.zIndex = '100';
-    
-    document.body.appendChild(errorDiv);
+     document.body.appendChild(errorDiv);
     
     setTimeout(function() {
-        document.body.removeChild(errorDiv);
+        if (document.body.contains(errorDiv)) {
+            document.body.removeChild(errorDiv);
+        }
     }, 3000);
 }
