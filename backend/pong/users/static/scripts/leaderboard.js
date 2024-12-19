@@ -77,7 +77,7 @@ function leaderboard() {
                         ${data.map((player, index) => `
                             <div class="player">
                                 <span class="rank-number">Rank ${index + 1}</span>
-                                <img src="${player.avatar}" alt="${player.name}'s avatar">
+                                <img onclick="userProfile('${player.name}')" src="${player.avatar}" alt="${player.name}'s avatar">
                                 <span class="player-name">${formatPlayerName(player.name)}</span>
                                 <span class="badge text-bg-light">${player.score}</span>
                             </div>

@@ -2135,7 +2135,7 @@ form .login-button:hover {
 
 #block {
     top: 80px;
-    left: 270px;
+    left: 160px;
 }
 
 #user-name {
@@ -2147,6 +2147,23 @@ form .login-button:hover {
 
 #active-now, #last-action {
     font-size: .4em;
+}
+
+.user-profile-design {
+    background-image: url("../images/user-pro.png");
+    background-size: cover;
+    height: 150px;
+    width: 150px;
+    position: fixed;
+    top: 55px;
+    right: 15px;
+}
+
+#chat-icon {
+    position: fixed;
+    top: 80px;
+    font-size: .5em;
+    left: 220px;
 }
 
 /*------- PROFILE PAGE END -------*/
