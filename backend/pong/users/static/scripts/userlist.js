@@ -59,25 +59,28 @@ function userList() {
                 return;
             }
             data.sort((a, b) => b.score - a.score);
+                        const currentUsername = localStorage.getItem('currentUsername') || 'Guest';
+            
+            const filteredData = data.filter(player => player.name !== currentUsername);
+            
             div.innerHTML = `
-                    <div class="title-all-rank">
-                        <h2>User List</h2>
-                    </div>
-                    <div class="all-players">
-                        ${data.map((player, index) => `
-                            <div class="player">
-                                <img onclick="userProfile('${player.name}')" src="${player.avatar}" alt="${player.name}'s avatar">
-                                <span class="player-name">${formatPlayerName(player.name, 11)}</span>
-                                <span class="badge text-bg-light">Add friend</span>
-                                <span class="badge text-bg-danger">Block</span>
-                                <span class="badge text-bg-info">Chat</span>
-                            </div>
-                        `).join('')}
-                    </div>
-                    <div class="quit-game" onclick="homePage()">
-                        <h1>BACK</h1>
-                    </div>
-                `;
+                <div class="title-all-rank">
+                    <h2>User List</h2>
+                </div>
+                <div class="all-players">
+                    ${filteredData.map((player, index) => `
+                        <div class="player">
+                            <img onclick="userProfile('${player.name}')" src="${player.avatar}" alt="${player.name}'s avatar">
+                            <span class="player-name">${formatPlayerName(player.name, 11)}</span>
+                            <span class="badge text-bg-danger">Block</span>
+                            <span class="badge text-bg-info" onclick="chatPage(); startChat('${player.name}', '${player.avatar}')">Chat</span>
+                        </div>
+                    `).join('')}
+                </div>
+                <div class="quit-game" onclick="homePage()">
+                    <h1>BACK</h1>
+                </div>
+            `;
             body.appendChild(div);
         })
         .catch(error => {

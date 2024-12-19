@@ -53,7 +53,7 @@ function chatPage() {
                 friendDiv.innerHTML = `
                     <img onclick="startChat('${user.username}', '${avatarUrl}')" src="${avatarUrl}" alt="${user.username}">
                     <span onclick="userProfile('${user.username}')" class="badge text-bg-light">${formatPlayerName(user.username)}</span>
-                    <p class="badge rounded-pill text-bg-info">Last Active: active</p>
+                    <p id="last-action" class="badge rounded-pill text-bg-info">Last Active: active</p>
                 `;
                 friendsContainer.appendChild(friendDiv);
             });
@@ -99,16 +99,36 @@ function chatPage() {
 }
 
 function startChat(username, avatarUrl) {
-    const chatTopBar = document.querySelector('.chat-top-bar');
+    // Fetch user profile
+    fetch(`/api/user-profile/${username}/`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                console.error(data.error);
+                return;
+            }
 
-    chatTopBar.innerHTML = `
-        <div onclick="userProfile('${username}')" class="chating-with">
-            <div class="friend-name">
-                <h1>${username.substring(0, 6)}.</h1>
-                <span class="badge rounded-pill text-bg-success">active now</span>
-            </div>
-            <div class="p-pic-back"></div>
-            <img src="${avatarUrl}" alt="${username}">
-        </div>
-    `;
+            const isFriend = data.is_friend;
+            if (!isFriend) {
+                error("You can't chat with the user.");
+                // console.error("You can't chat with the user.");
+                return;
+            }
+
+            const chatTopBar = document.querySelector('.chat-top-bar');
+
+            chatTopBar.innerHTML = `
+                <div onclick="userProfile('${username}')" class="chating-with">
+                    <div class="friend-name">
+                        <h1>${username.substring(0, 6)}.</h1>
+                        <span id="active-now" class="badge rounded-pill text-bg-warning">active now</span>
+                    </div>
+                    <div class="p-pic-back"></div>
+                    <img src="${avatarUrl}" alt="${username}">
+                </div>
+            `;
+        })
+        .catch(error => {
+            console.error('Error fetching user profile:', error);
+        });
 }

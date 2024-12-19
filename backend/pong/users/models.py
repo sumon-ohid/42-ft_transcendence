@@ -29,3 +29,10 @@ class Profile(models.Model):
     def __str__(self):
         return self.user.username
 
+class Friendship(models.Model):
+    user = models.ForeignKey(User, related_name='friendships', on_delete=models.CASCADE)
+    friend = models.ForeignKey(User, related_name='friends', on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('user', 'friend')

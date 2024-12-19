@@ -285,7 +285,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 break;
             case 'userList':
                 userList();
-                break;
+                break;                
             // default:
             //   window.location.href = '/index.html';
         }

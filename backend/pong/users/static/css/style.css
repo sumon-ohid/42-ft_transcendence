@@ -1803,7 +1803,7 @@ form .login-button:hover {
 }
 
 .player span {
-    font-size: 1.2em;
+    font-size: 1em;
     text-align: center;
 }
 
@@ -2135,13 +2135,18 @@ form .login-button:hover {
 
 #block {
     top: 80px;
-    left: 250px;
+    left: 270px;
 }
 
 #user-name {
     top: 40px;
     font-size: 1em;
     left: 160px;
+}
+
+
+#active-now, #last-action {
+    font-size: .4em;
 }
 
 /*------- PROFILE PAGE END -------*/
