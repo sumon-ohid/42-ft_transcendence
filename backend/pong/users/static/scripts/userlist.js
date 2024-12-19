@@ -58,10 +58,8 @@ function userList() {
                 }  
                 return;
             }
-            data.sort((a, b) => b.score - a.score);
-                        const currentUsername = localStorage.getItem('currentUsername') || 'Guest';
-            
-            const filteredData = data.filter(player => player.name !== currentUsername);
+            data.sort((a, b) => b.score - a.score);            
+            const filteredData = data.filter(player => player.name !== loggedInUser);
             
             div.innerHTML = `
                 <div class="title-all-rank">

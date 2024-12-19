@@ -257,6 +257,10 @@ document.addEventListener('DOMContentLoaded', () => {
     if (currentPage) {
         switch (currentPage) {
             case 'homePage':
+                if (loggedInUser == 'Guest') {
+                    login();
+                    break;
+                }
                 homePage();
                 break;
             case 'settingsPage':
@@ -285,15 +289,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 break;
             case 'userList':
                 userList();
-                break;                
+                break;               
             // default:
-            //   window.location.href = '/index.html';
+            //   window.location.href = '';
         }
     }
 });
 
 // Handle back and forward button
-window.addEventListener('popstate', (event) => {
+window.addEventListener('popstate', function(event) {
     if (event.state && event.state.page) {
         switch (event.state.page) {
             case 'homePage':
@@ -319,6 +323,12 @@ window.addEventListener('popstate', (event) => {
                 break;
             case '2fa':
                 show2FAPage();
+                break;
+            case 'userList':
+                userList();
+                break;
+            case 'userProfile':
+                userProfile()
                 break;
             // default:
             //   window.location.href = '/index.html';

@@ -1,5 +1,9 @@
 function userProfile(username) {
-    if (username) {
+    if (username == loggedInUser) {
+        homePage();
+        return;
+    }
+    if (username && username != loggedInUser) {
         localStorage.setItem('currentUsername', username);
     } else {
         username = localStorage.getItem('currentUsername') || 'Guest';
