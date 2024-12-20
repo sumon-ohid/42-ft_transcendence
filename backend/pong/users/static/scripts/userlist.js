@@ -45,7 +45,7 @@ function userList() {
                 <div class="title-all-rank">
                     <h2>User List</h2>
                 </div>
-                <div class="all-players">
+                <div class="all-users">
                     ${filteredData.map(user => {
                         const avatarUrl = user.profile__photo 
                             ? `/media/${user.profile__photo}` 

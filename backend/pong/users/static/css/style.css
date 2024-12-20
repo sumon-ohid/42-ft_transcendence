@@ -1766,6 +1766,15 @@ form .login-button:hover {
     gap: 10px;
 }
 
+.all-users {
+    width: 100%;
+    max-height: 600px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
 .title-all-rank {
     background-color: var(--pong-color);
     width: 100%;
