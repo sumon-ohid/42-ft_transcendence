@@ -208,6 +208,9 @@ def change_username(request):
             if User.objects.filter(username=new_username).exists():
                 return JsonResponse({'status': 'error', 'error' : 'New username already exists.'}, status=400)
 
+            if new_username == 'Guest':
+                return JsonResponse({'status': 'error', 'error': 'Username can not be Guest.'}, status=400)
+
             try:
                 user = User.objects.get(username=current_username)
                 user.username = new_username

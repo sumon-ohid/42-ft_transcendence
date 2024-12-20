@@ -105,7 +105,7 @@ function userProfile(username) {
 }
 
 function toggleBlock(username) {
-    const addFriendButton = document.getElementById('add-friend');
+    const addFriendButton = document.getElementById('block');
     if (addFriendButton.textContent === 'Unblock') {
         fetch(`/api/add-block/${username}/`, {
             method: 'POST',

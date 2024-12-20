@@ -37,26 +37,32 @@ async function fetchProfilePicture() {
 async function homePage() {
     saveCurrentPage('homePage');
     history.replaceState({ page: 'homePage' }, '', '#homePage');
-  
+    
     const body = document.body;
-
+    
     // Remove all child elements of the body
     while (body.firstChild) {
         body.removeChild(body.firstChild);
     }
-
+    
     // Fetch username and profile picture asynchronously
     // This solves the reload problem which was showing 
     // default value first the fetch value from user.
     const [username, profilePicture] = await Promise.all([fetchUsername(), fetchProfilePicture()]);
-
+    
+    if (loggedInUser === 'Guest') {
+        saveCurrentPage('login');
+        login();
+        return;
+    }
+    
     // Create nav bar and add content
     const nav = document.createElement("nav");
     nav.className = "navbar";
     nav.innerHTML = ` 
         <ul class="nav-menu">
             <li><a href="#" title="Home" onclick="homePage()"><i class="fa-solid fa-house"></i><span>Home</span></a></li>
-            <li><a href="#" title="Account" onclick="userList()" ><i class="fa-solid fa-clock-rotate-left"></i><span>Users</span></a></li>
+            <li><a href="#" title="Other Users" onclick="userList()" ><i class="fa-solid fa-users"></i><span>Users</span></a></li>
             <li><a href="#" title="Settings" onclick="settingsPage()"><i class="fa-solid fa-gear"></i><span>Settings</span></a></li>
             <li><a href="#" title="Game" onclick="gamePage()"><i class="fa-solid fa-gamepad"></i><span>Game</span></a></li>
             <li><a href="#" title="Leaderboard" onclick="leaderboard()"><i class="fa-solid fa-trophy"></i><span>Leaderboard</span></a></li>
@@ -257,10 +263,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (currentPage) {
         switch (currentPage) {
             case 'homePage':
-                if (loggedInUser == 'Guest') {
-                    login();
-                    break;
-                }
                 homePage();
                 break;
             case 'settingsPage':
