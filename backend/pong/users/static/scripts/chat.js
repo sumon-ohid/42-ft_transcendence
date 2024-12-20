@@ -109,7 +109,7 @@ function startChat(username, avatarUrl) {
             }
 
             const isFriend = data.is_friend;
-            if (!isFriend) {
+            if (isFriend) {
                 error("You can't chat with the user.");
                 // console.error("You can't chat with the user.");
                 return;

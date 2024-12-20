@@ -1359,6 +1359,14 @@ form .login-button:hover {
     scrollbar-width: none;
 }
 
+.friend {
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+}
+
 .active-friends {
     display: flex;
     flex-direction: column;
@@ -1378,7 +1386,6 @@ form .login-button:hover {
 .friend span{
     position: relative;
     top: -15px;
-    left: -5px;
     text-align: center;
     font-size: .6em;
     color: white;
@@ -1390,6 +1397,13 @@ form .login-button:hover {
 } 
 
 @media (min-width: 880px) {
+    .friend {
+        align-items: none;
+        justify-content: none;
+        display: inline;
+        flex-direction: none;
+    }
+
     .chatpage-container {
         background-color: var(--pong-color);
         position: fixed;
