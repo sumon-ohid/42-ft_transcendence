@@ -64,7 +64,7 @@ async function homePage() {
             <li><a href="#" title="Home" onclick="homePage()"><i class="fa-solid fa-house"></i><span>Home</span></a></li>
             <li><a href="#" title="Other Users" onclick="userList()" ><i class="fa-solid fa-users"></i><span>Users</span></a></li>
             <li><a href="#" title="Settings" onclick="settingsPage()"><i class="fa-solid fa-gear"></i><span>Settings</span></a></li>
-            <li><a href="#" title="Game" onclick="gamePage()"><i class="fa-solid fa-gamepad"></i><span>Game</span></a></li>
+            <li><a href="#" title="Game" onclick="gameOptions()"><i class="fa-solid fa-gamepad"></i><span>Game</span></a></li>
             <li><a href="#" title="Leaderboard" onclick="leaderboard()"><i class="fa-solid fa-trophy"></i><span>Leaderboard</span></a></li>
             <li><a href="https://github.com/sumon-ohid/42-Ft_transcendence" title="Github Star"><i class="fa-solid fa-star"></i><span>Github Star</span></a></li>
             <li><a href="#" title="Chat" onclick="chatPage()"><i class="fa-solid fa-message"></i><span>Chat</span></a></li>
@@ -97,7 +97,7 @@ async function homePage() {
                 </div>
             </div>
         </div>
-        <div class="play-container" onclick="gamePage()">
+        <div class="play-container" onclick="gameOptions()">
             <div class="yellow-badge">
                 <span class="badge rounded-pill text-bg-warning">🔥 popular</span>
             </div >
@@ -291,7 +291,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 break;
             case 'userList':
                 userList();
-                break;               
+                break; 
+            case 'gameOptions':
+                gameOptions();
+                break;              
             // default:
             //   window.location.href = '';
         }
@@ -331,6 +334,9 @@ window.addEventListener('popstate', function(event) {
                 break;
             case 'userProfile':
                 userProfile()
+                break;
+            case 'gameOptions':
+                gameOptions();
                 break;
             // default:
             //   window.location.href = '/index.html';

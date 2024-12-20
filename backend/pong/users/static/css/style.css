@@ -928,13 +928,13 @@ form .login-button:hover {
 .gamepage-button {
     font-family: "Modak";
     font-size: 2em;
-    color: #111111c0;
+    color: #ffffff;
     position: fixed;
     top: 430px;
     left: 50%;
     transform: translateX(-50%);
     z-index: 1;
-    background-color: rgb(255, 255, 255);
+    background-color: var(--container-background);
     background-size: cover;
     height: 60px;
     width: 170px;
@@ -943,11 +943,11 @@ form .login-button:hover {
     justify-content: center;
     display: flex;
     box-shadow: 0 5px 6px rgba(0.5, 0, 0, 0.51); /* shadow */
-    border: 2px solid #00a6ff;
+    border: 1px solid #ffffff;
 }
 
 .gamepage-button:hover {
-    background-color: #007bffd3;
+    background-color: #4e8cea;
     color: rgb(255, 255, 255);
 }
 
@@ -1766,6 +1766,15 @@ form .login-button:hover {
     gap: 10px;
 }
 
+.all-users {
+    width: 100%;
+    max-height: 600px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
 .title-all-rank {
     background-color: var(--pong-color);
     width: 100%;
@@ -2181,3 +2190,88 @@ form .login-button:hover {
 }
 
 /*------- PROFILE PAGE END -------*/
+
+/*------- GAME OPTION PAGE START -------*/
+
+.game-options {
+    /* background-color: rgba(0, 0, 0, 0.23); */
+    position: fixed;
+    top: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 350px;
+    width: 300px;
+    align-items: center;
+    justify-items: center;
+    display: flex;
+    flex-direction: column;
+    border-radius: 15px;
+    /* box-shadow: 0 2px 6px rgba(0.5, 0, 0, 0.51); */
+}
+
+.form-check1, .form-check2, .form-check3 {
+    text-align: center;
+    height: 50px;
+    width: 200px;
+    background-color: var(--pong-color);
+    position: fixed;
+    font-family: "Sour Gummy";
+    color: white;
+    border-radius: 20px;
+    box-shadow: 0 2px 2px rgba(0.15, 0, 0, 0.151); /* shadow */
+    margin: 30px;
+    cursor: pointer;
+    padding: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.315);
+}
+
+.form-check1 {
+    top: 220px;
+}
+
+.form-check2 {
+    top:280px;
+}
+
+.form-check3 {
+    top: 340px;
+}
+
+.form-check1:hover, .form-check2:hover, .form-check3:hover {
+    background-color: var(--primary-color);
+}
+
+.pong-container-options {
+    background-color: var(--pong-color);
+    background-size: 100%;
+    background-repeat: no-repeat;
+    height: 455px;
+    width: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0.5, 0, 0, 0.51); /* shadow */
+}
+
+.pong-options {
+    background-image: url('../images/gameplay.png');
+    background-size: 100%;
+    background-repeat: no-repeat;
+    height: 300px;
+    width: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 32%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+
+/*------- GAME OPTION PAGE END -------*/

@@ -15,28 +15,26 @@
 </head>
 <body>
     <div class="settings-container">
-       <h2>User List</h2>
-         <table class="table table-striped">
-              <thead>
-                <tr>
-                    <th>Photo</th>
-                    <th>Username</th>
-                    <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {% for user in users %}
-                <tr>
-                    <td><img src="{{ user.photo }}" alt="user photo" width="50" height="50"></td>
-                     <td>{{ user.username }}</td>
-                     <td>
-                          <a href="/pong/users/{{ user.id }}/edit" class="btn btn-primary">add friend</a>
-                          <a href="/pong/users/{{ user.id }}/delete" class="btn btn-danger">block</a>
-                     </td>
-                </tr>
-                {% endfor %}
-              </tbody>
-        </table>
+        <div class="pong-container-options"></div>
+        <div class="pong-options"></div>
+        <h2>Choose Option</h2>
+        <!-- <div class="ready">
+          <button class="gamepage-button" onclick="startGame()">Next</button>
+        </div> -->
+        <div class="quit-game" onclick="homePage()">
+            <h1>BACK</h1>
+        </div>
+        <div class="game-options">
+            <div class="form-check1">
+                <p>2 Players Game</p>
+            </div>
+            <div class="form-check2">
+                <p>4 Players Game</p>
+            </div>
+            <div class="form-check3">
+                <p>Tournament</p>
+            </div>
+        </div>
     </div>
 </body>
 </html>
