@@ -29,7 +29,7 @@ function settingsPage() {
         <div class="inside-wel"></div>
         <div class="quit-game" onclick="homePage()">
             <h1>BACK</h1>
-            </div>
+        </div>
         <div class="username-container">
             <input type="text" id="username" placeholder="new username" required>
             <div class="change-username" onclick="changeUserName()">

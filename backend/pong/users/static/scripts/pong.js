@@ -36,8 +36,9 @@ function gamePage() {
         <div class="ready">
             <button class="gamepage-button" onclick="startGame()">Ready</button>
         </div>
-        <div class="quit-game" onclick="homePage()">
+        <div class="quit-game" onclick="gameOptions()">
             <h1>BACK</h1>
+        </div>
     `;
     body.appendChild(div);
 
