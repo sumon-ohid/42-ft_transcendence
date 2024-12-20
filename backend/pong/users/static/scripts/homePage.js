@@ -37,19 +37,25 @@ async function fetchProfilePicture() {
 async function homePage() {
     saveCurrentPage('homePage');
     history.replaceState({ page: 'homePage' }, '', '#homePage');
-  
+    
     const body = document.body;
-
+    
     // Remove all child elements of the body
     while (body.firstChild) {
         body.removeChild(body.firstChild);
     }
-
+    
     // Fetch username and profile picture asynchronously
     // This solves the reload problem which was showing 
     // default value first the fetch value from user.
     const [username, profilePicture] = await Promise.all([fetchUsername(), fetchProfilePicture()]);
-
+    
+    if (loggedInUser === 'Guest') {
+        saveCurrentPage('login');
+        login();
+        return;
+    }
+    
     // Create nav bar and add content
     const nav = document.createElement("nav");
     nav.className = "navbar";
@@ -257,10 +263,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (currentPage) {
         switch (currentPage) {
             case 'homePage':
-                if (loggedInUser == 'Guest') {
-                    login();
-                    break;
-                }
                 homePage();
                 break;
             case 'settingsPage':
