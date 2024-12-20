@@ -22,6 +22,9 @@ function leaderboard() {
         .then(data => {
             if (!data || data.length === 0) {
                 div.innerHTML = `
+                    <div class="title-all-rank">
+                        <h2>Leaderboard</h2>
+                    </div>
                     <div class="inside-wel">
                         <div class="temp">
                             <p>No data available...</p>
