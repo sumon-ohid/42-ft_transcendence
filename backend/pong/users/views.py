@@ -34,11 +34,11 @@ def index(request):
     context = {'data': 'Hello from Django'}
     return render(request, 'index.html', context)
 
-# @csrf_exempt  # Use only if CSRF token is not included in the frontend request
+@csrf_exempt  # Use only if CSRF token is not included in the frontend request
 def api_signup(request):
     if request.method == 'POST':
         try:
-            data = json.loads(request.body)  # Parse JSON from the request body
+            data = json.loads(request.body)
         except json.JSONDecodeError:
             return JsonResponse({'status': 'error', 'message': 'Invalid JSON data.'}, status=400)
 

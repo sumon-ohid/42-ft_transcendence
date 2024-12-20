@@ -29,8 +29,8 @@ function userProfile(username) {
 
             const avatarUrl = data.profile__photo ? `${data.profile__photo}` : '/../static/images/11475215.jpg';
             const isFriend = data.is_friend;
-            const friendButtonText = isFriend ? 'Block' : 'Unblock';
-            const friendButtonClass = isFriend ? 'badge text-bg-danger' : 'badge text-bg-primary';
+            const friendButtonText = isFriend ? 'Unblock' : 'Block';
+            const friendButtonClass = isFriend ? 'badge text-bg-primary' : 'badge text-bg-danger';
 
             // Create a new div element and add content
             const div = document.createElement("div");
@@ -106,7 +106,7 @@ function userProfile(username) {
 
 function toggleBlock(username) {
     const addFriendButton = document.getElementById('block');
-    if (addFriendButton.textContent === 'Unblock') {
+    if (addFriendButton.textContent === 'Block') {
         fetch(`/api/add-block/${username}/`, {
             method: 'POST',
             headers: {
@@ -117,9 +117,9 @@ function toggleBlock(username) {
         .then(response => response.json())
         .then(data => {
             if (data.status === 'Friend added') {
-                addFriendButton.textContent = 'Block';
-                addFriendButton.classList.remove('text-bg-primary');
-                addFriendButton.classList.add('text-bg-danger');
+                addFriendButton.textContent = 'Unblock';
+                addFriendButton.classList.remove('text-bg-danger');
+                addFriendButton.classList.add('text-bg-primary');
             } else {
                 console.error(data.error);
             }
@@ -136,9 +136,9 @@ function toggleBlock(username) {
         .then(response => response.json())
         .then(data => {
             if (data.status === 'Friend removed') {
-                addFriendButton.textContent = 'Unblock';
-                addFriendButton.classList.remove('text-bg-danger');
-                addFriendButton.classList.add('text-bg-primary');
+                addFriendButton.textContent = 'Block';
+                addFriendButton.classList.remove('text-bg-primary');
+                addFriendButton.classList.add('text-bg-danger');
             } else {
                 console.error(data.error);
             }
