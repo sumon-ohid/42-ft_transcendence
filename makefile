@@ -22,7 +22,6 @@ clean: down
 
 fclean: clean
 	docker system prune -f
-	# rm -rf postgres_data
 
 re: fclean all
 
@@ -32,3 +31,7 @@ re: fclean all
 # docker rm $(docker ps -a -q)
 # docker rmi $(docker images -q)
 # docker volume rm $(docker volume ls -q)
+
+
+# docker build -t docker-compose-runner .
+# docker run -it --rm -v /var/run/docker.sock:/var/run/docker.sock -v $(pwd):/app -w /app docker-compose-runner

@@ -139,6 +139,24 @@ def upload_profile_picture(request):
         return JsonResponse({'status': 'success', 'file_path': file_path})
     return JsonResponse({'status': 'error', 'message': 'Invalid request'}, status=400)
 
+# def get_profile_picture(request):
+#     if request.user.is_authenticated:
+#         profile = Profile.objects.get(user=request.user)
+#         if profile.photo:
+#             photo_url = profile.photo.url
+#         else:
+#             default_avatars = [
+#                 '/static/avatars/avatar1.png',
+#                 '/static/avatars/avatar2.png',
+#                 '/static/avatars/avatar3.png',
+#                 '/static/avatars/avatar4.png',
+#                 '/static/avatars/avatar5.png',
+#                 '/static/avatars/avatar6.png'
+#             ]
+#             photo_url = random.choice(default_avatars)
+#         return JsonResponse({'photo': photo_url})
+#     return JsonResponse({'photo': None})
+
 def get_profile_picture(request):
     if request.user.is_authenticated:
         profile = Profile.objects.get(user=request.user)
