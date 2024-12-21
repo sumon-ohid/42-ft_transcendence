@@ -46,7 +46,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: github-pages
-          path: ./backend/static
+          path: ./backend/staticfiles  # Ensure this path matches the output of collectstatic
 
   deploy:
     environment:
@@ -62,7 +62,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: github-pages
-          path: ./backend/static
+          path: ./backend/staticfiles  # Ensure this path matches the upload path
 
       - name: Deploy to GitHub Pages
         id: deployment
