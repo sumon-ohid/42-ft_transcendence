@@ -44,7 +44,7 @@ jobs:
       # Copy templates (such as index.html) to the deploy directory
       - name: Copy templates directory
         run: |
-          cp -r ./users/templates ./deploy_directory
+          cp -r ./backend/pong/users/templates ./deploy_directory
 
       # Upload static files and templates as artifacts
       - name: Upload static files and templates as artifact
