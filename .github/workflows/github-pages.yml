@@ -46,7 +46,7 @@ jobs:
       # Optionally, collect static files if Django is running
       - name: Collect static files
         run: |
-          docker-compose exec web python manage.py collectstatic --noinput
+          docker-compose exec django python manage.py collectstatic --noinput
 
       # Optionally, upload any build artifacts (e.g., if you have a specific build output)
       - name: Upload build artifacts
