@@ -1,4 +1,4 @@
-name: Deploy Django Static Files to GitHub Pages
+name: Deploy Django Static Files and Templates to GitHub Pages
 
 on:
   push:
@@ -41,12 +41,19 @@ jobs:
         run: |
           docker-compose exec django python manage.py collectstatic --noinput
 
-      # Upload the static files artifact
-      - name: Upload static files as artifact
+      # Copy templates (such as index.html) to the deploy directory
+      - name: Copy templates directory
+        run: |
+          cp -r ./users/templates ./deploy_directory
+
+      # Upload static files and templates as artifacts
+      - name: Upload static files and templates as artifact
         uses: actions/upload-artifact@v3
         with:
           name: github-pages
-          path: ./static
+          path: |
+            ./static
+            ./deploy_directory/templates
 
   deploy:
     environment:
