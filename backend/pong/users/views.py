@@ -403,3 +403,75 @@ def get_user_profile(request, username):
         return JsonResponse(data)
     except User.DoesNotExist:
         return JsonResponse({'error': 'User does not exist'}, status=404)
+
+from django.shortcuts import redirect
+from django.conf import settings
+import requests
+import logging
+
+def intra42_login(request):
+    client_id = settings.SOCIALACCOUNT_PROVIDERS['intra42']['APP']['client_id']
+    redirect_uri = "https://localhost:8000/accounts/social/login/callback/"  # Update with your callback URL
+    auth_url = f"https://api.intra.42.fr/oauth/authorize?client_id={client_id}&redirect_uri={redirect_uri}&response_type=code"
+    print(auth_url)
+    return redirect(auth_url)
+
+from django.shortcuts import redirect
+from django.conf import settings
+from django.contrib.auth import login
+from django.contrib.auth.models import User
+from .models import Profile
+import requests
+import logging
+
+
+def callback_view(request):
+    code = request.GET.get('code')
+    if not code:
+        return redirect('/')
+
+    # Exchange the code for an access token
+    token_url = "https://api.intra.42.fr/oauth/token"
+    data = {
+        'grant_type': 'authorization_code',
+        'client_id': settings.SOCIALACCOUNT_PROVIDERS['intra42']['APP']['client_id'],
+        'client_secret': settings.SOCIALACCOUNT_PROVIDERS['intra42']['APP']['secret'],
+        'code': code,
+        'redirect_uri': 'https://localhost:8000/accounts/social/login/callback/',
+    }
+    response = requests.post(token_url, data=data)
+    response_data = response.json()
+
+    # if 'access_token' not in response_data:
+    #     return redirect('/api/singup/')  # Handle error if access token is not provided.
+
+    access_token = response_data['access_token']
+
+    # Fetch user info
+    user_info_url = "https://api.intra.42.fr/v2/me"
+    headers = {'Authorization': f'Bearer {access_token}'}
+    user_info = requests.get(user_info_url, headers=headers).json()
+
+    # Extract user data
+    username = user_info['login']
+    photo_url = user_info.get('image_url', '')
+
+    # Handle login or user creation
+    user, created = User.objects.get_or_create(username=username)
+    if created:
+        user.set_unusable_password()  # Set an unusable password for OAuth users
+        user.save()
+
+    # Update or create the profile
+    profile, _ = Profile.objects.get_or_create(user=user)
+    profile.photo = photo_url
+    profile.save()
+
+    # Log the user in (optional)
+    login(request, user)
+
+    # Log user info for debugging
+    logger = logging.getLogger(__name__)
+    logger.debug("User info fetched from 42 API: %s", user_info)
+
+    return redirect('/')

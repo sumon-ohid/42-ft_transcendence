@@ -48,6 +48,12 @@ INSTALLED_APPS = [
     'users',
     'django_otp',
     'django_otp.plugins.otp_totp',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.oauth2',
+    'sslserver',
 ]
 
 MIDDLEWARE = [
@@ -191,3 +197,16 @@ SECURE_HSTS_PRELOAD = True
 CSRF_TRUSTED_ORIGINS = [
     "https://localhost:9000",
 ]
+
+# For 42 auth
+SITE_ID = 1
+
+SOCIALACCOUNT_PROVIDERS = {
+    'intra42': {
+        'APP': {
+            'client_id': 'u-s4t2ud-facccc22d642c8ed4fa34dd7c49f3b724475be790cf41b99997be4690c371fb0',
+            'secret': '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',
+            'key': ''
+        }
+    }
+}
