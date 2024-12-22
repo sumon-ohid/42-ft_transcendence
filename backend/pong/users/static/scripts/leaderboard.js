@@ -11,7 +11,6 @@ function leaderboard() {
     const div = document.createElement("div");
     div.className = "leaderboard-container";
 
-    // Fetch leaderboard data
     fetch('/api/leaderboard/')
         .then(response => {
             if (!response.ok) {

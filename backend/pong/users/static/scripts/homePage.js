@@ -56,7 +56,7 @@ async function homePage() {
         return;
     }
     
-    // Create nav bar and add content
+    // nav bar and add content for navigation
     const nav = document.createElement("nav");
     nav.className = "navbar";
     nav.innerHTML = ` 
@@ -73,7 +73,7 @@ async function homePage() {
     `;
     body.appendChild(nav);
 
-    // Create a new div element and add content
+    // a new div element and add content , this is the left side 4 conatiners.
     const div = document.createElement("div");
     div.className = "main";
     div.innerHTML = ` 
@@ -162,7 +162,7 @@ async function homePage() {
         }
     });
 
-    // Player history
+    //Get Player history for logged it user.
     fetch(`/api/get-play-history/${loggedInUser}`)
         .then(response => response.json())
         .then(data => {
@@ -225,7 +225,6 @@ function handleLogout(event) {
         error("CSRF token not found. Logout request cannot be sent.");
         return;
     }
-    // Send a logout request to the backend
     fetch('/api/logout/', {
         method: 'POST',
         headers: {
@@ -254,6 +253,8 @@ function getLoggedInUser() {
 }
 
 // Reload should keep on the same page
+// NOTE: If someone knows a better way to do it,
+// please let me know. SMN
 function saveCurrentPage(page) {
     localStorage.setItem('currentPage', page);
 }
@@ -301,7 +302,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// Handle back and forward button
+// Handle back and forward button, push, pop, replace states in the history.
 window.addEventListener('popstate', function(event) {
     if (event.state && event.state.page) {
         switch (event.state.page) {

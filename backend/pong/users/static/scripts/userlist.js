@@ -12,7 +12,6 @@ function userList() {
     const div = document.createElement("div");
     div.className = "leaderboard-container";
 
-    // Fetch leaderboard data
     fetch('/api/users/')
         .then(response => {
             if (!response.ok) {
@@ -22,7 +21,7 @@ function userList() {
         })
         .then(users => {
             if (!users || users.length === 0) {
-                // Render empty user list message
+                // empty user list
                 div.innerHTML = `
                     <div class="inside-wel" style="display: flex; justify-content: center; align-items: center; height: 450px; width: 400px; position: fixed; left: 90px; top: 150px;">
                         <div class="temp" style="text-align: center;">
@@ -37,10 +36,10 @@ function userList() {
                 return;
             }
 
-            // Filter out the logged-in user
+            // Filter out the logged-in user from user list
             const filteredData = users.filter(user => user.username !== loggedInUser);
 
-            // Render user list
+            // Render user list without logged in user
             div.innerHTML = `
                 <div class="title-all-rank">
                     <h2>User List</h2>

@@ -8,7 +8,6 @@ function signup() {
         body.removeChild(body.firstChild);
     }
 
-    // Create a new div element and add content to it
     const div = document.createElement("div");
     div.className = "login-container";
     div.innerHTML = ` 
@@ -49,15 +48,13 @@ function handleSignup() {
         return;
     }
 
-    // Fetch the CSRF token
     const csrfToken = getCSRFToken();
 
-    // Send the POST request to the Django API
     fetch('/api/signup/', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'X-CSRFToken': csrfToken, // Include CSRF token for Django
+            'X-CSRFToken': csrfToken,
         },
         body: JSON.stringify({ email, username, password }),
     })

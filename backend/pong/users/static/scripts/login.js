@@ -95,7 +95,6 @@ function show2FAPage() {
         body.removeChild(body.firstChild);
     }
 
-    // Create a new div element and add content to it
     const div = document.createElement("div");
     div.className = "two-fa-container";
     div.innerHTML = ` 
@@ -110,7 +109,6 @@ function show2FAPage() {
     `;
     body.appendChild(div);
 
-    // Attach event listener to the form
     const twoFAForm = document.getElementById("2fa-form");
     twoFAForm.addEventListener("submit", handle2FAVerification);
 }
@@ -125,15 +123,13 @@ function handle2FAVerification(event) {
         return;
     }
 
-    // Fetch the CSRF token
     const csrfToken = getCSRFToken();
 
-    // Send the POST request to the Django 2FA verification API
     fetch('/api/verify-2fa/', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'X-CSRFToken': csrfToken, // Include CSRF token for Django
+            'X-CSRFToken': csrfToken,
         },
         body: JSON.stringify({ code }),
     })

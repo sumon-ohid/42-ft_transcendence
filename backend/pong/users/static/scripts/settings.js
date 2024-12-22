@@ -8,7 +8,6 @@ function settingsPage() {
         body.removeChild(body.firstChild);
     }
 
-    // Create a new div element and add content to it
     const div = document.createElement("div");
     div.className = "settings-container";
     div.innerHTML = `
@@ -217,7 +216,7 @@ function setup2FA() {
         .then(response => response.json())
         .then(data => {
             if (data.qr_code_url) {
-                // Create or update the QR code display
+                // Create and update the QR code display
                 let qrCodeContainer = document.getElementById('qr-code-container');
                 if (!qrCodeContainer) {
                     qrCodeContainer = document.createElement('div');

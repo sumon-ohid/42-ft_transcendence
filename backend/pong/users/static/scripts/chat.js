@@ -9,7 +9,6 @@ function chatPage() {
         body.removeChild(body.firstChild);
     }
 
-    // Create a new div element and add content to it
     const div = document.createElement("div");
     div.className = "chatpage-container";
     div.innerHTML = ` 
@@ -39,12 +38,12 @@ function chatPage() {
     `;
     body.appendChild(div);
 
-    // Fetch and display users
+    //  display all users
     fetch('/api/users/')
         .then(response => response.json())
         .then(users => {
             const friendsContainer = document.querySelector('.active-friends');
-            friendsContainer.innerHTML = ''; // Clear existing content
+            friendsContainer.innerHTML = ''; 
 
             users.forEach(user => {
                 const friendDiv = document.createElement('div');
@@ -60,7 +59,7 @@ function chatPage() {
         })
         .catch(error => console.error('Error fetching users:', error));
 
-    // Add event listeners for sending messages
+    // event listeners for sending messages both click and enter
     const chatInput = document.getElementById("chat-input");
     const sendButton = document.getElementById("send-button");
     const chatMessages = document.getElementById("chat-messages");
@@ -98,8 +97,8 @@ function chatPage() {
     }
 }
 
+// If user is blocked can't chat. Give a error instead.
 function startChat(username, avatarUrl) {
-    // Fetch user profile
     fetch(`/api/user-profile/${username}/`)
         .then(response => response.json())
         .then(data => {
