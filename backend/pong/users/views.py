@@ -23,6 +23,10 @@ from django.views.decorators.cache import never_cache
 from time import time
 import random
 import string
+from django.conf import settings
+import requests
+import logging
+from django.http import HttpResponse
 
 
 
@@ -404,11 +408,6 @@ def get_user_profile(request, username):
     except User.DoesNotExist:
         return JsonResponse({'error': 'User does not exist'}, status=404)
 
-from django.shortcuts import redirect
-from django.conf import settings
-import requests
-import logging
-
 def intra42_login(request):
     client_id = settings.SOCIALACCOUNT_PROVIDERS['intra42']['APP']['client_id']
     redirect_uri = "https://localhost:8000/accounts/social/login/callback/"  # Update with your callback URL
@@ -416,21 +415,12 @@ def intra42_login(request):
     print(auth_url)
     return redirect(auth_url)
 
-from django.shortcuts import redirect
-from django.conf import settings
-from django.contrib.auth import login
-from django.contrib.auth.models import User
-from .models import Profile
-import requests
-import logging
-
 
 def callback_view(request):
     code = request.GET.get('code')
     if not code:
         return redirect('/')
 
-    # Exchange the code for an access token
     token_url = "https://api.intra.42.fr/oauth/token"
     data = {
         'grant_type': 'authorization_code',
@@ -447,56 +437,56 @@ def callback_view(request):
 
     access_token = response_data['access_token']
 
-    # Fetch user info
     user_info_url = "https://api.intra.42.fr/v2/me"
     headers = {'Authorization': f'Bearer {access_token}'}
     user_info = requests.get(user_info_url, headers=headers).json()
 
-    # Extract user data
+    # get user data
     username = user_info['login']
     photo_url = user_info.get('image_url', '')
 
-    # Handle login or user creation
     user, created = User.objects.get_or_create(username=username)
     if created:
-        user.set_unusable_password()  # Set an unusable password for OAuth users
+        user.set_unusable_password()
         user.save()
 
-    # Update or create the profile
-    profile, _ = Profile.objects.get_or_create(user=user)
-    profile.photo = photo_url
-    profile.save()
-
-    # Log the user in (optional)
     login(request, user)
 
-    # Log user info for debugging
+    profile, _ = Profile.objects.get_or_create(user=user)
+    if photo_url:
+        response = requests.get(photo_url)
+        if response.status_code == 200:
+            file_name = os.path.basename(photo_url)
+            file_path = f'profile_pictures/{file_name}'
+            # Save the file using default_storage
+            saved_path = default_storage.save(file_path, ContentFile(response.content))
+            profile.photo = saved_path
+            profile.save()
+
     logger = logging.getLogger(__name__)
     logger.debug("User info fetched from 42 API: %s", user_info)
 
-    return redirect('/#homePage')
+    return redirect('/api/redirect/')
 
-from django.http import JsonResponse
-from django.contrib.auth.models import User
-from .models import Profile
 
-def nothing_view(request):
-    username = request.GET.get('username')
-    if not username:
-        return JsonResponse({'error': 'Username is required'}, status=400)
+def redirect_to_home(request):
 
-    two_factor_enabled = False
-    try:
-        user = User.objects.get(username=username)
-        profile = user.profile
-        two_factor_enabled = profile.two_factor_enabled
-    except User.DoesNotExist:
-        return JsonResponse({'error': 'User does not exist'}, status=404)
-    except Profile.DoesNotExist:
-        pass
-
-    return JsonResponse({
-        'status': 'success',
-        'message': 'Login successful!',
-        'two_factor_enabled': two_factor_enabled
-    })
+    return HttpResponse("""
+        <html>
+        <head>
+            <script src="/static/scripts/homePage.js" defer></script>
+            <link rel="stylesheet" href="/static/css/style.css">
+        </head>
+        <body style="justify-content: center; align-items: center; display: flex; height: 100vh;">
+            <h1 style="color: white; text-align: center;">Redirecting....</h1>
+            <script type="text/javascript">
+                window.onload = function() {
+                    setTimeout(function() {
+                        window.location.href = '/#homePage';
+                        homePage();
+                    }, 2000);
+                };
+            </script>
+        </body>
+        </html>
+    """)
