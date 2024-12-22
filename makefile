@@ -9,7 +9,7 @@ up:
 	${DOCKER_COMPOSE} up -d
 
 down:
-	${DOCKER_COMPOSE} down --rmi all
+	${DOCKER_COMPOSE} down
 
 rm_images:
 	${DOCKER_COMPOSE} --rmi all

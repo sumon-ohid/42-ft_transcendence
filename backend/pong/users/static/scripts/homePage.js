@@ -50,11 +50,11 @@ async function homePage() {
     // default value first the fetch value from user.
     const [username, profilePicture] = await Promise.all([fetchUsername(), fetchProfilePicture()]);
     
-    if (loggedInUser === 'Guest') {
-        saveCurrentPage('login');
-        login();
-        return;
-    }
+    // if (loggedInUser === 'Guest') {
+    //     saveCurrentPage('login');
+    //     login();
+    //     return;
+    // }
     
     // nav bar and add content for navigation
     const nav = document.createElement("nav");

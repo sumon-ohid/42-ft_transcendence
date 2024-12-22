@@ -1,3 +1,4 @@
+
 function login() {
     saveCurrentPage('login');
     history.pushState({ page: 'login' }, '', '#login');
@@ -21,7 +22,7 @@ function login() {
             <button type="submit" class="login-button">Login</button>
         </form>
         <div class="or">or</div>
-        <div class="intra-login">Login with 
+        <div class="intra-login" onClick="intraLogin()">Login with 
             <img src="https://simpleicons.org/icons/42.svg" alt="42" class="icon"/>
         </div>
         <div class="forgot-passwd">Forgot Password?</div>
@@ -150,3 +151,8 @@ function handle2FAVerification(event) {
         });
 }
 
+function intraLogin() {
+    // Redirect to the 42 OAuth login page
+    console.log("Redirecting to 42 OAuth login page...");
+    window.location.href = 'api/auth/intra42/';
+}

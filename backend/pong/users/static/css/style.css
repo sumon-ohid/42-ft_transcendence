@@ -789,6 +789,7 @@ form .login-button:hover {
     display: flex;
     justify-content: center;
     opacity: .8;
+    cursor: pointer;
 }
 
 .intra-login:hover {

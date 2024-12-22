@@ -23,6 +23,10 @@ from django.views.decorators.cache import never_cache
 from time import time
 import random
 import string
+from django.conf import settings
+import requests
+import logging
+from django.http import HttpResponse
 
 
 
@@ -403,3 +407,86 @@ def get_user_profile(request, username):
         return JsonResponse(data)
     except User.DoesNotExist:
         return JsonResponse({'error': 'User does not exist'}, status=404)
+
+def intra42_login(request):
+    client_id = settings.SOCIALACCOUNT_PROVIDERS['intra42']['APP']['client_id']
+    redirect_uri = "https://localhost:8000/accounts/social/login/callback/"  # Update with your callback URL
+    auth_url = f"https://api.intra.42.fr/oauth/authorize?client_id={client_id}&redirect_uri={redirect_uri}&response_type=code"
+    print(auth_url)
+    return redirect(auth_url)
+
+
+def callback_view(request):
+    code = request.GET.get('code')
+    if not code:
+        return redirect('/')
+
+    token_url = "https://api.intra.42.fr/oauth/token"
+    data = {
+        'grant_type': 'authorization_code',
+        'client_id': settings.SOCIALACCOUNT_PROVIDERS['intra42']['APP']['client_id'],
+        'client_secret': settings.SOCIALACCOUNT_PROVIDERS['intra42']['APP']['secret'],
+        'code': code,
+        'redirect_uri': 'https://localhost:8000/accounts/social/login/callback/',
+    }
+    response = requests.post(token_url, data=data)
+    response_data = response.json()
+
+    # if 'access_token' not in response_data:
+    #     return redirect('/api/singup/')  # Handle error if access token is not provided.
+
+    access_token = response_data['access_token']
+
+    user_info_url = "https://api.intra.42.fr/v2/me"
+    headers = {'Authorization': f'Bearer {access_token}'}
+    user_info = requests.get(user_info_url, headers=headers).json()
+
+    # get user data
+    username = user_info['login']
+    photo_url = user_info.get('image_url', '')
+
+    user, created = User.objects.get_or_create(username=username)
+    if created:
+        user.set_unusable_password()
+        user.save()
+
+    login(request, user)
+
+    profile, _ = Profile.objects.get_or_create(user=user)
+    if photo_url:
+        response = requests.get(photo_url)
+        if response.status_code == 200:
+            file_name = os.path.basename(photo_url)
+            file_path = f'profile_pictures/{file_name}'
+            # Save the file using default_storage
+            saved_path = default_storage.save(file_path, ContentFile(response.content))
+            profile.photo = saved_path
+            profile.save()
+
+    logger = logging.getLogger(__name__)
+    logger.debug("User info fetched from 42 API: %s", user_info)
+
+    return redirect('/api/redirect/')
+
+
+def redirect_to_home(request):
+
+    return HttpResponse("""
+        <html>
+        <head>
+            <script src="/static/scripts/homePage.js" defer></script>
+            <link rel="stylesheet" href="/static/css/style.css">
+        </head>
+        <body style="justify-content: center; align-items: center; display: flex; height: 100vh;">
+            <h1 style="color: white; text-align: center;">Redirecting....</h1>
+            <script type="text/javascript">
+                window.onload = function() {
+                    setTimeout(function() {
+                        window.location.href = '/#homePage';
+                        homePage();
+                    }, 1000);
+                };
+            </script>
+        </body>
+        </html>
+    """)
