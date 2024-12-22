@@ -153,3 +153,4 @@ function handle2FAVerification(event) {
             error("An error occurred. Please try again.");
         });
 }
+
