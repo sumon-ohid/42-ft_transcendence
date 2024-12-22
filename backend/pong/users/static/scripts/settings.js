@@ -8,7 +8,6 @@ function settingsPage() {
         body.removeChild(body.firstChild);
     }
 
-    // Create a new div element and add content to it
     const div = document.createElement("div");
     div.className = "settings-container";
     div.innerHTML = `
@@ -127,6 +126,9 @@ function settingsPage() {
             .then(data => {
                 if (data.status === 'success') {
                     error('Profile picture uploaded successfully');
+                    setTimeout(() => {
+                        location.reload();
+                    }, 1000);
                 } else {
                     error('Error uploading profile picture');
                 }
@@ -217,7 +219,7 @@ function setup2FA() {
         .then(response => response.json())
         .then(data => {
             if (data.qr_code_url) {
-                // Create or update the QR code display
+                // Create and update the QR code display
                 let qrCodeContainer = document.getElementById('qr-code-container');
                 if (!qrCodeContainer) {
                     qrCodeContainer = document.createElement('div');
@@ -327,6 +329,9 @@ function changeUserName() {
     if (data.status === 'success') {
         error('Username changed successfully!');
         loggedInUser = newUsername;
+        setTimeout(() => {
+            location.reload();
+        }, 1000);
     } else {
         error(`Error: ${data.error}`);
     }

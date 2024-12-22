@@ -8,7 +8,6 @@ function gameOptions() {
         body.removeChild(body.firstChild);
     }
 
-    // Create a new div element and add content to it
     const div = document.createElement("div");
     div.className = "settings-container";
     div.innerHTML = `

@@ -18,7 +18,6 @@ function userProfile(username) {
         body.removeChild(body.firstChild);
     }
 
-    // Fetch user profile
     fetch(`/api/user-profile/${username}/`)
         .then(response => response.json())
         .then(data => {
@@ -32,7 +31,6 @@ function userProfile(username) {
             const friendButtonText = isFriend ? 'Unblock' : 'Block';
             const friendButtonClass = isFriend ? 'badge text-bg-primary' : 'badge text-bg-danger';
 
-            // Create a new div element and add content
             const div = document.createElement("div");
             div.className = "settings-container";
             div.innerHTML = ` 
@@ -104,6 +102,7 @@ function userProfile(username) {
         });
 }
 
+// Handle block, unblock user
 function toggleBlock(username) {
     const addFriendButton = document.getElementById('block');
     if (addFriendButton.textContent === 'Block') {
