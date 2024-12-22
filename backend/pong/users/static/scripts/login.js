@@ -1,4 +1,42 @@
+let auth_flag = 1;
+
 function login() {
+
+    if (auth_flag === 2)
+    {
+        const csrfToken = getCSRFToken();
+
+        // Fetch /api/nothing on load
+        fetch('/api/nothing/', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrfToken,
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                if (data.two_factor_enabled) {
+                    show2FAPage(); // Show the 2FA page if 2FA is enabled
+                } else {
+                    error(data.message);
+                    setTimeout(function() {
+                        homePage(); // Redirect to the home page
+                    }, 1000);
+                }
+            } else if (data.error) {
+                error("Error: " + data.error);
+            } else {
+                error("Something went wrong!");
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching /api/nothing:', error);
+        });
+    }
+
+
     saveCurrentPage('login');
     history.pushState({ page: 'login' }, '', '#login');
     const body = document.body;
@@ -152,6 +190,7 @@ function handle2FAVerification(event) {
 
 function intraLogin() {
     // Redirect to the 42 OAuth login page
+    auth_flag = 2;
     console.log("Redirecting to 42 OAuth login page...");
     window.location.href = 'api/auth/intra42/';
 }

@@ -474,4 +474,29 @@ def callback_view(request):
     logger = logging.getLogger(__name__)
     logger.debug("User info fetched from 42 API: %s", user_info)
 
-    return redirect('/')
+    return redirect('/#homePage')
+
+from django.http import JsonResponse
+from django.contrib.auth.models import User
+from .models import Profile
+
+def nothing_view(request):
+    username = request.GET.get('username')
+    if not username:
+        return JsonResponse({'error': 'Username is required'}, status=400)
+
+    two_factor_enabled = False
+    try:
+        user = User.objects.get(username=username)
+        profile = user.profile
+        two_factor_enabled = profile.two_factor_enabled
+    except User.DoesNotExist:
+        return JsonResponse({'error': 'User does not exist'}, status=404)
+    except Profile.DoesNotExist:
+        pass
+
+    return JsonResponse({
+        'status': 'success',
+        'message': 'Login successful!',
+        'two_factor_enabled': two_factor_enabled
+    })
