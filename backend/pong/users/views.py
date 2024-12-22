@@ -484,7 +484,7 @@ def redirect_to_home(request):
                     setTimeout(function() {
                         window.location.href = '/#homePage';
                         homePage();
-                    }, 2000);
+                    }, 1000);
                 };
             </script>
         </body>
