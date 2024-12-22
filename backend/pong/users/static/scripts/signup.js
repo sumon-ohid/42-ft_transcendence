@@ -26,9 +26,17 @@ function signup() {
     `;
     body.appendChild(div);
 
-    // Add event listener for the signup button
     const signupButton = document.getElementById("signup-button");
+    const signupForm = document.getElementById("signup-form");
+
     signupButton.addEventListener("click", handleSignup);
+
+    signupForm.addEventListener("keypress", function(event) {
+        if (event.key === "Enter") {
+            event.preventDefault();
+            handleSignup();
+        }
+    });
 }
 
 function handleSignup() {
