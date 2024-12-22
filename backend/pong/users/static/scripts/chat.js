@@ -81,7 +81,7 @@ function chatPage() {
             messageElement.classList.add("chat-message");
     
             const profilePic = document.createElement("img");
-            profilePic.src = "../static/images/11475215.jpg"; // Should change later, put user picture
+            profilePic.src = '/../static/images/11475215.jpg'; // Should change later, put user picture
             profilePic.alt = "Profile Picture";
     
             const messageContent = document.createElement("span");

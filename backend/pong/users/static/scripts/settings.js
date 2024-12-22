@@ -126,6 +126,9 @@ function settingsPage() {
             .then(data => {
                 if (data.status === 'success') {
                     error('Profile picture uploaded successfully');
+                    setTimeout(() => {
+                        location.reload();
+                    }, 1000);
                 } else {
                     error('Error uploading profile picture');
                 }
@@ -326,6 +329,9 @@ function changeUserName() {
     if (data.status === 'success') {
         error('Username changed successfully!');
         loggedInUser = newUsername;
+        setTimeout(() => {
+            location.reload();
+        }, 1000);
     } else {
         error(`Error: ${data.error}`);
     }

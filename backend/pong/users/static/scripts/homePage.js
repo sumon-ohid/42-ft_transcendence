@@ -152,6 +152,9 @@ async function homePage() {
             .then(data => {
                 if (data.status === 'success') {
                     error('Profile picture uploaded successfully');
+                    setTimeout(() => {
+                        location.reload();
+                    }, 1000);
                 } else {
                     error('Error uploading profile picture');
                 }
