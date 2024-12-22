@@ -27,6 +27,8 @@ from django.conf import settings
 import requests
 import logging
 from django.http import HttpResponse
+import os
+from django.core.files.base import ContentFile
 
 
 
@@ -416,6 +418,7 @@ def intra42_login(request):
     return redirect(auth_url)
 
 
+
 def callback_view(request):
     code = request.GET.get('code')
     if not code:
@@ -443,7 +446,7 @@ def callback_view(request):
 
     # get user data
     username = user_info['login']
-    photo_url = user_info.get('image_url', '')
+    photo_url = user_info.get('image', {}).get('link', '')
 
     user, created = User.objects.get_or_create(username=username)
     if created:
@@ -462,9 +465,6 @@ def callback_view(request):
             saved_path = default_storage.save(file_path, ContentFile(response.content))
             profile.photo = saved_path
             profile.save()
-
-    logger = logging.getLogger(__name__)
-    logger.debug("User info fetched from 42 API: %s", user_info)
 
     return redirect('/api/redirect/')
 
