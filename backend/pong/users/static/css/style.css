@@ -398,7 +398,7 @@ body {
     width: 250px;
     position: fixed;
     bottom: 15%;
-    right: 13%;
+    right: 15%;
     display: inline-block;
 }
 
@@ -1730,11 +1730,23 @@ form .login-button:hover {
     }
 
     .temp {
-        display: none;
+        background-size: cover;
+        height: 250px;
+        width: 250px;
+        position: fixed;
+        right: 15%;
+        bottom: 15%;
+        display: inline-block;
+    }
+
+    .temp p {
+        left: 25%;
     }
 
     .inside-wel2 {
-        display: none;
+        left: 20px;
+        height: 400px;
+        width: 360px;
     }
 }
 
