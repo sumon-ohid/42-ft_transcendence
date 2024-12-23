@@ -24,7 +24,7 @@ function leaderboard() {
                     <div class="title-all-rank">
                         <h2>Leaderboard</h2>
                     </div>
-                    <div class="inside-wel">
+                    <div class="inside-wel2">
                         <div class="temp">
                             <p>No data available...</p>
                         </div>
@@ -35,29 +35,29 @@ function leaderboard() {
                 `;
                 body.appendChild(div);
 
-                const tempElement = document.querySelector('.inside-wel');
-                if (tempElement) {
-                    tempElement.style.display = 'flex';
-                    tempElement.style.justifyContent = 'center';
-                    tempElement.style.alignItems = 'center';
-                    tempElement.style.height = '450px';
-                    tempElement.style.width = '400px';
-                    tempElement.style.position = 'fixed';
-                    tempElement.style.left = '90px';
-                    tempElement.style.top = '150px';
-                }
+                // const tempElement = document.querySelector('.inside-wel');
+                // if (tempElement) {
+                //     tempElement.style.display = 'flex';
+                //     tempElement.style.justifyContent = 'center';
+                //     tempElement.style.alignItems = 'center';
+                //     tempElement.style.height = '450px';
+                //     tempElement.style.width = '400px';
+                //     tempElement.style.position = 'fixed';
+                //     tempElement.style.left = '90px';
+                //     tempElement.style.top = '150px';
+                // }
 
-                const tempElement2 = document.querySelector('.temp');
-                if (tempElement2) {
-                    tempElement2.style.position = 'fixed';
-                    tempElement2.style.right = '20%';
-                }
+                // const tempElement2 = document.querySelector('.temp');
+                // if (tempElement2) {
+                //     tempElement2.style.position = 'fixed';
+                //     tempElement2.style.right = '20%';
+                // }
                 
-                const tempElement3 = document.querySelector('.temp p');
-                if (tempElement3) {
-                    tempElement3.style.position = 'fixed';
-                    tempElement3.style.right = '20%';
-                }  
+                // const tempElement3 = document.querySelector('.temp p');
+                // if (tempElement3) {
+                //     tempElement3.style.position = 'fixed';
+                //     tempElement3.style.right = '20%';
+                // }  
                 return;
             }
             data.sort((a, b) => b.score - a.score);

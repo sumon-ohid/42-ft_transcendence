@@ -23,7 +23,10 @@ function userList() {
             if (!users || users.length === 0) {
                 // empty user list
                 div.innerHTML = `
-                    <div class="inside-wel" style="display: flex; justify-content: center; align-items: center; height: 450px; width: 400px; position: fixed; left: 90px; top: 150px;">
+                    <div class="title-all-rank">
+                        <h2>Users list</h2>
+                    </div>
+                    <div class="inside-wel2">
                         <div class="temp" style="text-align: center;">
                             <p>Empty user list</p>
                         </div>
