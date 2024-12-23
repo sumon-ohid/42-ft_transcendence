@@ -435,8 +435,8 @@ def callback_view(request):
     response = requests.post(token_url, data=data)
     response_data = response.json()
 
-    # if 'access_token' not in response_data:
-    #     return redirect('/api/singup/')  # Handle error if access token is not provided.
+    if 'access_token' not in response_data:
+        return JsonResponse({'status': 'error', 'message': 'Access token not provided'}, status=400)
 
     access_token = response_data['access_token']
 
@@ -448,6 +448,31 @@ def callback_view(request):
     username = user_info['login']
     photo_url = user_info.get('image', {}).get('link', '')
 
+    # check if the username already exists
+    # if User.objects.filter(username=username).exists():
+    #     return HttpResponse("""
+    #         <html>
+    #         <head>
+    #             <script src="/static/scripts/homePage.js" defer></script>
+    #             <link rel="stylesheet" href="/static/css/style.css">
+    #         </head>
+    #         <body style="justify-content: center; align-items: center; display: flex; height: 100vh;">
+    #             <div>
+    #                 <h1 style="color: white; text-align: center;">Error !!<br> User name already exists.<br></h1>
+    #                 <h2 style="color: white; text-align: center;">Redirecting....</h2>
+    #             </div>
+    #             <script type="text/javascript">
+    #                 window.onload = function() {
+    #                     setTimeout(function() {
+    #                         window.location.href = '/#homePage';
+    #                         login();
+    #                     }, 1000);
+    #                 };
+    #             </script>
+    #         </body>
+    #         </html>
+    #     """)
+
     user, created = User.objects.get_or_create(username=username)
     if created:
         user.set_unusable_password()
@@ -456,12 +481,13 @@ def callback_view(request):
     login(request, user)
 
     profile, _ = Profile.objects.get_or_create(user=user)
-    if photo_url:
+    if profile.photo:
+        saved_path = profile.photo
+    elif photo_url:
         response = requests.get(photo_url)
         if response.status_code == 200:
             file_name = os.path.basename(photo_url)
             file_path = f'profile_pictures/{file_name}'
-            # Save the file using default_storage
             saved_path = default_storage.save(file_path, ContentFile(response.content))
             profile.photo = saved_path
             profile.save()
