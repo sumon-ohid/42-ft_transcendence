@@ -74,14 +74,17 @@ function chatPage() {
         }
     });
 
-    function sendMessage() {
+    async function sendMessage() {
+
+        const [username, profilePicture] = await Promise.all([fetchUsername(), fetchProfilePicture()]);
+
         const messageText = chatInput.value.trim();
         if (messageText !== "") {
             const messageElement = document.createElement("div");
             messageElement.classList.add("chat-message");
     
             const profilePic = document.createElement("img");
-            profilePic.src = '/../static/images/11475215.jpg'; // Should change later, put user picture
+            profilePic.src = profilePicture; // Should change later, put user picture
             profilePic.alt = "Profile Picture";
     
             const messageContent = document.createElement("span");

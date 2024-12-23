@@ -280,7 +280,7 @@ body {
 
     .play-container {
         top: 160px;
-        left: 50%;
+        left: 55%;
         transform: translate(-50%, -50%);
         width: 300px;
         height: 120px;
@@ -288,7 +288,7 @@ body {
 
     .account-container {
         top: 580px;
-        left: 50%;
+        left: 55%;
         transform: translate(-50%, -50%);
         width: 300px;
         height: 120px;
@@ -296,7 +296,7 @@ body {
 
     .leader-container {
         top: 440px;
-        left: 50%;
+        left: 55%;
         transform: translate(-50%, -50%);
         width: 300px;
         height: 120px;
@@ -304,7 +304,7 @@ body {
 
     .chat-container {
         top: 300px;
-        left: 50%;
+        left: 55%;
         transform: translate(-50%, -50%);
         width: 300px;
         height: 120px;
@@ -379,6 +379,9 @@ body {
     bottom: 40px;
     left: 25px;
     border-radius: 20px;
+    display: flex;
+    display: flex;
+    flex-direction: column;
 }
 
 .edit-pic {
@@ -421,6 +424,9 @@ body {
     margin-top: 15px;
     border-radius: 30px;
     background-color: var(--container-background);
+    height: 50px;
+    margin-left: 5px;
+    margin-right: 5px;
 }
 
 .history-record p {
@@ -485,6 +491,21 @@ body {
     display: inline-block;
     z-index: -1;
 }
+
+/* @media (max-width: 700px) {
+    #pongCanvas {
+        width: 100%;
+        max-width: 400px;
+    }
+
+    .maingame-container {
+        display: none;
+    }
+
+    .score-board {
+        display: none;
+    }
+} */
 
 /* ------ PLAY SECTION END ------*/
 
@@ -981,7 +1002,7 @@ form .login-button:hover {
     background-color: var(--black-color);
     transform: translateX(-50%);
     height: 360px;
-    width: 1px;
+    width: .5px;
     position: fixed;
     top: 20px;
     opacity: .5;
@@ -1041,7 +1062,7 @@ form .login-button:hover {
     background-color: var(--black-color);
     transform: translateX(-50%);
     height: 80px;
-    width: 1px;
+    width: .5px;
     position: fixed;
     top: 10px;
     opacity: .5;
@@ -1342,8 +1363,8 @@ form .login-button:hover {
 .friends {
     background-color: var(--pong-color);
     position: fixed;
-    top: 20px;
-    left: 0px;
+    top: 16px;
+    left: 20px;
     transform: translateX(-50%);
     height: 561px;
     width: 80px;
@@ -1684,6 +1705,37 @@ form .login-button:hover {
     box-shadow: 0 10px 6px rgba(0.5, 0, 0, 0.51); /* shadow */
     gap: 20px;
     padding: 20px;
+}
+
+/* style="display: flex; justify-content: center; align-items: center; height: 450px; width: 400px; position: fixed; left: 90px; top: 150px; */
+
+.inside-wel2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 450px;
+    width: 400px;
+    position: fixed;
+    left: 90px;
+    top: 150px;
+    background-color: rgba(0, 0, 0, 0.156);
+    backdrop-filter: blur(10px);
+    bottom: 40px;
+    border-radius: 20px;
+}
+
+@media (max-width: 700px) {
+    .leaderboard-container {
+        width: 400px;
+    }
+
+    .temp {
+        display: none;
+    }
+
+    .inside-wel2 {
+        display: none;
+    }
 }
 
 .top-badge {
@@ -2183,11 +2235,24 @@ form .login-button:hover {
     right: 15px;
 }
 
-#chat-icon {
+.chat-icon {
     position: fixed;
-    top: 80px;
-    font-size: .5em;
-    left: 230px;
+    top: 110px;
+    font-size: .7em;
+    left: 53px;
+    font-weight: 400;
+    margin-top: 2px;
+    width: 60px;
+    background-color: rgb(0, 114, 245);
+    border-radius: 10px;
+    text-align: center;
+    color: rgb(255, 255, 255);
+    border: 1px solid rgba(255, 255, 255, 0.63);
+    box-shadow: 0 2px 6px rgba(0.15, 0, 0, 0.21);
+}
+
+.chat-icon:hover {
+    background-color: var(--primary-color);
 }
 
 /*------- PROFILE PAGE END -------*/
