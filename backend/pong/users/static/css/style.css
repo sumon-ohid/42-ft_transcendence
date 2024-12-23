@@ -380,6 +380,8 @@ body {
     left: 25px;
     border-radius: 20px;
     display: flex;
+    display: flex;
+    flex-direction: column;
 }
 
 .edit-pic {
@@ -422,6 +424,9 @@ body {
     margin-top: 15px;
     border-radius: 30px;
     background-color: var(--container-background);
+    height: 50px;
+    margin-left: 5px;
+    margin-right: 5px;
 }
 
 .history-record p {
@@ -486,6 +491,21 @@ body {
     display: inline-block;
     z-index: -1;
 }
+
+/* @media (max-width: 700px) {
+    #pongCanvas {
+        width: 100%;
+        max-width: 400px;
+    }
+
+    .maingame-container {
+        display: none;
+    }
+
+    .score-board {
+        display: none;
+    }
+} */
 
 /* ------ PLAY SECTION END ------*/
 
@@ -982,7 +1002,7 @@ form .login-button:hover {
     background-color: var(--black-color);
     transform: translateX(-50%);
     height: 360px;
-    width: 1px;
+    width: .5px;
     position: fixed;
     top: 20px;
     opacity: .5;
@@ -1042,7 +1062,7 @@ form .login-button:hover {
     background-color: var(--black-color);
     transform: translateX(-50%);
     height: 80px;
-    width: 1px;
+    width: .5px;
     position: fixed;
     top: 10px;
     opacity: .5;
@@ -2215,11 +2235,24 @@ form .login-button:hover {
     right: 15px;
 }
 
-#chat-icon {
+.chat-icon {
     position: fixed;
-    top: 80px;
-    font-size: .5em;
-    left: 230px;
+    top: 110px;
+    font-size: .7em;
+    left: 53px;
+    font-weight: 400;
+    margin-top: 2px;
+    width: 60px;
+    background-color: rgb(0, 114, 245);
+    border-radius: 10px;
+    text-align: center;
+    color: rgb(255, 255, 255);
+    border: 1px solid rgba(255, 255, 255, 0.63);
+    box-shadow: 0 2px 6px rgba(0.15, 0, 0, 0.21);
+}
+
+.chat-icon:hover {
+    background-color: var(--primary-color);
 }
 
 /*------- PROFILE PAGE END -------*/

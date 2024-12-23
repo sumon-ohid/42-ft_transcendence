@@ -90,9 +90,8 @@ function startGame() {
                 <h1 id="right-score">0</h1>
             </div>
             <div class="score-line"></div>
-            <div class="score-line"></div>
-                <div class="quit-game" onclick="showQuitConfirmation()">
-                    <h1>QUIT</h1>
+            <div class="quit-game" onclick="showQuitConfirmation()">
+                <h1>QUIT</h1>
             </div>
         </div>
         <canvas id="pongCanvas" width="700" height="400"></canvas>
@@ -143,9 +142,9 @@ function initializeGame() {
     const canvas = document.getElementById("pongCanvas");
     const ctx = canvas.getContext("2d");
 
-    const paddleWidth = 10;
-    const paddleHeight = 100;
-    const ballRadius = 10;
+    const paddleWidth = 8;
+    const paddleHeight = 80;
+    const ballRadius = 8;
 
     let leftScore = 0;
     let rightScore = 0;
@@ -155,8 +154,8 @@ function initializeGame() {
     let paddle2Y = (canvas.height - paddleHeight) / 2;
     let ballX = canvas.width / 2;
     let ballY = canvas.height / 2;
-    let ballSpeedX = 5;
-    let ballSpeedY = 5;
+    let ballSpeedX = 3;
+    let ballSpeedY = 3;
 
     const paddleSpeed = 20;
 
