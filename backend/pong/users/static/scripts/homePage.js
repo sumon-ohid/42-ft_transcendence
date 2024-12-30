@@ -61,14 +61,14 @@ async function homePage() {
     nav.className = "navbar";
     nav.innerHTML = ` 
         <ul class="nav-menu">
-            <li><a href="#" title="Home" onclick="homePage()"><i class="fa-solid fa-house"></i><span>Home</span></a></li>
-            <li><a href="#" title="Other Users" onclick="userList()" ><i class="fa-solid fa-users"></i><span>Users</span></a></li>
-            <li><a href="#" title="Settings" onclick="settingsPage()"><i class="fa-solid fa-gear"></i><span>Settings</span></a></li>
-            <li><a href="#" title="Game" onclick="gameOptions()"><i class="fa-solid fa-gamepad"></i><span>Game</span></a></li>
-            <li><a href="#" title="Leaderboard" onclick="leaderboard()"><i class="fa-solid fa-trophy"></i><span>Leaderboard</span></a></li>
+            <li><a href="#homePage" title="Home" onclick="homePage()"><i class="fa-solid fa-house"></i><span>Home</span></a></li>
+            <li><a href="#userList" title="Other Users" onclick="userList()" ><i class="fa-solid fa-users"></i><span>Users</span></a></li>
+            <li><a href="#settingsPage" title="Settings" onclick="settingsPage()"><i class="fa-solid fa-gear"></i><span>Settings</span></a></li>
+            <li><a href="#gameOptions" title="Game" onclick="gameOptions()"><i class="fa-solid fa-gamepad"></i><span>Game</span></a></li>
+            <li><a href="#leaderboard" title="Leaderboard" onclick="leaderboard()"><i class="fa-solid fa-trophy"></i><span>Leaderboard</span></a></li>
             <li><a href="https://github.com/sumon-ohid/42-Ft_transcendence" title="Github Star"><i class="fa-solid fa-star"></i><span>Github Star</span></a></li>
-            <li><a href="#" title="Chat" onclick="chatPage()"><i class="fa-solid fa-message"></i><span>Chat</span></a></li>
-            <li><a href="#" title="logout" onclick="handleLogout(event)"><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a></li>
+            <li><a href="#chatPage" title="Chat" onclick="chatPage()"><i class="fa-solid fa-message"></i><span>Chat</span></a></li>
+            <li><a href="" title="logout" onclick="handleLogout(event)"><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a></li>
         </ul>
     `;
     body.appendChild(nav);
