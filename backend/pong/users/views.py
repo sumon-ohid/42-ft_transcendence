@@ -98,7 +98,9 @@ def api_logout(request):
     if request.user.is_authenticated:
         logout(request)
         return JsonResponse({'status': 'success', 'message': 'Logged out successfully.'})
-    return JsonResponse({'status': 'error', 'message': 'Invalid request method.'}, status=405)
+    else:
+        return redirect("https://localhost:8000/#login")
+    #return JsonResponse({'status': 'error', 'message': 'Invalid request method.'}, status=405)
 
 def get_username(request):
     if request.user.is_authenticated:
