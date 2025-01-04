@@ -31,5 +31,6 @@ function gameOptions() {
     `;
     body.appendChild(div);
 
+    // This throws an Error, need to catch it properly.
     document.querySelector('.wel-user').style.textAlign = 'center';
 }
