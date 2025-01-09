@@ -1648,12 +1648,12 @@ form .login-button:hover {
     background-color: #fdfdfdcc;
     color: rgb(0, 0, 0);
     padding: 10px;
-    border-radius: 5px;
+    border-radius: 10px;
     margin-bottom: 10px;
     max-width: 80%;
     word-wrap: break-word;
     width: auto;
-    border-radius: 20px 20px 0 20px;
+    /* border-radius: 20px 20px 0 20px; */
     position: relative;
     right: -30px;
 }
@@ -1689,12 +1689,12 @@ form .login-button:hover {
     background-color: #00000059;
     color: white;
     padding: 10px;
-    border-radius: 5px;
+    border-radius: 10px;
     margin-bottom: 10px;
     max-width: 80%;
     word-wrap: break-word;
     width: auto;
-    border-radius: 20px 20px 0 20px;
+    /* border-radius: 20px 20px 20px 20px; */
     position: relative;
     right: -30px;
 }
