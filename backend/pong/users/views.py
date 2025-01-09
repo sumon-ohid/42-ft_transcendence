@@ -519,8 +519,6 @@ def redirect_to_home(request):
     """)
 
 
-from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
 from .models import ChatMessage
 from django.utils.timezone import now
 import time
@@ -567,10 +565,6 @@ def long_poll(request):
     return JsonResponse({"error": "Invalid request method"}, status=405)
 
 
-from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
-from django.contrib.auth.models import User  # Import the User model
-import json
 import datetime
 
 @csrf_exempt
@@ -638,6 +632,27 @@ def get_chat_history(request):
 
         except User.DoesNotExist:
             return JsonResponse({"error": "Receiver not found"}, status=404)
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=500)
+
+    return JsonResponse({"error": "Invalid request method"}, status=405)
+
+@csrf_exempt
+def get_last_active(request):
+    if request.method == "GET":
+        username = request.GET.get("username")
+
+        if not username:
+            return JsonResponse({"error": "Missing username parameter"}, status=400)
+
+        try:
+            user = User.objects.get(username=username)
+            last_login = user.last_login
+            last_active = last_login.isoformat() if last_login else 'unknown'
+            return JsonResponse({"last_active": last_active}, status=200)
+
+        except User.DoesNotExist:
+            return JsonResponse({"error": "User not found"}, status=404)
         except Exception as e:
             return JsonResponse({"error": str(e)}, status=500)
 

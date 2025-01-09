@@ -2247,7 +2247,15 @@ form .login-button:hover {
 }
 
 
-#active-now, #last-action {
+#last-action {
+    font-size: .5em;
+    left: 60px;
+}
+
+#active-now {
+    top: 30px;
+    left: -25px;
+    width: 120px;
     font-size: .4em;
 }
 

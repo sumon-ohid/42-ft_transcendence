@@ -1,6 +1,31 @@
 let profilePicture = null;
-let selectedUser = null;
+let selectedUser;
 let lastTimestamp = null;
+let avatarUrl = "../static/images/11475215.jpg";
+
+async function fetchLastActiveTime(username) {
+    try {
+        const response = await fetch(`/api/last-active/?username=${username}`);
+        const data = await response.json();
+        const lastActive = new Date(data.last_active);
+
+        const now = new Date();
+        const isToday = lastActive.toDateString() === now.toDateString();
+        const isYesterday = new Date(now.setDate(now.getDate() - 1)).toDateString() === lastActive.toDateString();
+
+        if (isToday) {
+            return `${lastActive.getHours()}:${lastActive.getMinutes().toString().padStart(2, '0')}`;
+        } else if (isYesterday) {
+            return 'yesterday';
+        } else {
+            return lastActive.toLocaleDateString();
+        }
+    } catch (error) {
+        console.error("Error fetching last active time:", error);
+        return 'unknown';
+    }
+}
+
 
 async function chatPage() {
     fetchMessages();
@@ -44,9 +69,8 @@ async function chatPage() {
     body.appendChild(div);
 
 
-    let avatarUrl = null;
     const [username, profile_picture] = await Promise.all([fetchUsername(), fetchProfilePicture()]);
-        profilePicture = profile_picture;
+    profilePicture = profile_picture;
 
     // Display all users
     fetch('/api/users/')
@@ -62,8 +86,7 @@ async function chatPage() {
                 friendDiv.innerHTML = `
                     <img onclick="startChat('${user.username}', '${avatarUrl}')" src="${avatarUrl}" alt="${user.username}">
                     <span onclick="userProfile('${user.username}')" class="badge text-bg-light">${formatPlayerName(user.username)}</span>
-                    <p id="last-action" class="badge rounded-pill text-bg-info">Last Active: active</p>
-                `;
+                    <p id="last-action" class="badge rounded-pill text-bg-info">Say Hello to ${user.username.substring(0, 6)} 👋 </p>                `;
                 friendsContainer.appendChild(friendDiv);
             });
         })
@@ -125,7 +148,31 @@ async function chatPage() {
     
     async function fetchMessages() {
         if (!selectedUser) return;
+       
+        // THIS IS TO CHECK IF THE USER IS BLOCKED
         
+        // fetch(`/api/user-profile/${selectedUser.username}/`)
+        // .then(response => response.json())
+        // .then(data => {
+        //     if (data.error) {
+        //         console.error(data.error);
+        //         return;
+        //     }
+
+        //     const isFriend = data.is_friend;
+        //     if (isFriend) {
+        //         error("You can't chat with the user.");
+        //         // console.error("You can't chat with the user.");
+        //         chatInput.classList.add('disabled');
+        //         chatInput.style.pointerEvents = 'none';
+        //         return;
+        //     }
+        // })
+        // .catch(error => {
+        //     console.error('Error fetching user profile:', error);
+        // });
+
+
         const timestamp = formatTimestamp(new Date());
         const url = `/chat/long-poll/?receiver=${selectedUser.username}&last_timestamp=${timestamp}`;
 
@@ -171,16 +218,20 @@ async function chatPage() {
             });
     }
 
-    window.startChat = function(username, avatarUrl) {
+    window.startChat = async function(username, avatarUrl) {
+
         selectedUser = { username, avatarUrl };
         lastTimestamp = null;
 
         const chatTopBar = document.querySelector('.chat-top-bar');
+        const lastActiveTime = await fetchLastActiveTime(username);
+
+    
         chatTopBar.innerHTML = `
             <div onclick="userProfile('${username}')" class="chating-with">
                 <div class="friend-name">
                     <h1>${username.substring(0, 6)}.</h1>
-                    <span id="active-now" class="badge rounded-pill text-bg-warning">active now</span>
+                    <span id="active-now" class="badge rounded-pill text-bg-warning">Last Active: ${lastActiveTime}</span>
                 </div>
                 <div class="p-pic-back"></div>
                 <img src="${avatarUrl}" alt="${username}">
