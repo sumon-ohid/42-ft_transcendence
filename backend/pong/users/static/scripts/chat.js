@@ -82,8 +82,11 @@ function chatPage() {
             error("Select a user to chat with first.");
             return;
         }
-
+        
         const messageText = chatInput.value.trim();
+
+        console.log(messageText);
+        
         if (messageText !== "") {
             fetch('/chat/send-message/', {
                 method: 'POST',
@@ -107,15 +110,25 @@ function chatPage() {
         }
     }
 
-    function fetchMessages() {
+    function formatTimestamp(date) {
+        return date.toISOString().replace('T', ' ').replace('Z', '');
+    }
+
+    async function fetchMessages() {
         if (!selectedUser) return;
 
-        const url = `/chat/long-poll/?receiver=${selectedUser.username}&last_timestamp=${lastTimestamp}`;
+        const timestamp = formatTimestamp(new Date());
+        const url = `/chat/long-poll/?receiver=${selectedUser.username}&last_timestamp=${timestamp}`;
 
         fetch(url)
             .then(response => response.json())
             .then(data => {
-                const messages = data.messages;
+                if (data.error) {
+                    console.error("Error fetching messages:", data.error);
+                    return;
+                }
+
+                const messages = data.messages || [];
 
                 if (messages.length > 0) {
                     messages.forEach(msg => {
@@ -164,8 +177,6 @@ function chatPage() {
         chatInput.classList.remove('disabled');
         chatInput.style.pointerEvents = 'auto';
 
-        // Clear previous messages and start long polling
-        chatMessages.innerHTML = '';
-        fetchMessages();
+        fetchMessages(); // Start fetching messages
     };
 }

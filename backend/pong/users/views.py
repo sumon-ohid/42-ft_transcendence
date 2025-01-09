@@ -524,6 +524,8 @@ from django.views.decorators.csrf import csrf_exempt
 from .models import ChatMessage
 from django.utils.timezone import now
 import time
+from django.utils.dateparse import parse_datetime
+from django.utils.timezone import make_aware
 
 @csrf_exempt
 def long_poll(request):
@@ -535,6 +537,10 @@ def long_poll(request):
             return JsonResponse({"error": "Missing parameters"}, status=400)
 
         try:
+            last_timestamp = parse_datetime(last_timestamp)
+            if last_timestamp is not None:
+                last_timestamp = make_aware(last_timestamp)
+
             messages = []
             for _ in range(30):  # Polling duration (30 seconds)
                 new_messages = ChatMessage.objects.filter(
@@ -561,7 +567,6 @@ def long_poll(request):
     return JsonResponse({"error": "Invalid request method"}, status=405)
 
 
-
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import User  # Import the User model
@@ -572,7 +577,7 @@ def send_message(request):
     if request.method == "POST":
         try:
             data = json.loads(request.body)
-            receiver_username = data.get('username')  # Get username from request payload
+            receiver_username = data.get('receiver')  # Get username from request payload
             message_content = data.get('message')  # Get message content from request payload
 
             if not receiver_username or not message_content:
