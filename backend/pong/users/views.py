@@ -40,7 +40,7 @@ def index(request):
     context = {'data': 'Hello from Django'}
     return render(request, 'index.html', context)
 
-@csrf_exempt  # Use only if CSRF token is not included in the frontend request
+@csrf_exempt
 def api_signup(request):
     if request.method == 'POST':
         try:
@@ -413,7 +413,7 @@ def get_user_profile(request, username):
 
 def intra42_login(request):
     client_id = settings.SOCIALACCOUNT_PROVIDERS['intra42']['APP']['client_id']
-    redirect_uri = "https://localhost:8000/accounts/social/login/callback/"  # Update with your callback URL
+    redirect_uri = "https://localhost:8000/accounts/social/login/callback/"
     auth_url = f"https://api.intra.42.fr/oauth/authorize?client_id={client_id}&redirect_uri={redirect_uri}&response_type=code"
     print(auth_url)
     return redirect(auth_url)
