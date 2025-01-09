@@ -59,7 +59,7 @@ function chatPage() {
         })
         .catch(error => console.error('Error fetching users:', error));
 
-    // Event listeners for sending messages both click and enter
+    // works with both click and enter
     const chatInput = document.getElementById("chat-input");
     const sendButton = document.getElementById("send-button");
     const chatMessages = document.getElementById("chat-messages");
@@ -74,8 +74,8 @@ function chatPage() {
         }
     });
 
-    let selectedUser = null; // Track selected user for chat
-    let lastTimestamp = null; // Track last message timestamp
+    let selectedUser = null;
+    let lastTimestamp = null;
 
     async function sendMessage() {
         if (!selectedUser) {
@@ -85,7 +85,7 @@ function chatPage() {
         
         const messageText = chatInput.value.trim();
 
-        console.log(messageText);
+        console.log(messageText); // remove later
         
         if (messageText !== "") {
             fetch('/chat/send-message/', {
@@ -110,6 +110,7 @@ function chatPage() {
         }
     }
 
+    // To match the timestamp format in the database
     function formatTimestamp(date) {
         return date.toISOString().replace('T', ' ').replace('Z', '');
     }
@@ -117,6 +118,7 @@ function chatPage() {
     async function fetchMessages() {
         if (!selectedUser) return;
 
+        const [username, profilePicture] = await Promise.all([fetchUsername(), fetchProfilePicture()]);
         const timestamp = formatTimestamp(new Date());
         const url = `/chat/long-poll/?receiver=${selectedUser.username}&last_timestamp=${timestamp}`;
 
@@ -132,34 +134,39 @@ function chatPage() {
 
                 if (messages.length > 0) {
                     messages.forEach(msg => {
+                       
+                        const messageText = `${msg.message}`;
                         const messageElement = document.createElement("div");
                         messageElement.className = "chat-message";
-                        messageElement.innerHTML = `
-                            <strong>${msg.sender}:</strong> ${msg.message}
-                        `;
+                        
+                        messageElement.classList.add("chat-message");
+    
+                        const profilePic = document.createElement("img");
+                        profilePic.src = profilePicture; // Should change later, put user picture
+                        profilePic.alt = "Profile Picture";
+                
+                        const messageContent = document.createElement("span");
+                        messageContent.textContent = messageText;
+                
+                        messageElement.appendChild(profilePic);
+                        messageElement.appendChild(messageContent);
+                
                         chatMessages.appendChild(messageElement);
                     });
-
                     chatMessages.scrollTop = chatMessages.scrollHeight;
-
-                    // Update lastTimestamp to the latest message
                     lastTimestamp = messages[messages.length - 1].timestamp;
                 }
-
-                // Continue long polling
                 fetchMessages();
             })
             .catch(error => {
                 console.error("Error fetching messages:", error);
-
-                // Retry after a delay
                 setTimeout(fetchMessages, 5000);
             });
     }
 
     window.startChat = function(username, avatarUrl) {
-        selectedUser = { username, avatarUrl }; // Set selected user
-        lastTimestamp = null; // Reset timestamp for new chat
+        selectedUser = { username, avatarUrl };
+        lastTimestamp = null;
 
         const chatTopBar = document.querySelector('.chat-top-bar');
         chatTopBar.innerHTML = `
@@ -177,7 +184,7 @@ function chatPage() {
         chatInput.classList.remove('disabled');
         chatInput.style.pointerEvents = 'auto';
 
-        // Fetch and display previous messages between the users
+        // display previous messages between the users
         fetch(`/chat/get-chat-history/?receiver=${username}`)
         .then(response => response.json())
         .then(data => {
@@ -196,6 +203,6 @@ function chatPage() {
         })
         .catch(error => console.error("Error loading chat history:", error));
 
-        fetchMessages(); // Start fetching messages
+        fetchMessages();
     };
 }
