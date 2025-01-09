@@ -26,10 +26,10 @@ function chatPage() {
         <div class="chat-messages" id="chat-messages"></div>
         <div class="chat-box-holder">
             <i class="fa-solid fa-face-smile"></i>
-            <input type="text" class="chat-box" id="chat-input" placeholder="type a message">
+            <input  style="pointer-events: none;" type="text" class="chat-box disabled" id="chat-input" placeholder="type a message">
             <div class="attachment"><i class="fa-solid fa-paperclip"></i></div>
         </div>
-        <div class="send-button" id="send-button">
+        <div class="send-button" id="send-button" >
             <i class="fa-solid fa-paper-plane"></i>
         </div>
         <div class="quit-game" onclick="homePage()">
@@ -38,7 +38,7 @@ function chatPage() {
     `;
     body.appendChild(div);
 
-    //  display all users
+    // Display all users
     fetch('/api/users/')
         .then(response => response.json())
         .then(users => {
@@ -59,7 +59,7 @@ function chatPage() {
         })
         .catch(error => console.error('Error fetching users:', error));
 
-    // event listeners for sending messages both click and enter
+    // Event listeners for sending messages both click and enter
     const chatInput = document.getElementById("chat-input");
     const sendButton = document.getElementById("send-button");
     const chatMessages = document.getElementById("chat-messages");
@@ -75,6 +75,11 @@ function chatPage() {
     });
 
     async function sendMessage() {
+        const chatTopBar = document.querySelector('.chat-top-bar');
+        if (!chatTopBar.innerHTML.trim()) {
+            error("Select a user to chat with first.");
+            return;
+        }
 
         const [username, profilePicture] = await Promise.all([fetchUsername(), fetchProfilePicture()]);
 
@@ -82,17 +87,17 @@ function chatPage() {
         if (messageText !== "") {
             const messageElement = document.createElement("div");
             messageElement.classList.add("chat-message");
-    
+
             const profilePic = document.createElement("img");
-            profilePic.src = profilePicture; // Should change later, put user picture
+            profilePic.src = profilePicture;
             profilePic.alt = "Profile Picture";
-    
+
             const messageContent = document.createElement("span");
             messageContent.textContent = messageText;
-    
+
             messageElement.appendChild(profilePic);
             messageElement.appendChild(messageContent);
-    
+
             chatMessages.appendChild(messageElement);
             chatInput.value = "";
             chatMessages.scrollTop = chatMessages.scrollHeight; // Scroll to the bottom
@@ -100,7 +105,6 @@ function chatPage() {
     }
 }
 
-// If user is blocked can't chat. Give a error instead.
 function startChat(username, avatarUrl) {
     fetch(`/api/user-profile/${username}/`)
         .then(response => response.json())
@@ -113,7 +117,6 @@ function startChat(username, avatarUrl) {
             const isFriend = data.is_friend;
             if (isFriend) {
                 error("You can't chat with the user.");
-                // console.error("You can't chat with the user.");
                 return;
             }
 
@@ -129,6 +132,11 @@ function startChat(username, avatarUrl) {
                     <img src="${avatarUrl}" alt="${username}">
                 </div>
             `;
+
+            // Enable the send button after user selection
+            const chatInput = document.getElementById("chat-input");
+            chatInput.classList.remove('disabled');
+            chatInput.style.pointerEvents = 'auto';
         })
         .catch(error => {
             console.error('Error fetching user profile:', error);
