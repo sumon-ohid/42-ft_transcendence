@@ -52,15 +52,13 @@ function handleLogin(event) {
         return;
     }
 
-    // Fetch the CSRF token
     const csrfToken = getCSRFToken();
 
-    // Send the POST request to the Django login API
     fetch('/api/login/', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'X-CSRFToken': csrfToken, // Include CSRF token for Django
+            'X-CSRFToken': csrfToken,
         },
         body: JSON.stringify({ username, password }),
     })
@@ -115,7 +113,7 @@ function show2FAPage() {
 }
 
 function handle2FAVerification(event) {
-    event.preventDefault(); // Prevent the form from refreshing the page
+    event.preventDefault();
 
     const code = document.getElementById("2fa-code").value.trim();
 

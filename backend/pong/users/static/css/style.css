@@ -1598,15 +1598,15 @@ form .login-button:hover {
     }
     
     .chat-message {
-        background-color: #007bff;
-        color: white;
+        background-color: #fdfdfdcc;
+        color: rgb(0, 0, 0);
         padding: 10px;
-        border-radius: 5px;
+        /* border-radius: 5px; */
         margin-bottom: 10px;
         max-width: 80%;
         word-wrap: break-word;
         width: auto;
-        border-radius: 20px 20px 0 20px;
+        border-radius: 0px 20px 0 20px;
         position: relative;
         right: -50px;
     }
@@ -1645,15 +1645,15 @@ form .login-button:hover {
 }
 
 .chat-message {
-    background-color: #007bff;
-    color: white;
+    background-color: #fdfdfdcc;
+    color: rgb(0, 0, 0);
     padding: 10px;
-    border-radius: 5px;
+    border-radius: 10px;
     margin-bottom: 10px;
     max-width: 80%;
     word-wrap: break-word;
     width: auto;
-    border-radius: 20px 20px 0 20px;
+    /* border-radius: 20px 20px 0 20px; */
     position: relative;
     right: -30px;
 }
@@ -1683,6 +1683,20 @@ form .login-button:hover {
 
 .chat-messages::-webkit-scrollbar {
     display: none;
+}
+
+.other-user-message {
+    background-color: #00000059;
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    max-width: 80%;
+    word-wrap: break-word;
+    width: auto;
+    /* border-radius: 20px 20px 20px 20px; */
+    position: relative;
+    right: -30px;
 }
 
 /*------- CHAT PAGE END -------*/
@@ -2233,7 +2247,15 @@ form .login-button:hover {
 }
 
 
-#active-now, #last-action {
+#last-action {
+    font-size: .5em;
+    left: 60px;
+}
+
+#active-now {
+    top: 30px;
+    left: -25px;
+    width: 120px;
     font-size: .4em;
 }
 

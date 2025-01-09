@@ -49,7 +49,7 @@ async function homePage() {
     // This solves the reload problem which was showing 
     // default value first the fetch value from user.
     const [username, profilePicture] = await Promise.all([fetchUsername(), fetchProfilePicture()]);
-    
+  
     // if (loggedInUser === 'Guest') {
     //     saveCurrentPage('login');
     //     login();
@@ -205,6 +205,10 @@ async function homePage() {
             }
         })
         .catch(error => {
+            // change page to login if user is not logged in
+            saveCurrentPage('login');
+            // reload the page
+            window.location.reload();
             console.error('Error fetching play history:', error);
         });
 }

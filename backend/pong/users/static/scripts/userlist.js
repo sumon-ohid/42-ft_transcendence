@@ -42,7 +42,7 @@ function userList() {
             // Filter out the logged-in user from user list
             const filteredData = users.filter(user => user.username !== loggedInUser);
 
-            // Render user list without logged in user
+            // Render user list except logged in user
             div.innerHTML = `
                 <div class="title-all-rank">
                     <h2>User List</h2>

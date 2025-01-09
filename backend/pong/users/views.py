@@ -40,7 +40,7 @@ def index(request):
     context = {'data': 'Hello from Django'}
     return render(request, 'index.html', context)
 
-@csrf_exempt  # Use only if CSRF token is not included in the frontend request
+@csrf_exempt
 def api_signup(request):
     if request.method == 'POST':
         try:
@@ -191,7 +191,6 @@ def leaderboard(request):
             'avatar': avatar_url
         })
 
-    # Return the leaderboard data as JSON
     return JsonResponse(data, safe=False)
 
 
@@ -414,7 +413,7 @@ def get_user_profile(request, username):
 
 def intra42_login(request):
     client_id = settings.SOCIALACCOUNT_PROVIDERS['intra42']['APP']['client_id']
-    redirect_uri = "https://localhost:8000/accounts/social/login/callback/"  # Update with your callback URL
+    redirect_uri = "https://localhost:8000/accounts/social/login/callback/"
     auth_url = f"https://api.intra.42.fr/oauth/authorize?client_id={client_id}&redirect_uri={redirect_uri}&response_type=code"
     print(auth_url)
     return redirect(auth_url)
@@ -518,3 +517,143 @@ def redirect_to_home(request):
         </body>
         </html>
     """)
+
+
+from .models import ChatMessage
+from django.utils.timezone import now
+import time
+from django.utils.dateparse import parse_datetime
+from django.utils.timezone import make_aware
+
+@csrf_exempt
+def long_poll(request):
+    if request.method == "GET":
+        receiver = request.GET.get("receiver")
+        last_timestamp = request.GET.get("last_timestamp")
+
+        if not receiver or not last_timestamp:
+            return JsonResponse({"error": "Missing parameters"}, status=400)
+
+        try:
+            last_timestamp = parse_datetime(last_timestamp)
+            if last_timestamp is not None:
+                last_timestamp = make_aware(last_timestamp)
+
+            messages = []
+            for _ in range(30):  # Polling duration (30 seconds)
+                new_messages = ChatMessage.objects.filter(
+                    receiver__username=receiver,
+                    timestamp__gt=last_timestamp
+                )
+                if new_messages.exists():
+                    messages = [
+                        {
+                            "sender": msg.sender.username,
+                            "message": msg.message,
+                            "timestamp": msg.timestamp.isoformat(),
+                        }
+                        for msg in new_messages
+                    ]
+                    break
+                time.sleep(1)  # Sleep for 1 second before checking again
+
+            return JsonResponse({"messages": messages}, status=200)
+
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=500)
+
+    return JsonResponse({"error": "Invalid request method"}, status=405)
+
+
+import datetime
+
+@csrf_exempt
+def send_message(request):
+    if request.method == "POST":
+        try:
+            data = json.loads(request.body)
+            receiver_username = data.get('receiver')  # Get username from request payload
+            message_content = data.get('message')  # Get message content from request payload
+
+            if not receiver_username or not message_content:
+                return JsonResponse({"error": "Missing username or message"}, status=400)
+
+            # Get the receiver user object
+            try:
+                receiver = User.objects.get(username=receiver_username)
+            except User.DoesNotExist:
+                return JsonResponse({"error": "Receiver not found"}, status=404)
+
+            # Create the chat message
+            message = ChatMessage.objects.create(
+                sender=request.user,  # Assuming request.user is the authenticated user
+                receiver=receiver,
+                message=message_content,
+                timestamp=datetime.datetime.now()
+            )
+
+            return JsonResponse({"status": "success", "message_id": message.id}, status=200)
+
+        except json.JSONDecodeError:
+            return JsonResponse({"error": "Invalid JSON"}, status=400)
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=500)
+
+    return JsonResponse({"error": "Invalid request method"}, status=405)
+
+
+from django.db.models import Q
+
+@csrf_exempt
+def get_chat_history(request):
+    if request.method == "GET":
+        user = request.user
+        receiver_username = request.GET.get("receiver")
+
+        if not receiver_username:
+            return JsonResponse({"error": "Missing receiver parameter"}, status=400)
+
+        try:
+            receiver = User.objects.get(username=receiver_username)
+            messages = ChatMessage.objects.filter(
+                (Q(sender=user) & Q(receiver=receiver)) | (Q(sender=receiver) & Q(receiver=user))
+            ).order_by('timestamp')
+
+            messages_data = [
+                {
+                    "sender": msg.sender.username,
+                    "message": msg.message,
+                    "timestamp": msg.timestamp.isoformat(),
+                }
+                for msg in messages
+            ]
+
+            return JsonResponse({"messages": messages_data}, status=200)
+
+        except User.DoesNotExist:
+            return JsonResponse({"error": "Receiver not found"}, status=404)
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=500)
+
+    return JsonResponse({"error": "Invalid request method"}, status=405)
+
+@csrf_exempt
+def get_last_active(request):
+    if request.method == "GET":
+        username = request.GET.get("username")
+
+        if not username:
+            return JsonResponse({"error": "Missing username parameter"}, status=400)
+
+        try:
+            user = User.objects.get(username=username)
+            last_login = user.last_login
+            last_active = last_login.isoformat() if last_login else 'unknown'
+            return JsonResponse({"last_active": last_active}, status=200)
+
+        except User.DoesNotExist:
+            return JsonResponse({"error": "User not found"}, status=404)
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=500)
+
+    return JsonResponse({"error": "Invalid request method"}, status=405)
