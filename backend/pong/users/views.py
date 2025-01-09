@@ -572,21 +572,19 @@ def send_message(request):
     if request.method == "POST":
         try:
             data = json.loads(request.body)
-            receiver_username = data.get('receiver')  # Get username from request payload
-            message_content = data.get('message')  # Get message content from request payload
+            receiver_username = data.get('receiver')
+            message_content = data.get('message')
 
             if not receiver_username or not message_content:
                 return JsonResponse({"error": "Missing username or message"}, status=400)
 
-            # Get the receiver user object
             try:
                 receiver = User.objects.get(username=receiver_username)
             except User.DoesNotExist:
                 return JsonResponse({"error": "Receiver not found"}, status=404)
 
-            # Create the chat message
             message = ChatMessage.objects.create(
-                sender=request.user,  # Assuming request.user is the authenticated user
+                sender=request.user,
                 receiver=receiver,
                 message=message_content,
                 timestamp=datetime.datetime.now()
