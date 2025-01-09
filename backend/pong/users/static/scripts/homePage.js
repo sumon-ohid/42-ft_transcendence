@@ -49,7 +49,7 @@ async function homePage() {
     // This solves the reload problem which was showing 
     // default value first the fetch value from user.
     const [username, profilePicture] = await Promise.all([fetchUsername(), fetchProfilePicture()]);
-    
+  
     // if (loggedInUser === 'Guest') {
     //     saveCurrentPage('login');
     //     login();

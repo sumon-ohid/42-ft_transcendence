@@ -1,4 +1,9 @@
-function chatPage() {
+let profilePicture = null;
+let selectedUser = null;
+let lastTimestamp = null;
+
+async function chatPage() {
+    fetchMessages();
     saveCurrentPage('chatPage');
     history.pushState({ page: 'chatPage' }, '', '#chatPage');
 
@@ -38,6 +43,11 @@ function chatPage() {
     `;
     body.appendChild(div);
 
+
+    let avatarUrl = null;
+    const [username, profile_picture] = await Promise.all([fetchUsername(), fetchProfilePicture()]);
+        profilePicture = profile_picture;
+
     // Display all users
     fetch('/api/users/')
         .then(response => response.json())
@@ -48,7 +58,7 @@ function chatPage() {
             users.forEach(user => {
                 const friendDiv = document.createElement('div');
                 friendDiv.className = 'friend';
-                const avatarUrl = user.profile__photo ? `/media/${user.profile__photo}` : '/../static/images/11475215.jpg';
+                avatarUrl = user.profile__photo ? `/media/${user.profile__photo}` : '/../static/images/11475215.jpg';
                 friendDiv.innerHTML = `
                     <img onclick="startChat('${user.username}', '${avatarUrl}')" src="${avatarUrl}" alt="${user.username}">
                     <span onclick="userProfile('${user.username}')" class="badge text-bg-light">${formatPlayerName(user.username)}</span>
@@ -74,10 +84,8 @@ function chatPage() {
         }
     });
 
-    let selectedUser = null;
-    let lastTimestamp = null;
-
     async function sendMessage() {
+        
         if (!selectedUser) {
             error("Select a user to chat with first.");
             return;
@@ -114,11 +122,10 @@ function chatPage() {
     function formatTimestamp(date) {
         return date.toISOString().replace('T', ' ').replace('Z', '');
     }
-
+    
     async function fetchMessages() {
         if (!selectedUser) return;
-
-        const [username, profilePicture] = await Promise.all([fetchUsername(), fetchProfilePicture()]);
+        
         const timestamp = formatTimestamp(new Date());
         const url = `/chat/long-poll/?receiver=${selectedUser.username}&last_timestamp=${timestamp}`;
 
@@ -156,7 +163,7 @@ function chatPage() {
                     chatMessages.scrollTop = chatMessages.scrollHeight;
                     lastTimestamp = messages[messages.length - 1].timestamp;
                 }
-                fetchMessages();
+                startChat(selectedUser.username, selectedUser.avatarUrl);
             })
             .catch(error => {
                 console.error("Error fetching messages:", error);
@@ -191,11 +198,36 @@ function chatPage() {
             if (data.messages) {
                 const chatMessages = document.getElementById("chat-messages");
                 data.messages.forEach(msg => {
+                    
+                    let userChat;
+                    if (msg.sender === username) {
+                        userChat = `${username}`;
+                    } else {
+                        userChat = "You";
+                    }
+                    const messageText =  `${userChat}: ${msg.message}`;
                     const messageElement = document.createElement("div");
                     messageElement.className = "chat-message";
-                    messageElement.innerHTML = `
-                        <strong>${msg.sender}:</strong> ${msg.message}
-                    `;
+                    
+                    // messageElement.classList.add("chat-message");
+                    const profilePic = document.createElement("img");
+
+                    if (msg.sender === username) {
+                        messageElement.classList.add("other-user-message");
+                        profilePic.src = `${avatarUrl}`;
+                    } else {
+                        messageElement.classList.add("chat-message");
+                        profilePic.src = profilePicture; // Should change later, put user picture
+                    }
+                   
+                    profilePic.alt = "Profile Picture";
+            
+                    const messageContent = document.createElement("span");
+                    messageContent.textContent = messageText;
+            
+                    messageElement.appendChild(profilePic);
+                    messageElement.appendChild(messageContent);
+            
                     chatMessages.appendChild(messageElement);
                 });
                 chatMessages.scrollTop = chatMessages.scrollHeight;
