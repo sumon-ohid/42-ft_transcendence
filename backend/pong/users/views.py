@@ -540,7 +540,7 @@ def long_poll(request):
                 last_timestamp = make_aware(last_timestamp)
 
             messages = []
-            for _ in range(30):  # Polling duration (30 seconds)
+            for _ in range(5):  # Polling duration 5 seconds, refresh every 5 second
                 new_messages = ChatMessage.objects.filter(
                     receiver__username=receiver,
                     timestamp__gt=last_timestamp

@@ -185,29 +185,30 @@ async function chatPage() {
                 }
 
                 const messages = data.messages || [];
-
+                chatMessages.innerHTML = '';
+                
                 if (messages.length > 0) {
-                    messages.forEach(msg => {
+                    //messages.forEach(msg => {
                        
-                        const messageText = `${msg.message}`;
-                        const messageElement = document.createElement("div");
-                        messageElement.className = "chat-message";
+                        // const messageText = `${msg.message}`;
+                        // const messageElement = document.createElement("div");
+                        // messageElement.className = "chat-message";
                         
-                        messageElement.classList.add("chat-message");
+                        // messageElement.classList.add("chat-message");
     
-                        const profilePic = document.createElement("img");
-                        profilePic.src = profilePicture; // Should change later, put user picture
-                        profilePic.alt = "Profile Picture";
+                        // const profilePic = document.createElement("img");
+                        // profilePic.src = profilePicture; // Should change later, put user picture
+                        // profilePic.alt = "Profile Picture";
                 
-                        const messageContent = document.createElement("span");
-                        messageContent.textContent = messageText;
+                        // const messageContent = document.createElement("span");
+                        // messageContent.textContent = messageText;
                 
-                        messageElement.appendChild(profilePic);
-                        messageElement.appendChild(messageContent);
+                        // messageElement.appendChild(profilePic);
+                        // messageElement.appendChild(messageContent);
                 
-                        chatMessages.appendChild(messageElement);
-                    });
-                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                        // chatMessages.appendChild(messageElement);
+                    //});
+                    // chatMessages.scrollTop = chatMessages.scrollHeight;
                     lastTimestamp = messages[messages.length - 1].timestamp;
                 }
                 startChat(selectedUser.username, selectedUser.avatarUrl);
