@@ -191,7 +191,6 @@ def leaderboard(request):
             'avatar': avatar_url
         })
 
-    # Return the leaderboard data as JSON
     return JsonResponse(data, safe=False)
 
 
