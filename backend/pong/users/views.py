@@ -571,6 +571,7 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import User  # Import the User model
 import json
+import datetime
 
 @csrf_exempt
 def send_message(request):
@@ -593,13 +594,50 @@ def send_message(request):
             message = ChatMessage.objects.create(
                 sender=request.user,  # Assuming request.user is the authenticated user
                 receiver=receiver,
-                message=message_content
+                message=message_content,
+                timestamp=datetime.datetime.now()
             )
 
             return JsonResponse({"status": "success", "message_id": message.id}, status=200)
 
         except json.JSONDecodeError:
             return JsonResponse({"error": "Invalid JSON"}, status=400)
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=500)
+
+    return JsonResponse({"error": "Invalid request method"}, status=405)
+
+
+from django.db.models import Q
+
+@csrf_exempt
+def get_chat_history(request):
+    if request.method == "GET":
+        user = request.user
+        receiver_username = request.GET.get("receiver")
+
+        if not receiver_username:
+            return JsonResponse({"error": "Missing receiver parameter"}, status=400)
+
+        try:
+            receiver = User.objects.get(username=receiver_username)
+            messages = ChatMessage.objects.filter(
+                (Q(sender=user) & Q(receiver=receiver)) | (Q(sender=receiver) & Q(receiver=user))
+            ).order_by('timestamp')
+
+            messages_data = [
+                {
+                    "sender": msg.sender.username,
+                    "message": msg.message,
+                    "timestamp": msg.timestamp.isoformat(),
+                }
+                for msg in messages
+            ]
+
+            return JsonResponse({"messages": messages_data}, status=200)
+
+        except User.DoesNotExist:
+            return JsonResponse({"error": "Receiver not found"}, status=404)
         except Exception as e:
             return JsonResponse({"error": str(e)}, status=500)
 

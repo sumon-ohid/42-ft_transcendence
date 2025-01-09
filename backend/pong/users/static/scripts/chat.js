@@ -177,6 +177,25 @@ function chatPage() {
         chatInput.classList.remove('disabled');
         chatInput.style.pointerEvents = 'auto';
 
+        // Fetch and display previous messages between the users
+        fetch(`/chat/get-chat-history/?receiver=${username}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.messages) {
+                const chatMessages = document.getElementById("chat-messages");
+                data.messages.forEach(msg => {
+                    const messageElement = document.createElement("div");
+                    messageElement.className = "chat-message";
+                    messageElement.innerHTML = `
+                        <strong>${msg.sender}:</strong> ${msg.message}
+                    `;
+                    chatMessages.appendChild(messageElement);
+                });
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+        })
+        .catch(error => console.error("Error loading chat history:", error));
+
         fetchMessages(); // Start fetching messages
     };
 }

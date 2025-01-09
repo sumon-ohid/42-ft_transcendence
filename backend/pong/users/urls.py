@@ -3,7 +3,7 @@ from .views import index, api_signup, api_login, api_logout, get_username, save_
     upload_profile_picture, get_profile_picture, leaderboard, get_play_history, \
     change_username, change_password, disable_2fa, verify_2fa, setup_2fa, get_2fa_status, \
     get_users, add_block, remove_block, get_user_profile, intra42_login, callback_view, \
-    redirect_to_home, long_poll, send_message
+    redirect_to_home, long_poll, send_message, get_chat_history
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -33,6 +33,7 @@ urlpatterns = [
     path('api/redirect/', redirect_to_home, name='redirect_to_home'),
     path('chat/long-poll/', long_poll, name='long_poll'),
     path('chat/send-message/', send_message, name='send_message'),
+    path('chat/get-chat-history/', get_chat_history, name='get_chat_history'),
 ]
 
 
