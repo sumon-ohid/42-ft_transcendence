@@ -517,3 +517,85 @@ def redirect_to_home(request):
         </body>
         </html>
     """)
+
+
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from .models import ChatMessage
+from django.utils.timezone import now
+import time
+
+@csrf_exempt
+def long_poll(request):
+    if request.method == "GET":
+        receiver = request.GET.get("receiver")
+        last_timestamp = request.GET.get("last_timestamp")
+
+        if not receiver or not last_timestamp:
+            return JsonResponse({"error": "Missing parameters"}, status=400)
+
+        try:
+            messages = []
+            for _ in range(30):  # Polling duration (30 seconds)
+                new_messages = ChatMessage.objects.filter(
+                    receiver__username=receiver,
+                    timestamp__gt=last_timestamp
+                )
+                if new_messages.exists():
+                    messages = [
+                        {
+                            "sender": msg.sender.username,
+                            "message": msg.message,
+                            "timestamp": msg.timestamp.isoformat(),
+                        }
+                        for msg in new_messages
+                    ]
+                    break
+                time.sleep(1)  # Sleep for 1 second before checking again
+
+            return JsonResponse({"messages": messages}, status=200)
+
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=500)
+
+    return JsonResponse({"error": "Invalid request method"}, status=405)
+
+
+
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.models import User  # Import the User model
+import json
+
+@csrf_exempt
+def send_message(request):
+    if request.method == "POST":
+        try:
+            data = json.loads(request.body)
+            receiver_username = data.get('username')  # Get username from request payload
+            message_content = data.get('message')  # Get message content from request payload
+
+            if not receiver_username or not message_content:
+                return JsonResponse({"error": "Missing username or message"}, status=400)
+
+            # Get the receiver user object
+            try:
+                receiver = User.objects.get(username=receiver_username)
+            except User.DoesNotExist:
+                return JsonResponse({"error": "Receiver not found"}, status=404)
+
+            # Create the chat message
+            message = ChatMessage.objects.create(
+                sender=request.user,  # Assuming request.user is the authenticated user
+                receiver=receiver,
+                message=message_content
+            )
+
+            return JsonResponse({"status": "success", "message_id": message.id}, status=200)
+
+        except json.JSONDecodeError:
+            return JsonResponse({"error": "Invalid JSON"}, status=400)
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=500)
+
+    return JsonResponse({"error": "Invalid request method"}, status=405)

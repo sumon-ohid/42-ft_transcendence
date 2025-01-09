@@ -74,71 +74,98 @@ function chatPage() {
         }
     });
 
+    let selectedUser = null; // Track selected user for chat
+    let lastTimestamp = null; // Track last message timestamp
+
     async function sendMessage() {
-        const chatTopBar = document.querySelector('.chat-top-bar');
-        if (!chatTopBar.innerHTML.trim()) {
+        if (!selectedUser) {
             error("Select a user to chat with first.");
             return;
         }
 
-        const [username, profilePicture] = await Promise.all([fetchUsername(), fetchProfilePicture()]);
-
         const messageText = chatInput.value.trim();
         if (messageText !== "") {
-            const messageElement = document.createElement("div");
-            messageElement.classList.add("chat-message");
-
-            const profilePic = document.createElement("img");
-            profilePic.src = profilePicture;
-            profilePic.alt = "Profile Picture";
-
-            const messageContent = document.createElement("span");
-            messageContent.textContent = messageText;
-
-            messageElement.appendChild(profilePic);
-            messageElement.appendChild(messageContent);
-
-            chatMessages.appendChild(messageElement);
-            chatInput.value = "";
-            chatMessages.scrollTop = chatMessages.scrollHeight; // Scroll to the bottom
+            fetch('/chat/send-message/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCSRFToken(),
+                },
+                body: JSON.stringify({
+                    receiver: selectedUser.username,
+                    message: messageText,
+                }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === "success") {
+                    chatInput.value = "";
+                } else {
+                    console.error("Error sending message:", data);
+                }
+            });
         }
     }
-}
 
-function startChat(username, avatarUrl) {
-    fetch(`/api/user-profile/${username}/`)
-        .then(response => response.json())
-        .then(data => {
-            if (data.error) {
-                console.error(data.error);
-                return;
-            }
+    function fetchMessages() {
+        if (!selectedUser) return;
 
-            const isFriend = data.is_friend;
-            if (isFriend) {
-                error("You can't chat with the user.");
-                return;
-            }
+        const url = `/chat/long-poll/?receiver=${selectedUser.username}&last_timestamp=${lastTimestamp}`;
 
-            const chatTopBar = document.querySelector('.chat-top-bar');
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                const messages = data.messages;
 
-            chatTopBar.innerHTML = `
-                <div onclick="userProfile('${username}')" class="chating-with">
-                    <div class="friend-name">
-                        <h1>${username.substring(0, 6)}.</h1>
-                        <span id="active-now" class="badge rounded-pill text-bg-warning">active now</span>
-                    </div>
-                    <div class="p-pic-back"></div>
-                    <img src="${avatarUrl}" alt="${username}">
+                if (messages.length > 0) {
+                    messages.forEach(msg => {
+                        const messageElement = document.createElement("div");
+                        messageElement.className = "chat-message";
+                        messageElement.innerHTML = `
+                            <strong>${msg.sender}:</strong> ${msg.message}
+                        `;
+                        chatMessages.appendChild(messageElement);
+                    });
+
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+
+                    // Update lastTimestamp to the latest message
+                    lastTimestamp = messages[messages.length - 1].timestamp;
+                }
+
+                // Continue long polling
+                fetchMessages();
+            })
+            .catch(error => {
+                console.error("Error fetching messages:", error);
+
+                // Retry after a delay
+                setTimeout(fetchMessages, 5000);
+            });
+    }
+
+    window.startChat = function(username, avatarUrl) {
+        selectedUser = { username, avatarUrl }; // Set selected user
+        lastTimestamp = null; // Reset timestamp for new chat
+
+        const chatTopBar = document.querySelector('.chat-top-bar');
+        chatTopBar.innerHTML = `
+            <div onclick="userProfile('${username}')" class="chating-with">
+                <div class="friend-name">
+                    <h1>${username.substring(0, 6)}.</h1>
+                    <span id="active-now" class="badge rounded-pill text-bg-warning">active now</span>
                 </div>
-            `;
+                <div class="p-pic-back"></div>
+                <img src="${avatarUrl}" alt="${username}">
+            </div>
+        `;
 
-            // Enable the send button after user selection
-            const chatInput = document.getElementById("chat-input");
-            chatInput.classList.remove('disabled');
-            chatInput.style.pointerEvents = 'auto';
-        })
-        .catch(error => {
-            console.error('Error fetching user profile:', error);
-        });
+        const chatInput = document.getElementById("chat-input");
+        chatInput.classList.remove('disabled');
+        chatInput.style.pointerEvents = 'auto';
+
+        // Clear previous messages and start long polling
+        chatMessages.innerHTML = '';
+        fetchMessages();
+    };
 }
