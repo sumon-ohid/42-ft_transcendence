@@ -10,7 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
-# from dotenv import load_dotenv
+from dotenv import load_dotenv
 from pathlib import Path
 import os
 
@@ -22,11 +22,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# load_dotenv()
-# SECRET_KEY = os.getenv('SECRET_KEY')
-
-#Change it before pushing to intra
-SECRET_KEY = 'django-insecure-pw))z=9qc-_2ci8ai8u(5()@e@c2vxyhxl-_2oa8rqq2p1o705'
+load_dotenv()
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -57,7 +54,6 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.oauth2',
     'sslserver',
-    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -133,9 +129,9 @@ CHANNEL_LAYERS = {
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'pongdb',
-        'USER': 'msumon',
-        'PASSWORD': 'msumon1234',
+        'NAME': os.getenv('POSTGRES_DB'),
+        'USER': os.getenv('POSTGRES_USER'),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
         'HOST': 'postgres',
         'PORT': '5432',
     }
@@ -219,8 +215,8 @@ SITE_ID = 1
 SOCIALACCOUNT_PROVIDERS = {
     'intra42': {
         'APP': {
-            'client_id': 'u-s4t2ud-facccc22d642c8ed4fa34dd7c49f3b724475be790cf41b99997be4690c371fb0',
-            'secret': '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',
+            'client_id': os.getenv('INTRA42_CLIENT_ID'),
+            'secret': os.getenv('INTRA42_SECRET'),
             'key': ''
         }
     }
