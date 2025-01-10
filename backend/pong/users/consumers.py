@@ -7,7 +7,8 @@ from channels.db import database_sync_to_async
 class ChatConsumer(AsyncWebsocketConsumer):
     async def connect(self):
         self.user = self.scope['user']
-        self.room_name = 'chat_room'
+        self.other_user = self.scope['url_route']['kwargs']['username']
+        self.room_name = self.get_room_name(self.user.username, self.other_user)
         self.room_group_name = 'chat_%s' % self.room_name
 
         await self.channel_layer.group_add(
@@ -59,3 +60,8 @@ class ChatConsumer(AsyncWebsocketConsumer):
             receiver=receiver,
             message=message
         )
+
+    def get_room_name(self, user1, user2):
+        """Generate a unique room name for a pair of users."""
+        users = sorted([user1, user2])
+        return f"{users[0]}_{users[1]}"

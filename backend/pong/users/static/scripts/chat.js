@@ -5,9 +5,9 @@ let avatarUrl = "../static/images/11475215.jpg";
 let chatSocket = null;
 
 // Initialize WebSocket connection
-function connectWebSocket() {
+function connectWebSocket(username) {
     chatSocket = new WebSocket(
-        'wss://' + window.location.host + '/ws/chat/'
+        'wss://' + window.location.host + '/ws/chat/' + username + '/'
     );
 
     chatSocket.onmessage = function(e) {
@@ -19,12 +19,11 @@ function connectWebSocket() {
     chatSocket.onclose = function(e) {
         console.error('Chat socket closed unexpectedly');
         setTimeout(function() {
-            connectWebSocket();
+            connectWebSocket(username);
         }, 1000);
     };
 }
 
-// Display incoming message
 function displayMessage(message) {
     const chatMessages = document.getElementById("chat-messages");
     
@@ -50,7 +49,7 @@ function displayMessage(message) {
     messageElement.appendChild(messageContent);
     chatMessages.appendChild(messageElement);
     
-    // Scroll to bottom
+    // Scroll to bottom when new message is received or sent
     chatMessages.scrollTop = chatMessages.scrollHeight;
 }
 
@@ -77,9 +76,7 @@ async function fetchLastActiveTime(username) {
     }
 }
 
-
 async function chatPage() {
-    connectWebSocket();
     saveCurrentPage('chatPage');
     history.pushState({ page: 'chatPage' }, '', '#chatPage');
 
@@ -118,7 +115,6 @@ async function chatPage() {
         </div>
     `;
     body.appendChild(div);
-
 
     const [username, profile_picture] = await Promise.all([fetchUsername(), fetchProfilePicture()]);
     profilePicture = profile_picture;
@@ -160,7 +156,7 @@ async function chatPage() {
 
     async function sendMessage() {
         if (!selectedUser) {
-            error("Select a user to chat with first.");
+            console.error("Select a user to chat with first.");
             return;
         }
         
@@ -203,6 +199,8 @@ async function chatPage() {
     window.startChat = async function(username, avatarUrl) {
         selectedUser = { username, avatarUrl };
         lastTimestamp = null;
+
+        connectWebSocket(username);
 
         const chatTopBar = document.querySelector('.chat-top-bar');
         const lastActiveTime = await fetchLastActiveTime(username);

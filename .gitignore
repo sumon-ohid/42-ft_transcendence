@@ -2,7 +2,7 @@
 postgres_data/
 
 # Ignore environment variable files
-.env
+# .env
 
 # Ignore Python bytecode files
 *.pyc
