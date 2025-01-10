@@ -2,6 +2,50 @@ let profilePicture = null;
 let selectedUser;
 let lastTimestamp = null;
 let avatarUrl = "../static/images/11475215.jpg";
+let chatSocket = null;
+
+// Initialize WebSocket connection
+function connectWebSocket() {
+    chatSocket = new WebSocket(
+        'wss://' + window.location.host + '/ws/chat/'
+    );
+
+    chatSocket.onmessage = function(e) {
+        const data = JSON.parse(e.data);
+        const message = data.message;
+        displayMessage(message);
+    };
+
+    chatSocket.onclose = function(e) {
+        console.error('Chat socket closed unexpectedly');
+        setTimeout(function() {
+            connectWebSocket();
+        }, 1000);
+    };
+}
+
+// Display incoming message
+function displayMessage(message) {
+    const chatMessages = document.getElementById("chat-messages");
+    
+    const messageElement = document.createElement("div");
+    messageElement.className = "chat-message";
+    
+    const profilePic = document.createElement("img");
+    profilePic.src = message.sender === selectedUser.username ? 
+        selectedUser.avatarUrl : profilePicture;
+    profilePic.alt = "Profile Picture";
+
+    const messageContent = document.createElement("span");
+    messageContent.textContent = `${message.sender}: ${message.text}`;
+
+    messageElement.appendChild(profilePic);
+    messageElement.appendChild(messageContent);
+    chatMessages.appendChild(messageElement);
+    
+    // Scroll to bottom
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+}
 
 async function fetchLastActiveTime(username) {
     try {
@@ -28,7 +72,7 @@ async function fetchLastActiveTime(username) {
 
 
 async function chatPage() {
-    fetchMessages();
+    connectWebSocket();
     saveCurrentPage('chatPage');
     history.pushState({ page: 'chatPage' }, '', '#chatPage');
 
@@ -108,36 +152,19 @@ async function chatPage() {
     });
 
     async function sendMessage() {
-        
         if (!selectedUser) {
             error("Select a user to chat with first.");
             return;
         }
         
         const messageText = chatInput.value.trim();
-
-        console.log(messageText); // remove later
         
         if (messageText !== "") {
-            fetch('/chat/send-message/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': getCSRFToken(),
-                },
-                body: JSON.stringify({
-                    receiver: selectedUser.username,
-                    message: messageText,
-                }),
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.status === "success") {
-                    chatInput.value = "";
-                } else {
-                    console.error("Error sending message:", data);
-                }
-            });
+            chatSocket.send(JSON.stringify({
+                'message': messageText,
+                'receiver': selectedUser.username
+            }));
+            chatInput.value = "";
         }
     }
 
@@ -146,88 +173,33 @@ async function chatPage() {
         return date.toISOString().replace('T', ' ').replace('Z', '');
     }
     
-    async function fetchMessages() {
-        if (!selectedUser) return;
-       
-        // THIS IS TO CHECK IF THE USER IS BLOCKED
-        
-        // fetch(`/api/user-profile/${selectedUser.username}/`)
-        // .then(response => response.json())
-        // .then(data => {
-        //     if (data.error) {
-        //         console.error(data.error);
-        //         return;
-        //     }
-
-        //     const isFriend = data.is_friend;
-        //     if (isFriend) {
-        //         error("You can't chat with the user.");
-        //         // console.error("You can't chat with the user.");
-        //         chatInput.classList.add('disabled');
-        //         chatInput.style.pointerEvents = 'none';
-        //         return;
-        //     }
-        // })
-        // .catch(error => {
-        //     console.error('Error fetching user profile:', error);
-        // });
-
-
-        const timestamp = formatTimestamp(new Date());
-        const url = `/chat/long-poll/?receiver=${selectedUser.username}&last_timestamp=${timestamp}`;
-
-        fetch(url)
-            .then(response => response.json())
-            .then(data => {
-                if (data.error) {
-                    console.error("Error fetching messages:", data.error);
-                    return;
-                }
-
-                const messages = data.messages || [];
+    // Load chat history when starting chat with a user
+    async function loadChatHistory(username) {
+        fetch(`/chat/get-chat-history/?receiver=${username}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.messages) {
+                const chatMessages = document.getElementById("chat-messages");
                 chatMessages.innerHTML = '';
-                
-                if (messages.length > 0) {
-                    //messages.forEach(msg => {
-                       
-                        // const messageText = `${msg.message}`;
-                        // const messageElement = document.createElement("div");
-                        // messageElement.className = "chat-message";
-                        
-                        // messageElement.classList.add("chat-message");
-    
-                        // const profilePic = document.createElement("img");
-                        // profilePic.src = profilePicture; // Should change later, put user picture
-                        // profilePic.alt = "Profile Picture";
-                
-                        // const messageContent = document.createElement("span");
-                        // messageContent.textContent = messageText;
-                
-                        // messageElement.appendChild(profilePic);
-                        // messageElement.appendChild(messageContent);
-                
-                        // chatMessages.appendChild(messageElement);
-                    //});
-                    // chatMessages.scrollTop = chatMessages.scrollHeight;
-                    lastTimestamp = messages[messages.length - 1].timestamp;
-                }
-                startChat(selectedUser.username, selectedUser.avatarUrl);
-            })
-            .catch(error => {
-                console.error("Error fetching messages:", error);
-                setTimeout(fetchMessages, 5000);
-            });
+                data.messages.forEach(msg => {
+                    displayMessage({
+                        sender: msg.sender,
+                        text: msg.message,
+                        timestamp: msg.timestamp
+                    });
+                });
+            }
+        })
+        .catch(error => console.error("Error loading chat history:", error));
     }
 
     window.startChat = async function(username, avatarUrl) {
-
         selectedUser = { username, avatarUrl };
         lastTimestamp = null;
 
         const chatTopBar = document.querySelector('.chat-top-bar');
         const lastActiveTime = await fetchLastActiveTime(username);
 
-    
         chatTopBar.innerHTML = `
             <div onclick="userProfile('${username}')" class="chating-with">
                 <div class="friend-name">
@@ -243,50 +215,7 @@ async function chatPage() {
         chatInput.classList.remove('disabled');
         chatInput.style.pointerEvents = 'auto';
 
-        // display previous messages between the users
-        fetch(`/chat/get-chat-history/?receiver=${username}`)
-        .then(response => response.json())
-        .then(data => {
-            if (data.messages) {
-                const chatMessages = document.getElementById("chat-messages");
-                data.messages.forEach(msg => {
-                    
-                    let userChat;
-                    if (msg.sender === username) {
-                        userChat = `${username}`;
-                    } else {
-                        userChat = "You";
-                    }
-                    const messageText =  `${userChat}: ${msg.message}`;
-                    const messageElement = document.createElement("div");
-                    messageElement.className = "chat-message";
-                    
-                    // messageElement.classList.add("chat-message");
-                    const profilePic = document.createElement("img");
-
-                    if (msg.sender === username) {
-                        messageElement.classList.add("other-user-message");
-                        profilePic.src = `${avatarUrl}`;
-                    } else {
-                        messageElement.classList.add("chat-message");
-                        profilePic.src = profilePicture; // Should change later, put user picture
-                    }
-                   
-                    profilePic.alt = "Profile Picture";
-            
-                    const messageContent = document.createElement("span");
-                    messageContent.textContent = messageText;
-            
-                    messageElement.appendChild(profilePic);
-                    messageElement.appendChild(messageContent);
-            
-                    chatMessages.appendChild(messageElement);
-                });
-                chatMessages.scrollTop = chatMessages.scrollHeight;
-            }
-        })
-        .catch(error => console.error("Error loading chat history:", error));
-
-        fetchMessages();
+        // Load chat history
+        loadChatHistory(username);
     };
 }

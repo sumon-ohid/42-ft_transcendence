@@ -4,7 +4,6 @@ services:
     image: postgres:latest
     container_name: postgres
     environment:
-      #change it to .env later
       POSTGRES_USER: msumon
       POSTGRES_PASSWORD: msumon1234
       POSTGRES_DB: pongdb
@@ -20,3 +19,12 @@ services:
       - "8000:8000"
     depends_on:
       - postgres
+      - redis
+    environment:
+      - DJANGO_SETTINGS_MODULE=pong.settings
+
+  redis:
+    image: redis:latest
+    container_name: redis
+    ports:
+      - "6379:6379"
