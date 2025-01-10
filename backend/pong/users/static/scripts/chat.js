@@ -30,6 +30,9 @@ function displayMessage(message) {
     
     const messageElement = document.createElement("div");
     messageElement.className = "chat-message";
+    if (message.sender === selectedUser.username) {
+        messageElement.classList.add("other-user-message");
+    }
     
     const profilePic = document.createElement("img");
     profilePic.src = message.sender === selectedUser.username ? 
@@ -37,7 +40,11 @@ function displayMessage(message) {
     profilePic.alt = "Profile Picture";
 
     const messageContent = document.createElement("span");
-    messageContent.textContent = `${message.sender}: ${message.text}`;
+    if (message.sender === selectedUser.username) {
+        messageContent.textContent = `${message.sender}: ${message.text}`;
+    } else {
+        messageContent.textContent = `you: ${message.text}`;
+    }
 
     messageElement.appendChild(profilePic);
     messageElement.appendChild(messageContent);
