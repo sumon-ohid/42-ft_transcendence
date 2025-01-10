@@ -197,30 +197,49 @@ async function chatPage() {
     }
 
     window.startChat = async function(username, avatarUrl) {
-        selectedUser = { username, avatarUrl };
-        lastTimestamp = null;
 
-        connectWebSocket(username);
-
-        const chatTopBar = document.querySelector('.chat-top-bar');
-        const lastActiveTime = await fetchLastActiveTime(username);
-
-        chatTopBar.innerHTML = `
-            <div onclick="userProfile('${username}')" class="chating-with">
-                <div class="friend-name">
-                    <h1>${username.substring(0, 6)}.</h1>
-                    <span id="active-now" class="badge rounded-pill text-bg-warning">Last Active: ${lastActiveTime}</span>
-                </div>
-                <div class="p-pic-back"></div>
-                <img src="${avatarUrl}" alt="${username}">
-            </div>
-        `;
-
-        const chatInput = document.getElementById("chat-input");
-        chatInput.classList.remove('disabled');
-        chatInput.style.pointerEvents = 'auto';
-
-        // Load chat history
-        loadChatHistory(username);
-    };
+        // Check if the user is a blocked, friend means the user is blocked
+        fetch(`/api/user-profile/${username}/`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                console.error(data.error);
+                return;
+            }
+    
+            const isFriend = data.is_friend;
+            if (isFriend) {
+                error("You can't chat with the user.");
+                return;
+            }
+    
+            // Proceed with setting up the chat
+            selectedUser = { username, avatarUrl };
+            lastTimestamp = null;
+    
+            connectWebSocket(username); // Connect WebSocket with the selected user's username
+    
+            const chatTopBar = document.querySelector('.chat-top-bar');
+            fetchLastActiveTime(username).then(lastActiveTime => {
+                chatTopBar.innerHTML = `
+                    <div onclick="userProfile('${username}')" class="chating-with">
+                        <div class="friend-name">
+                            <h1>${username.substring(0, 6)}.</h1>
+                            <span id="active-now" class="badge rounded-pill text-bg-warning">Last Active: ${lastActiveTime}</span>
+                        </div>
+                        <div class="p-pic-back"></div>
+                        <img src="${avatarUrl}" alt="${username}">
+                    </div>
+                `;
+            });
+    
+            const chatInput = document.getElementById("chat-input");
+            chatInput.classList.remove('disabled');
+            chatInput.style.pointerEvents = 'auto';
+    
+            // Load chat history
+            loadChatHistory(username);
+        })
+        .catch(error => console.error('Error fetching user profile:', error));
+    }
 }
