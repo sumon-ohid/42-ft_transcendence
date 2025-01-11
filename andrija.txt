@@ -1,0 +1,40 @@
+I have to now this files:
+
+
+consumers.py
+routing.py
+
+users/urls.py
+path('chat/get-chat-history/', get_chat_history, name='get_chat_history'),
+path('api/last-active/', get_last_active, name='get_last_active'),
+
+users/views.py
+get_chat_history function
+get_last_active function
+
+models.py
+class ChatMessage(models.Model):
+    sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name="sent_messages")
+    receiver = models.ForeignKey(User, on_delete=models.CASCADE, related_name="received_messages")
+    message = models.TextField()
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.sender} to {self.receiver}: {self.message[:20]}"
+
+asgi.py
+full file
+
+settings.py
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("redis", 6379)],
+        },
+    },
+}
+
+redis decides which application layer to use dynamically
+
+ASGI_APPLICATION = 'pong.asgi.application'
