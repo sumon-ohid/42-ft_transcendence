@@ -5,7 +5,17 @@ let avatarUrl = "../static/images/11475215.jpg";
 let chatSocket = null;
 
 // Initialize WebSocket connection
+let currentConnectedUsername = null;
+
 function connectWebSocket(username) {
+
+    if (chatSocket && currentConnectedUsername === username) {
+        return;
+    } else if (chatSocket) {
+        chatSocket.close();
+    }
+
+    currentConnectedUsername = username;
     chatSocket = new WebSocket(
         'wss://' + window.location.host + '/ws/chat/' + username + '/'
     );
@@ -16,15 +26,18 @@ function connectWebSocket(username) {
         displayMessage(message);
     };
 
+    // In case of failure
     chatSocket.onclose = function(e) {
         console.error('Chat socket closed unexpectedly');
-        setTimeout(function() {
-            connectWebSocket(username);
-        }, 1000);
+        setTimeout(() => connectWebSocket(username), 1000);
     };
 }
 
+
 function displayMessage(message) {
+
+    console.log("Display Function");
+
     const chatMessages = document.getElementById("chat-messages");
     
     const messageElement = document.createElement("div");
