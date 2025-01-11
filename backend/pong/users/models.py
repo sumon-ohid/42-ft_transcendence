@@ -46,3 +46,13 @@ class ChatMessage(models.Model):
 
     def __str__(self):
         return f"{self.sender} to {self.receiver}: {self.message[:20]}"
+
+# For Tourmanent
+class Tournament(models.Model):
+    name = models.CharField(max_length=255)
+    created_at = models.DateTimeField(auto_now_add=True)
+    players = models.ManyToManyField(User, related_name='tournaments')
+    winner = models.ForeignKey(User, related_name='won_tournaments', on_delete=models.SET_NULL, null=True, blank=True)
+
+    def __str__(self):
+        return self.name

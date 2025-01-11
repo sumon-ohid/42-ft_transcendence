@@ -3,7 +3,8 @@ from .views import index, api_signup, api_login, api_logout, get_username, save_
     upload_profile_picture, get_profile_picture, leaderboard, get_play_history, \
     change_username, change_password, disable_2fa, verify_2fa, setup_2fa, get_2fa_status, \
     get_users, add_block, remove_block, get_user_profile, intra42_login, callback_view, \
-    redirect_to_home, long_poll, send_message, get_chat_history, get_last_active
+    redirect_to_home, long_poll, send_message, get_chat_history, get_last_active, \
+    create_tournament, join_tournament, get_tournaments
 from django.conf import settings
 from django.conf.urls.static import static
 

@@ -2381,5 +2381,28 @@ form .login-button:hover {
     transform: translate(-50%, -50%);
 }
 
+.tournament-container {
+    background-color: var(--container-background);
+    position: fixed;
+    top: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 350px;
+    width: 300px;
+    align-items: center;
+    justify-items: center;
+    display: flex;
+    flex-direction: column;
+    border-radius: 15px;
+    box-shadow: 0 10px 6px rgba(0.5, 0, 0, 0.51);
+    gap: 20px;
+    padding: 20px;
+}
+
+.tournament-options {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
 
 /*------- GAME OPTION PAGE END -------*/

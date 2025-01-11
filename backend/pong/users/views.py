@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.http import JsonResponse
 from .forms import UserRegistrationForm
 from django.contrib.auth import authenticate, logout, login
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
@@ -29,7 +29,7 @@ import logging
 from django.http import HttpResponse
 import os
 from django.core.files.base import ContentFile
-
+from .models import Tournament
 
 
 @login_required
@@ -655,3 +655,26 @@ def get_last_active(request):
             return JsonResponse({"error": str(e)}, status=500)
 
     return JsonResponse({"error": "Invalid request method"}, status=405)
+
+# For Tourmanent
+
+@login_required
+def create_tournament(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        name = data.get('name')
+        tournament = Tournament.objects.create(name=name)
+        tournament.players.add(request.user)
+        return JsonResponse({'status': 'success', 'tournament_id': tournament.id})
+
+@login_required
+def join_tournament(request, tournament_id):
+    tournament = get_object_or_404(Tournament, id=tournament_id)
+    tournament.players.add(request.user)
+    return JsonResponse({'status': 'success'})
+
+@login_required
+def get_tournaments(request):
+    tournaments = Tournament.objects.all()
+    data = [{'id': t.id, 'name': t.name, 'players': [player.username for player in t.players.all()]} for t in tournaments]
+    return JsonResponse(data, safe=False)
