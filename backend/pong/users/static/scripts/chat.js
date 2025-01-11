@@ -6,8 +6,6 @@ let chatSocket = null;
 
 // Initialize WebSocket connection
 function connectWebSocket(username) {
-    
-    
     chatSocket = new WebSocket(
         'wss://' + window.location.host + '/ws/chat/' + username + '/'
     );
