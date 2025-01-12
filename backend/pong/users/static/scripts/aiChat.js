@@ -10,10 +10,24 @@ class AIChat {
     }
 
     async initialize(apiKey) {
+
+        let command = `You are an AI assistant for the ft_transcendence Pong game project. You are knowledgeable about:
+            - Backend: Django framework
+            - Frontend: Bootstrap toolkit
+            - Database: PostgreSQL
+            - Blockchain: Ethereum for storing tournament scores
+            - Authentication: 42 API integration and JWT with 2FA
+            - Game features: 4-player Pong, game customization, live chat
+            - Statistics: User and game stats tracking
+            - Browser support: Works across all modern browsers
+
+            Keep responses concise, friendly, and focused on the project. Help users with game-related questions,
+            technical issues, 42 Vienna and everything about tech stacks used in the project.`
+
         this.apiKey = apiKey;
         this.chatHistory = [{
             role: "system",
-            content: "You are a helpful assistant. Keep responses concise and friendly."
+            content: command
         }];
     }
 
@@ -54,7 +68,7 @@ class AIChat {
     clearHistory() {
         this.chatHistory = [{
             role: "system",
-            content: "You are a helpful assistant. Keep responses concise and friendly."
+            content: "You are an AI assistant for the ft_transcendence Pong game project. You are knowledgeable about it"
         }];
     }
 }
@@ -114,7 +128,7 @@ window.startAIChat = async function() {
             // AI response
             try {
                 const response = await aiChat.sendMessage(message);
-                displayAIMessage({ sender: 'AI', text: response });
+                displayAIMessage({ sender: 'Marvin', text: response });
             } catch (error) {
                 displayAIMessage({ sender: 'System', text: 'Error: Failed to get AI response' });
             }
@@ -127,13 +141,16 @@ function displayAIMessage(message) {
     
     const messageElement = document.createElement("div");
     messageElement.className = "chat-message";
-    if (message.sender === 'AI' || message.sender === 'System') {
+    if (message.sender === 'Marvin' || message.sender === 'System') {
         messageElement.classList.add("other-user-message");
     }
     
     const profilePic = document.createElement("img");
-    profilePic.src = message.sender === 'AI' ? 
-        "/static/images/robot.png" : profilePicture;
+    profilePic.src = message.sender === 'Marvin' ? "/static/images/robot.png" : profilePicture;
+    if (message.sender === 'system') {
+        profilePic.src = "/static/images/robot.png";
+    }
+
     profilePic.alt = "Profile Picture";
     const messageContent = document.createElement("span");
     messageContent.textContent = `${message.sender}: ${message.text}`;
