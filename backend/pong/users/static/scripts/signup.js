@@ -17,7 +17,11 @@ function signup() {
         <form id="signup-form" class="form">
             <input type="text" id="email" name="email" placeholder="email" class="form-box" required><br>
             <input type="text" id="username" name="username" placeholder="username" class="form-box" required><br>
-            <input type="password" id="password" name="password" placeholder="password" class="form-box" required><br><br>
+            <input type="password" id="password" name="password" placeholder="Password" class="form-box" autocomplete="current-password" required>
+                <span id="toggle-password" class="toggle-password-signup">
+                    <i class="fa fa-eye" aria-hidden="true"></i>
+                </span>
+            <br><br>
             <button type="button" id="signup-button" class="login-button">Signup</button>
             <button type="button" id="login-button" class="login-button2" onclick="login()"><i class="fa-solid fa-arrow-left-long"></i> back</button>
         </form>

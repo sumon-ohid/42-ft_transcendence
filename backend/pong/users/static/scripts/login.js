@@ -18,7 +18,11 @@ function login() {
         </div>
         <form class="form" id="login-form">
             <input type="text" id="username" name="username" placeholder="Username" class="form-box" autocomplete="username" required><br>
-            <input type="password" id="password" name="password" placeholder="Password" class="form-box" autocomplete="current-password" required><br><br>
+            <input type="password" id="password" name="password" placeholder="Password" class="form-box" autocomplete="current-password" required>
+            <span id="toggle-password" class="toggle-password">
+                <i class="fa fa-eye" aria-hidden="true"></i>
+            </span>
+            <br><br>
             <button type="submit" class="login-button">Login</button>
         </form>
         <div class="or">or</div>
@@ -40,6 +44,19 @@ function login() {
     const loginForm = document.getElementById("login-form");
     loginForm.addEventListener("submit", handleLogin);
 }
+
+// For password toggle eye, view and hide password
+document.addEventListener("click", function() {
+        const passwordInput = document.getElementById("password");
+        const togglePassword = document.getElementById("toggle-password");
+    
+        togglePassword.addEventListener("click", function() {
+            const type = passwordInput.getAttribute("type") === "password" ? "text" : "password";
+            passwordInput.setAttribute("type", type);
+            this.querySelector("i").classList.toggle("fa-eye");
+            this.querySelector("i").classList.toggle("fa-eye-slash");
+        });
+    });
 
 function handleLogin(event) {
     event.preventDefault(); // Prevent the form from refreshing the page
