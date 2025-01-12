@@ -149,7 +149,7 @@ function displayAIMessage(message) {
     
     const profilePic = document.createElement("img");
     profilePic.src = message.sender === 'Marvin' ? "/static/images/robot.png" : profilePicture;
-    if (message.sender === 'system') {
+    if (message.sender === 'System') {
         profilePic.src = "/static/images/robot.png";
     }
 
