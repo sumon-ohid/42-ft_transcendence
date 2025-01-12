@@ -16,7 +16,7 @@ class AIChat {
             - Database: PostgreSQL
             - Blockchain: Ethereum for storing tournament scores
             - Authentication: 42 API integration and JWT with 2FA
-            - Game features: 4-player Pong, game customization, live chat
+            - Game features: 2-Player Pong, 4-player Pong, Tournament, game customization, live chat
             - Statistics: User and game stats tracking
             - Browser support: Works across all modern browsers
 
@@ -138,6 +138,64 @@ window.startAIChat = async function() {
     };
 };
 
+function formatMessageContent(text) {
+    // Detect code blocks
+    if (text.includes('```')) {
+        const codeBlocks = text.split('```');
+        const formattedBlocks = codeBlocks.map((block, index) => {
+            if (index % 2 === 1) { // Odd indices are code blocks
+                const codeElement = document.createElement('pre');
+                codeElement.className = 'code-block';
+                codeElement.textContent = block;
+                return codeElement.outerHTML;
+            }
+            return block;
+        });
+        return formattedBlocks.join('');
+    }
+
+    // Detect tables
+    if (text.includes('|')) {
+        const lines = text.split('\n');
+        if (lines.some(line => line.trim().startsWith('|'))) {
+            const table = document.createElement('table');
+            table.className = 'ai-table';
+            lines.forEach(line => {
+                if (line.trim().startsWith('|')) {
+                    const row = document.createElement('tr');
+                    line.split('|').slice(1, -1).forEach(cell => {
+                        const td = document.createElement('td');
+                        td.textContent = cell.trim();
+                        row.appendChild(td);
+                    });
+                    table.appendChild(row);
+                }
+            });
+            return table.outerHTML;
+        }
+    }
+
+    // Detect lists
+    if (text.includes('* ') || text.includes('- ')) {
+        const lines = text.split('\n');
+        if (lines.some(line => line.trim().startsWith('* ') || line.trim().startsWith('- '))) {
+            const list = document.createElement('ul');
+            list.className = 'ai-list';
+            lines.forEach(line => {
+                if (line.trim().startsWith('* ') || line.trim().startsWith('- ')) {
+                    const li = document.createElement('li');
+                    li.textContent = line.trim().substring(2);
+                    list.appendChild(li);
+                }
+            });
+            return list.outerHTML;
+        }
+    }
+
+    // Default to plain text
+    return text;
+}
+
 function displayAIMessage(message) {
     const chatMessages = document.getElementById("chat-messages");
     
@@ -154,14 +212,18 @@ function displayAIMessage(message) {
     }
 
     profilePic.alt = "Profile Picture";
-    const messageContent = document.createElement("span");
-    messageContent.textContent = `${message.sender}: ${message.text}`;
+    const messageContent = document.createElement("div");
+    messageContent.className = "message-content";
+    if (message.sender !== 'Marvin' && message.sender !== 'System') {
+        messageContent.style.color = "black";
+    }
+    messageContent.innerHTML = formatMessageContent(message.text);
     messageElement.appendChild(profilePic);
     messageElement.appendChild(messageContent);
     chatMessages.appendChild(messageElement);
     chatMessages.scrollTop = chatMessages.scrollHeight;
 
-    return messageElement.id = `message-${Date.now()}`; // Return a unique ID for the message
+    return messageElement.id = `message-${Date.now()}`;
 }
 
 function removeMessage(messageId) {

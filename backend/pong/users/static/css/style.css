@@ -2439,3 +2439,114 @@ form .login-button:hover {
 
 
 /*------- GAME OPTION PAGE END -------*/
+
+/*------- AI CHAT STYLES START -------*/
+.code-block {
+    background-color: #1e1e1e;
+    color: #d4d4d4;
+    padding: 1em;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9em;
+    white-space: pre-wrap;
+    margin: 0.5em 0;
+    overflow-x: auto;
+}
+
+.ai-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1em 0;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.ai-table th,
+.ai-table td {
+    padding: 0.75em;
+    text-align: left;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.ai-table th {
+    background-color: rgba(0, 0, 0, 0.2);
+    font-weight: bold;
+}
+
+.ai-list {
+    list-style-type: disc;
+    padding-left: 2em;
+    margin: 1em 0;
+}
+
+.ai-list li {
+    margin-bottom: 0.5em;
+    line-height: 1.4;
+}
+
+.message-content {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.6;
+    color: #ffffff;
+}
+
+.message-content p {
+    margin: 0.5em 0;
+}
+
+.message-content strong {
+    font-weight: 600;
+    color: #ffffff;
+}
+
+.message-content em {
+    font-style: italic;
+    color: #ffffff;
+}
+
+.message-content a {
+    color: #64b5f6;
+    text-decoration: none;
+}
+
+.message-content a:hover {
+    text-decoration: underline;
+}
+
+.message-content blockquote {
+    border-left: 4px solid rgba(255, 255, 255, 0.2);
+    margin: 1em 0;
+    padding: 0.5em 1em;
+    color: rgba(255, 255, 255, 0.8);
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+}
+
+.message-content pre {
+    background-color: #1e1e1e;
+    padding: 1em;
+    border-radius: 4px;
+    overflow-x: auto;
+}
+
+.message-content code {
+    font-family: 'Courier New', monospace;
+    background-color: rgba(0, 0, 0, 0.2);
+    padding: 0.2em 0.4em;
+    border-radius: 3px;
+    font-size: 0.9em;
+}
+
+.message-content .math {
+    font-family: 'Times New Roman', serif;
+    font-style: italic;
+}
+
+.message-content .highlight {
+    background-color: rgba(255, 235, 59, 0.2);
+    padding: 0.1em 0.3em;
+    border-radius: 3px;
+}
+
+/*------- AI CHAT STYLES END -------*/
