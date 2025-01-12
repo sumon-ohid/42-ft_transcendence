@@ -43,20 +43,18 @@ function login() {
     // Attach event listener to the form
     const loginForm = document.getElementById("login-form");
     loginForm.addEventListener("submit", handleLogin);
-}
 
-// For password toggle eye, view and hide password
-document.addEventListener("click", function() {
-        const passwordInput = document.getElementById("password");
-        const togglePassword = document.getElementById("toggle-password");
-    
-        togglePassword.addEventListener("click", function() {
-            const type = passwordInput.getAttribute("type") === "password" ? "text" : "password";
-            passwordInput.setAttribute("type", type);
-            this.querySelector("i").classList.toggle("fa-eye");
-            this.querySelector("i").classList.toggle("fa-eye-slash");
-        });
+    // For password toggle eye, view and hide password
+    const passwordInput = document.getElementById("password");
+    const togglePassword = document.getElementById("toggle-password");
+
+    togglePassword.addEventListener("click", function() {
+        const type = passwordInput.getAttribute("type") === "password" ? "text" : "password";
+        passwordInput.setAttribute("type", type);
+        this.querySelector("i").classList.toggle("fa-eye");
+        this.querySelector("i").classList.toggle("fa-eye-slash");
     });
+}
 
 function handleLogin(event) {
     event.preventDefault(); // Prevent the form from refreshing the page

@@ -116,7 +116,7 @@ async function chatPage() {
         </div>
         <div class="chat-messages" id="chat-messages"></div>
         <div class="chat-box-holder">
-            <i class="fa-solid fa-face-smile"></i>
+            <i class="fa-solid fa-face-smile" onclick=""></i>
             <input  style="pointer-events: none;" type="text" class="chat-box disabled" id="chat-input" placeholder="type a message">
             <div class="attachment"><i class="fa-solid fa-paperclip"></i></div>
         </div>
@@ -137,8 +137,19 @@ async function chatPage() {
         .then(response => response.json())
         .then(users => {
             const friendsContainer = document.querySelector('.active-friends');
-            friendsContainer.innerHTML = ''; 
+            friendsContainer.innerHTML = '';
 
+            // Add AI chat option
+            const aiFriendDiv = document.createElement('div');
+            aiFriendDiv.className = 'friend';
+            aiFriendDiv.innerHTML = `
+                <img onclick="startAIChat()" src="/static/images/robot.png" alt="AI-Bot">
+                <span class="badge text-bg-light">Marvin AI</span>
+                <p id="last-action" class="badge rounded-pill text-bg-info">Always Available 🤖</p>
+            `;
+            friendsContainer.appendChild(aiFriendDiv);
+
+            // Add regular users
             users.forEach(user => {
                 const friendDiv = document.createElement('div');
                 friendDiv.className = 'friend';
@@ -158,18 +169,22 @@ async function chatPage() {
     const chatMessages = document.getElementById("chat-messages");
 
     sendButton.addEventListener("click", function() {
+        if (aiChat)
+            return;
         sendMessage();
     });
 
     chatInput.addEventListener("keypress", function(event) {
         if (event.key === "Enter") {
+            if (aiChat)
+                return;
             sendMessage();
         }
     });
 
     async function sendMessage() {
         if (!selectedUser) {
-            console.error("Select a user to chat with first.");
+            error("Select a user to chat with first.");
             return;
         }
         
@@ -249,6 +264,7 @@ async function chatPage() {
             const chatInput = document.getElementById("chat-input");
             chatInput.classList.remove('disabled');
             chatInput.style.pointerEvents = 'auto';
+            chatInput.placeholder = "Type a message...";
     
             // Load chat history
             loadChatHistory(username);

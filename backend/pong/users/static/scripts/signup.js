@@ -40,6 +40,17 @@ function signup() {
             handleSignup();
         }
     });
+
+    // For password toggle eye, view and hide password
+    const passwordInput = document.getElementById("password");
+    const togglePassword = document.getElementById("toggle-password-signup");
+
+    togglePassword.addEventListener("click", function() {
+        const type = passwordInput.getAttribute("type") === "password" ? "text" : "password";
+        passwordInput.setAttribute("type", type);
+        this.querySelector("i").classList.toggle("fa-eye");
+        this.querySelector("i").classList.toggle("fa-eye-slash");
+    });
 }
 
 function handleSignup() {
