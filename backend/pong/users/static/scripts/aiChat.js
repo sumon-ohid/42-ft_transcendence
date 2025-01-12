@@ -85,7 +85,8 @@ window.addEventListener('load', async () => {
     }
 });
 
-window.startAIChat = async function() {
+startAIChat = async function() {
+    aiChatDetected = true;
     //-- Clear previous chat
     const chatMessages = document.getElementById("chat-messages");
     chatMessages.innerHTML = '';

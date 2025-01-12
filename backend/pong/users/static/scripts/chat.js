@@ -3,6 +3,7 @@ let selectedUser;
 let lastTimestamp = null;
 let avatarUrl = "../static/images/11475215.jpg";
 let chatSocket = null;
+let aiChatDetected = false;
 
 // Initialize WebSocket connection
 let currentConnectedUsername = null;
@@ -143,7 +144,7 @@ async function chatPage() {
             const aiFriendDiv = document.createElement('div');
             aiFriendDiv.className = 'friend';
             aiFriendDiv.innerHTML = `
-                <img onclick="startAIChat()" src="/static/images/robot.png" alt="AI-Bot">
+                <img onclick="aiChatDetector()" src="/static/images/robot.png" alt="AI-Bot">
                 <span class="badge text-bg-light">Marvin AI</span>
                 <p id="last-action" class="badge rounded-pill text-bg-info">Always Available 🤖</p>
             `;
@@ -169,14 +170,14 @@ async function chatPage() {
     const chatMessages = document.getElementById("chat-messages");
 
     sendButton.addEventListener("click", function() {
-        if (aiChat)
+        if (aiChatDetected)
             return;
         sendMessage();
     });
 
     chatInput.addEventListener("keypress", function(event) {
         if (event.key === "Enter") {
-            if (aiChat)
+            if (aiChatDetected)
                 return;
             sendMessage();
         }
@@ -242,6 +243,7 @@ async function chatPage() {
             }
     
             // Proceed with setting up the chat
+            aiChatDetected = false;
             selectedUser = { username, avatarUrl };
             lastTimestamp = null;
     
@@ -271,4 +273,10 @@ async function chatPage() {
         })
         .catch(error => console.error('Error fetching user profile:', error));
     }
+}
+
+
+function aiChatDetector() {
+    aiChatDetected = true;
+    startAIChat();
 }
