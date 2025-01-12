@@ -1,4 +1,3 @@
-
 // NOTE: chat in the chat page with AI
 // Using the OpenRouter API to chat with an AI assistant
 // Free AI model: meta-llama/llama-3.2-90b-vision-instruct:free
@@ -125,11 +124,14 @@ window.startAIChat = async function() {
             displayAIMessage({ sender: 'You', text: message });
             chatInput.value = '';
 
+            const thinkingMessageId = displayAIMessage({ sender: 'Marvin', text: ' thinking...' });
             // AI response
             try {
                 const response = await aiChat.sendMessage(message);
+                removeMessage(thinkingMessageId);
                 displayAIMessage({ sender: 'Marvin', text: response });
             } catch (error) {
+                removeMessage(thinkingMessageId);
                 displayAIMessage({ sender: 'System', text: 'Error: Failed to get AI response' });
             }
         }
@@ -158,4 +160,13 @@ function displayAIMessage(message) {
     messageElement.appendChild(messageContent);
     chatMessages.appendChild(messageElement);
     chatMessages.scrollTop = chatMessages.scrollHeight;
+
+    return messageElement.id = `message-${Date.now()}`; // Return a unique ID for the message
+}
+
+function removeMessage(messageId) {
+    const messageElement = document.getElementById(messageId);
+    if (messageElement) {
+        messageElement.remove();
+    }
 }

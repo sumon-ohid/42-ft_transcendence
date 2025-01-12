@@ -141,10 +141,10 @@ async function homePage() {
 
     if (adElement) {
         setTimeout(() => {
-            console.log("Displaying the ad...");
+            // console.log("Displaying the ad...");
             adElement.style.display = "block";
             setTimeout(() => {
-                console.log("Hiding the ad...");
+                // console.log("Hiding the ad...");
                 adElement.style.display = "none";
             }, 10000);
         }, 5000);
