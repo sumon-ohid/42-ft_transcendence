@@ -124,8 +124,42 @@ async function homePage() {
             <div class="chat-pic"></div>
             <p>with <br> friends</p>
         </div>
+        <div id="ad-42vienna" style="display: none;">
+            <button id="close-ad-btn" title="Close Ad">&times;</button>
+            <a href="https://www.42vienna.com/en/" target="_blank">
+                <img src="/static/images/42ad.png" alt="42 Vienna Ad" width="100%" height="100%">
+            </a>
+        </div>
     `;
+    
     body.appendChild(div);
+
+    // :: JUST FOR FUN :: //
+    // Pop up ad after 5 seconds and hide after 10 seconds
+    const adElement = document.getElementById("ad-42vienna");
+    const closeButton = document.getElementById("close-ad-btn");
+
+    if (adElement) {
+        setTimeout(() => {
+            console.log("Displaying the ad...");
+            adElement.style.display = "block";
+            setTimeout(() => {
+                console.log("Hiding the ad...");
+                adElement.style.display = "none";
+            }, 10000);
+        }, 5000);
+    } else {
+        console.error("Ad element not found in the DOM.");
+    }
+    
+    if (closeButton) {
+        closeButton.addEventListener("click", () => {
+            adElement.style.display = "none";
+        });
+    } else {
+        console.error("Close button not found in the DOM.");
+    }
+    //------------------------------------------------//
 
     document.getElementById('profile-picture-input').addEventListener('change', function(event) {
         const file = event.target.files[0];
@@ -264,6 +298,11 @@ function getLoggedInUser() {
 // please let me know. SMN
 function saveCurrentPage(page) {
     localStorage.setItem('currentPage', page);
+}
+
+function showAd() {
+    const ad = document.getElementById('ad-42vienna');
+    ad.style.display = ad.style.display === 'none' ? 'block' : 'none';
 }
 
 document.addEventListener('DOMContentLoaded', () => {

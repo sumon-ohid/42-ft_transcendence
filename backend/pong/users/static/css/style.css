@@ -36,6 +36,49 @@ body {
     z-index: -1;
 }
 
+/*--------------42 AD START------------------*/
+
+#ad-42vienna {
+    z-index: 1000;
+    /* background-image: url(../images/42ad.png); */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    height: 120px;
+    width: 780px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    position: fixed;
+    bottom: -90px;
+    left: 70px;
+}
+
+@media (max-width: 800px) {
+    #ad-42vienna {
+        display: none !important;
+    }
+}
+
+#close-ad-btn {
+    position: absolute;
+    top: 12px;
+    right: 19px;
+    background-color: rgb(8, 8, 8);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/*--------------42 AD END------------------*/
+
 /*--------------NAV BAR START------------------*/
 .navbar {
     background: linear-gradient(135deg, #2a66c6, #114394);
