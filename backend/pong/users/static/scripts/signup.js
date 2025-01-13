@@ -18,7 +18,7 @@ function signup() {
             <input type="text" id="email" name="email" placeholder="email" class="form-box" required><br>
             <input type="text" id="username" name="username" placeholder="username" class="form-box" required><br>
             <input type="password" id="password" name="password" placeholder="Password" class="form-box" autocomplete="current-password" required>
-                <span id="toggle-password" class="toggle-password-signup">
+                <span id="toggle-password-signup" class="toggle-password-signup">
                     <i class="fa fa-eye" aria-hidden="true"></i>
                 </span>
             <br><br>
