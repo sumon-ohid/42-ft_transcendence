@@ -655,3 +655,6 @@ def get_last_active(request):
             return JsonResponse({"error": str(e)}, status=500)
 
     return JsonResponse({"error": "Invalid request method"}, status=405)
+
+def get_openrouter_key(request):
+    return JsonResponse({'apiKey': settings.OPENROUTER_API})
