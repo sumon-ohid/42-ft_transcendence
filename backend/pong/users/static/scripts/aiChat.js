@@ -74,12 +74,12 @@ class AIChat {
 
 const aiChat = new AIChat();
 
-window.addEventListener('load', async () => {
+window.addEventListener('DOMContentLoaded', async () => {
     try {
         // NOTE: use .env file to store the API key
-        // const response = await fetch('/api/get-openrouter-key/');
-        // const data = await response.json();
-        await aiChat.initialize("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");
+        const response = await fetch('/api/get-openrouter-key/');
+        const data = await response.json();
+        await aiChat.initialize(data.apiKey);
     } catch (error) {
         console.error('Failed to initialize AI chat:', error);
     }
@@ -129,15 +129,23 @@ startAIChat = async function() {
             // AI response
             try {
                 const response = await aiChat.sendMessage(message);
-                removeMessage(thinkingMessageId);
-                displayAIMessage({ sender: 'Marvin', text: response });
+                updateMessage(thinkingMessageId, { sender: 'Marvin', text: response });
             } catch (error) {
-                removeMessage(thinkingMessageId);
-                displayAIMessage({ sender: 'System', text: 'Error: Failed to get AI response' });
+                updateMessage(thinkingMessageId, { sender: 'System', text: 'Error: Failed to get AI response' });
             }
         }
     };
 };
+
+function updateMessage(messageId, message) {
+    const messageElement = document.getElementById(messageId);
+    if (messageElement) {
+        const messageContent = messageElement.querySelector('.message-content');
+        if (messageContent) {
+            messageContent.innerHTML = formatMessageContent(message.text);
+        }
+    }
+}
 
 function formatMessageContent(text) {
     // Detect code blocks
