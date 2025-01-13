@@ -12,7 +12,7 @@ class AIChat {
 
         let command = `You are an AI assistant for the ft_transcendence Pong game project. You are knowledgeable about:
             - Backend: Django framework
-            - Frontend: Bootstrap toolkit
+            - Frontend: CSS and Bootstrap toolkit
             - Database: PostgreSQL
             - Blockchain: Ethereum for storing tournament scores
             - Authentication: 42 API integration and JWT with 2FA
@@ -164,6 +164,7 @@ function formatMessageContent(text) {
             lines.forEach(line => {
                 if (line.trim().startsWith('|')) {
                     const row = document.createElement('tr');
+                    // if less than 3 cells, it's not a table
                     line.split('|').slice(1, -1).forEach(cell => {
                         const td = document.createElement('td');
                         td.textContent = cell.trim();
@@ -193,7 +194,6 @@ function formatMessageContent(text) {
         }
     }
 
-    // Default to plain text
     return text;
 }
 
