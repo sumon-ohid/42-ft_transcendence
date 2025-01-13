@@ -129,23 +129,15 @@ startAIChat = async function() {
             // AI response
             try {
                 const response = await aiChat.sendMessage(message);
-                updateMessage(thinkingMessageId, { sender: 'Marvin', text: response });
+                removeMessage(thinkingMessageId);
+                displayAIMessage({ sender: 'Marvin', text: response });
             } catch (error) {
-                updateMessage(thinkingMessageId, { sender: 'System', text: 'Error: Failed to get AI response' });
+                removeMessage(thinkingMessageId);
+                displayAIMessage({ sender: 'Marvin', text: 'Sorry, I am unable to respond at the moment. Please try again later.' });
             }
         }
     };
 };
-
-function updateMessage(messageId, message) {
-    const messageElement = document.getElementById(messageId);
-    if (messageElement) {
-        const messageContent = messageElement.querySelector('.message-content');
-        if (messageContent) {
-            messageContent.innerHTML = formatMessageContent(message.text);
-        }
-    }
-}
 
 function formatMessageContent(text) {
     // Detect code blocks
@@ -211,7 +203,7 @@ function displayAIMessage(message) {
     const messageElement = document.createElement("div");
     messageElement.className = "chat-message";
     if (message.sender === 'Marvin' || message.sender === 'System') {
-        messageElement.classList.add("other-user-message");
+        messageElement.className = "other-user-message";
     }
     
     const profilePic = document.createElement("img");
