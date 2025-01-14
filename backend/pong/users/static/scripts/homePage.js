@@ -172,11 +172,13 @@ async function homePage() {
             formData.append('profile_picture', file);
 
             const csrfToken = getCSRFToken();
+            const jwtToken = localStorage.getItem('jwtToken');
 
             fetch('/api/upload-profile-picture/', {
                 method: 'POST',
                 headers: {
                     'X-CSRFToken': csrfToken,
+                    'Authorization': `Bearer ${jwtToken}`
                 },
                 body: formData
             })
@@ -274,6 +276,7 @@ function handleLogout(event) {
         .then(response => {
             if (response.ok) {
                 error("You have been logged out.");
+                localStorage.removeItem('jwtToken');
                 login();
             } else {
                 return response.json().then(data => {

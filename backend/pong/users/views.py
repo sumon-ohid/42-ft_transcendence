@@ -22,15 +22,19 @@ from django.utils.crypto import get_random_string
 from django.views.decorators.cache import never_cache
 from time import time, sleep
 import string
+import datetime
 from django.conf import settings
 import requests
 import logging
 from django.http import HttpResponse
 import os
 from django.core.files.base import ContentFile
+import jwt
+from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.db.models import Q
 from .models import ChatMessage
+from .auth import jwt_required
 
 
 @login_required
@@ -82,11 +86,26 @@ def api_login(request):
                 except Profile.DoesNotExist:
                     pass
 
-                return JsonResponse({
-                    'status': 'success',
-                    'message': 'Login successful!',
-                    'two_factor_enabled': two_factor_enabled
-                })
+                if not two_factor_enabled:
+                    # Generate JWT token
+                    payload = {
+                        'user_id': user.id,
+                        'exp': datetime.datetime.utcnow() + datetime.timedelta(hours=1),
+                        'iat': datetime.datetime.utcnow()
+                    }
+                    token = jwt.encode(payload, settings.SECRET_KEY, algorithm='HS256')
+                    return JsonResponse({
+                        'status': 'success',
+                        'message': 'Login successful!',
+                        'token': token
+                    })
+                else:
+                    # 2FA is required
+                    return JsonResponse({
+                        'status': 'success',
+                        'message': '2FA verification required',
+                        'two_factor_required': True
+                    })
             else:
                 return JsonResponse({'status': 'error', 'error': 'Invalid username or password.'}, status=401)
         except json.JSONDecodeError:
@@ -110,6 +129,7 @@ def get_username(request):
         return JsonResponse({'username': 'Guest'})
 
 
+# @jwt_required
 def save_score(request):
     if request.method == 'POST':
         data = json.loads(request.body)
@@ -133,6 +153,7 @@ def save_score(request):
 
 
 # @csrf_exempt
+@jwt_required
 def upload_profile_picture(request):
     if request.method == 'POST' and request.FILES.get('profile_picture'):
         profile_picture = request.FILES['profile_picture']
@@ -335,7 +356,18 @@ def verify_2fa(request):
             if totp_device.verify_token(code):
                 request.user.profile.two_factor_enabled = True
                 request.user.profile.save()
-                return JsonResponse({'status': 'success', 'message': '2FA verification successful'})
+                # Generate JWT token
+                payload = {
+                    'user_id': request.user.id,
+                    'exp': datetime.datetime.utcnow() + datetime.timedelta(hours=1),
+                    'iat': datetime.datetime.utcnow()
+                }
+                token = jwt.encode(payload, settings.SECRET_KEY, algorithm='HS256')
+                return JsonResponse({
+                    'status': 'success',
+                    'message': '2FA verification successful',
+                    'token': token
+                })
             else:
                 return JsonResponse({'error': 'Invalid verification code'}, status=400)
 
