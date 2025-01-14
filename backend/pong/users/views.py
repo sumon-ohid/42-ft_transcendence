@@ -20,8 +20,7 @@ from django.views.decorators.csrf import csrf_protect
 from django_otp import devices_for_user
 from django.utils.crypto import get_random_string
 from django.views.decorators.cache import never_cache
-from time import time
-import random
+from time import time, sleep
 import string
 from django.conf import settings
 import requests
@@ -29,7 +28,9 @@ import logging
 from django.http import HttpResponse
 import os
 from django.core.files.base import ContentFile
-
+from django.contrib.auth import get_user_model
+from django.db.models import Q
+from .models import ChatMessage
 
 
 @login_required
@@ -276,7 +277,7 @@ def change_password(request):
 
 
 # 2Factor Authentication
-def random_hex(length):
+def generate_random_hex(length):
     return get_random_string(length * 2, allowed_chars='0123456789abcdef')
 
 
@@ -289,7 +290,7 @@ def setup_2fa(request):
                 otp_device = TOTPDevice.objects.get(user=request.user, name="default")
             except TOTPDevice.DoesNotExist:
                 # Generate a random secret key
-                secret = random_hex(20)
+                secret = generate_random_hex(20)
                 
                 # Create a TOTP device for the user
                 otp_device = TOTPDevice(user=request.user, name="default")
@@ -517,88 +518,6 @@ def redirect_to_home(request):
         </body>
         </html>
     """)
-
-
-from .models import ChatMessage
-from django.utils.timezone import now
-import time
-from django.utils.dateparse import parse_datetime
-from django.utils.timezone import make_aware
-
-@csrf_exempt
-def long_poll(request):
-    if request.method == "GET":
-        receiver = request.GET.get("receiver")
-        last_timestamp = request.GET.get("last_timestamp")
-
-        if not receiver or not last_timestamp:
-            return JsonResponse({"error": "Missing parameters"}, status=400)
-
-        try:
-            last_timestamp = parse_datetime(last_timestamp)
-            if last_timestamp is not None:
-                last_timestamp = make_aware(last_timestamp)
-
-            messages = []
-            for _ in range(5):  # Polling duration 5 seconds, refresh every 5 second
-                new_messages = ChatMessage.objects.filter(
-                    receiver__username=receiver,
-                    timestamp__gt=last_timestamp
-                )
-                if new_messages.exists():
-                    messages = [
-                        {
-                            "sender": msg.sender.username,
-                            "message": msg.message,
-                            "timestamp": msg.timestamp.isoformat(),
-                        }
-                        for msg in new_messages
-                    ]
-                    break
-                time.sleep(1)  # Sleep for 1 second before checking again
-
-            return JsonResponse({"messages": messages}, status=200)
-
-        except Exception as e:
-            return JsonResponse({"error": str(e)}, status=500)
-
-    return JsonResponse({"error": "Invalid request method"}, status=405)
-
-
-import datetime
-
-@csrf_exempt
-def send_message(request):
-    if request.method == "POST":
-        try:
-            data = json.loads(request.body)
-            receiver_username = data.get('receiver')
-            message_content = data.get('message')
-
-            if not receiver_username or not message_content:
-                return JsonResponse({"error": "Missing username or message"}, status=400)
-
-            try:
-                receiver = User.objects.get(username=receiver_username)
-            except User.DoesNotExist:
-                return JsonResponse({"error": "Receiver not found"}, status=404)
-
-            message = ChatMessage.objects.create(
-                sender=request.user,
-                receiver=receiver,
-                message=message_content,
-                timestamp=datetime.datetime.now()
-            )
-
-            return JsonResponse({"status": "success", "message_id": message.id}, status=200)
-
-        except json.JSONDecodeError:
-            return JsonResponse({"error": "Invalid JSON"}, status=400)
-        except Exception as e:
-            return JsonResponse({"error": str(e)}, status=500)
-
-    return JsonResponse({"error": "Invalid request method"}, status=405)
-
 
 from django.db.models import Q
 
