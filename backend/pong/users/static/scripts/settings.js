@@ -317,7 +317,8 @@ function changeUserName() {
         method: 'POST',
         headers: {
         'Content-Type': 'application/json',
-        'X-CSRFToken': csrfToken
+        'X-CSRFToken': csrfToken,
+        'Authorization': `Bearer ${localStorage.getItem('jwtToken')}`
         },
         body: JSON.stringify({
         current_username: currentUsername,

@@ -244,7 +244,7 @@ def get_play_history(request, username):
     ]
     return JsonResponse(sorted(scores_with_dates, key=lambda x: x['date'], reverse=True), safe=False)
 
-@csrf_exempt
+@jwt_required
 def change_username(request):
     if request.method == 'POST':
         try:
