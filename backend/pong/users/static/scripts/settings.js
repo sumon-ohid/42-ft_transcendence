@@ -289,7 +289,10 @@ function verify2FA() {
 function disable2FA() {
     fetch('/api/disable-2fa/', {
         method: 'POST',
-        headers: { 'X-CSRFToken': getCSRFToken() }
+        headers: {
+            'X-CSRFToken': getCSRFToken(),
+            'Authorization': `Bearer ${localStorage.getItem('jwtToken')}`
+        }
     })
         .then(response => response.json())
         .then(data => {
