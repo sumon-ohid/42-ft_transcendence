@@ -6,7 +6,7 @@ from functools import wraps
 def jwt_required(func):
     @wraps(func)
     def wrapper(request, *args, **kwargs):
-        token = request.META.get('HTTP_AUTHORIZATION')
+        token = request.META.get('HTTP_AUTHORIZATION', None)
         if token is not None:
             token = token.replace('Bearer ', '')
             try:
