@@ -380,7 +380,8 @@ def verify_2fa(request):
 
     return JsonResponse({'error': 'Invalid method'}, status=400)
 
-@csrf_exempt
+#@csrf_exempt
+@jwt_required
 def disable_2fa(request):
     if request.method == 'POST':
         request.user.profile.two_factor_enabled = False
