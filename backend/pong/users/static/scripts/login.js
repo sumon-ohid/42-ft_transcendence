@@ -151,6 +151,8 @@ function handle2FAVerification(event) {
         .then(data => {
             if (data.status === 'success') {
                 error("2FA verification successful!");
+                const token = data.token;
+                localStorage.setItem('jwtToken', token);
                 homePage(); // Redirect to the home page
             } else if (data.error) {
                 error("Error: " + data.error);

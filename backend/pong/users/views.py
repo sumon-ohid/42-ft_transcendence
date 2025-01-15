@@ -86,6 +86,7 @@ def api_login(request):
                 except Profile.DoesNotExist:
                     pass
 
+                token = jwt.encode(payload, settings.SECRET_KEY, algorithm='HS256')
                 if not two_factor_enabled:
                     # Generate JWT token
                     payload = {
@@ -93,7 +94,6 @@ def api_login(request):
                         'exp': datetime.datetime.utcnow() + datetime.timedelta(hours=1),
                         'iat': datetime.datetime.utcnow()
                     }
-                    token = jwt.encode(payload, settings.SECRET_KEY, algorithm='HS256')
                     return JsonResponse({
                         'status': 'success',
                         'message': 'Login successful!',
@@ -104,7 +104,9 @@ def api_login(request):
                     return JsonResponse({
                         'status': 'success',
                         'message': '2FA verification required',
+                        'two_factor_enabled': two_factor_enabled,
                         'two_factor_required': True
+                        'token': token
                     })
             else:
                 return JsonResponse({'status': 'error', 'error': 'Invalid username or password.'}, status=401)
