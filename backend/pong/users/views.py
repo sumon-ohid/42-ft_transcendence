@@ -541,7 +541,7 @@ def redirect_to_home(request):
     token = jwt.encode(payload, settings.SECRET_KEY, algorithm='HS256')
     token_str = token.decode('utf-8') if isinstance(token, bytes) else token
 
-    return HttpResponse("""
+    return HttpResponse(f"""
         <html>
         <head>
             <script src="/static/scripts/homePage.js" defer></script>
@@ -550,17 +550,19 @@ def redirect_to_home(request):
         <body style="justify-content: center; align-items: center; display: flex; height: 100vh;">
             <h1 style="color: white; text-align: center;">Redirecting....</h1>
             <script type="text/javascript">
-                window.onload = function() {
-                    setTimeout(function() {
+                window.onload = function() {{
+                    setTimeout(function() {{
                         localStorage.setItem('jwtToken', "{token_str}");
                         window.location.href = '/#homePage';
                         homePage();
-                    }, 1000);
-                };
+                    }}, 1000);
+                }};
             </script>
         </body>
         </html>
     """)
+
+
 
 from django.db.models import Q
 
