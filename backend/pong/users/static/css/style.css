@@ -2405,4 +2405,19 @@ form .login-button:hover {
     gap: 20px;
 }
 
+#players {
+    background-color: var(--pong-color);
+    height: 50px;
+    width: 200px;
+    position: fixed;
+    top: 310px;
+    left: 50px;
+    border-radius: 20px;
+    box-shadow: 0 2px 6px rgba(0.2, 0, 0, 0.31);
+    color: white;
+    font-family: "Sour Gummy";
+    padding: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.315);
+}
+
 /*------- GAME OPTION PAGE END -------*/

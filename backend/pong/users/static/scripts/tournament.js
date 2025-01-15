@@ -14,11 +14,14 @@ function tournamentPage() {
         <div class="pong-options"></div>
         <h2>Pong Tournament</h2>
         <div class="game-options">
-            <div class="form-check1" onclick="createTournamentPage()">
-                <p>Create Tournament</p>
+            <!-- choose players for tournment -->
+            <!-- from 6 to 3 players -->
+            <div class="form-check1" id="number_of_plyers">
+                <p>Choose Players</p>
+                <input type="number" id="players" min="3" max="6" value="3">
             </div>
-            <div class="form-check2" onclick="joinTournamentPage()">
-                <p>Join Tournament</p>
+            <div class="form-check3" onclick="createTournamentPage()">
+                <p>Create Tournament</p>
             </div>
         </div>
         <div class="quit-game" onclick="gameOptions()">
@@ -82,53 +85,8 @@ function joinTournamentPage() {
 
 function createTournament() {
     const tournamentName = document.getElementById("tournamentName").value;
-    if (tournamentName) {
-        fetch('/api/create-tournament/', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRFToken': getCSRFToken()
-            },
-            body: JSON.stringify({ name: tournamentName })
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.status === 'success') {
-                alert('Tournament created successfully!');
-                // Optionally redirect to tournament page
-            } else {
-                alert('Error creating tournament.');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('Error creating tournament.');
-        });
-    }
+    // choose players for tournment
+    // from 6 to 3 players
+    gamePage();
 }
 
-function joinTournament() {
-    const tournamentId = document.getElementById("tournamentId").value;
-    if (tournamentId) {
-        fetch(`/api/join-tournament/${tournamentId}/`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRFToken': getCSRFToken()
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.status === 'success') {
-                alert('Joined tournament successfully!');
-                // Optionally redirect to tournament page
-            } else {
-                alert('Error joining tournament.');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('Error joining tournament.');
-        });
-    }
-}
