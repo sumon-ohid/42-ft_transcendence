@@ -105,7 +105,7 @@ def api_login(request):
                         'status': 'success',
                         'message': '2FA verification required',
                         'two_factor_enabled': two_factor_enabled,
-                        'two_factor_required': True
+                        'two_factor_required': True,
                         'token': token
                     })
             else:
