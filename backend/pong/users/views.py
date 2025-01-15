@@ -78,6 +78,7 @@ def api_login(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
+                token = None
                 # Check if 2FA is enabled for the user
                 two_factor_enabled = False
                 try:
