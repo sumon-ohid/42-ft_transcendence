@@ -275,7 +275,7 @@ def change_username(request):
     return JsonResponse({'status': 'error', 'message': 'Invalid request method.'}, status=405)
 
 
-@csrf_exempt
+@jwt_required
 def change_password(request):
     if request.method == 'POST':
         try:
@@ -305,7 +305,7 @@ def generate_random_hex(length):
     return get_random_string(length * 2, allowed_chars='0123456789abcdef')
 
 
-@csrf_exempt
+@jwt_required
 def setup_2fa(request):
     if request.user.is_authenticated:
         if request.method == 'POST':

@@ -214,7 +214,10 @@ function fetch2FAStatus() {
 function setup2FA() {
     fetch('/api/setup-2fa/', {
         method: 'POST',
-        headers: { 'X-CSRFToken': getCSRFToken() }
+        headers: {
+            'X-CSRFToken': getCSRFToken(),
+            'Authorization': `Bearer ${localStorage.getItem('jwtToken')}`
+        }
     })
         .then(response => response.json())
         .then(data => {
@@ -365,7 +368,8 @@ function changePassword() {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'X-CSRFToken': csrfToken
+        'X-CSRFToken': csrfToken,
+        'Authorization': `Bearer ${localStorage.getItem('jwtToken')}`
       },
       body: JSON.stringify({
         current_password: currentPassword,
