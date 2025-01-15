@@ -67,19 +67,19 @@ function handleLogin(event) {
         return;
     }
 
-    const csrfToken = getCSRFToken();
-
     fetch('/api/login/', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'X-CSRFToken': csrfToken,
+            'X-CSRFToken': getCSRFToken(),
         },
         body: JSON.stringify({ username, password }),
     })
         .then(response => response.json())
         .then(data => {
             if (data.status === 'success') {
+                const token = data.token;
+                localStorage.setItem('jwtToken', token);
                 if (data.two_factor_enabled) {
                     show2FAPage(); // Show the 2FA page if 2FA is enabled
                 } else {
@@ -151,6 +151,8 @@ function handle2FAVerification(event) {
         .then(data => {
             if (data.status === 'success') {
                 error("2FA verification successful!");
+                const token = data.token;
+                localStorage.setItem('jwtToken', token);
                 homePage(); // Redirect to the home page
             } else if (data.error) {
                 error("Error: " + data.error);
