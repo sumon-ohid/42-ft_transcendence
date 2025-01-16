@@ -6,6 +6,8 @@ from .views import index, api_signup, api_login, api_logout, get_username, save_
     redirect_to_home, get_chat_history, get_last_active, get_openrouter_key
 from django.conf import settings
 from django.conf.urls.static import static
+from django.conf.urls.i18n import i18n_patterns
+from django.views.i18n import JavaScriptCatalog
 
 urlpatterns = [
     path("", index, name="index"),
@@ -34,6 +36,8 @@ urlpatterns = [
     path('chat/get-chat-history/', get_chat_history, name='get_chat_history'),
     path('api/last-active/', get_last_active, name='get_last_active'),
     path('api/get-openrouter-key/', get_openrouter_key, name='get_openrouter_key'),
+    path('jsi18n/', JavaScriptCatalog.as_view(domain='djangojs'), name='javascript-catalog'),
+
 ]
 
 

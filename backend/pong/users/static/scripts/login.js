@@ -14,7 +14,7 @@ function login() {
     div.className = "login-container";
     div.innerHTML = ` 
         <div class="login-text">
-            <p>Login</p>
+            <p>${ translations.login }</p>
         </div>
         <form class="form" id="login-form">
             <input type="text" id="username" name="username" placeholder="Username" class="form-box" autocomplete="username" required><br>
@@ -23,15 +23,15 @@ function login() {
                 <i class="fa fa-eye" aria-hidden="true"></i>
             </span>
             <br><br>
-            <button type="submit" class="login-button">Login</button>
+            <button type="submit" class="login-button">${ translations.login }</button>
         </form>
-        <div class="or">or</div>
-        <div class="intra-login" onClick="intraLogin()">Login with 
+        <div class="or"></div>
+        <div class="intra-login" onClick="intraLogin()">${ translations.loginwith }
             <img src="https://simpleicons.org/icons/42.svg" alt="42" class="icon"/>
         </div>
-        <div class="forgot-passwd">Forgot Password?</div>
+        <div class="forgot-passwd">${ translations.forgotpassword }</div>
         <div class="signup">
-            Don't have an account?
+        ${ translations.donthaveanaccount }
             <button onclick="signup()" class="signup-button">
                 <strong id="register">Register</strong>
             </button>

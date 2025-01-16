@@ -1,4 +1,4 @@
-{% load static %}
+{% load static i18n %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,6 +17,7 @@
     <meta name="csrf-token" content="{{ csrf_token }}">
     <!-- add favicon -->
     <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
+    <script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
 
 </head>
 <body data-static-url="{% static '' %}">
@@ -25,12 +26,21 @@
     <div class="pong"></div>
     <div class="title">PONG</div>
     <button class="button" onclick="login()">
-        <h1>continue</h1>
+        <h1>{% trans "continue" %}</h1>
     </button>
 
     <!--JS SCRIPTS-->
     <!-- defer is for document to be completly parsed first the execute script-->
     <script src="{% static 'scripts/homePage.js' %}" defer></script>
+    <script>
+        const translations = {
+          login: "{{ _('Login')|escapejs }}",
+          loginwith: "{{ _('Login with')|escapejs }}",
+          forgotpassword: "{{ _('Forgot Password?')|escapejs }}",
+          donthaveanaccount: "{{ _('Dont have an account?')|escapejs }}"
+
+        }
+      </script>
     <script src="{% static 'scripts/login.js' %}" defer></script>
     <script src="{% static 'scripts/signup.js' %}" defer></script>
     <script src="{% static 'scripts/pong.js' %}" defer></script>
