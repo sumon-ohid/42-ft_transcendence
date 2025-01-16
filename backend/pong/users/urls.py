@@ -38,6 +38,7 @@ urlpatterns = [
     path('api/get-openrouter-key/', get_openrouter_key, name='get_openrouter_key'),
     path('jsi18n/', JavaScriptCatalog.as_view(domain='djangojs'), name='javascript-catalog'),
 
+
 ]
 
 

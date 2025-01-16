@@ -13,31 +13,43 @@ function login() {
     const div = document.createElement("div");
     div.className = "login-container";
     div.innerHTML = ` 
-        <div class="login-text">
-            <p>${ translations.login }</p>
-        </div>
-        <form class="form" id="login-form">
-            <input type="text" id="username" name="username" placeholder="Username" class="form-box" autocomplete="username" required><br>
-            <input type="password" id="password" name="password" placeholder="Password" class="form-box" autocomplete="current-password" required>
-            <span id="toggle-password" class="toggle-password">
-                <i class="fa fa-eye" aria-hidden="true"></i>
-            </span>
-            <br><br>
-            <button type="submit" class="login-button">${ translations.login }</button>
-        </form>
-        <div class="or">${ translations.or }</div>
-        <div class="intra-login" onClick="intraLogin()">${ translations.loginwith }
-            <img src="https://simpleicons.org/icons/42.svg" alt="42" class="icon"/>
-        </div>
-        <div class="forgot-passwd">${ translations.forgotpassword }</div>
-        <div class="signup">
+    <div class="login-text">
+        <p>${ translations.login }</p>
+    </div>
+    <form class="form" id="login-form">
+        <input type="text" id="username" name="username" placeholder="Username" class="form-box" autocomplete="username" required><br>
+        <input type="password" id="password" name="password" placeholder="Password" class="form-box" autocomplete="current-password" required>
+        <span id="toggle-password" class="toggle-password">
+            <i class="fa fa-eye" aria-hidden="true"></i>
+        </span>
+        <br><br>
+        <button type="submit" class="login-button">${ translations.login }</button>
+    </form>
+    <div class="or">${ translations.or }</div>
+    <div class="intra-login" onClick="intraLogin()">${ translations.loginwith }
+        <img src="https://simpleicons.org/icons/42.svg" alt="42" class="icon"/>
+    </div>
+    <div class="forgot-passwd">${ translations.forgotpassword }</div>
+    <div class="signup">
         ${ translations.donthaveanaccount }
-            <button onclick="signup()" class="signup-button">
-                <strong id="register">Register</strong>
-            </button>
-        </div>
-        <div class="image"></div>
-    `;
+        <button onclick="signup()" class="signup-button">
+            <strong id="register">Register</strong>
+        </button>
+    </div>
+    <div class="image"></div>
+
+    <!-- language-switcher -->
+      <div class="language-switcher">
+      <form action="/i18n/setlang/" method="post">
+        <input type="hidden" name="csrfmiddlewaretoken" value="${csrfToken}">
+        <select name="language" onchange="this.form.submit()">
+          <option value="en" ${ currentLang === 'en' ? 'selected' : '' }>English</option>
+    <option value="de" ${ currentLang === 'de' ? 'selected' : '' }>Deutsch</option>
+        </select>
+      </form>
+    </div>
+`;
+
     body.appendChild(div);
 
     // Attach event listener to the form

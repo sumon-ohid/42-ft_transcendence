@@ -2550,3 +2550,11 @@ form .login-button:hover {
 }
 
 /*------- AI CHAT STYLES END -------*/
+
+.language-switcher {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    /* további stílusok... */
+  }
+  

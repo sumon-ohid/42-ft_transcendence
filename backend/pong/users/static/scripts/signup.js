@@ -83,7 +83,7 @@ function handleSignup() {
             } else if (data.errors) {
                 error("Errors: " + JSON.stringify(data.errors));
             } else {
-                error("Something went wrong!");
+                error("Someething went wrong!");
             }
         })
         .catch(error => {

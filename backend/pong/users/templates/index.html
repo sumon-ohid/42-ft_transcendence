@@ -1,6 +1,6 @@
 {% load static i18n %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ LANGUAGE_CODE }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -31,6 +31,7 @@
 
     <!--JS SCRIPTS-->
     <!-- defer is for document to be completly parsed first the execute script-->
+   
     <script src="{% static 'scripts/homePage.js' %}" defer></script>
     <script>
         const translations = {
@@ -42,6 +43,13 @@
 
         }
       </script>
+     <script>
+      const csrfToken = "{{ csrf_token }}";
+    </script>
+    <script>
+      const currentLang = "{{ LANGUAGE_CODE }}";
+   </script>
+   
     <script src="{% static 'scripts/login.js' %}" defer></script>
     <script src="{% static 'scripts/signup.js' %}" defer></script>
     <script src="{% static 'scripts/pong.js' %}" defer></script>
