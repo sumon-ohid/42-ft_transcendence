@@ -25,7 +25,7 @@ function login() {
             <br><br>
             <button type="submit" class="login-button">${ translations.login }</button>
         </form>
-        <div class="or"></div>
+        <div class="or">${ translations.or }</div>
         <div class="intra-login" onClick="intraLogin()">${ translations.loginwith }
             <img src="https://simpleicons.org/icons/42.svg" alt="42" class="icon"/>
         </div>

@@ -35,3 +35,5 @@ msgstr "Passwort vergessen?"
 msgid "Dont have an account?"
 msgstr "Kein acc?"
 
+msgid "or"
+msgstr "oder"
