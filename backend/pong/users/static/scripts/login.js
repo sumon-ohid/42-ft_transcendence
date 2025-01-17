@@ -42,16 +42,49 @@ function login() {
       <div class="language-switcher">
       <form action="/i18n/setlang/" method="post">
         <input type="hidden" name="csrfmiddlewaretoken" value="${csrfToken}">
-        <select name="language" onchange="this.form.submit()">
-          <option value="en" ${ currentLang === 'en' ? 'selected' : '' }>English</option>
-    <option value="de" ${ currentLang === 'de' ? 'selected' : '' }>Deutsch</option>
+        <select name="language" id="language-select" onchange="this.form.submit()">
+            <option value="en" ${ currentLang === 'en' ? 'selected' : '' }>English</option>
+            <option value="de" ${ currentLang === 'de' ? 'selected' : '' }>Deutsch</option>
         </select>
       </form>
     </div>
-`;
+    `
+;
+
+
+    
+
 
     body.appendChild(div);
-
+    const languageSwitcher = document.querySelector(".language-switcher");
+    if (languageSwitcher) {
+        const languageSelect = languageSwitcher.querySelector("select");
+        if (languageSelect) {
+            languageSelect.addEventListener("change", function () {
+                const selectedLanguage = this.value;
+    
+    
+                if (selectedLanguage === "en") {
+                    window.location.href = "https://localhost:8000/#login";
+                    return; 
+                }
+    
+                this.form.submit();
+    
+                setTimeout(() => {
+                    console.log("Oldal újratöltése...");
+                    window.location.reload(); 
+                }, 100); 
+            });
+        } else {
+            console.error("Doesent found: language-switcherben!");
+        }
+    } else {
+        console.error("Doesent found: language-switcher element!");
+    }
+    
+    
+    
     // Attach event listener to the form
     const loginForm = document.getElementById("login-form");
     loginForm.addEventListener("submit", handleLogin);
