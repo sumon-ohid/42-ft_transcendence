@@ -262,6 +262,9 @@ function handleLogout(event) {
     event.preventDefault();
     const csrfToken = getCSRFToken();
 
+    // remove saved page
+    localStorage.removeItem('currentPage');
+
     if (!csrfToken) {
         error("CSRF token not found. Logout request cannot be sent.");
         return;
@@ -277,7 +280,7 @@ function handleLogout(event) {
             if (response.ok) {
                 error("You have been logged out.");
                 localStorage.removeItem('jwtToken');
-                login();
+                window.location.href = 'https://localhost:8000/';
             } else {
                 return response.json().then(data => {
                     error("Logout failed: " + (data.error || "Unknown error."));
