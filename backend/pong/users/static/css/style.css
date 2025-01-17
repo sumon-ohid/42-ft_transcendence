@@ -2406,18 +2406,20 @@ form .login-button:hover {
 }
 
 #players {
-    background-color: var(--pong-color);
-    height: 50px;
-    width: 200px;
+    background-color: white;
+    height: 40px;
+    width: 100px;
     position: fixed;
     top: 310px;
-    left: 50px;
+    left: 100px;
     border-radius: 20px;
     box-shadow: 0 2px 6px rgba(0.2, 0, 0, 0.31);
-    color: white;
+    color: black;
     font-family: "Sour Gummy";
     padding: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.315);
+    border: 1px solid rgba(129, 129, 129, 0.417);
+    text-align: center;
+    opacity: .8;
 }
 
 .choose-players, .ready {
@@ -2431,11 +2433,37 @@ form .login-button:hover {
     font-family: "Sour Gummy";
 }
 
+.player-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    position: fixed;
+    top: 50px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.player-container p {
+    color: white;
+    font-family: "Sour Gummy";
+}
+
 .player-list {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    text-align: center;
 }
+
+.player-list.grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(3, auto);
+    gap: 10px;
+    text-align: center;
+}
+
 
 .player-options {
     position: fixed;
@@ -2448,7 +2476,7 @@ form .login-button:hover {
 }
 
 .player-item {
-    background-color: var(--container-background);
+    background-color: var(--pong-color);
     padding: 5px;
     border-radius: 10px;
     text-align: center;
@@ -2466,10 +2494,12 @@ form .login-button:hover {
     width: 50px;
     height: 50px;
     border-radius: 50%;
+    margin-left: 20px;
 }
 
 .player-item p {
-    margin: 0;
+    margin-left: 10px;
+    margin-top: 10px;
 }
 
 .player-item:hover {
@@ -2519,5 +2549,17 @@ form .login-button:hover {
     background-color: var(--primary-color-dark);
 }
 
+#number_of_plyers {
+    color: white;
+    font-family: "Sour Gummy";
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    gap: 0px;
+    position: fixed;
+    top: 260px;
+    line-height: 2px;
+}
 
 /*------- GAME OPTION PAGE END -------*/

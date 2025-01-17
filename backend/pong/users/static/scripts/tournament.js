@@ -1,3 +1,6 @@
+
+let tournamentMode = false;
+
 function tournamentPage() {
     saveCurrentPage('tournamentPage');
     history.pushState({ page: 'tournamentPage' }, '', '#tournamentPage');
@@ -16,8 +19,9 @@ function tournamentPage() {
         <div class="game-options">
             <!-- choose players for tournment -->
             <!-- from 3 to 6 players -->
-            <div class="form-check1" id="number_of_plyers">
-                <p>Choose Players</p>
+            <div id="number_of_plyers">
+                <p>Choose Number of players</p>
+                <p>(min 3 max 6)</p>
                 <input type="number" id="players" min="3" max="6" value="3">
             </div>
             <div class="form-check3" onclick="choosePlayersForTournamentPage()">
@@ -32,11 +36,18 @@ function tournamentPage() {
 }
 
 function choosePlayersForTournamentPage() {
-    const numberOfPlayers = document.getElementById('players').value;
-    const players = generateRandomPlayers(numberOfPlayers);
-
     saveCurrentPage('choosePlayersForTournamentPage');
     history.pushState({ page: 'choosePlayersForTournamentPage' }, '', '#choosePlayersForTournamentPage');
+
+    // NOTE: There is an error here. when page is reloaded, the selected players are not saved.
+    // Check if the number of players is valid
+    const numberOfPlayers = document.getElementById('players').value;
+    if (numberOfPlayers < 3 || numberOfPlayers > 6) {
+        error('Please choose between 3 and 6 players.');
+        return;
+    }
+    const players = generateRandomPlayers(numberOfPlayers);
+
     const body = document.body;
 
     while (body.firstChild) {
@@ -46,14 +57,17 @@ function choosePlayersForTournamentPage() {
     const div = document.createElement("div");
     div.className = "settings-container";
     div.innerHTML = `
-        <h2>Choose Players</h2>
-        <div class="player-list">
+        <h2>All Players</h2>
+        <div class="player-container">
+            <p>These players will play against each other <br> in the tournament</p>
+            <div class="player-list" id="player-list">
             ${players.map(player => `
                 <div class="player-item" onclick="selectPlayer(this)">
                     <img src="${player.avatar}" alt="${player.name}'s avatar">
                     <p>${player.name}</p>
                 </div>
             `).join('')}
+        </div>
         </div>
         <div class="ready">
             <button class="gamepage-button" onclick="startTournament()">Start</button>
@@ -62,6 +76,13 @@ function choosePlayersForTournamentPage() {
             <h1>BACK</h1>
         </div>
     `;
+
+    const playerList = div.querySelector('#player-list');
+    const playerItems = playerList.children;
+
+    if (playerItems.length > 3)
+        playerList.classList.add('grid');
+    
     body.appendChild(div);
 }
 
@@ -98,37 +119,53 @@ function startTournament() {
 }
 
 function roundRobinStage(players) {
-    saveCurrentPage('roundRobinStage');
-    history.pushState({ page: 'roundRobinStage' }, '', '#roundRobinStage');
-    const body = document.body;
+    // saveCurrentPage('roundRobinStage');
+    // history.pushState({ page: 'roundRobinStage' }, '', '#roundRobinStage');
+    // const body = document.body;
 
-    while (body.firstChild) {
-        body.removeChild(body.firstChild);
-    }
+    // while (body.firstChild) {
+    //     body.removeChild(body.firstChild);
+    // }
 
-    const div = document.createElement("div");
-    div.className = "gamepage-container";
-    div.innerHTML = `
-        <h2>Round Robin Stage</h2>
-        <div class="match-list-container">
-            <div class="match-list">
-                ${generateRoundRobinMatches(players).map(match => `
-                    <div class="match-item">
-                        <p>${match[0].name} vs ${match[1].name}</p>
-                        <button onclick="recordMatchResult('${match[0].name}', '${match[1].name}', 'win')">Win</button>
-                        <button onclick="recordMatchResult('${match[0].name}', '${match[1].name}', 'lose')">Lose</button>
-                    </div>
-                `).join('')}
-            </div>
-        </div>
-        <div class="ready">
-            <button class="gamepage-button" onclick="proceedToSemiFinals()">Pre-Finals</button>
-        </div>
-        <div class="quit-game" onclick="tournamentPage()">
-            <h1>BACK</h1>
-        </div>
-    `;
-    body.appendChild(div);
+    // const div = document.createElement("div");
+    // div.className = "gamepage-container";
+    // div.innerHTML = `
+    //     <h2>Round Robin Stage</h2>
+    //     <div class="match-list-container">
+    //         <div class="match-list">
+    //             ${generateRoundRobinMatches(players).map(match => `
+    //                 <div class="match-item">
+    //                     <p>${match[0].name} vs ${match[1].name}</p>
+    //                     <button onclick="recordMatchResult('${match[0].name}', '${match[1].name}', 'win')">Win</button>
+    //                     <button onclick="recordMatchResult('${match[0].name}', '${match[1].name}', 'lose')">Lose</button>
+    //                 </div>
+    //             `).join('')}
+    //         </div>
+    //     </div>
+    //     <div class="ready">
+    //         <button class="gamepage-button" onclick="proceedToSemiFinals()">Pre-Finals</button>
+    //     </div>
+    //     <div class="quit-game" onclick="tournamentPage()">
+    //         <h1>BACK</h1>
+    //     </div>
+    // `;
+    // body.appendChild(div);
+
+    let matchList = generateRoundRobinMatches(players);
+
+    // For each pair call start game and before setName to player name
+    matchList.forEach(match => {
+        let player1 = match[0];
+        let player2 = match[1];
+
+        setPlayerNames(player1.name, player2.name);
+
+        tournamentMode = true;
+        if (gameInterval) {
+            clearInterval(gameInterval);
+        }
+        startGame(player1, player2);
+    });
 }
 
 function generateRoundRobinMatches(players) {
