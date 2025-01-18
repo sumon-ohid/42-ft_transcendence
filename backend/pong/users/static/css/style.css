@@ -1113,6 +1113,150 @@ form .login-button:hover {
     font-size: 3em;
 }
 
+/*---- Multi Players ------- */
+.multi-score-board {
+    font-family: "Sour Gummy";
+    background-color: var(--container-background);
+    position: fixed;
+    top: 430px;
+    left: 50%;
+    transform: translate(-50%);
+    height: 200px;
+    width: 740px;
+    align-items: center;
+    justify-items: center;
+    display: flex;
+    flex-direction: column;
+    border-radius: 15px;
+    box-shadow: 0 10px 6px rgba(0.5, 0, 0, 0.51); /* shadow */
+}
+
+.top-left-player {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    font-family: "Sour Gummy";
+    color: white;
+    font-size: 1.5em;
+}
+
+.top-left-player img {
+    height: 80px;
+    width: auto;
+    border-radius: 50%;
+    border: 1px solid white;
+}
+
+.top-right-player {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    font-family: "Sour Gummy";
+    color: white;
+    font-size: 1.5em;
+}
+
+.top-right-player img {
+    height: 80px;
+    width: auto;
+    border-radius: 50%;
+    border: 1px solid white;
+}
+
+.bottom-left-player {
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+    font-family: "Sour Gummy";
+    color: white;
+    font-size: 1.5em;
+}
+
+.bottom-left-player img {
+    height: 80px;
+    width: auto;
+    border-radius: 50%;
+    border: 1px solid white;
+}
+
+.bottom-right-player {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    font-family: "Sour Gummy";
+    color: white;
+    font-size: 1.5em;
+}
+
+.bottom-right-player img {
+    height: 80px;
+    width: auto;
+    border-radius: 50%;
+    border: 1px solid white;
+}
+
+.multi-score-line {
+    background-color: var(--black-color);
+    transform: translateX(-50%);
+    height: 180px;
+    width: .5px;
+    position: fixed;
+    top: 10px;
+    opacity: .5;
+}
+
+.top-left-player h3, .bottom-left-player h3, .bottom-right-player h3 {
+    position: fixed;
+    left: 110px;
+    top: 33px;
+}
+
+.top-right-player h3 {
+    position: fixed;
+    right: 110px;
+    top: 33px;
+}
+
+.bottom-left-player h3 {
+    position: fixed;
+    left: 110px;
+    top: 130px;
+}
+
+.bottom-right-player h3 {
+    position: fixed;
+    top: 130px;
+    left: 530px;
+}
+
+.top-left-player h1 {
+    position: fixed;
+    left: 280px;
+    top: 20px;
+    font-size: 2em;
+}
+
+.top-right-player h1 {
+    position: fixed;
+    right: 280px;
+    top: 20px;
+    font-size: 2em;
+}
+
+.bottom-left-player h1 {
+    position: fixed;
+    left: 280px;
+    bottom: 20px;
+    font-size: 2em;
+}
+
+.bottom-right-player h1 {
+    position: fixed;
+    right: 280px;
+    bottom: 20px;
+    font-size: 2em;
+}
+
 /* line in the middle */
 .score-line {
     background-color: var(--black-color);
