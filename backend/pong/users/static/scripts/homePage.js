@@ -345,7 +345,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 break; 
             case 'gameOptions':
                 gameOptions();
-                break;              
+                break;
+            case 'multiGamePage':
+                multiGamePage();
+                break;         
             // default:
             //   window.location.href = '';
         }
@@ -388,6 +391,9 @@ window.addEventListener('popstate', function(event) {
                 break;
             case 'gameOptions':
                 gameOptions();
+                break;
+            case 'multiGamePage':
+                multiGamePage();
                 break;
             // default:
             //   window.location.href = '/index.html';

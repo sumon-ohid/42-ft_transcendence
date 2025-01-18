@@ -21,7 +21,7 @@ function gameOptions() {
             <div class="form-check1" onclick="gamePage()">
                 <p>2 Players Game</p>
             </div>
-            <div class="form-check2">
+            <div class="form-check2" onclick="multiGamePage()">
                 <p>4 Players Game</p>
             </div>
             <div class="form-check3">

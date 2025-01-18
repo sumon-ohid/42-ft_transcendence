@@ -1113,6 +1113,217 @@ form .login-button:hover {
     font-size: 3em;
 }
 
+/*---- Multi Players ------- */
+.multi-maingame-container {
+    background-color: var(--pong-color);
+    position: fixed;
+    top: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 420px;
+    width: 410px;
+    align-items: center;
+    justify-items: center;
+    display: flex;
+    flex-direction: column;
+    border-radius: 15px;
+    box-shadow: 0 10px 6px rgba(0.5, 0, 0, 0.51);
+    padding-top: 10px;
+}
+
+.multi-middle-line.hidden {
+    display: none;
+}
+
+.multi-middle-line {
+    background-color: var(--black-color);
+    transform: translateX(-50%);
+    height: 360px;
+    width: .5px;
+    position: fixed;
+    top: 28px;
+    opacity: .5;
+    z-index: -1;
+}
+
+.multi-score-board {
+    font-family: "Sour Gummy";
+    background-color: var(--container-background);
+    position: fixed;
+    top: 430px;
+    left: 50%;
+    transform: translate(-50%);
+    height: 200px;
+    width: 740px;
+    align-items: center;
+    justify-items: center;
+    display: flex;
+    flex-direction: column;
+    border-radius: 15px;
+    box-shadow: 0 10px 6px rgba(0.5, 0, 0, 0.51);
+    color: black;
+}
+
+.top-left-player {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    font-family: "Sour Gummy";
+    color: black;
+    font-size: 1.5em;
+}
+
+.top-left-player img {
+    height: 80px;
+    width: auto;
+    border-radius: 50%;
+    border: 1px solid white;
+}
+
+.top-right-player {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    font-family: "Sour Gummy";
+    color: black;
+    font-size: 1.5em;
+}
+
+.top-right-player img {
+    height: 80px;
+    width: auto;
+    border-radius: 50%;
+    border: 1px solid white;
+}
+
+.bottom-left-player {
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+    font-family: "Sour Gummy";
+    color: black;
+    font-size: 1.5em;
+}
+
+.bottom-left-player img {
+    height: 80px;
+    width: auto;
+    border-radius: 50%;
+    border: 1px solid white;
+}
+
+.bottom-right-player {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    font-family: "Sour Gummy";
+    color: black;
+    font-size: 1.5em;
+}
+
+.bottom-right-player img {
+    height: 80px;
+    width: auto;
+    border-radius: 50%;
+    border: 1px solid white;
+}
+
+.multi-score-line {
+    background-color: var(--black-color);
+    transform: translateX(-50%);
+    height: 180px;
+    width: .5px;
+    position: fixed;
+    top: 10px;
+    opacity: .5;
+}
+
+.top-left-player h3 {
+    position: fixed;
+    left: 110px;
+    top: 33px;
+    opacity: .8;
+}
+
+.top-right-player h3 {
+    position: fixed;
+    right: 110px;
+    top: 33px;
+    opacity: .8;
+}
+
+.bottom-left-player h3 {
+    position: fixed;
+    left: 110px;
+    top: 130px;
+    opacity: .8;
+}
+
+.bottom-right-player h3 {
+    position: fixed;
+    top: 130px;
+    left: 530px;
+    opacity: .8;
+}
+
+.top-left-player h1 {
+    position: fixed;
+    left: 280px;
+    top: 20px;
+    font-size: 2em;
+    opacity: .8;
+}
+
+.top-right-player h1 {
+    position: fixed;
+    right: 280px;
+    top: 20px;
+    font-size: 2em;
+    opacity: .8;
+}
+
+.bottom-left-player h1 {
+    position: fixed;
+    left: 280px;
+    bottom: 20px;
+    font-size: 2em;
+    opacity: .8;
+}
+
+.bottom-right-player h1 {
+    position: fixed;
+    right: 280px;
+    bottom: 20px;
+    font-size: 2em;
+    opacity: .8;
+}
+
+.multi-confirmation-to-quit {
+    font-family: "Sour Gummy";
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    text-align: center;
+    width: 250px;
+}
+
+.multi-confirmation-to-quit button {
+    margin: 0 10px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    font-size: 1em;
+}
+
 /* line in the middle */
 .score-line {
     background-color: var(--black-color);
