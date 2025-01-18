@@ -2162,6 +2162,56 @@ form .login-button:hover {
     background-color: var(--pong-color);
 }
 
+.delete-account {
+    position: fixed;
+    display: inline-block;
+    cursor: pointer;
+    font-family: "Sour Gummy";
+    left: 175px;
+    bottom: 5px;
+    z-index: 1000;
+  }
+  
+  .delete-account:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+    z-index: 1000;
+  }
+  
+  .tooltiptext {
+    visibility: hidden;
+    width: 260px;
+    background-color: #ff0000;
+    color: #fff;
+    text-align: center;
+    border-radius: 5px;
+    padding: 10px;
+    position: absolute;
+    z-index: 1;
+    bottom: 42px;
+    left: 50%;
+    margin-left: -120px;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  
+  .delete-account .icon {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-color: var(--danger-color);
+    color: #fff;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 20px;
+    height: 30px;
+    width: 30px;
+  }
+  
+  .icon i {
+    margin-top: 7px;
+  }
+
 /*------- SETTINGS PAGE END -------*/
  
 

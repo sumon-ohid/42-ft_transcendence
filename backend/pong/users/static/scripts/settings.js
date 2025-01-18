@@ -11,6 +11,10 @@ function settingsPage() {
     const div = document.createElement("div");
     div.className = "settings-container";
     div.innerHTML = `
+        <div class="delete-account" onclick="deleteAccount()">
+            <div class="icon"><i class="fa-solid fa-trash"></i></div>
+            <div class="tooltiptext">⚠️ Delete Account</div>
+        </div>
         <h2>Settings</h2>
         <div class="edit-pic">
             <span class="badge text-bg-primary">change</span>
@@ -393,3 +397,41 @@ function changePassword() {
         error('An error occurred while changing the password.');
       });
  }
+
+
+function deleteAccount() {
+    if (confirm('Are you sure you want to delete your account?')) {
+        fetch('/api/delete-account/', {
+            method: 'DELETE',
+            headers: {
+                'X-CSRFToken': getCSRFToken(),
+                'Authorization': `Bearer ${localStorage.getItem('jwtToken')}`
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.status === 'success') {
+                showError('Account deleted successfully!');
+                localStorage.removeItem('jwtToken');
+                localStorage.removeItem('gdpr');
+                logout();
+            } else {
+                showError(`Error: ${data.error}`);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            error('An error occurred while deleting the account.');
+        });
+    }
+}
+
+function showError(message) {
+    // Implement your error display logic here
+    alert(message);
+}

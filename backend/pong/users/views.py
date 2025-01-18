@@ -624,3 +624,21 @@ def get_last_active(request):
 
 def get_openrouter_key(request):
     return JsonResponse({'apiKey': settings.OPENROUTER_API})
+
+# Delete user account and profile picture
+@jwt_required
+@csrf_exempt
+def delete_account(request):
+    if request.method == 'DELETE':
+        user = request.user
+        try:
+            profile = Profile.objects.get(user=user)
+            if profile.photo:
+                default_storage.delete(profile.photo.path)
+            
+            user.delete()
+            return JsonResponse({'status': 'success', 'message': 'Account and profile picture deleted successfully!'})
+        except Profile.DoesNotExist:
+            user.delete()
+            return JsonResponse({'status': 'success', 'message': 'Account deleted successfully.'})
+    return JsonResponse({'status': 'error', 'message': 'Invalid request method.'}, status=405)
