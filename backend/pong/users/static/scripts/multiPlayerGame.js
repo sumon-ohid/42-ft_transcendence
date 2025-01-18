@@ -316,9 +316,15 @@ function showGameOverScreen() {
         bottomRight: parseInt(document.getElementById("bottom-right-score").innerText)
     };
 
-    const winner = Object.entries(scores).reduce((a, b) => a[1] > b[1] ? a : b)[0];
-    const winnerName = document.querySelector(`.${winner.replace('-', '-')}-player h3`).innerText;
-
+    let winnerName = playerOneName;
+    if (scores.topRight === 5) {
+        winnerName = "Player 2";
+    } else if (scores.bottomLeft === 5) {
+        winnerName = "Player 3";
+    } else {
+        winnerName = "Player 4";
+    }
+    
     const confirmationElement = document.querySelector('.confirmation-to-quit');
     if (confirmationElement) {
         confirmationElement.classList.remove('hidden');
