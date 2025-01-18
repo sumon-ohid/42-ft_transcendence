@@ -8,9 +8,9 @@ let player3Avatar = "./avatars/avatar6.png";
 let player4Avatar = "./avatars/avatar1.png";
 let multiGameInterval;
 
-function showGameSetupScreen() {
-    // saveCurrentPage('gamePage');
-    // history.pushState({ page: 'gamePage' }, '', '#gamePage');
+function multiGamePage() {
+    saveCurrentPage('multiGamePage');
+    history.pushState({ page: 'multiGamePage' }, '', '#multiGamePage');
     const body = document.body;
 
     while (body.firstChild) {
@@ -331,7 +331,7 @@ function showGameOverScreen() {
 
             if (countdown === 0) {
                 clearInterval(countdownInterval);
-                showGameSetupScreen();
+                multiGamePage();
             }
         }, 1000);
     }
@@ -344,7 +344,7 @@ function displayQuitPrompt() {
 
 function handleQuitConfirmation() {
     clearInterval(multiGameInterval);
-    showGameSetupScreen();
+    multiGamePage();
 }
 
 function cancelQuitPrompt() {
