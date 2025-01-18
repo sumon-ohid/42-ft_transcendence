@@ -77,9 +77,9 @@ function initializeGameScreen() {
     }
 
     const div = document.createElement("div");
-    div.className = "maingame-container";
+    div.className = "multi-maingame-container";
     div.innerHTML = `
-        <div class="middle-line"></div>
+        <div class="multi-middle-line"></div>
         <div class="multi-score-board">
             <div class="top-left-player">
                 <img id="top-left-player" src="../static/${playerOneAvatar}" alt="player1">
@@ -106,9 +106,9 @@ function initializeGameScreen() {
                 <h1>QUIT</h1>
             </div>
         </div>
-        <canvas id="pongCanvas" width="700" height="400"></canvas>
+        <canvas id="pongCanvas" width="400" height="400"></canvas>
         <div id="countdown" class="countdown"></div>
-        <div id="quit-confirmation" class="confirmation-to-quit hidden">
+        <div id="multi-quit-confirmation" class="multi-confirmation-to-quit hidden">
             <p>Are you sure you want to quit?</p>
             <button onclick="handleQuitConfirmation()">Yes</button>
             <button onclick="cancelQuitPrompt()">No</button>
@@ -127,7 +127,7 @@ function initializeGameScreen() {
 
 function displayGameCountdown() {
     const countdownElement = document.getElementById("countdown");
-    const middleLineElement = document.querySelector(".middle-line");
+    const middleLineElement = document.querySelector(".multi-middle-line");
     middleLineElement.classList.add("hidden");
 
     let countdown = 3;
@@ -276,25 +276,25 @@ function startGameLogic() {
     }
 
     function handlePlayerInput(e) {
-        // Player 1 (Top paddle) - A/D
+        //- Player 1 (Top paddle) - A/D
         if (e.key == "a" || e.key == "A") {
             topPaddleX = Math.max(topPaddleX - paddleSpeed, 0);
         } else if (e.key == "d" || e.key == "D") {
             topPaddleX = Math.min(topPaddleX + paddleSpeed, canvas.width - paddleWidth);
         }
-        // Player 2 (Bottom paddle) - Left/Right arrows
+        //- Player 2 (Bottom paddle) - Left/Right arrows
         else if (e.key == "ArrowLeft") {
             bottomPaddleX = Math.max(bottomPaddleX - paddleSpeed, 0);
         } else if (e.key == "ArrowRight") {
             bottomPaddleX = Math.min(bottomPaddleX + paddleSpeed, canvas.width - paddleWidth);
         }
-        // Player 3 (Left paddle) - W/S
+        //- Player 3 (Left paddle) - W/S
         else if (e.key == "w" || e.key == "W") {
             leftPaddleY = Math.max(leftPaddleY - paddleSpeed, 0);
         } else if (e.key == "s" || e.key == "S") {
             leftPaddleY = Math.min(leftPaddleY + paddleSpeed, canvas.height - paddleWidth);
         }
-        // Player 4 (Right paddle) - Up/Down arrows
+        //- Player 4 (Right paddle) - Up/Down arrows
         else if (e.key == "ArrowUp") {
             rightPaddleY = Math.max(rightPaddleY - paddleSpeed, 0);
         } else if (e.key == "ArrowDown") {
@@ -352,7 +352,7 @@ function showGameOverScreen() {
 }
 
 function displayQuitPrompt() {
-    const confirmationDialog = document.getElementById("quit-confirmation");
+    const confirmationDialog = document.getElementById("multi-quit-confirmation");
     confirmationDialog.classList.remove("hidden");
 }
 
@@ -362,6 +362,6 @@ function handleQuitConfirmation() {
 }
 
 function cancelQuitPrompt() {
-    const confirmationDialog = document.getElementById("quit-confirmation");
+    const confirmationDialog = document.getElementById("multi-quit-confirmation");
     confirmationDialog.classList.add("hidden");
 }
