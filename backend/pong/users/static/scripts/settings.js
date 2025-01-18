@@ -400,7 +400,7 @@ function changePassword() {
 
 
 function deleteAccount() {
-    if (confirm('Are you sure you want to delete your account?')) {
+    if (confirm('Are you sure you want to permanently delete your account? This action cannot be undone.')) {
         fetch('/api/delete-account/', {
             method: 'DELETE',
             headers: {
@@ -410,7 +410,10 @@ function deleteAccount() {
         })
         .then(response => {
             if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
+                if (response.status === 404) {
+                    throw new Error('Account deletion endpoint not found. Please contact support.');
+                }
+                throw new Error(`Server error: ${response.status}`);
             }
             return response.json();
         })
@@ -421,17 +424,16 @@ function deleteAccount() {
                 localStorage.removeItem('gdpr');
                 logout();
             } else {
-                showError(`Error: ${data.error}`);
+                showError(`Error: ${data.error || 'Unknown error occurred'}`);
             }
         })
         .catch(error => {
             console.error('Error:', error);
-            error('An error occurred while deleting the account.');
+            showError(error.message || 'An error occurred while deleting the account. Please try again later.');
         });
     }
 }
 
 function showError(message) {
-    // Implement your error display logic here
     alert(message);
 }

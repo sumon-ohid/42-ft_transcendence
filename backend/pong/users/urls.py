@@ -34,7 +34,7 @@ urlpatterns = [
     path('chat/get-chat-history/', get_chat_history, name='get_chat_history'),
     path('api/last-active/', get_last_active, name='get_last_active'),
     path('api/get-openrouter-key/', get_openrouter_key, name='get_openrouter_key'),
-    path('api/delete-account', delete_account, name='delete_account'),
+    path('api/delete-account/', delete_account, name='delete_account'),
 ]
 
 
