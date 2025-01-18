@@ -26,8 +26,7 @@ This project is about famous classic online pong game. In game you can 2 players
 ![Screenshot from 2024-12-03 17-33-47](https://github.com/user-attachments/assets/e476be91-ffb9-4197-88cb-488da9e13d2f)
 
 ## Modules Done
-![Screenshot from 2024-12-02 18-07-24](https://github.com/user-attachments/assets/e80a6adb-7eb3-4f20-a7db-915b6a9f23cd)
-
+<img width="1080" alt="Screenshot 2025-01-18 at 15 15 17" src="https://github.com/user-attachments/assets/b7833a62-4573-4deb-946c-eaf49d4db2d3" />
 
 ## How to run ?
 
