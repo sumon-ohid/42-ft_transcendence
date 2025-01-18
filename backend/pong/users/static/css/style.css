@@ -2162,6 +2162,104 @@ form .login-button:hover {
     background-color: var(--pong-color);
 }
 
+.delete-account {
+    position: fixed;
+    display: inline-block;
+    cursor: pointer;
+    font-family: "Sour Gummy";
+    left: 175px;
+    bottom: 5px;
+    z-index: 1000;
+  }
+  
+  .delete-account:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+    z-index: 1000;
+  }
+  
+  .tooltiptext {
+    visibility: hidden;
+    width: 260px;
+    background-color: #ff0000;
+    color: #fff;
+    text-align: center;
+    border-radius: 5px;
+    padding: 10px;
+    position: absolute;
+    z-index: 1;
+    bottom: 42px;
+    left: 50%;
+    margin-left: -120px;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  
+  .delete-account .icon {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-color: var(--danger-color);
+    color: #fff;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 20px;
+    height: 30px;
+    width: 30px;
+  }
+  
+  .icon i {
+    margin-top: 7px;
+  }
+
+.confirmation-to-delete {
+    font-family: "Sour Gummy";
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    text-align: center;
+    width: 300px;
+}
+
+.confirmation-to-delete p {
+    margin-bottom: 20px;
+    font-size: 1.2em;
+}
+
+#yesDelete {
+    margin: 0 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #ff0000;
+    color: white;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+#yesDelete:hover {
+    background-color: #e00000;
+}
+
+#noDelete {
+    margin: 0 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #00ce1f;
+    color: white;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+#noDelete:hover {
+    background-color: #008714;
+}
+
 /*------- SETTINGS PAGE END -------*/
  
 
@@ -2437,7 +2535,6 @@ form .login-button:hover {
     transform: translate(-50%, -50%);
 }
 
-
 /*------- GAME OPTION PAGE END -------*/
 
 /*------- AI CHAT STYLES START -------*/
@@ -2550,3 +2647,104 @@ form .login-button:hover {
 }
 
 /*------- AI CHAT STYLES END -------*/
+
+/*------- GDPR CONTAINER START -------*/
+
+.cookie-container {
+   z-index: 1000;
+}
+
+.cookie-container h3 {
+    font-size: 1em;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.gdpr-container {
+    background-color: white;
+    color: #000000;
+    padding: 1em;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9em;
+    white-space: pre-wrap;
+    margin: 0.5em 0;
+    z-index: 10;
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+    text-align: center;
+    height: 200px;
+    width: 300px;
+}
+
+.gdpr-container p {
+    margin-bottom: 100px;
+    font-size: .7em;
+}
+
+#p2 {
+    margin-top: 20px;
+}
+
+#accept {
+    background-color: #008cff;
+    color: white;
+    border: none;
+    padding: 0.5em 1em;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9em;
+    margin-bottom: 30px;
+    position: fixed;
+    right: 50px;
+    bottom: -10px;
+}
+
+#accept:hover {
+    background-color: #007de3;
+}
+
+.cookie-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 20px;
+    position: fixed;
+    z-index: 1010;
+    bottom: 186px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.cookie-icon p {
+    font-size: 2em;
+    margin: 0;
+    position: fixed;
+    margin-top: -20px;
+    z-index: 1010;
+}
+
+#decline {
+    background-color: rgb(197, 197, 197);
+    color: white;
+    border: none;
+    padding: 0.5em 1em;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9em;
+    margin-bottom: 30px;
+    position: fixed;
+    left: 50px;
+    bottom: -10px;
+}
+
+#decline:hover {
+    background-color: rgb(177, 177, 177);
+}
+/*------- GDPR CONTAINER END -------*/

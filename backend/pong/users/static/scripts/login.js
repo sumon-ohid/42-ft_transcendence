@@ -54,6 +54,40 @@ function login() {
         this.querySelector("i").classList.toggle("fa-eye");
         this.querySelector("i").classList.toggle("fa-eye-slash");
     });
+
+    // Show GDPR consent message
+    const gdpr = localStorage.getItem('gdpr');
+    if (!gdpr)
+        showGDPRMessage(); 
+}
+
+function showGDPRMessage() {
+    const body = document.body;
+    const div = document.createElement("div");
+    div.className = "cookie-container";
+    div.innerHTML = `
+        <div class="cookie-icon">
+            <p>🍪</p>
+        </div>
+        <div class="gdpr-container">
+            <h3>Want some cookies?</h3>
+            <p>This website uses cookies to ensure you get the best experience on our website.
+            <br>By clicking "Accept" you agree to our use of cookies, data policy and <strong>GDPR Consent. </strong></p>
+            <button id="accept" onclick="closeGDPR()">Accept</button>
+            <button id="decline" onclick="closeGDPR()">Decline</button>
+        </div>
+    `;
+    body.appendChild(div);
+}
+
+function closeGDPR() {
+    const body = document.body;
+    const gdprContainer = document.querySelector('.cookie-container');
+    body.removeChild(gdprContainer);
+
+    //-- Save the user's choice in local storage
+    if (event.target.id === 'accept')
+        localStorage.setItem('gdpr', 'accepted');
 }
 
 function handleLogin(event) {

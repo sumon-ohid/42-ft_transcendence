@@ -4,6 +4,13 @@ let player1Avatar = "./avatars/avatar4.png";
 let player2Avatar = "./avatars/avatar5.png";
 let gameInterval;
 
+// Function to set players name
+function setPlayerNames(player1, player2) {
+    player1Name = player1;
+    if (player2)
+        player2Name = player2;
+}
+
 // *** NOTE ****
 // Change later: Nickname can be max 8 character other wise truncate to 8 chars.
 function gamePage() {
@@ -62,7 +69,8 @@ function selectAvatar(avatarNumber, element) {
 
 function startGame() {
     const nicknameInput = document.getElementById("nickname");
-    player1Name = nicknameInput.value || "Player 1";
+    if (nicknameInput)
+        player1Name = nicknameInput.value;
 
     if (player1Name.length > 8) {
         player1Name = player1Name.substring(0, 8) + '.';
@@ -210,7 +218,7 @@ function initializeGame() {
             clearInterval(gameInterval); // Stop the game loop
             const winner = leftScore === 5 ? leftPlayerNickname : rightPlayerNickname;
             const confirmationElement = document.querySelector('.confirmation-to-quit');
-            if (confirmationElement) {
+            if (confirmationElement && tournamentMode === false) {
                 confirmationElement.classList.remove('hidden');
                 let countdown = 3;
                 confirmationElement.innerHTML = `<span>Game Over</span><br><span style="font-size: 2em; color: #007bff">${winner} Wins!</span><br>Returning to game page in ${countdown}s...`;
@@ -252,6 +260,8 @@ function initializeGame() {
                     }
                 }, 1000);
             }
+            if (tournamentMode === true)
+                tournamentMode = false;
         }
     }
     

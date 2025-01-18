@@ -11,6 +11,10 @@ function settingsPage() {
     const div = document.createElement("div");
     div.className = "settings-container";
     div.innerHTML = `
+        <div class="delete-account" onclick="deleteAccount()">
+            <div class="icon"><i class="fa-solid fa-trash"></i></div>
+            <div class="tooltiptext">⚠️ Delete Account</div>
+        </div>
         <h2>Settings</h2>
         <div class="edit-pic">
             <span class="badge text-bg-primary">change</span>
@@ -50,6 +54,11 @@ function settingsPage() {
                 <label>two factor authentication</label>
                 <i class="fa-solid fa-circle-arrow-right"></i>
             </div>
+        </div>
+        <div id="quit-confirmation" class="confirmation-to-delete hidden">
+            <p>Are you sure you want to Delete your Account?</p>
+            <button id="yesDelete" onclick="confirmDeletation()">Yes</button>
+            <button id="noDelete" onclick="cancelDeletation()">No</button>
         </div>
     `;
     body.appendChild(div);
@@ -393,3 +402,43 @@ function changePassword() {
         error('An error occurred while changing the password.');
       });
  }
+
+ function deleteAccount() {
+    const confirmationModal = document.getElementById('quit-confirmation');
+    confirmationModal.classList.remove('hidden');
+}
+
+function cancelDeletation() {
+    const confirmationModal = document.getElementById('quit-confirmation');
+    confirmationModal.classList.add('hidden');
+}
+
+function confirmDeletation() {
+    fetch('/api/delete-account/', {
+        method: 'DELETE',
+        headers: {
+            'X-CSRFToken': getCSRFToken(),
+            'Authorization': `Bearer ${localStorage.getItem('jwtToken')}`
+        }
+    })
+    .then(response => {
+        return response.json();
+    })
+    .then(data => {
+        if (data.status === 'success') {
+            error('Account deleted successfully!');
+            setTimeout(() => {
+                localStorage.removeItem('jwtToken');
+                localStorage.removeItem('gdpr');
+                localStorage.removeItem('currentPage');
+                window.location.href = "https://localhost:8000/";
+            }, 1000);
+        } else {
+            error(`Error: ${data.error || 'Unknown error occurred'}`);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        error(error.message || 'An error occurred while deleting the account. Please try again later.');
+    });
+}
