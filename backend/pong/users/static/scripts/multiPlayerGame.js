@@ -115,7 +115,7 @@ function initializeGameScreen() {
     `;
     body.appendChild(div);
     
-    // Reset scores
+    //-- Reset scores to 0 before starting the game
     document.getElementById("top-left-score").innerText = 0;
     document.getElementById("top-right-score").innerText = 0;
     document.getElementById("bottom-left-score").innerText = 0;
@@ -160,7 +160,7 @@ function startGameLogic() {
     let bottomLeftScore = 0;
     let bottomRightScore = 0;
 
-    // Position of paddles and ball
+    // Position of paddles and ball #
     let topPaddleX = (canvas.width - paddleWidth) / 2;
     let bottomPaddleX = (canvas.width - paddleWidth) / 2;
     let leftPaddleY = (canvas.height - paddleHeight) / 2;
@@ -192,18 +192,17 @@ function startGameLogic() {
     function updateGameFrame() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         
-        // Draw paddles
-        renderPaddle(topPaddleX, 0); // Top paddle
-        renderPaddle(bottomPaddleX, canvas.height - paddleHeight); // Bottom paddle
-        renderPaddle(0, leftPaddleY, true); // Left paddle
-        renderPaddle(canvas.width - paddleHeight, rightPaddleY, true); // Right paddle
+        renderPaddle(topPaddleX, 0); //-- Top paddle
+        renderPaddle(bottomPaddleX, canvas.height - paddleHeight); //-- Bottom paddle
+        renderPaddle(0, leftPaddleY, true); //-- Left paddle
+        renderPaddle(canvas.width - paddleHeight, rightPaddleY, true); //-- Right paddle
         
         renderBall();
 
         ballX += ballSpeedX;
         ballY += ballSpeedY;
 
-        // Ball collision with walls
+        //-- Ball hit wall
         if (ballY + ballSpeedY > canvas.height - ballRadius || ballY + ballSpeedY < ballRadius) {
             ballSpeedY = -ballSpeedY;
         }
@@ -212,27 +211,31 @@ function startGameLogic() {
             ballSpeedX = -ballSpeedX;
         }
 
-        // Ball collision with paddles
-        // Top paddle
-        if (ballY < paddleHeight && ballX > topPaddleX && ballX < topPaddleX + paddleWidth) {
+        //-- Ball hit paddle
+        //-- Top paddle
+        if (ballY - ballRadius < paddleHeight && ballX > topPaddleX && ballX < topPaddleX + paddleWidth) {
             ballSpeedY = -ballSpeedY;
+            ballY = paddleHeight + ballRadius; // ball not get stuck
         }
-        // Bottom paddle
-        if (ballY > canvas.height - paddleHeight - ballRadius && 
+        //-- Bottom paddle
+        if (ballY + ballRadius > canvas.height - paddleHeight && 
             ballX > bottomPaddleX && ballX < bottomPaddleX + paddleWidth) {
             ballSpeedY = -ballSpeedY;
+            ballY = canvas.height - paddleHeight - ballRadius;
         }
-        // Left paddle
-        if (ballX < paddleHeight && ballY > leftPaddleY && ballY < leftPaddleY + paddleWidth) {
+        //-- Left paddle
+        if (ballX - ballRadius < paddleHeight && ballY > leftPaddleY && ballY < leftPaddleY + paddleWidth) {
             ballSpeedX = -ballSpeedX;
+            ballX = paddleHeight + ballRadius;
         }
-        // Right paddle
-        if (ballX > canvas.width - paddleHeight - ballRadius && 
+        //-- Right paddle
+        if (ballX + ballRadius > canvas.width - paddleHeight && 
             ballY > rightPaddleY && ballY < rightPaddleY + paddleWidth) {
             ballSpeedX = -ballSpeedX;
+            ballX = canvas.width - paddleHeight - ballRadius;
         }
 
-        // Scoring
+        //-- Score update
         if (ballY < 0) {
             if (ballX < canvas.width / 2) {
                 topLeftScore++;
@@ -253,7 +256,7 @@ function startGameLogic() {
             resetBallPosition();
         }
 
-        // Check for winner
+        //-- Check for winner
         const scores = [topLeftScore, topRightScore, bottomLeftScore, bottomRightScore];
         if (scores.some(score => score === 5)) {
             showGameOverScreen();
@@ -268,25 +271,25 @@ function startGameLogic() {
     }
 
     function handlePlayerInput(e) {
-        // Player 1 (Top paddle) - A/D
+        //** Player 1 (Top paddle) - A/D
         if (e.key == "a" || e.key == "A") {
             topPaddleX = Math.max(topPaddleX - paddleSpeed, 0);
         } else if (e.key == "d" || e.key == "D") {
             topPaddleX = Math.min(topPaddleX + paddleSpeed, canvas.width - paddleWidth);
         }
-        // Player 2 (Bottom paddle) - Left/Right arrows
+        //** Player 2 (Bottom paddle) - Left/Right arrows
         else if (e.key == "ArrowLeft") {
             bottomPaddleX = Math.max(bottomPaddleX - paddleSpeed, 0);
         } else if (e.key == "ArrowRight") {
             bottomPaddleX = Math.min(bottomPaddleX + paddleSpeed, canvas.width - paddleWidth);
         }
-        // Player 3 (Left paddle) - W/S
+        //** Player 3 (Left paddle) - W/S
         else if (e.key == "w" || e.key == "W") {
             leftPaddleY = Math.max(leftPaddleY - paddleSpeed, 0);
         } else if (e.key == "s" || e.key == "S") {
             leftPaddleY = Math.min(leftPaddleY + paddleSpeed, canvas.height - paddleWidth);
         }
-        // Player 4 (Right paddle) - Up/Down arrows
+        //** Player 4 (Right paddle) - Up/Down arrows
         else if (e.key == "ArrowUp") {
             rightPaddleY = Math.max(rightPaddleY - paddleSpeed, 0);
         } else if (e.key == "ArrowDown") {
