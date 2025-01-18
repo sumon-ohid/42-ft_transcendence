@@ -2212,6 +2212,54 @@ form .login-button:hover {
     margin-top: 7px;
   }
 
+.confirmation-to-delete {
+    font-family: "Sour Gummy";
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    text-align: center;
+    width: 300px;
+}
+
+.confirmation-to-delete p {
+    margin-bottom: 20px;
+    font-size: 1.2em;
+}
+
+#yesDelete {
+    margin: 0 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #ff0000;
+    color: white;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+#yesDelete:hover {
+    background-color: #e00000;
+}
+
+#noDelete {
+    margin: 0 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #00ce1f;
+    color: white;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+#noDelete:hover {
+    background-color: #008714;
+}
+
 /*------- SETTINGS PAGE END -------*/
  
 

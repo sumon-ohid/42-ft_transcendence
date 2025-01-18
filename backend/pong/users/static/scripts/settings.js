@@ -55,6 +55,11 @@ function settingsPage() {
                 <i class="fa-solid fa-circle-arrow-right"></i>
             </div>
         </div>
+        <div id="quit-confirmation" class="confirmation-to-delete hidden">
+            <p>Are you sure you want to Delete your Account?</p>
+            <button id="yesDelete" onclick="confirmDeletation()">Yes</button>
+            <button id="noDelete" onclick="cancelDeletation()">No</button>
+        </div>
     `;
     body.appendChild(div);
 
@@ -398,42 +403,42 @@ function changePassword() {
       });
  }
 
-
-function deleteAccount() {
-    if (confirm('Are you sure you want to permanently delete your account? This action cannot be undone.')) {
-        fetch('/api/delete-account/', {
-            method: 'DELETE',
-            headers: {
-                'X-CSRFToken': getCSRFToken(),
-                'Authorization': `Bearer ${localStorage.getItem('jwtToken')}`
-            }
-        })
-        .then(response => {
-            if (!response.ok) {
-                if (response.status === 404) {
-                    throw new Error('Account deletion endpoint not found. Please contact support.');
-                }
-                throw new Error(`Server error: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then(data => {
-            if (data.status === 'success') {
-                showError('Account deleted successfully!');
-                localStorage.removeItem('jwtToken');
-                localStorage.removeItem('gdpr');
-                logout();
-            } else {
-                showError(`Error: ${data.error || 'Unknown error occurred'}`);
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            showError(error.message || 'An error occurred while deleting the account. Please try again later.');
-        });
-    }
+ function deleteAccount() {
+    const confirmationModal = document.getElementById('quit-confirmation');
+    confirmationModal.classList.remove('hidden');
 }
 
-function showError(message) {
-    alert(message);
+function cancelDeletation() {
+    const confirmationModal = document.getElementById('quit-confirmation');
+    confirmationModal.classList.add('hidden');
+}
+
+function confirmDeletation() {
+    fetch('/api/delete-account/', {
+        method: 'DELETE',
+        headers: {
+            'X-CSRFToken': getCSRFToken(),
+            'Authorization': `Bearer ${localStorage.getItem('jwtToken')}`
+        }
+    })
+    .then(response => {
+        return response.json();
+    })
+    .then(data => {
+        if (data.status === 'success') {
+            error('Account deleted successfully!');
+            setTimeout(() => {
+                localStorage.removeItem('jwtToken');
+                localStorage.removeItem('gdpr');
+                localStorage.removeItem('currentPage');
+                window.location.href = "https://localhost:8000/";
+            }, 1000);
+        } else {
+            error(`Error: ${data.error || 'Unknown error occurred'}`);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        error(error.message || 'An error occurred while deleting the account. Please try again later.');
+    });
 }

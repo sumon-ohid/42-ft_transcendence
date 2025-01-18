@@ -72,7 +72,7 @@ function showGDPRMessage() {
         <div class="gdpr-container">
             <h3>want some cookies?</h3>
             <p>This website uses cookies to ensure you get the best experience on our website.
-            <br>By clicking "Accept" you agree to our use of cookies, <a href="/data-policy" target="_blank">data policy</a> and <a href="/gdpr-consent" target="_blank">GDPR Consent</a>.</p>
+            <br>By clicking "Accept" you agree to our use of cookies, <a href="/" target="_blank">data policy</a> and <a href="/" target="_blank">GDPR Consent</a>.</p>
             <button id="accept" onclick="closeGDPR()">Accept</button>
             <button id="decline" onclick="closeGDPR()">Decline</button>
         </div>
