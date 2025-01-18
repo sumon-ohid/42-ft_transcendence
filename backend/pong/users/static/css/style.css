@@ -1128,7 +1128,8 @@ form .login-button:hover {
     display: flex;
     flex-direction: column;
     border-radius: 15px;
-    box-shadow: 0 10px 6px rgba(0.5, 0, 0, 0.51); /* shadow */
+    box-shadow: 0 10px 6px rgba(0.5, 0, 0, 0.51);
+    color: black;
 }
 
 .top-left-player {
@@ -1136,7 +1137,7 @@ form .login-button:hover {
     top: 10px;
     left: 10px;
     font-family: "Sour Gummy";
-    color: white;
+    color: black;
     font-size: 1.5em;
 }
 
@@ -1152,7 +1153,7 @@ form .login-button:hover {
     top: 10px;
     right: 10px;
     font-family: "Sour Gummy";
-    color: white;
+    color: black;
     font-size: 1.5em;
 }
 
@@ -1168,7 +1169,7 @@ form .login-button:hover {
     bottom: 10px;
     left: 10px;
     font-family: "Sour Gummy";
-    color: white;
+    color: black;
     font-size: 1.5em;
 }
 
@@ -1184,7 +1185,7 @@ form .login-button:hover {
     bottom: 10px;
     right: 10px;
     font-family: "Sour Gummy";
-    color: white;
+    color: black;
     font-size: 1.5em;
 }
 
@@ -1205,28 +1206,32 @@ form .login-button:hover {
     opacity: .5;
 }
 
-.top-left-player h3, .bottom-left-player h3, .bottom-right-player h3 {
+.top-left-player h3 {
     position: fixed;
     left: 110px;
     top: 33px;
+    opacity: .8;
 }
 
 .top-right-player h3 {
     position: fixed;
     right: 110px;
     top: 33px;
+    opacity: .8;
 }
 
 .bottom-left-player h3 {
     position: fixed;
     left: 110px;
     top: 130px;
+    opacity: .8;
 }
 
 .bottom-right-player h3 {
     position: fixed;
     top: 130px;
     left: 530px;
+    opacity: .8;
 }
 
 .top-left-player h1 {
@@ -1234,6 +1239,7 @@ form .login-button:hover {
     left: 280px;
     top: 20px;
     font-size: 2em;
+    opacity: .8;
 }
 
 .top-right-player h1 {
@@ -1241,6 +1247,7 @@ form .login-button:hover {
     right: 280px;
     top: 20px;
     font-size: 2em;
+    opacity: .8;
 }
 
 .bottom-left-player h1 {
@@ -1248,6 +1255,7 @@ form .login-button:hover {
     left: 280px;
     bottom: 20px;
     font-size: 2em;
+    opacity: .8;
 }
 
 .bottom-right-player h1 {
@@ -1255,6 +1263,7 @@ form .login-button:hover {
     right: 280px;
     bottom: 20px;
     font-size: 2em;
+    opacity: .8;
 }
 
 /* line in the middle */
