@@ -168,8 +168,8 @@ function startGameLogic() {
     let rightPaddleY = (canvas.height - paddleHeight) / 2;
     let ballX = canvas.width / 2;
     let ballY = canvas.height / 2;
-    let ballSpeedX = 3;
-    let ballSpeedY = 3;
+    let ballSpeedX = 1.5;
+    let ballSpeedY = 1.5;
 
     const paddleSpeed = 20;
 
@@ -270,8 +270,8 @@ function startGameLogic() {
     function resetBallPosition() {
         ballX = canvas.width / 2;
         ballY = canvas.height / 2;
-        ballSpeedX = (Math.random() > 0.5 ? 1 : -1) * 3;
-        ballSpeedY = (Math.random() > 0.5 ? 1 : -1) * 3;
+        ballSpeedX = (Math.random() > 0.5 ? 1 : -1) * 1.5;
+        ballSpeedY = (Math.random() > 0.5 ? 1 : -1) * 1.5;
         lastPaddleHit = null;
     }
 
