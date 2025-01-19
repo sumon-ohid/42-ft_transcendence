@@ -160,7 +160,8 @@ function recordMatchResult(player1, player2, result) {
         matchResults.push({ player1, player2, result });
     }
     console.log(`${player1} ${result === 'win' ? 'won' : 'lost'} against ${player2}`);
-
+    
+    console.log('Match results:', matchResults);
     // Move to the next match
     console.log('Moving to the next match...');
     currentMatchIndex++;
@@ -217,15 +218,26 @@ function proceedToSemiFinals() {
         if (!playerPoints[match.player2]) playerPoints[match.player2] = 0;
 
         if (match.result === 'win') {
-            playerPoints[match.player1] += 3;
+            playerPoints[match.player1] += 5;
         } else {
-            playerPoints[match.player2] += 3;
+            playerPoints[match.player2] += 5;
         }
     });
 
-    const sortedPlayers = Object.keys(playerPoints).sort((a, b) => playerPoints[b] - playerPoints[a]);
-    semiFinalPlayers = sortedPlayers.slice(0, 4);
+    console.log('Player points:', playerPoints);
 
+    const sortedPlayers = Object.keys(playerPoints).sort((a, b) => playerPoints[b] - playerPoints[a]);
+    
+    console.log('Sorted players:', sortedPlayers);
+    
+    if (sortedPlayers.length < 4) {
+        console.log('Not enough players for semi-finals. Proceeding to finals with top players.');
+        finalStage(sortedPlayers.slice(0, 2));
+        return;
+    }
+    
+    semiFinalPlayers = sortedPlayers.slice(0, 4);
+    
     console.log('Proceeding to semi-finals with players:', semiFinalPlayers);
     semiFinalStage(semiFinalPlayers);
 }
@@ -299,12 +311,8 @@ function finalStage(players) {
         <div class="match-list">
             <div class="match-item">
                 <p>${players[0]} vs ${players[1]}</p>
-                <button onclick="recordMatchResult('${players[0]}', '${players[1]}', 'win')">Win</button>
-                <button onclick="recordMatchResult('${players[0]}', '${players[1]}', 'lose')">Lose</button>
+                <button onclick="startTournamentGame(${JSON.stringify(players[0])}, ${JSON.stringify(players[1])})">Play</button>
             </div>
-        </div>
-        <div class="ready">
-            <button class="gamepage-button" onclick="declareWinner()">Winner</button>
         </div>
         <div class="quit-game" onclick="tournamentPage()">
             <h1>BACK</h1>
