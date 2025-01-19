@@ -1,6 +1,9 @@
 
 let tournamentMode = false;
 
+let currentMatchIndex = 0;
+let roundRobinMatches = [];
+
 function tournamentPage() {
     saveCurrentPage('tournamentPage');
     history.pushState({ page: 'tournamentPage' }, '', '#tournamentPage');
@@ -42,12 +45,17 @@ function choosePlayersForTournamentPage() {
     // NOTE: There is an error here. when page is reloaded, the selected players are not saved.
     // Check if the number of players is valid
     const numberOfPlayers = document.getElementById('players').value;
+    console.log("numberOfPlayers: ");
+    console.log(numberOfPlayers);
     if (numberOfPlayers < 3 || numberOfPlayers > 6) {
         error('Please choose between 3 and 6 players.');
         return;
     }
     const players = generateRandomPlayers(numberOfPlayers);
 
+    // printout the players in console
+    console.log("Players for the tournament:");
+    console.log(players);
     const body = document.body;
 
     while (body.firstChild) {
@@ -105,6 +113,8 @@ function generateRandomPlayers(number) {
 
 function startTournament() {
     const selectedPlayers = document.querySelectorAll('.selected-player');
+    console.log("Selected players: ");
+    console.log(selectedPlayers);
     if (selectedPlayers.length < 3) {
         error('Please select at least 3 players.');
         return;
@@ -119,53 +129,15 @@ function startTournament() {
 }
 
 function roundRobinStage(players) {
-    // saveCurrentPage('roundRobinStage');
-    // history.pushState({ page: 'roundRobinStage' }, '', '#roundRobinStage');
-    // const body = document.body;
+    saveCurrentPage('roundRobinStage');
+    history.pushState({ page: 'roundRobinStage' }, '', '#roundRobinStage');
 
-    // while (body.firstChild) {
-    //     body.removeChild(body.firstChild);
-    // }
+    roundRobinMatches = generateRoundRobinMatches(players);
+    console.log("Round Robin Matches: ");
+    console.log(roundRobinMatches);
 
-    // const div = document.createElement("div");
-    // div.className = "gamepage-container";
-    // div.innerHTML = `
-    //     <h2>Round Robin Stage</h2>
-    //     <div class="match-list-container">
-    //         <div class="match-list">
-    //             ${generateRoundRobinMatches(players).map(match => `
-    //                 <div class="match-item">
-    //                     <p>${match[0].name} vs ${match[1].name}</p>
-    //                     <button onclick="recordMatchResult('${match[0].name}', '${match[1].name}', 'win')">Win</button>
-    //                     <button onclick="recordMatchResult('${match[0].name}', '${match[1].name}', 'lose')">Lose</button>
-    //                 </div>
-    //             `).join('')}
-    //         </div>
-    //     </div>
-    //     <div class="ready">
-    //         <button class="gamepage-button" onclick="proceedToSemiFinals()">Pre-Finals</button>
-    //     </div>
-    //     <div class="quit-game" onclick="tournamentPage()">
-    //         <h1>BACK</h1>
-    //     </div>
-    // `;
-    // body.appendChild(div);
-
-    let matchList = generateRoundRobinMatches(players);
-
-    // For each pair call start game and before setName to player name
-    matchList.forEach(match => {
-        let player1 = match[0];
-        let player2 = match[1];
-
-        setPlayerNames(player1.name, player2.name);
-
-        tournamentMode = true;
-        if (gameInterval) {
-            clearInterval(gameInterval);
-        }
-        startGame(player1, player2);
-    });
+    currentMatchIndex = 0;
+    displayCurrentMatch();
 }
 
 function generateRoundRobinMatches(players) {
@@ -188,6 +160,51 @@ function recordMatchResult(player1, player2, result) {
         matchResults.push({ player1, player2, result });
     }
     console.log(`${player1} ${result === 'win' ? 'won' : 'lost'} against ${player2}`);
+
+    // Move to the next match
+    console.log('Moving to the next match...');
+    currentMatchIndex++;
+    console.log('Current match index after increment:', currentMatchIndex);
+    if (currentMatchIndex < roundRobinMatches.length) {
+        displayCurrentMatch();
+    } else {
+        proceedToSemiFinals();
+    }
+}
+
+function displayCurrentMatch() {
+    if (currentMatchIndex >= roundRobinMatches.length) {
+        console.error('Invalid match index:', currentMatchIndex);
+        return;
+    }
+
+    const match = roundRobinMatches[currentMatchIndex];
+    if (!match) {
+        console.error('Match is undefined at index:', currentMatchIndex);
+        return;
+    }
+
+    const body = document.body;
+
+    while (body.firstChild) {
+        body.removeChild(body.firstChild);
+    }
+
+    const div = document.createElement("div");
+    div.className = "gamepage-container";
+    div.innerHTML = `
+        <h2>Round Robin Stage</h2>
+        <div class="match-list-container">
+            <div class="match-item">
+                <p>${match[0].name} vs ${match[1].name}</p>
+                <button onclick='startTournamentGame(${JSON.stringify(match[0])}, ${JSON.stringify(match[1])})'>Play</button>
+            </div>
+        </div>
+        <div class="quit-game" onclick="tournamentPage()">
+            <h1>BACK</h1>
+        </div>
+    `;
+    body.appendChild(div);
 }
 
 let semiFinalPlayers = [];
@@ -316,8 +333,8 @@ function declareWinner() {
 
 let tournamentPlayer1Name = "Player 1";
 let tournamentPlayer2Name = "Player 2";
-let tournamentPlayer1Avatar = "./avatars/avatar4.png";
-let tournamentPlayer2Avatar = "./avatars/avatar5.png";
+let tournamentPlayer1Avatar = "../static/avatars/avatar4.png";
+let tournamentPlayer2Avatar = "../static/avatars/avatar5.png";
 let tournamentGameInterval;
 
 function tournamentGamePage() {
@@ -343,10 +360,6 @@ function tournamentGamePage() {
                 <img src="../static/avatars/avatar6.png" alt="Avatar 6" onclick="selectTournamentAvatar(6, this)">
             </div>
         </div>
-        <div class="choose-nickname">
-            <h2>Nickname</h2>
-            <input class="gamepage-input" type="text" id="tournamentNickname" placeholder="Enter your nickname">
-        </div>
         <div class="ready">
             <button class="gamepage-button" onclick="startTournamentGame()">Ready</button>
         </div>
@@ -358,7 +371,6 @@ function tournamentGamePage() {
 
     document.addEventListener('keydown', function(event) {
         if (event.key === 'Enter') {
-            // clear previous game interval if exists
             if (tournamentGameInterval) {
                 clearInterval(tournamentGameInterval);
             }
@@ -368,18 +380,28 @@ function tournamentGamePage() {
 }
 
 function selectTournamentAvatar(avatarNumber, element) {
-    tournamentPlayer1Avatar = `./avatars/avatar${avatarNumber}.png`;
+    tournamentPlayer1Avatar = `../static/avatars/avatar${avatarNumber}.png`;
     const avatars = document.querySelectorAll('.avatar-options img');
     avatars.forEach(avatar => avatar.classList.remove('selected-avatar'));
     element.classList.add('selected-avatar');
 }
 
-function startTournamentGame() {
-    const nicknameInput = document.getElementById("tournamentNickname");
-    tournamentPlayer1Name = nicknameInput.value || "Player 1";
+function startTournamentGame(player1, player2) {
+    if (!player1 || !player2) {
+        console.error('Player objects are undefined');
+        return;
+    }
+
+    tournamentPlayer1Name = player1.name || "Player 1";
+    tournamentPlayer2Name = player2.name || "Player 2";
+    tournamentPlayer1Avatar = player1.avatar || "../static/avatars/avatar1.png";
+    tournamentPlayer2Avatar = player2.avatar || "../static/avatars/avatar2.png";
 
     if (tournamentPlayer1Name.length > 8) {
         tournamentPlayer1Name = tournamentPlayer1Name.substring(0, 8) + '.';
+    }
+    if (tournamentPlayer2Name.length > 8) {
+        tournamentPlayer2Name = tournamentPlayer2Name.substring(0, 8) + '.';
     }
 
     const body = document.body;
@@ -394,12 +416,12 @@ function startTournamentGame() {
         <div class="middle-line"></div>
         <div class="score-board">
             <div class="left-player">
-                <img id="left-player" src="../static/${tournamentPlayer1Avatar}" alt="player1">
+                <img id="left-player" src="${tournamentPlayer1Avatar}" alt="player1">
                 <h3>${tournamentPlayer1Name}</h3>
                 <h1 id="left-score">0</h1>
             </div>
             <div class="right-player">
-                <img id="right-player" src="../static/${tournamentPlayer2Avatar}" alt="player2">
+                <img id="right-player" src="${tournamentPlayer2Avatar}" alt="player2">
                 <h3>${tournamentPlayer2Name}</h3>
                 <h1 id="right-score">0</h1>
             </div>
@@ -417,6 +439,7 @@ function startTournamentGame() {
         </div>
     `;
     body.appendChild(div);
+
     // Reset scores
     leftScore = 0;
     rightScore = 0;
@@ -444,8 +467,6 @@ function showTournamentCountdown() {
             setTimeout(() => {
                 countdownElement.style.display = "none";
                 middleLineElement.classList.remove("hidden");
-                leftScore = 0;
-                rightScore = 0;
                 initializeTournamentGame();
             }, 1000);
         }
@@ -518,25 +539,20 @@ function initializeTournamentGame() {
         }
 
         // Check if the game has ended
-        const leftPlayerNickname = tournamentPlayer1Name;
-        const rightPlayerNickname = tournamentPlayer2Name;
-
         if (leftScore === 5 || rightScore === 5) {
             clearInterval(tournamentGameInterval); // Stop the game loop
-            const winner = leftScore === 5 ? leftPlayerNickname : rightPlayerNickname;
+            const winner = leftScore === 5 ? tournamentPlayer1Name : tournamentPlayer2Name;
             const confirmationElement = document.querySelector('.confirmation-to-quit');
             if (confirmationElement) {
                 confirmationElement.classList.remove('hidden');
                 let countdown = 3;
-                confirmationElement.innerHTML = `<span>Game Over</span><br><span style="font-size: 2em; color: #007bff">${winner} Wins!</span><br>Returning to game page in ${countdown}s...`;
-
                 const countdownInterval = setInterval(() => {
                     countdown -= 1;
                     confirmationElement.innerHTML = `<span>Game Over</span><br><span style="font-size: 2em; color: #007bff">${winner} Wins!</span><br>Returning to game page in ${countdown}s...`;
 
                     if (countdown === 0) {
                         clearInterval(countdownInterval);
-                        tournamentGamePage();
+                        recordMatchResult(tournamentPlayer1Name, tournamentPlayer2Name, leftScore === 5 ? 'win' : 'lose');
                     }
                 }, 1000);
             }

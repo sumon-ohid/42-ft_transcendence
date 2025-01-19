@@ -6,7 +6,7 @@ async function fetchUsername() {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                'X-CSRFToken': document.querySelector('meta[name="csrf-token"]').content
+                'X-CSRFToken':  getCSRFToken()
             }
         });
         const data = await response.json();
@@ -18,6 +18,17 @@ async function fetchUsername() {
         console.error('Error fetching username:', error);
         return "Guest";
     }
+}
+
+function getCSRFToken() {
+    const metaToken = document.querySelector('meta[name="csrf-token"]');
+    if (metaToken) {
+        return metaToken.content;
+    }
+    const csrfCookie = document.cookie
+        .split('; ')
+        .find(row => row.startsWith('csrftoken='));
+    return csrfCookie ? csrfCookie.split('=')[1] : null;
 }
 
 async function fetchProfilePicture() {
