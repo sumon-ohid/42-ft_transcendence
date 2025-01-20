@@ -168,7 +168,7 @@ function recordMatchResult(player1, player2, result) {
     const winner = result === 'win' ? player1 : player2;
     const playerScore = playerScores.find(p => p.name === winner);
     if (playerScore) {
-        playerScore.score += 5;
+        playerScore.score += 3;
     }
 
     console.log('Match results:', matchResults);
@@ -330,9 +330,9 @@ function proceedToSemiFinals() {
         if (!playerPoints[match.player2]) playerPoints[match.player2] = 0;
 
         if (match.result === 'win') {
-            playerPoints[match.player1] += 5;
+            playerPoints[match.player1] += 3;
         } else {
-            playerPoints[match.player2] += 5;
+            playerPoints[match.player2] += 3;
         }
     });
 
@@ -698,9 +698,9 @@ function initializeTournamentGame() {
         }
 
         // Check if the game has ended
-        if (leftScore === 5 || rightScore === 5) {
+        if (leftScore === 3 || rightScore === 3) {
             clearInterval(tournamentGameInterval); // Stop the game loop
-            const winner = leftScore === 5 ? tournamentPlayer1Name : tournamentPlayer2Name;
+            const winner = leftScore === 3 ? tournamentPlayer1Name : tournamentPlayer2Name;
             const confirmationElement = document.querySelector('.confirmation-to-quit');
             if (confirmationElement) {
                 confirmationElement.classList.remove('hidden');
@@ -711,7 +711,7 @@ function initializeTournamentGame() {
 
                     if (countdown === 0) {
                         clearInterval(countdownInterval);
-                        recordMatchResult(tournamentPlayer1Name, tournamentPlayer2Name, leftScore === 5 ? 'win' : 'lose');
+                        recordMatchResult(tournamentPlayer1Name, tournamentPlayer2Name, leftScore === 3 ? 'win' : 'lose');
                     }
                 }, 1000);
             }
