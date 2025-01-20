@@ -7,6 +7,8 @@ let roundRobinMatches = [];
 let currentSemiFinalMatchIndex = 0;
 let semiFinalMatches = [];
 
+let playerScores = [];
+
 function tournamentPage() {
     saveCurrentPage('tournamentPage');
     history.pushState({ page: 'tournamentPage' }, '', '#tournamentPage');
@@ -128,6 +130,8 @@ function startTournament() {
         avatar: player.querySelector('img').src
     }));
 
+    playerScores = players.map(player => ({ name: player.name, score: 0 }));
+
     roundRobinStage(players);
 }
 
@@ -194,15 +198,6 @@ function recordMatchResult(player1, player2, result) {
         proceedToFinal();
     }
 }
-
-let playerScores = [
-    { name: 'Alice', score: 0 },
-    { name: 'Bob', score: 0 },
-    { name: 'Charlie', score: 0 },
-    { name: 'David', score: 0 },
-    { name: 'Frank', score: 0 },
-    { name: 'Eve', score: 0 }
-];
 
 function createScoreTableIfNotExists() {
     if (!document.getElementById('score-table-body')) {
@@ -328,7 +323,7 @@ function displayCurrentSemiFinalMatch() {
         </div>
         <div class="score-table-container">
             <h3>Score Table</h3>
-            <table>
+            <table class="score-table">
                 <thead>
                     <tr>
                         <th>Player</th>
@@ -480,7 +475,7 @@ function finalStage(players) {
         </div>
         <div class="score-table-container">
             <h3>Score Table</h3>
-            <table>
+            <table class="score-table">
                 <thead>
                     <tr>
                         <th>Player</th>
