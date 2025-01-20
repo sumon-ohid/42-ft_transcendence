@@ -3,6 +3,7 @@ let currentMatchIndex = 0;
 let roundRobinMatches = [];
 let semiFinalMatches = [];
 let playerScores = [];
+let currentSemiFinalMatchIndex = 0;
 
 function tournamentPage() {
     saveCurrentPage('tournamentPage');
@@ -301,9 +302,13 @@ function displayCurrentMatch() {
 }
 
 function displayCurrentSemiFinalMatch() {
-    if (currentSemiFinalMatchIndex >= semiFinalMatches.length) {
-        console.log('Invalid semi-final match index:', currentSemiFinalMatchIndex);
-        return;
+    // To protect against invalid semi-final match index
+    if (semiFinalMatches && currentSemiFinalMatchIndex) 
+    {
+        if (currentSemiFinalMatchIndex >= semiFinalMatches.length) {
+            console.log('Invalid semi-final match index:', currentSemiFinalMatchIndex);
+            return;
+        }
     }
 
     const match = semiFinalMatches[currentSemiFinalMatchIndex];
@@ -389,12 +394,12 @@ function proceedToSemiFinals() {
     console.log('Players advancing:', advancingPlayers);
     
     if (advancingPlayers.length === 2) {
-        // Direct to finals for 3-4 players
+        // for 3-4 players
         finalStage(advancingPlayers);
     } else if (advancingPlayers.length === 3) {
-        // Special handling for 5 players
+        // for 5 players
         semiFinalPlayers = advancingPlayers;
-        // First player gets a bye to finals
+        // Top player goes directly to final
         const finalist = semiFinalPlayers[0];
         // Other two play semi-final
         semiFinalMatches = [[semiFinalPlayers[1], semiFinalPlayers[2]]];
@@ -483,6 +488,10 @@ function finalStage(players) {
     div.className = "gamepage-container";
     div.innerHTML = `
         <h1>Final Score</h1>
+        <div class="match-list-container">
+            <p>🏆 The Winner is 🏆</p>
+            <h3>${players[0].name}</h3>
+        </div>
         <div class="score-table-container">
             <h3>Final Standings</h3>
             <table class="score-table">
@@ -498,7 +507,6 @@ function finalStage(players) {
                 </tbody>
             </table>
         </div>
-        <button class="gamepage-button" onclick="declareWinner()">Winner</button>
         <div class="quit-game" onclick="tournamentPage()">
             <h1>BACK</h1>
         </div>

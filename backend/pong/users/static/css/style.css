@@ -2902,6 +2902,14 @@ form .login-button:hover {
     border: 1px solid rgba(255, 255, 255, 0.253);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     background-color: var(--pong-color);
+    color: white;
+}
+
+.match-list-container h3 {
+    font-family: "Sour Gummy";
+    font-size: 2em;
+    margin-top: -30px;
+    color: white;
 }
 
 .match-list {
@@ -3236,5 +3244,9 @@ form .login-button:hover {
 /* .score-table tr:nth-child(even) {
     background-color: rgba(255, 255, 255, 0.1);
 } */
+
+.winner-container {
+
+}
 
 /*------- TOURNAMENT CONTAINER END -------*/
