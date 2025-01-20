@@ -808,6 +808,9 @@ function initializeTournamentGame() {
                     if (countdown === 0) {
                         clearInterval(countdownInterval);
                         recordMatchResult(tournamentPlayer1Name, tournamentPlayer2Name, leftScore === 3 ? 'win' : 'lose');
+                        // if (currentMatchIndex >= roundRobinMatches.length) {
+                        //     declareWinner();
+                        // }
                     }
                 }, 1000);
             }
