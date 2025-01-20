@@ -4,6 +4,9 @@ let tournamentMode = false;
 let currentMatchIndex = 0;
 let roundRobinMatches = [];
 
+let currentSemiFinalMatchIndex = 0;
+let semiFinalMatches = [];
+
 function tournamentPage() {
     saveCurrentPage('tournamentPage');
     history.pushState({ page: 'tournamentPage' }, '', '#tournamentPage');
@@ -160,28 +163,34 @@ function recordMatchResult(player1, player2, result) {
         matchResults.push({ player1, player2, result });
     }
     console.log(`${player1} ${result === 'win' ? 'won' : 'lost'} against ${player2}`);
-    
+
     console.log('Match results:', matchResults);
     // Move to the next match
     console.log('Moving to the next match...');
     currentMatchIndex++;
     console.log('Current match index after increment:', currentMatchIndex);
     if (currentMatchIndex < roundRobinMatches.length) {
+        console.log('Proceeding to the next match in round robin stage...');
         displayCurrentMatch();
-    } else {
+    } else if (currentMatchIndex === roundRobinMatches.length) {
+        console.log('Proceeding to semi-finals stage after round robin...');
         proceedToSemiFinals();
+        displayCurrentSemiFinalMatch();
+    } else {
+        console.log('Proceeding to finals stage after semi-finals...');
+        proceedToFinal();
     }
 }
 
 function displayCurrentMatch() {
     if (currentMatchIndex >= roundRobinMatches.length) {
-        console.error('Invalid match index:', currentMatchIndex);
+        console.log('Invalid match index:', currentMatchIndex);
         return;
     }
 
     const match = roundRobinMatches[currentMatchIndex];
     if (!match) {
-        console.error('Match is undefined at index:', currentMatchIndex);
+        console.log('Match is undefined at index:', currentMatchIndex);
         return;
     }
 
@@ -195,6 +204,41 @@ function displayCurrentMatch() {
     div.className = "gamepage-container";
     div.innerHTML = `
         <h2>Round Robin Stage</h2>
+        <div class="match-list-container">
+            <div class="match-item">
+                <p>${match[0].name} vs ${match[1].name}</p>
+                <button onclick='startTournamentGame(${JSON.stringify(match[0])}, ${JSON.stringify(match[1])})'>Play</button>
+            </div>
+        </div>
+        <div class="quit-game" onclick="tournamentPage()">
+            <h1>BACK</h1>
+        </div>
+    `;
+    body.appendChild(div);
+}
+
+function displayCurrentSemiFinalMatch() {
+    if (currentSemiFinalMatchIndex >= semiFinalMatches.length) {
+        console.log('Invalid semi-final match index:', currentSemiFinalMatchIndex);
+        return;
+    }
+
+    const match = semiFinalMatches[currentSemiFinalMatchIndex];
+    if (!match) {
+        console.log('Semi-final match is undefined at index:', currentSemiFinalMatchIndex);
+        return;
+    }
+
+    const body = document.body;
+
+    while (body.firstChild) {
+        body.removeChild(body.firstChild);
+    }
+
+    const div = document.createElement("div");
+    div.className = "gamepage-container";
+    div.innerHTML = `
+        <h2>Semi-Finals</h2>
         <div class="match-list-container">
             <div class="match-item">
                 <p>${match[0].name} vs ${match[1].name}</p>
@@ -232,14 +276,34 @@ function proceedToSemiFinals() {
     
     if (sortedPlayers.length < 4) {
         console.log('Not enough players for semi-finals. Proceeding to finals with top players.');
-        finalStage(sortedPlayers.slice(0, 2));
+        const topPlayers = sortedPlayers.slice(0, 2).map(playerName => {
+            const match = matchResults.find(match => match.player1 === playerName || match.player2 === playerName);
+            return {
+                name: playerName,
+                avatar: match.player1 === playerName ? match.player1.avatar : match.player2.avatar
+            };
+        });
+        finalStage(topPlayers);
         return;
     }
     
-    semiFinalPlayers = sortedPlayers.slice(0, 4);
+    semiFinalPlayers = sortedPlayers.slice(0, 4).map(playerName => {
+        const match = matchResults.find(match => match.player1 === playerName || match.player2 === playerName);
+        return {
+            name: playerName,
+            avatar: match.player1 === playerName ? match.player1.avatar : match.player2.avatar
+        };
+    });
     
     console.log('Proceeding to semi-finals with players:', semiFinalPlayers);
     semiFinalStage(semiFinalPlayers);
+}
+
+function generateSemiFinalMatches(players) {
+    return [
+        [players[0], players[3]],
+        [players[1], players[2]]
+    ];
 }
 
 function semiFinalStage(players) {
@@ -251,38 +315,23 @@ function semiFinalStage(players) {
         body.removeChild(body.firstChild);
     }
 
-    const div = document.createElement("div");
-    div.className = "gamepage-container";
-    div.innerHTML = `
-        <h2>Semi-Finals</h2>
-        <div class="match-list">
-            <div class="match-item">
-                <p>${players[0]} vs ${players[3]}</p>
-                <button onclick="recordMatchResult('${players[0]}', '${players[3]}', 'win')">Win</button>
-                <button onclick="recordMatchResult('${players[0]}', '${players[3]}', 'lose')">Lose</button>
-            </div>
-            <div class="match-item">
-                <p>${players[1]} vs ${players[2]}</p>
-                <button onclick="recordMatchResult('${players[1]}', '${players[2]}', 'win')">Win</button>
-                <button onclick="recordMatchResult('${players[1]}', '${players[2]}', 'lose')">Lose</button>
-            </div>
-        </div>
-        <div class="ready">
-            <button class="gamepage-button" onclick="proceedToFinal()">Final</button>
-        </div>
-        <div class="quit-game" onclick="tournamentPage()">
-            <h1>BACK</h1>
-        </div>
-    `;
-    body.appendChild(div);
+    semiFinalMatches = generateSemiFinalMatches(players);
+    currentSemiFinalMatchIndex = 0;
+    displayCurrentSemiFinalMatch();
 }
 
 function proceedToFinal() {
+    if (semiFinalPlayers.length < 4) {
+        console.log('Not enough players for semi-finals. Proceeding to finals with top players.');
+        finalStage(semiFinalPlayers.slice(0, 2));
+        return;
+    }
+
     const semiFinalMatches = matchResults.filter(match => 
-        (match.player1 === semiFinalPlayers[0] && match.player2 === semiFinalPlayers[3]) ||
-        (match.player1 === semiFinalPlayers[3] && match.player2 === semiFinalPlayers[0]) ||
-        (match.player1 === semiFinalPlayers[1] && match.player2 === semiFinalPlayers[2]) ||
-        (match.player1 === semiFinalPlayers[2] && match.player2 === semiFinalPlayers[1])
+        (match.player1 === semiFinalPlayers[0].name && match.player2 === semiFinalPlayers[3].name) ||
+        (match.player1 === semiFinalPlayers[3].name && match.player2 === semiFinalPlayers[0].name) ||
+        (match.player1 === semiFinalPlayers[1].name && match.player2 === semiFinalPlayers[2].name) ||
+        (match.player1 === semiFinalPlayers[2].name && match.player2 === semiFinalPlayers[1].name)
     );
 
     const semiFinalWinners = semiFinalMatches.filter(match => match.result === 'win').map(match => match.player1);
@@ -291,11 +340,29 @@ function proceedToFinal() {
         return;
     }
 
-    console.log('Proceeding to final with players:', semiFinalWinners);
-    finalStage(semiFinalWinners);
+    const finalPlayers = semiFinalWinners.map(playerName => {
+        const match = matchResults.find(match => match.player1 === playerName || match.player2 === playerName);
+        return {
+            name: playerName,
+            avatar: match.player1 === playerName ? match.player1.avatar : match.player2.avatar
+        };
+    });
+
+    console.log('Semi-final winners:', finalPlayers);
+
+    console.log('Proceeding to final with players:', finalPlayers);
+    finalStage(finalPlayers);
 }
 
 function finalStage(players) {
+
+    console.log('Final stage with players:', players);
+
+    if (players.length < 2) {
+        console.log('Not enough players for the final.');
+        return;
+    }
+
     saveCurrentPage('finalStage');
     history.pushState({ page: 'finalStage' }, '', '#finalStage');
     const body = document.body;
@@ -310,7 +377,7 @@ function finalStage(players) {
         <h2>Final</h2>
         <div class="match-list">
             <div class="match-item">
-                <p>${players[0]} vs ${players[1]}</p>
+                <p>${players[0].name} vs ${players[1].name}</p>
                 <button onclick="startTournamentGame(${JSON.stringify(players[0])}, ${JSON.stringify(players[1])})">Play</button>
             </div>
         </div>
