@@ -263,7 +263,7 @@ function displayCurrentMatch() {
     const div = document.createElement("div");
     div.className = "gamepage-container";
     div.innerHTML = `
-        <h2>Round Robin Stage</h2>
+        <h1>Round Robin Stage</h1>
         <div class="match-list-container">
             <div class="match-item">
                 <p>${match[0].name} vs ${match[1].name}</p>
@@ -314,7 +314,7 @@ function displayCurrentSemiFinalMatch() {
     const div = document.createElement("div");
     div.className = "gamepage-container";
     div.innerHTML = `
-        <h2>Semi-Finals</h2>
+        <h1>Semi-Finals</h1>
         <div class="match-list-container">
             <div class="match-item">
                 <p>${match[0].name} vs ${match[1].name}</p>
@@ -466,7 +466,7 @@ function finalStage(players) {
     const div = document.createElement("div");
     div.className = "gamepage-container";
     div.innerHTML = `
-        <h2>Final</h2>
+        <h1>Final</h1>
         <div class="match-list">
             <div class="match-item">
                 <p>${players[0].name} vs ${players[1].name}</p>

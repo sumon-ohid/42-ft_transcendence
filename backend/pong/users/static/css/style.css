@@ -950,6 +950,13 @@ form .login-button:hover {
     box-shadow: 0 10px 6px rgba(0.5, 0, 0, 0.51); /* shadow */
 }
 
+.gamepage-container h1 {
+    font-family: "Modak";
+    color: var(--white-color);
+    font-size: 2em;
+    margin-top: 20px;
+}
+
 .choose-avatar, .choose-nickname, .ready {
     margin-bottom: 20px;
 }
