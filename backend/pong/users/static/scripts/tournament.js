@@ -271,6 +271,7 @@ function displayCurrentMatch() {
             </div>
         </div>
         <div class="score-table-container">
+            <h3>Score Table</h3>
             <table class="score-table">
                 <thead>
                     <tr>
