@@ -1,12 +1,7 @@
 
-let tournamentMode = false;
-
 let currentMatchIndex = 0;
 let roundRobinMatches = [];
-
-let currentSemiFinalMatchIndex = 0;
 let semiFinalMatches = [];
-
 let playerScores = [];
 
 function tournamentPage() {
@@ -21,9 +16,9 @@ function tournamentPage() {
     const div = document.createElement("div");
     div.className = "settings-container";
     div.innerHTML = `
+        <h2>Pong Tournament</h2>
         <div class="pong-container-options"></div>
         <div class="pong-options"></div>
-        <h2>Pong Tournament</h2>
         <div class="game-options">
             <!-- choose players for tournment -->
             <!-- from 3 to 6 players -->
@@ -50,16 +45,12 @@ function choosePlayersForTournamentPage() {
     // NOTE: There is an error here. when page is reloaded, the selected players are not saved.
     // Check if the number of players is valid
     const numberOfPlayers = document.getElementById('players').value;
-    console.log("numberOfPlayers: ");
-    console.log(numberOfPlayers);
     if (numberOfPlayers < 3 || numberOfPlayers > 6) {
         error('Please choose between 3 and 6 players.');
         return;
     }
     const players = generateRandomPlayers(numberOfPlayers);
 
-    console.log("Players for the tournament:");
-    console.log(players);
     const body = document.body;
 
     while (body.firstChild) {
@@ -330,13 +321,7 @@ function displayCurrentSemiFinalMatch() {
     const div = document.createElement("div");
     div.className = "gamepage-container";
     div.innerHTML = `
-        <h1>Semi-Finals</h1>
-        <div class="match-list-container">
-            <div class="match-item">
-                <p>${match[0].name} vs ${match[1].name}</p>
-                <button onclick='startTournamentGame(${JSON.stringify(match[0])}, ${JSON.stringify(match[1])})'>Play</button>
-            </div>
-        </div>
+        <h1>Final Score</h1>
         <div class="score-table-container">
             <h3>Score Table</h3>
             <table class="score-table">
@@ -497,13 +482,7 @@ function finalStage(players) {
     const div = document.createElement("div");
     div.className = "gamepage-container";
     div.innerHTML = `
-        <h1>Final Match</h1>
-        <div class="match-list-container">
-            <div class="match-item">
-                <p>${players[0].name} vs ${players[1].name}</p>
-                <button onclick="startTournamentGame(${JSON.stringify(players[0])}, ${JSON.stringify(players[1])})">Play Final</button>
-            </div>
-        </div>
+        <h1>Final Score</h1>
         <div class="score-table-container">
             <h3>Final Standings</h3>
             <table class="score-table">
