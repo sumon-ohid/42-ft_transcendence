@@ -498,11 +498,14 @@ function finalStage(players) {
                 </tbody>
             </table>
         </div>
+        <button class="gamepage-button" onclick="declareWinner()">Winner</button>
         <div class="quit-game" onclick="tournamentPage()">
             <h1>BACK</h1>
         </div>
     `;
     body.appendChild(div);
+
+
 
     // Update the score table with current scores and positions
     updateFinalScoreTable(players);
@@ -541,47 +544,6 @@ function getPositionText(position) {
     }
 }
 
-function declareWinner() {
-    const finalMatch = matchResults.find(match => 
-        (match.player1 === semiFinalPlayers[0] && match.player2 === semiFinalPlayers[1]) ||
-        (match.player1 === semiFinalPlayers[1] && match.player2 === semiFinalPlayers[0])
-    );
-
-    if (!finalMatch) {
-        error('Please complete the final match.');
-        return;
-    }
-
-    const winner = finalMatch.result === 'win' ? finalMatch.player1 : finalMatch.player2;
-    
-    // Show winner celebration
-    const body = document.body;
-    while (body.firstChild) {
-        body.removeChild(body.firstChild);
-    }
-
-    const div = document.createElement("div");
-    div.className = "gamepage-container";
-    div.innerHTML = `
-        <div class="winner-celebration">
-            <h1>🏆 Tournament Winner 🏆</h1>
-            <h2>${winner}</h2>
-            <div class="fireworks"></div>
-            <button class="gamepage-button" onclick="tournamentPage()">New Tournament</button>
-        </div>
-    `;
-    body.appendChild(div);
-
-    // Add fireworks animation
-    const fireworks = div.querySelector('.fireworks');
-    for (let i = 0; i < 20; i++) {
-        const firework = document.createElement('div');
-        firework.className = 'firework';
-        fireworks.appendChild(firework);
-    }
-
-    console.log(`The tournament winner is ${winner}!`);
-}
 
 // Copy of main game functions from pong.js, adjusted for tournament
 
@@ -808,9 +770,6 @@ function initializeTournamentGame() {
                     if (countdown === 0) {
                         clearInterval(countdownInterval);
                         recordMatchResult(tournamentPlayer1Name, tournamentPlayer2Name, leftScore === 3 ? 'win' : 'lose');
-                        // if (currentMatchIndex >= roundRobinMatches.length) {
-                        //     declareWinner();
-                        // }
                     }
                 }, 1000);
             }

@@ -3237,38 +3237,4 @@ form .login-button:hover {
     background-color: rgba(255, 255, 255, 0.1);
 } */
 
-
-.winner-celebration {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: var(--pong-color);
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
-    text-align: center;
-    width: 300px;
-}
-
-.fireworks {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1000;
-    pointer-events: none;
-}
-
-.firework {
-    position: absolute;
-    width: 10px;
-    height: 10px;
-    background: #f00;
-    border-radius: 50%;
-    animation: firework 1s infinite;
-}
-
 /*------- TOURNAMENT CONTAINER END -------*/
