@@ -467,7 +467,7 @@ function finalStage(players) {
     div.className = "gamepage-container";
     div.innerHTML = `
         <h1>Final</h1>
-        <div class="match-list">
+        <div class="match-list-container">
             <div class="match-item">
                 <p>${players[0].name} vs ${players[1].name}</p>
                 <button onclick="startTournamentGame(${JSON.stringify(players[0])}, ${JSON.stringify(players[1])})">Play</button>
