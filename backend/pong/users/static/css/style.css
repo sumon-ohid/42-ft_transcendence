@@ -948,14 +948,6 @@ form .login-button:hover {
     flex-direction: column;
     border-radius: 15px;
     box-shadow: 0 10px 6px rgba(0.5, 0, 0, 0.51); /* shadow */
-    font-family: "Sour Gummy";
-}
-
-.gamepage-container h2 {
-    font-family: "Modak";
-    color: var(--light-color);
-    font-size: 2em;
-    margin-top: 20px;
 }
 
 .choose-avatar, .choose-nickname, .ready {
