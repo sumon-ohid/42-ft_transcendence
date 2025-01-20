@@ -58,7 +58,6 @@ function choosePlayersForTournamentPage() {
     }
     const players = generateRandomPlayers(numberOfPlayers);
 
-    // printout the players in console
     console.log("Players for the tournament:");
     console.log(players);
     const body = document.body;
@@ -149,11 +148,28 @@ function roundRobinStage(players) {
 
 function generateRoundRobinMatches(players) {
     const matches = [];
-    for (let i = 0; i < players.length; i++) {
-        for (let j = i + 1; j < players.length; j++) {
-            matches.push([players[i], players[j]]);
+    const numPlayers = players.length;
+    
+    // 3 players should be simpler, handle odd number of players by adding a dummy player
+    const hasBye = numPlayers % 2 !== 0;
+    const playersWithBye = hasBye ? [...players, {name: 'BYE', avatar: ''}] : players;
+    
+    // Generate matches using round-robin algorithm
+    for (let round = 0; round < playersWithBye.length - 1; round++) {
+        for (let i = 0; i < playersWithBye.length / 2; i++) {
+            const player1 = playersWithBye[i];
+            const player2 = playersWithBye[playersWithBye.length - 1 - i];
+            
+            // Skip matches with the BYE player
+            if (player1.name !== 'BYE' && player2.name !== 'BYE') {
+                matches.push([player1, player2]);
+            }
         }
+        
+        // Rotate players for next round
+        playersWithBye.splice(1, 0, playersWithBye.pop());
     }
+    
     return matches;
 }
 
@@ -168,7 +184,7 @@ function recordMatchResult(player1, player2, result) {
     }
     console.log(`${player1} ${result === 'win' ? 'won' : 'lost'} against ${player2}`);
 
-    // Update player scores
+    //It will update player scores
     const winner = result === 'win' ? player1 : player2;
     const playerScore = playerScores.find(p => p.name === winner);
     if (playerScore) {
@@ -178,11 +194,11 @@ function recordMatchResult(player1, player2, result) {
     console.log('Match results:', matchResults);
     console.log('Player scores:', playerScores);
     
-    // Ensure score table exists before updating
+    // to make sure score table is updated
     createScoreTableIfNotExists();
     updateScoreTable();
 
-    // Move to the next match
+    // move to the next match
     console.log('Moving to the next match...');
     currentMatchIndex++;
     console.log('Current match index after increment:', currentMatchIndex);
@@ -230,7 +246,7 @@ function updateScoreTable() {
         return;
     }
     
-    scoreTableBody.innerHTML = ''; // Clear existing rows
+    scoreTableBody.innerHTML = '';
 
     playerScores.forEach(player => {
         const row = document.createElement('tr');
@@ -290,7 +306,6 @@ function displayCurrentMatch() {
     `;
     body.appendChild(div);
 
-    // Update the score table with current scores
     updateScoreTable();
 }
 
@@ -342,7 +357,6 @@ function displayCurrentSemiFinalMatch() {
     `;
     body.appendChild(div);
 
-    // Update the score table with current scores
     updateScoreTable();
 }
 
@@ -368,29 +382,44 @@ function proceedToSemiFinals() {
     
     console.log('Sorted players:', sortedPlayers);
     
-    if (sortedPlayers.length < 4) {
-        console.log('Not enough players for semi-finals. Proceeding to finals with top players.');
-        const topPlayers = sortedPlayers.slice(0, 2).map(playerName => {
-            const match = matchResults.find(match => match.player1 === playerName || match.player2 === playerName);
-            return {
-                name: playerName,
-                avatar: match.player1 === playerName ? match.player1.avatar : match.player2.avatar
-            };
-        });
-        finalStage(topPlayers);
-        return;
-    }
+    // Top players from round robin stage
+    const totalPlayers = Object.keys(playerPoints).length;
+    let playersToAdvance = 2;
     
-    semiFinalPlayers = sortedPlayers.slice(0, 4).map(playerName => {
+    if (totalPlayers === 5) {
+        playersToAdvance = 3;
+    } else if (totalPlayers === 6) {
+        playersToAdvance = 4;
+    }
+
+    // Get the top players to next stage
+    const advancingPlayers = sortedPlayers.slice(0, playersToAdvance).map(playerName => {
         const match = matchResults.find(match => match.player1 === playerName || match.player2 === playerName);
         return {
             name: playerName,
             avatar: match.player1 === playerName ? match.player1.avatar : match.player2.avatar
         };
     });
+
+    console.log('Players advancing:', advancingPlayers);
     
-    console.log('Proceeding to semi-finals with players:', semiFinalPlayers);
-    semiFinalStage(semiFinalPlayers);
+    if (advancingPlayers.length === 2) {
+        // Direct to finals for 3-4 players
+        finalStage(advancingPlayers);
+    } else if (advancingPlayers.length === 3) {
+        // Special handling for 5 players
+        semiFinalPlayers = advancingPlayers;
+        // First player gets a bye to finals
+        const finalist = semiFinalPlayers[0];
+        // Other two play semi-final
+        semiFinalMatches = [[semiFinalPlayers[1], semiFinalPlayers[2]]];
+        currentSemiFinalMatchIndex = 0;
+        displayCurrentSemiFinalMatch();
+    } else if (advancingPlayers.length === 4) {
+        // Standard semi-finals for 6 players
+        semiFinalPlayers = advancingPlayers;
+        semiFinalStage(semiFinalPlayers);
+    }
 }
 
 function generateSemiFinalMatches(players) {
@@ -453,6 +482,7 @@ function finalStage(players) {
 
     if (players.length < 2) {
         console.log('Not enough players for the final.');
+        error('Not enough players to start the final match.');
         return;
     }
 
@@ -467,20 +497,21 @@ function finalStage(players) {
     const div = document.createElement("div");
     div.className = "gamepage-container";
     div.innerHTML = `
-        <h1>Final</h1>
+        <h1>Final Match</h1>
         <div class="match-list-container">
             <div class="match-item">
                 <p>${players[0].name} vs ${players[1].name}</p>
-                <button onclick="startTournamentGame(${JSON.stringify(players[0])}, ${JSON.stringify(players[1])})">Play</button>
+                <button onclick="startTournamentGame(${JSON.stringify(players[0])}, ${JSON.stringify(players[1])})">Play Final</button>
             </div>
         </div>
         <div class="score-table-container">
-            <h3>Score Table</h3>
+            <h3>Final Standings</h3>
             <table class="score-table">
                 <thead>
                     <tr>
                         <th>Player</th>
                         <th>Score</th>
+                        <th>Position</th>
                     </tr>
                 </thead>
                 <tbody id="score-table-body">
@@ -494,8 +525,41 @@ function finalStage(players) {
     `;
     body.appendChild(div);
 
-    // Update the score table with current scores
-    updateScoreTable();
+    // Update the score table with current scores and positions
+    updateFinalScoreTable(players);
+}
+
+function updateFinalScoreTable(players) {
+    createScoreTableIfNotExists();
+    const scoreTableBody = document.getElementById('score-table-body');
+    if (!scoreTableBody) {
+        console.error('Score table body not found');
+        return;
+    }
+    
+    // Sort players by score
+    const sortedPlayers = playerScores.sort((a, b) => b.score - a.score);
+    
+    scoreTableBody.innerHTML = '';
+
+    sortedPlayers.forEach((player, index) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${player.name}</td>
+            <td>${player.score}</td>
+            <td>${getPositionText(index + 1)}</td>
+        `;
+        scoreTableBody.appendChild(row);
+    });
+}
+
+function getPositionText(position) {
+    switch(position) {
+        case 1: return '1st 🥇';
+        case 2: return '2nd 🥈';
+        case 3: return '3rd 🥉';
+        default: return `${position}th`;
+    }
 }
 
 function declareWinner() {
@@ -510,7 +574,33 @@ function declareWinner() {
     }
 
     const winner = finalMatch.result === 'win' ? finalMatch.player1 : finalMatch.player2;
-    error(`The tournament winner is ${winner}!`);
+    
+    // Show winner celebration
+    const body = document.body;
+    while (body.firstChild) {
+        body.removeChild(body.firstChild);
+    }
+
+    const div = document.createElement("div");
+    div.className = "gamepage-container";
+    div.innerHTML = `
+        <div class="winner-celebration">
+            <h1>🏆 Tournament Winner 🏆</h1>
+            <h2>${winner}</h2>
+            <div class="fireworks"></div>
+            <button class="gamepage-button" onclick="tournamentPage()">New Tournament</button>
+        </div>
+    `;
+    body.appendChild(div);
+
+    // Add fireworks animation
+    const fireworks = div.querySelector('.fireworks');
+    for (let i = 0; i < 20; i++) {
+        const firework = document.createElement('div');
+        firework.className = 'firework';
+        fireworks.appendChild(firework);
+    }
+
     console.log(`The tournament winner is ${winner}!`);
 }
 
