@@ -2746,6 +2746,187 @@ form .login-button:hover {
     transform: translate(-50%, -50%);
 }
 
+.tournament-container {
+    background-color: var(--container-background);
+    position: fixed;
+    top: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 350px;
+    width: 300px;
+    align-items: center;
+    justify-items: center;
+    display: flex;
+    flex-direction: column;
+    border-radius: 15px;
+    box-shadow: 0 10px 6px rgba(0.5, 0, 0, 0.51);
+    gap: 20px;
+    padding: 20px;
+}
+
+.tournament-options {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+#players {
+    background-color: white;
+    height: 40px;
+    width: 100px;
+    position: fixed;
+    top: 310px;
+    left: 100px;
+    border-radius: 20px;
+    box-shadow: 0 2px 6px rgba(0.2, 0, 0, 0.31);
+    color: black;
+    font-family: "Sour Gummy";
+    padding: 10px;
+    border: 1px solid rgba(129, 129, 129, 0.417);
+    text-align: center;
+    opacity: .8;
+}
+
+.choose-players, .ready {
+    margin-bottom: 20px;
+}
+
+.choose-players h2 {
+    position: relative;
+    top: 50px;
+    color: white;
+    font-family: "Sour Gummy";
+}
+
+.player-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    position: fixed;
+    top: 50px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.player-container p {
+    color: white;
+    font-family: "Sour Gummy";
+}
+
+.player-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+}
+
+.player-list.grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(3, auto);
+    gap: 10px;
+    text-align: center;
+}
+
+
+.player-options {
+    position: fixed;
+    top: 150px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+.player-item {
+    background-color: var(--pong-color);
+    padding: 5px;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 1.2em;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    border: 2px solid transparent;
+}
+
+.player-item img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-left: 20px;
+}
+
+.player-item p {
+    margin-left: 10px;
+    margin-top: 10px;
+}
+
+.player-item:hover {
+    border-color: var(--primary-color);
+}
+
+.selected-player {
+    border-color: var(--primary-color);
+}
+
+.match-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.match-item {
+    background-color: var(--container-background);
+    padding: 10px;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 1.2em;
+    color: white;
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    border: 2px solid transparent;
+}
+
+.match-item p {
+    margin: 0;
+}
+
+.match-item button {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+.match-item button:hover {
+    background-color: var(--primary-color-dark);
+}
+
+#number_of_plyers {
+    color: white;
+    font-family: "Sour Gummy";
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    gap: 0px;
+    position: fixed;
+    top: 260px;
+    line-height: 2px;
+}
+
 /*------- GAME OPTION PAGE END -------*/
 
 /*------- AI CHAT STYLES START -------*/

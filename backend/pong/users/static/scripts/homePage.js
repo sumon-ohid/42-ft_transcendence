@@ -348,7 +348,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 break;
             case 'multiGamePage':
                 multiGamePage();
-                break;         
+                break;
+            case 'tournamentPage':
+                tournamentPage();
+                break;
+            case 'createTournamentPage':
+                createTournamentPage();
+                break;
+            case 'choosePlayersForTournamentPage':
+                choosePlayersForTournamentPage();
+                break;                  
             // default:
             //   window.location.href = '';
         }
@@ -394,6 +403,15 @@ window.addEventListener('popstate', function(event) {
                 break;
             case 'multiGamePage':
                 multiGamePage();
+                break;
+            case 'tournamentPage':
+                tournamentPage();
+                break;
+            case 'createTournamentPage':
+                createTournamentPage();
+                break;
+            case 'choosePlayersForTournamentPage':
+                choosePlayersForTournamentPage();
                 break;
             // default:
             //   window.location.href = '/index.html';
