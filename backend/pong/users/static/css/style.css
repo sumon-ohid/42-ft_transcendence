@@ -948,6 +948,14 @@ form .login-button:hover {
     flex-direction: column;
     border-radius: 15px;
     box-shadow: 0 10px 6px rgba(0.5, 0, 0, 0.51); /* shadow */
+    font-family: "Sour Gummy";
+}
+
+.gamepage-container h2 {
+    font-family: "Modak";
+    color: var(--light-color);
+    font-size: 2em;
+    margin-top: 20px;
 }
 
 .choose-avatar, .choose-nickname, .ready {
@@ -2905,13 +2913,16 @@ form .login-button:hover {
     color: white;
     padding: 5px 10px;
     border: none;
-    border-radius: 5px;
+    border-radius: 15px;
     cursor: pointer;
     font-size: 1em;
+    width: 150px;
+    border: 1px solid rgba(255, 255, 255, 0.432);
+    box-shadow: 0 2px 6px rgba(0.2, 0, 0, 0.31);
 }
 
 .match-item button:hover {
-    background-color: var(--primary-color-dark);
+    background-color: var(--pong-color);
 }
 
 #number_of_plyers {

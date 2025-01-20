@@ -664,7 +664,7 @@ function showTournamentQuitConfirmation() {
 
 function confirmTournamentQuit() {
     clearInterval(tournamentGameInterval);
-    tournamentGamePage();
+    tournamentPage();
 }
 
 function cancelTournamentQuit() {
