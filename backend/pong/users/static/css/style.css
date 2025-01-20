@@ -955,6 +955,9 @@ form .login-button:hover {
     color: var(--white-color);
     font-size: 2em;
     margin-top: 20px;
+    border-radius: 10px;
+    padding: 5px;
+    margin-top: -70px;
 }
 
 .choose-avatar, .choose-nickname, .ready {
@@ -2882,6 +2885,25 @@ form .login-button:hover {
     border-color: var(--primary-color);
 }
 
+.match-list-container {
+    position: fixed;
+    top: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    align-items: center;
+    justify-items: center;
+    display: flex;
+    flex-direction: column;
+    border-radius: 15px;
+    gap: 20px;
+    padding: 20px;
+    font-family: "Sour Gummy";
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.253);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: var(--pong-color);
+}
+
 .match-list {
     display: flex;
     flex-direction: column;
@@ -2889,7 +2911,7 @@ form .login-button:hover {
 }
 
 .match-item {
-    background-color: var(--container-background);
+    background-color: var(--pong-color);
     padding: 10px;
     border-radius: 10px;
     text-align: center;
@@ -3179,6 +3201,7 @@ form .login-button:hover {
     padding: 15px;
     border-radius: 8px;
     z-index: 100;
+    font-family: "Sour Gummy";
 }
 
 .score-table-container h3 {
