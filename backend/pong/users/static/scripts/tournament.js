@@ -176,9 +176,12 @@ function recordMatchResult(player1, player2, result) {
         console.log('Proceeding to semi-finals stage after round robin...');
         proceedToSemiFinals();
         displayCurrentSemiFinalMatch();
-    } else {
+    } else if (currentMatchIndex === roundRobinMatches.length + semiFinalMatches.length) {
         console.log('Proceeding to finals stage after semi-finals...');
         proceedToFinal();
+    } else {
+        console.log('Final match completed. Declaring winner...');
+        declareWinner();
     }
 }
 
@@ -378,7 +381,7 @@ function finalStage(players) {
         <div class="match-list">
             <div class="match-item">
                 <p>${players[0].name} vs ${players[1].name}</p>
-                <button onclick="startTournamentGame(${JSON.stringify(players[0])}, ${JSON.stringify(players[1])})">Play</button>
+                <button onclick="startTournamentGame('${players[0].name}', '${players[1].name}')">Play</button>
             </div>
         </div>
         <div class="quit-game" onclick="tournamentPage()">
