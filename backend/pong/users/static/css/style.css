@@ -3172,29 +3172,45 @@ form .login-button:hover {
     width: 300px;
 }
 
+.score-table-container {
+    position: fixed;
+    top: 200px;
+    right: 20px;
+    background: var(--container-background);
+    padding: 15px;
+    border-radius: 8px;
+    z-index: 100;
+}
+
+.score-table-container h3 {
+    color: #fff;
+    margin: 0 0 10px 0;
+    font-size: 1.2em;
+}
+
 .score-table {
     width: 100%;
     border-collapse: collapse;
-    background-color: rgba(255, 255, 255, 0.1);
-    border-radius: 8px;
-    overflow: hidden;
+    color: #fff;
+}
+
+.score-table th,
+.score-table td {
+    padding: 8px 12px;
+    text-align: left;
 }
 
 .score-table th {
-    background-color: rgba(0, 0, 0, 0.2);
-    font-weight: bold;
-    padding: 0.5em;
-    text-align: left;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    margin-left: 15px;
+    background-color: #0077ff;
+    font-weight: 500;
 }
 
-.score-table td {
-    padding: 0.5em;
-    text-align: left;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    height: 20px;
-    margin-left: 20px;
+.score-table tr {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.692);
+}
+
+.score-table tr:nth-child(even) {
+    background-color: rgba(255, 255, 255, 0.1);
 }
 
 /*------- TOURNAMENT CONTAINER END -------*/

@@ -174,7 +174,8 @@ function recordMatchResult(player1, player2, result) {
     console.log('Match results:', matchResults);
     console.log('Player scores:', playerScores);
     
-    // Update score table
+    // Ensure score table exists before updating
+    createScoreTableIfNotExists();
     updateScoreTable();
 
     // Move to the next match
@@ -203,8 +204,37 @@ let playerScores = [
     { name: 'Eve', score: 0 }
 ];
 
+function createScoreTableIfNotExists() {
+    if (!document.getElementById('score-table-body')) {
+        const table = document.createElement('table');
+        table.className = 'score-table';
+        table.innerHTML = `
+            <thead>
+                <tr>
+                    <th>Player</th>
+                    <th>Wins</th>
+                </tr>
+            </thead>
+            <tbody id="score-table-body"></tbody>
+        `;
+        const container = document.createElement('div');
+        container.className = 'score-table-container';
+        container.innerHTML = `
+            <h3>Tournament Standings</h3>
+            ${table.outerHTML}
+        `;
+        document.body.appendChild(container);
+    }
+}
+
 function updateScoreTable() {
+    createScoreTableIfNotExists();
     const scoreTableBody = document.getElementById('score-table-body');
+    if (!scoreTableBody) {
+        console.error('Score table body not found');
+        return;
+    }
+    
     scoreTableBody.innerHTML = ''; // Clear existing rows
 
     playerScores.forEach(player => {
