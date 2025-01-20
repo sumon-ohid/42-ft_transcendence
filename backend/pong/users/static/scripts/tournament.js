@@ -164,7 +164,19 @@ function recordMatchResult(player1, player2, result) {
     }
     console.log(`${player1} ${result === 'win' ? 'won' : 'lost'} against ${player2}`);
 
+    // Update player scores
+    const winner = result === 'win' ? player1 : player2;
+    const playerScore = playerScores.find(p => p.name === winner);
+    if (playerScore) {
+        playerScore.score += 5;
+    }
+
     console.log('Match results:', matchResults);
+    console.log('Player scores:', playerScores);
+    
+    // Update score table
+    updateScoreTable();
+
     // Move to the next match
     console.log('Moving to the next match...');
     currentMatchIndex++;
@@ -180,6 +192,29 @@ function recordMatchResult(player1, player2, result) {
         console.log('Proceeding to finals stage after semi-finals...');
         proceedToFinal();
     }
+}
+
+let playerScores = [
+    { name: 'Alice', score: 0 },
+    { name: 'Bob', score: 0 },
+    { name: 'Charlie', score: 0 },
+    { name: 'David', score: 0 },
+    { name: 'Frank', score: 0 },
+    { name: 'Eve', score: 0 }
+];
+
+function updateScoreTable() {
+    const scoreTableBody = document.getElementById('score-table-body');
+    scoreTableBody.innerHTML = ''; // Clear existing rows
+
+    playerScores.forEach(player => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${player.name}</td>
+            <td>${player.score}</td>
+        `;
+        scoreTableBody.appendChild(row);
+    });
 }
 
 function displayCurrentMatch() {
@@ -210,11 +245,27 @@ function displayCurrentMatch() {
                 <button onclick='startTournamentGame(${JSON.stringify(match[0])}, ${JSON.stringify(match[1])})'>Play</button>
             </div>
         </div>
+        <div class="score-table-container">
+            <table class="score-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Score</th>
+                    </tr>
+                </thead>
+                <tbody id="score-table-body">
+                    <!-- Score rows will be dynamically generated here -->
+                </tbody>
+            </table>
+        </div>
         <div class="quit-game" onclick="tournamentPage()">
             <h1>BACK</h1>
         </div>
     `;
     body.appendChild(div);
+
+    // Update the score table with current scores
+    updateScoreTable();
 }
 
 function displayCurrentSemiFinalMatch() {
@@ -245,11 +296,28 @@ function displayCurrentSemiFinalMatch() {
                 <button onclick='startTournamentGame(${JSON.stringify(match[0])}, ${JSON.stringify(match[1])})'>Play</button>
             </div>
         </div>
+        <div class="score-table-container">
+            <h3>Score Table</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Player</th>
+                        <th>Score</th>
+                    </tr>
+                </thead>
+                <tbody id="score-table-body">
+                    <!-- Score rows will be dynamically generated here -->
+                </tbody>
+            </table>
+        </div>
         <div class="quit-game" onclick="tournamentPage()">
             <h1>BACK</h1>
         </div>
     `;
     body.appendChild(div);
+
+    // Update the score table with current scores
+    updateScoreTable();
 }
 
 let semiFinalPlayers = [];
@@ -355,7 +423,6 @@ function proceedToFinal() {
 }
 
 function finalStage(players) {
-
     console.log('Final stage with players:', players);
 
     if (players.length < 2) {
@@ -381,11 +448,28 @@ function finalStage(players) {
                 <button onclick="startTournamentGame(${JSON.stringify(players[0])}, ${JSON.stringify(players[1])})">Play</button>
             </div>
         </div>
+        <div class="score-table-container">
+            <h3>Score Table</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Player</th>
+                        <th>Score</th>
+                    </tr>
+                </thead>
+                <tbody id="score-table-body">
+                    <!-- Score rows will be dynamically generated here -->
+                </tbody>
+            </table>
+        </div>
         <div class="quit-game" onclick="tournamentPage()">
             <h1>BACK</h1>
         </div>
     `;
     body.appendChild(div);
+
+    // Update the score table with current scores
+    updateScoreTable();
 }
 
 function declareWinner() {
