@@ -32,4 +32,4 @@ jobs:
 
     - name: Build and Run Docker Compose
       run: |
-        docker-compose up --build
+        make
