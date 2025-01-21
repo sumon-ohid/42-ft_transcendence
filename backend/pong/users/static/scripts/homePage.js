@@ -357,9 +357,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 break;
             case 'choosePlayersForTournamentPage':
                 choosePlayersForTournamentPage();
-                break;                  
-            // default:
-            //   window.location.href = '';
+                break;
+            case 'roundRobinStage':
+                roundRobinStage();
+                break;
+            case 'semiFinalStage':
+                semiFinalStage();
+                break;
+            case 'finalStage':
+                finalStage();
+                break;
+            case 'tournamentGamePage':
+                tournamentGamePage();
+                break;     
+            default:
+                homePage();
         }
     }
 });
@@ -413,8 +425,20 @@ window.addEventListener('popstate', function(event) {
             case 'choosePlayersForTournamentPage':
                 choosePlayersForTournamentPage();
                 break;
-            // default:
-            //   window.location.href = '/index.html';
+            case 'roundRobinStage':
+                roundRobinStage();
+                break;
+            case 'semiFinalStage':
+                semiFinalStage();
+                break;
+            case 'finalStage':
+                finalStage();
+                break;
+            case 'tournamentGamePage':
+                tournamentGamePage();
+                break;
+            default:
+                homePage();
         }
     }
 });
