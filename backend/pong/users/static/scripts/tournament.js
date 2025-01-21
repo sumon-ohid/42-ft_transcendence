@@ -240,7 +240,9 @@ function updateScoreTable() {
     
     scoreTableBody.innerHTML = '';
 
-    playerScores.forEach(player => {
+    const sortedPlayerScores = playerScores.sort((a, b) => b.score - a.score);
+
+    sortedPlayerScores.forEach(player => {
         const row = document.createElement('tr');
         row.innerHTML = `
             <td>${player.name}</td>
@@ -327,6 +329,10 @@ function displayCurrentSemiFinalMatch() {
     div.className = "gamepage-container";
     div.innerHTML = `
         <h1>Final Score</h1>
+        <div class="match-list-container">
+            <p>🏆 The Winner is 🏆</p>
+            <h3>${players[0].name}</h3>
+        </div>
         <div class="score-table-container">
             <h3>Score Table</h3>
             <table class="score-table">
