@@ -4,6 +4,7 @@ let roundRobinMatches = [];
 let semiFinalMatches = [];
 let playerScores = [];
 let currentSemiFinalMatchIndex = 0;
+let numberOfPlayers = 3;
 
 function tournamentPage() {
     saveCurrentPage('tournamentPage');
@@ -37,6 +38,12 @@ function tournamentPage() {
         </div>
     `;
     body.appendChild(div);
+
+    numberOfPlayers = document.getElementById('players').value;
+    if (numberOfPlayers < 3 || numberOfPlayers > 6) {
+        error('Please choose between 3 and 6 players.');
+        return;
+    }
 }
 
 function choosePlayersForTournamentPage() {
@@ -45,11 +52,11 @@ function choosePlayersForTournamentPage() {
 
     // NOTE: There is an error here. when page is reloaded, the selected players are not saved.
     // Check if the number of players is valid
-    const numberOfPlayers = document.getElementById('players').value;
-    if (numberOfPlayers < 3 || numberOfPlayers > 6) {
-        error('Please choose between 3 and 6 players.');
-        return;
-    }
+    // const numberOfPlayers = document.getElementById('players').value;
+    // if (numberOfPlayers < 3 || numberOfPlayers > 6) {
+    //     error('Please choose between 3 and 6 players.');
+    //     return;
+    // }
     const players = generateRandomPlayers(numberOfPlayers);
 
     const body = document.body;
