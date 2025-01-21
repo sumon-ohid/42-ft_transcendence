@@ -2877,9 +2877,9 @@ form .login-button:hover {
     margin-top: 10px;
 }
 
-.player-item:hover {
+/* .player-item:hover {
     border-color: var(--primary-color);
-}
+} */
 
 .selected-player {
     border-color: var(--primary-color);

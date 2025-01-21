@@ -5,6 +5,7 @@ let semiFinalMatches = [];
 let playerScores = [];
 let currentSemiFinalMatchIndex = 0;
 let numberOfPlayers = 3;
+let chosenPlayers = [];
 
 function tournamentPage() {
     saveCurrentPage('tournamentPage');
@@ -58,6 +59,7 @@ function choosePlayersForTournamentPage() {
     //     return;
     // }
     const players = generateRandomPlayers(numberOfPlayers);
+    chosenPlayers = players;
 
     const body = document.body;
 
@@ -73,7 +75,7 @@ function choosePlayersForTournamentPage() {
             <p>These players will play against each other <br> in the tournament</p>
             <div class="player-list" id="player-list">
             ${players.map(player => `
-                <div class="player-item" onclick="selectPlayer(this)">
+                <div class="player-item">
                     <img src="${player.avatar}" alt="${player.name}'s avatar">
                     <p>${player.name}</p>
                 </div>
@@ -97,10 +99,6 @@ function choosePlayersForTournamentPage() {
     body.appendChild(div);
 }
 
-function selectPlayer(element) {
-    element.classList.toggle('selected-player');
-}
-
 function generateRandomPlayers(number) {
     const playerNames = [
         { name: 'Alice', avatar: '../static/avatars/avatar1.png' },
@@ -115,17 +113,11 @@ function generateRandomPlayers(number) {
 }
 
 function startTournament() {
-    const selectedPlayers = document.querySelectorAll('.selected-player');
-    console.log("Selected players: ");
-    console.log(selectedPlayers);
-    if (selectedPlayers.length < 3) {
-        error('Please select at least 3 players.');
-        return;
-    }
+    const selectedPlayers = chosenPlayers;
 
-    const players = Array.from(selectedPlayers).map(player => ({
-        name: player.querySelector('p').innerText,
-        avatar: player.querySelector('img').src
+    const players = selectedPlayers.map(player => ({
+        name: player.name,
+        avatar: player.avatar
     }));
 
     playerScores = players.map(player => ({ name: player.name, score: 0 }));
