@@ -304,8 +304,7 @@ function displayCurrentMatch() {
 
 function displayCurrentSemiFinalMatch() {
     // To protect against invalid semi-final match index
-    if (semiFinalMatches && currentSemiFinalMatchIndex) 
-    {
+    if (semiFinalMatches && currentSemiFinalMatchIndex) {
         if (currentSemiFinalMatchIndex >= semiFinalMatches.length) {
             console.log('Invalid semi-final match index:', currentSemiFinalMatchIndex);
             return;
@@ -381,11 +380,11 @@ function proceedToSemiFinals() {
     const totalPlayers = Object.keys(playerPoints).length;
     let playersToAdvance = 2;
     
-    if (totalPlayers === 5) {
-        playersToAdvance = 3;
-    } else if (totalPlayers === 6) {
-        playersToAdvance = 4;
-    }
+    // if (totalPlayers === 5) {
+    //     playersToAdvance = 3;
+    // } else if (totalPlayers === 6) {
+    //     playersToAdvance = 4;
+    // }
 
     // Get the top players to next stage
     const advancingPlayers = sortedPlayers.slice(0, playersToAdvance).map(playerName => {
@@ -418,13 +417,33 @@ function proceedToSemiFinals() {
 }
 
 function generateSemiFinalMatches(players) {
-    return [
-        [players[0], players[3]],
-        [players[1], players[2]]
-    ];
+    if (!players || players.length < 2) {
+        console.error('Not enough players to generate semi-final matches.');
+        return [];
+    }
+
+    // Assuming a simple semi-final match generation logic
+    // Adjust this logic based on your tournament rules
+    const matches = [];
+    if (players.length === 4) {
+        matches.push([players[0], players[3]]);
+        matches.push([players[1], players[2]]);
+    } else if (players.length === 3) {
+        matches.push([players[0], players[2]]);
+        matches.push([players[1], players[2]]);
+    } else {
+        matches.push([players[0], players[1]]);
+    }
+
+    return matches;
 }
 
 function semiFinalStage(players) {
+    if (!players || players.length < 2) {
+        console.error('Not enough players for the semi-final stage.');
+        return;
+    }
+
     saveCurrentPage('semiFinalStage');
     history.pushState({ page: 'semiFinalStage' }, '', '#semiFinalStage');
     const body = document.body;
