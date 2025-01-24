@@ -229,6 +229,114 @@ function createScoreTableIfNotExists() {
     }
 }
 
+const contractAddress = '0xf036bFB25370A1fD6cC397B432F9c6b7f37684c6';
+const contractABI = [
+	{
+		"inputs": [],
+		"name": "getAllResults",
+		"outputs": [
+			{
+				"components": [
+					{
+						"internalType": "string",
+						"name": "winnerName",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "score",
+						"type": "uint256"
+					}
+				],
+				"internalType": "struct ScoreContract.Result[]",
+				"name": "",
+				"type": "tuple[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "resultCount",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "results",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "winnerName",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "score",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_winnerName",
+				"type": "string"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_score",
+				"type": "uint256"
+			}
+		],
+		"name": "storeResult",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	}
+];
+
+let web3;
+let scoreContract;
+
+if (typeof Web3 !== 'undefined') {
+    web3 = new Web3(Web3.givenProvider || "http://localhost:7545");
+    scoreContract = new web3.eth.Contract(contractABI, contractAddress);
+} else {
+    console.log('Web3 not found. Please install it.');
+}
+
+async function storeWinner(winnerName, score) {
+    if (!scoreContract) {
+        console.error('scoreContract is not initialized.');
+        return;
+    }
+    if (!web3) {
+        console.error('Web3 is not initialized.');
+        return;
+    }   
+    const accounts = await web3.eth.getAccounts();
+    await ScoreContract.methods.storeResult(winnerName, score).send({ from: accounts[0] });
+}
+
+
 function updateScoreTable() {
     createScoreTableIfNotExists();
     const scoreTableBody = document.getElementById('score-table-body');
@@ -249,6 +357,13 @@ function updateScoreTable() {
         `;
         scoreTableBody.appendChild(row);
     });
+
+    if (sortedPlayerScores.length > 0) {
+        const winner = sortedPlayerScores[0];
+        console.log('Winner:', winner);
+        console.log('Storing winner in blockchain...');
+        storeWinner(winner.name, winner.score);
+    }
 }
 
 function displayCurrentMatch() {
