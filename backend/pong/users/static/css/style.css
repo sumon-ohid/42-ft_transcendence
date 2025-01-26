@@ -1161,6 +1161,14 @@ form .login-button:hover {
     display: flex;
 }
 
+.left-player p {
+    position: fixed;
+    left: 110px;
+    top: 65px;
+    font-size: .6em;
+    opacity: .7;
+}
+
 .left-player img {
     position: fixed;
     top: 10px;
@@ -1267,6 +1275,7 @@ form .login-button:hover {
     color: black;
     font-size: 1.5em;
 }
+
 
 .top-right-player p {
     position: fixed;
@@ -1443,6 +1452,14 @@ form .login-button:hover {
     align-items: center;
     justify-items: center;
     display: flex;
+}
+
+.right-player p {
+    position: fixed;
+    right: 110px;
+    top: 65px;
+    font-size: .6em;
+    opacity: .7;
 }
 
 .right-player img {
