@@ -206,9 +206,9 @@ function startGameLogic() {
         //-- Ball collision with left and right walls
         //-- If ball hits left or right wall, reverse the x direction
         //-- Score points for the opposite side
-        if (ballX + ballSpeedX > canvas.width - ballRadius || ballX + ballSpeedX < ballRadius) {
-            ballSpeedX = -ballSpeedX;
-        }
+        // if (ballX + ballSpeedX > canvas.width - ballRadius || ballX + ballSpeedX < ballRadius) {
+        //     ballSpeedX = -ballSpeedX;
+        // }
 
         // Ball collision with paddles
         // Top paddle
@@ -239,11 +239,11 @@ function startGameLogic() {
         }
 
         //-- Scoring
-        //-- If ball hits top or bottom wall, score points for the opposite side
+        //-- If ball hits top, bottom, left, or right wall, score points for the opposite side
         //-- Reset ball position
         //-- Example: If ball hits top wall, bottom player scores a point
         //-- He has to hit the ball at least once to score a point
-        if (ballY < 0 || ballY > canvas.height) {
+        if (ballY < 0 || ballY > canvas.height || ballX < 0 || ballX > canvas.width) {
             if (lastPaddleHit === 'top') {
                 topLeftScore++;
                 document.getElementById("top-left-score").innerText = topLeftScore;
