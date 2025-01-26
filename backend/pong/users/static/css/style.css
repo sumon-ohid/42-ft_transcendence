@@ -1044,6 +1044,44 @@ form .login-button:hover {
     border-radius: 50%;
 }
 
+.nickname-title {
+    top: 210px !important;
+    left: 70px !important;
+}
+
+.gamepage-nickname-inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    position: relative;
+    top: 204px;
+}
+
+.gamepage-nickname-inputs input {
+    width: 300px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    font-size: 16px;
+    text-align: center;
+}
+
+.gamepage-nickname-inputs #nickname1 {
+    border: 2px solid blue !important;
+}
+
+.gamepage-nickname-inputs #nickname2 {
+    border: 2px solid red !important;
+}
+
+.selected-avatar-player1 {
+    border: 2px solid blue;
+}
+
+.selected-avatar-player2 {
+    border: 2px solid red;
+}
+
 /*------- GAME PAGE END -------*/
 
 /*------- MAIN GAME START -------*/
@@ -1068,11 +1106,11 @@ form .login-button:hover {
     background-color: var(--black-color);
     transform: translateX(-50%);
     height: 360px;
-    width: .5px;
+    width: 1px;
     position: fixed;
     top: 20px;
     opacity: .5;
-    z-index: -1;
+    z-index: 10;
 }
 
 /* game scoreboard during game*/
@@ -1149,11 +1187,11 @@ form .login-button:hover {
     background-color: var(--black-color);
     transform: translateX(-50%);
     height: 360px;
-    width: .5px;
+    width: 1px;
     position: fixed;
     top: 28px;
     opacity: .5;
-    z-index: -1;
+    z-index: 1;
 }
 
 .multi-score-board {
@@ -1242,7 +1280,7 @@ form .login-button:hover {
     background-color: var(--black-color);
     transform: translateX(-50%);
     height: 180px;
-    width: .5px;
+    width: 1px;
     position: fixed;
     top: 10px;
     opacity: .5;
@@ -1339,7 +1377,7 @@ form .login-button:hover {
     background-color: var(--black-color);
     transform: translateX(-50%);
     height: 80px;
-    width: .5px;
+    width: 1px;
     position: fixed;
     top: 10px;
     opacity: .5;
