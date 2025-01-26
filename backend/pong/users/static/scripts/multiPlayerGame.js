@@ -64,6 +64,8 @@ function handleAvatarSelection(avatarNumber, element) {
 
 function initializeGameScreen() {
     const nicknameInput = document.getElementById("nickname");
+    if (!nicknameInput)
+        return;
     playerOneName = nicknameInput.value || "Player 1";
 
     if (playerOneName.length > 8) {
