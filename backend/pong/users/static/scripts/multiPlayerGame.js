@@ -1,7 +1,7 @@
 let playerOneName = "Player 1";
-let playerTwoName = "Player 2";
-let player3Name = "Player 3";
-let player4Name = "Player 4";
+let playerTwoName = "Mr Ponger";
+let player3Name = "Zsofia";
+let player4Name = "Claudia";
 let playerOneAvatar = "./avatars/avatar4.png";
 let playerTwoAvatar = "./avatars/avatar5.png";
 let player3Avatar = "./avatars/avatar6.png";
@@ -318,11 +318,11 @@ function showGameOverScreen() {
 
     let winnerName = playerOneName;
     if (scores.topRight === 3) {
-        winnerName = "Player 2";
+        winnerName = playerTwoName;
     } else if (scores.bottomLeft === 3) {
-        winnerName = "Player 3";
+        winnerName = player3Name;
     } else if (scores.bottomRight === 3) {
-        winnerName = "Player 4";
+        winnerName = player4Name;
     } else {
         winnerName = playerOneName;
     }
