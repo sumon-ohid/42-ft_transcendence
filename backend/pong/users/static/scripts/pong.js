@@ -63,30 +63,30 @@ function gamePage() {
     const div = document.createElement("div");
     div.className = "gamepage-container";
     div.innerHTML = /*html*/`
-    <div class="choose-avatar">
-        <h2>Choose Your Avatar</h2>
-        <div class="avatar-options">
-            <img src="../static/avatars/avatar1.png" alt="Avatar 1" onclick="selectAvatar(1, this)">
-            <img src="../static/avatars/avatar2.png" alt="Avatar 2" onclick="selectAvatar(2, this)">
-            <img src="../static/avatars/avatar3.png" alt="Avatar 3" onclick="selectAvatar(3, this)">
-            <img src="../static/avatars/avatar4.png" alt="Avatar 4" onclick="selectAvatar(4, this)">
-            <img src="../static/avatars/avatar5.png" alt="Avatar 5" onclick="selectAvatar(5, this)">
-            <img src="../static/avatars/avatar6.png" alt="Avatar 6" onclick="selectAvatar(6, this)">
+        <div class="choose-avatar">
+            <h2>Choose Your Avatar</h2>
+            <div class="avatar-options">
+                <img src="../static/avatars/avatar1.png" alt="Avatar 1" onclick="selectAvatar(1, this)">
+                <img src="../static/avatars/avatar2.png" alt="Avatar 2" onclick="selectAvatar(2, this)">
+                <img src="../static/avatars/avatar3.png" alt="Avatar 3" onclick="selectAvatar(3, this)">
+                <img src="../static/avatars/avatar4.png" alt="Avatar 4" onclick="selectAvatar(4, this)">
+                <img src="../static/avatars/avatar5.png" alt="Avatar 5" onclick="selectAvatar(5, this)">
+                <img src="../static/avatars/avatar6.png" alt="Avatar 6" onclick="selectAvatar(6, this)">
+            </div>
         </div>
-    </div>
-    <div class="choose-nickname">
-        <h2 class="nickname-title">Nicknames</h2>
-        <div class="gamepage-nickname-inputs">
-            <input type="text" id="nickname1" placeholder="Enter Player 1 nickname">
-            <input type="text" id="nickname2" placeholder="Enter Player 2 nickname">
+        <div class="choose-nickname">
+            <h2 class="nickname-title">Nicknames</h2>
+            <div class="gamepage-nickname-inputs">
+                <input type="text" id="nickname1" placeholder="Enter Player 1 nickname">
+                <input type="text" id="nickname2" placeholder="Enter Player 2 nickname">
+            </div>
         </div>
-    </div>
-    <div class="ready">
-        <button class="gamepage-button" onclick="startGame()">Ready</button>
-    </div>
-    <div class="quit-game" onclick="gameOptions()">
-        <h1>BACK</h1>
-    </div>
+        <div class="ready">
+            <button class="gamepage-button" onclick="startGame()">Ready</button>
+        </div>
+        <div class="quit-game" onclick="gameOptions()">
+            <h1>BACK</h1>
+        </div>
     `;
     body.appendChild(div);
 
@@ -98,14 +98,6 @@ function gamePage() {
             startGame();
         }
     });
-}
-
-function toggleAvatarSelection() {
-    if (currentAvatarSelection === 'player1') {
-        currentAvatarSelection = 'player2';
-    } else {
-        currentAvatarSelection = 'player1';
-    }
 }
 
 let avatarSelectionCount = 0;
