@@ -1011,6 +1011,7 @@ form .login-button:hover {
     border: 1px solid #000000;
     border-radius: 15px;
     box-shadow: 0 5px 6px rgba(0.5, 0, 0, 0.21); /* shadow */
+    font-family: "Sour Gummy";
 }
 
 .gamepage-button {
@@ -1034,7 +1035,28 @@ form .login-button:hover {
     border: 1px solid #ffffff;
 }
 
-.gamepage-button:hover {
+#game-play-button {
+    font-family: "Modak";
+    font-size: 2em;
+    color: #ffffff;
+    position: fixed;
+    top: 450px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+    background-color: var(--container-background);
+    background-size: cover;
+    height: 60px;
+    width: 170px;
+    border-radius: 30px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    box-shadow: 0 5px 6px rgba(0.5, 0, 0, 0.51); /* shadow */
+    border: 1px solid #ffffff;
+}
+
+.gamepage-button:hover, #game-play-button:hover {
     background-color: #4e8cea;
     color: rgb(255, 255, 255);
 }
@@ -1052,9 +1074,9 @@ form .login-button:hover {
 .gamepage-nickname-inputs {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 20px;
     position: relative;
-    top: 204px;
+    top: 210px;
 }
 
 .gamepage-nickname-inputs input {
@@ -1064,22 +1086,23 @@ form .login-button:hover {
     border-radius: 15px;
     font-size: 16px;
     text-align: center;
+    font-family: "Sour Gummy";
 }
 
 .gamepage-nickname-inputs #nickname1 {
-    border: 2px solid blue !important;
+    border: 2px solid rgb(227, 147, 0) !important;
 }
 
 .gamepage-nickname-inputs #nickname2 {
-    border: 2px solid red !important;
+    border: 2px solid rgb(128, 0, 255) !important;
 }
 
 .selected-avatar-player1 {
-    border: 2px solid blue;
+    border: 2px solid  rgb(255, 166, 0);
 }
 
 .selected-avatar-player2 {
-    border: 2px solid red;
+    border: 2px solid rgb(128, 0, 255);
 }
 
 /*------- GAME PAGE END -------*/
