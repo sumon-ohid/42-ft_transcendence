@@ -119,8 +119,8 @@ function selectAvatar(avatarNumber, element) {
 }
 
 function startGame() {
-    saveCurrentPage('startGame');
-    history.pushState({ page: 'startGame' }, '', '#startGame');
+    // saveCurrentPage('startGame');
+    // history.pushState({ page: 'startGame' }, '', '#startGame');
 
     const nicknameInput1 = document.getElementById("nickname1");
     const nicknameInput2 = document.getElementById("nickname2");

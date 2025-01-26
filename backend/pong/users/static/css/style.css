@@ -971,6 +971,10 @@ form .login-button:hover {
     font-family: "Sour Gummy";
 }
 
+.choose-nickname input {
+    background-color: rgba(249, 249, 249, 0.666);
+}
+
 .choose-nickname h2 {
     position: relative;
     top: 250px;
@@ -1087,14 +1091,17 @@ form .login-button:hover {
     font-size: 16px;
     text-align: center;
     font-family: "Sour Gummy";
+    background-color: rgba(249, 249, 249, 0.666);
 }
 
 .gamepage-nickname-inputs #nickname1 {
-    border: 2px solid rgb(227, 147, 0) !important;
+    border: none;
+    border-bottom: 2px solid rgb(227, 147, 0) !important;
 }
 
 .gamepage-nickname-inputs #nickname2 {
-    border: 2px solid rgb(128, 0, 255) !important;
+    border: none;
+    border-bottom: 2px solid rgb(128, 0, 255) !important;
 }
 
 .selected-avatar-player1 {
