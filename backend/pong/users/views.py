@@ -548,6 +548,7 @@ def redirect_to_home(request):
         <head>
             <script src="/static/scripts/homePage.js" defer></script>
             <link rel="stylesheet" href="/static/css/style.css">
+            <link rel="icon" type="image/png" href="/static/images/favicon.ico">
         </head>
         <body style="justify-content: center; align-items: center; display: flex; height: 100vh;">
             <h1 style="color: white; text-align: center;">Redirecting....</h1>
