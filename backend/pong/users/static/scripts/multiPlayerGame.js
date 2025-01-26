@@ -84,21 +84,25 @@ function initializeGameScreen() {
             <div class="top-left-player">
                 <img id="top-left-player" src="../static/${playerOneAvatar}" alt="player1">
                 <h3>${playerOneName}</h3>
+                <p>Control: A and D</p>
                 <h1 id="top-left-score">0</h1>
             </div>
             <div class="top-right-player">
                 <img id="top-right-player" src="../static/${playerTwoAvatar}" alt="player2">
                 <h3>${playerTwoName}</h3>
+                <p>Control: Left and Right arrows</p>
                 <h1 id="top-right-score">0</h1>
             </div>
             <div class="bottom-left-player">
                 <img id="bottom-left-player" src="../static/${player3Avatar}" alt="player3">
                 <h3>${player3Name}</h3>
+                <p>Control: W and S</p>
                 <h1 id="bottom-left-score">0</h1>
             </div>
             <div class="bottom-right-player">
                 <img id="bottom-right-player" src="../static/${player4Avatar}" alt="player4">
                 <h3>${player4Name}</h3>
+                <p>Control: Up and Down arrows</p>
                 <h1 id="bottom-right-score">0</h1>
             </div>
             <div class="multi-score-line"></div>

@@ -1244,6 +1244,14 @@ form .login-button:hover {
     font-size: 1.5em;
 }
 
+.top-left-player p {
+    position: fixed;
+    left: 110px;
+    top: 65px;
+    font-size: .5em;
+    opacity: .7;
+}
+
 .top-left-player img {
     height: 80px;
     width: auto;
@@ -1258,6 +1266,14 @@ form .login-button:hover {
     font-family: "Sour Gummy";
     color: black;
     font-size: 1.5em;
+}
+
+.top-right-player p {
+    position: fixed;
+    right: 110px;
+    top: 65px;
+    font-size: .5em;
+    opacity: .7;
 }
 
 .top-right-player img {
@@ -1276,6 +1292,14 @@ form .login-button:hover {
     font-size: 1.5em;
 }
 
+.bottom-left-player p {
+    position: fixed;
+    left: 110px;
+    bottom: 5px;
+    font-size: .5em;
+    opacity: .7;
+}
+
 .bottom-left-player img {
     height: 80px;
     width: auto;
@@ -1290,6 +1314,14 @@ form .login-button:hover {
     font-family: "Sour Gummy";
     color: black;
     font-size: 1.5em;
+}
+
+.bottom-right-player p {
+    position: fixed;
+    right: 110px;
+    bottom: 5px;
+    font-size: .5em;
+    opacity: .7;
 }
 
 .bottom-right-player img {
