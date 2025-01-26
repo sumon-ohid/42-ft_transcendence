@@ -18,7 +18,7 @@ function tournamentPage() {
 
     const div = document.createElement("div");
     div.className = "settings-container";
-    div.innerHTML = `
+    div.innerHTML = /*html*/`
         <h2>Pong Tournament</h2>
         <div class="pong-container-options"></div>
         <div class="pong-options"></div>
@@ -69,7 +69,7 @@ function choosePlayersForTournamentPage() {
 
     const div = document.createElement("div");
     div.className = "settings-container";
-    div.innerHTML = `
+    div.innerHTML = /*html*/`
         <h2>All Players</h2>
         <div class="player-container">
             <p>These players will play against each other <br> in the tournament</p>
@@ -271,7 +271,7 @@ function displayCurrentMatch() {
 
     const div = document.createElement("div");
     div.className = "gamepage-container";
-    div.innerHTML = `
+    div.innerHTML = /*html*/`
         <h1>Round Robin Stage</h1>
         <div class="match-list-container">
             <div class="match-item">
@@ -325,7 +325,7 @@ function displayCurrentSemiFinalMatch() {
 
     const div = document.createElement("div");
     div.className = "gamepage-container";
-    div.innerHTML = `
+    div.innerHTML = /*html*/`
         <h1>Final Score</h1>
         <div class="match-list-container">
             <p>🏆 The Winner is 🏆</p>
@@ -510,7 +510,7 @@ function finalStage(players) {
 
     const div = document.createElement("div");
     div.className = "gamepage-container";
-    div.innerHTML = `
+    div.innerHTML = /*html*/`
         <h1>Final Score</h1>
         <div class="match-list-container">
             <p>🏆 The Winner is 🏆</p>
@@ -596,7 +596,7 @@ function tournamentGamePage() {
 
     const div = document.createElement("div");
     div.className = "gamepage-container";
-    div.innerHTML = `
+    div.innerHTML = /*html*/`
         <div class="choose-avatar">
             <h2>Choose Your Avatar</h2>
             <div class="avatar-options">
@@ -660,7 +660,7 @@ function startTournamentGame(player1, player2) {
 
     const div = document.createElement("div");
     div.className = "maingame-container";
-    div.innerHTML = `
+    div.innerHTML = /*html*/`
         <div class="middle-line"></div>
         <div class="score-board">
             <div class="left-player">

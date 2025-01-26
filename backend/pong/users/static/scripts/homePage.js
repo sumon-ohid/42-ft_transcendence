@@ -369,7 +369,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 break;
             case 'tournamentGamePage':
                 tournamentGamePage();
-                break;     
+                break;
+            case 'startGame':
+                startGame();
+                break;
             default:
                 homePage();
         }

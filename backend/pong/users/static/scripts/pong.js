@@ -4,6 +4,45 @@ let player1Avatar = "./avatars/avatar4.png";
 let player2Avatar = "./avatars/avatar5.png";
 let gameInterval;
 
+function saveGameState() {
+    const canvas = document.getElementById("pongCanvas");
+    if (canvas) {
+        localStorage.setItem("gameState", JSON.stringify({
+            leftScore: leftScore,
+            rightScore: rightScore,
+            paddle1Y: paddle1Y,
+            paddle2Y: paddle2Y,
+            ballX: ballX,
+            ballY: ballY,
+            ballSpeedX: ballSpeedX,
+            ballSpeedY: ballSpeedY,
+        }));
+    }
+}
+
+function loadGameState() {
+    const savedState = localStorage.getItem("gameState");
+    if (savedState) {
+        const gameState = JSON.parse(savedState);
+        leftScore = gameState.leftScore || 0;
+        rightScore = gameState.rightScore || 0;
+        paddle1Y = gameState.paddle1Y || 0;
+        paddle2Y = gameState.paddle2Y || 0;
+        ballX = gameState.ballX || canvas.width / 2;
+        ballY = gameState.ballY || canvas.height / 2;
+        ballSpeedX = gameState.ballSpeedX || 3;
+        ballSpeedY = gameState.ballSpeedY || 3;
+
+        document.getElementById("left-score").innerText = leftScore;
+        document.getElementById("right-score").innerText = rightScore;
+    }
+}
+
+function clearGameState() {
+    localStorage.removeItem("gameState");
+}
+
+
 // *** NOTE ****
 // Change later: Nickname can be max 8 character other wise truncate to 8 chars.
 function gamePage() {
@@ -15,36 +54,44 @@ function gamePage() {
         body.removeChild(body.firstChild);
     }
 
+    // Load player data from localStorage
+    player1Name = localStorage.getItem('player1Name') || "Player 1";
+    player1Avatar = localStorage.getItem('player1Avatar') || "./avatars/avatar4.png";
+    player2Name = localStorage.getItem('player2Name') || "Player 2";
+    player2Avatar = localStorage.getItem('player2Avatar') || "./avatars/avatar5.png";
+
     const div = document.createElement("div");
     div.className = "gamepage-container";
-    div.innerHTML = `
-        <div class="choose-avatar">
-            <h2>Choose Your Avatar</h2>
-            <div class="avatar-options">
-                <img src="../static/avatars/avatar1.png" alt="Avatar 1" onclick="selectAvatar(1, this)">
-                <img src="../static/avatars/avatar2.png" alt="Avatar 2" onclick="selectAvatar(2, this)">
-                <img src="../static/avatars/avatar3.png" alt="Avatar 3" onclick="selectAvatar(3, this)">
-                <img src="../static/avatars/avatar4.png" alt="Avatar 4" onclick="selectAvatar(4, this)">
-                <img src="../static/avatars/avatar5.png" alt="Avatar 5" onclick="selectAvatar(5, this)">
-                <img src="../static/avatars/avatar6.png" alt="Avatar 6" onclick="selectAvatar(6, this)">
-            </div>
+    div.innerHTML = /*html*/`
+    <div class="choose-avatar">
+        <h2>Choose Your Avatar</h2>
+        <div class="avatar-options">
+            <img src="../static/avatars/avatar1.png" alt="Avatar 1" onclick="selectAvatar(1, this)">
+            <img src="../static/avatars/avatar2.png" alt="Avatar 2" onclick="selectAvatar(2, this)">
+            <img src="../static/avatars/avatar3.png" alt="Avatar 3" onclick="selectAvatar(3, this)">
+            <img src="../static/avatars/avatar4.png" alt="Avatar 4" onclick="selectAvatar(4, this)">
+            <img src="../static/avatars/avatar5.png" alt="Avatar 5" onclick="selectAvatar(5, this)">
+            <img src="../static/avatars/avatar6.png" alt="Avatar 6" onclick="selectAvatar(6, this)">
         </div>
-        <div class="choose-nickname">
-            <h2>Nickname</h2>
-            <input class="gamepage-input" type="text" id="nickname" placeholder="Enter your nickname">
+    </div>
+    <div class="choose-nickname">
+        <h2 class="nickname-title">Nicknames</h2>
+        <div class="gamepage-nickname-inputs">
+            <input type="text" id="nickname1" placeholder="Enter Player 1 nickname">
+            <input type="text" id="nickname2" placeholder="Enter Player 2 nickname">
         </div>
-        <div class="ready">
-            <button class="gamepage-button" onclick="startGame()">Ready</button>
-        </div>
-        <div class="quit-game" onclick="gameOptions()">
-            <h1>BACK</h1>
-        </div>
+    </div>
+    <div class="ready">
+        <button class="gamepage-button" onclick="startGame()">Ready</button>
+    </div>
+    <div class="quit-game" onclick="gameOptions()">
+        <h1>BACK</h1>
+    </div>
     `;
     body.appendChild(div);
 
     document.addEventListener('keydown', function(event) {
         if (event.key === 'Enter') {
-            // clear previous game interval if exists
             if (gameInterval) {
                 clearInterval(gameInterval);
             }
@@ -53,20 +100,53 @@ function gamePage() {
     });
 }
 
+function toggleAvatarSelection() {
+    if (currentAvatarSelection === 'player1') {
+        currentAvatarSelection = 'player2';
+    } else {
+        currentAvatarSelection = 'player1';
+    }
+}
+
+let avatarSelectionCount = 0;
+
 function selectAvatar(avatarNumber, element) {
-    player1Avatar = `./avatars/avatar${avatarNumber}.png`;
-    const avatars = document.querySelectorAll('.avatar-options img');
-    avatars.forEach(avatar => avatar.classList.remove('selected-avatar'));
-    element.classList.add('selected-avatar');
+    avatarSelectionCount++;
+    if (avatarSelectionCount === 1) {
+        player1Avatar = `./avatars/avatar${avatarNumber}.png`;
+        const avatars = document.querySelectorAll('.avatar-options img');
+        avatars.forEach(avatar => avatar.classList.remove('selected-avatar-player1'));
+        element.classList.add('selected-avatar-player1');
+    } else if (avatarSelectionCount === 2) {
+        player2Avatar = `./avatars/avatar${avatarNumber}.png`;
+        const avatars = document.querySelectorAll('.avatar-options img');
+        avatars.forEach(avatar => avatar.classList.remove('selected-avatar-player2'));
+        element.classList.add('selected-avatar-player2');
+        avatarSelectionCount = 0;
+    }
 }
 
 function startGame() {
-    const nicknameInput = document.getElementById("nickname");
-    player1Name = nicknameInput.value || "Player 1";
+    saveCurrentPage('startGame');
+    history.pushState({ page: 'startGame' }, '', '#startGame');
+
+    const nicknameInput1 = document.getElementById("nickname1");
+    const nicknameInput2 = document.getElementById("nickname2");
+    player1Name = nicknameInput1.value || "Player 1";
+    player2Name = nicknameInput2.value || "Player 2";
 
     if (player1Name.length > 8) {
         player1Name = player1Name.substring(0, 8) + '.';
     }
+    if (player2Name.length > 8) {
+        player2Name = player2Name.substring(0, 8) + '.';
+    }
+
+    // Save player data to localStorage
+    localStorage.setItem('player1Name', player1Name);
+    localStorage.setItem('player1Avatar', player1Avatar);
+    localStorage.setItem('player2Name', player2Name);
+    localStorage.setItem('player2Avatar', player2Avatar);
 
     const body = document.body;
 
@@ -76,7 +156,7 @@ function startGame() {
 
     const div = document.createElement("div");
     div.className = "maingame-container";
-    div.innerHTML = `
+    div.innerHTML = /*html*/ `
         <div class="middle-line"></div>
         <div class="score-board">
             <div class="left-player">
@@ -139,6 +219,9 @@ function showCountdown() {
 }
 
 function initializeGame() {
+    window.addEventListener("beforeunload", saveGameState);
+
+    loadGameState();
     const canvas = document.getElementById("pongCanvas");
     const ctx = canvas.getContext("2d");
 
@@ -207,6 +290,7 @@ function initializeGame() {
         const rightPlayerNickname = player2Name;
 
         if (leftScore === 5 || rightScore === 5) {
+            clearGameState();
             clearInterval(gameInterval); // Stop the game loop
             const winner = leftScore === 5 ? leftPlayerNickname : rightPlayerNickname;
             const confirmationElement = document.querySelector('.confirmation-to-quit');
