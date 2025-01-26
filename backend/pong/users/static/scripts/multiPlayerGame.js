@@ -262,7 +262,7 @@ function startGameLogic() {
 
         //-- Check for winner
         const scores = [topLeftScore, topRightScore, bottomLeftScore, bottomRightScore];
-        if (scores.some(score => score === 5)) {
+        if (scores.some(score => score === 3)) {
             showGameOverScreen();
         }
     }
@@ -317,15 +317,18 @@ function showGameOverScreen() {
     };
 
     let winnerName = playerOneName;
-    if (scores.topRight === 5) {
+    if (scores.topRight === 3) {
         winnerName = "Player 2";
-    } else if (scores.bottomLeft === 5) {
+    } else if (scores.bottomLeft === 3) {
         winnerName = "Player 3";
-    } else {
+    } else if (scores.bottomRight === 3) {
         winnerName = "Player 4";
+    } else {
+        winnerName = playerOneName;
     }
-    
-    const confirmationElement = document.querySelector('.confirmation-to-quit');
+
+
+    const confirmationElement = document.querySelector('.multi-confirmation-to-quit');
     if (confirmationElement) {
         confirmationElement.classList.remove('hidden');
         let countdown = 3;
