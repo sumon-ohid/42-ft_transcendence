@@ -82,7 +82,7 @@ function gamePage() {
             </div>
         </div>
         <div class="ready">
-            <button class="gamepage-button" onclick="startGame()">Ready</button>
+            <button id="game-play-button" class="gamepage-button" onclick="startGame()">Ready</button>
         </div>
         <div class="quit-game" onclick="gameOptions()">
             <h1>BACK</h1>
