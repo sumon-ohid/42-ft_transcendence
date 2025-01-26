@@ -1,7 +1,7 @@
 let playerOneName = "Player 1";
-let playerTwoName = "Player 2";
-let player3Name = "Player 3";
-let player4Name = "Player 4";
+let playerTwoName = "Mr Ponger";
+let player3Name = "Zsofia";
+let player4Name = "Claudia";
 let playerOneAvatar = "./avatars/avatar4.png";
 let playerTwoAvatar = "./avatars/avatar5.png";
 let player3Avatar = "./avatars/avatar6.png";
@@ -64,6 +64,8 @@ function handleAvatarSelection(avatarNumber, element) {
 
 function initializeGameScreen() {
     const nicknameInput = document.getElementById("nickname");
+    if (!nicknameInput)
+        return;
     playerOneName = nicknameInput.value || "Player 1";
 
     if (playerOneName.length > 8) {
@@ -84,21 +86,25 @@ function initializeGameScreen() {
             <div class="top-left-player">
                 <img id="top-left-player" src="../static/${playerOneAvatar}" alt="player1">
                 <h3>${playerOneName}</h3>
+                <p>Control: A and D</p>
                 <h1 id="top-left-score">0</h1>
             </div>
             <div class="top-right-player">
                 <img id="top-right-player" src="../static/${playerTwoAvatar}" alt="player2">
                 <h3>${playerTwoName}</h3>
+                <p>Control: Left and Right arrows</p>
                 <h1 id="top-right-score">0</h1>
             </div>
             <div class="bottom-left-player">
                 <img id="bottom-left-player" src="../static/${player3Avatar}" alt="player3">
                 <h3>${player3Name}</h3>
+                <p>Control: W and S</p>
                 <h1 id="bottom-left-score">0</h1>
             </div>
             <div class="bottom-right-player">
                 <img id="bottom-right-player" src="../static/${player4Avatar}" alt="player4">
                 <h3>${player4Name}</h3>
+                <p>Control: Up and Down arrows</p>
                 <h1 id="bottom-right-score">0</h1>
             </div>
             <div class="multi-score-line"></div>
@@ -318,11 +324,11 @@ function showGameOverScreen() {
 
     let winnerName = playerOneName;
     if (scores.topRight === 3) {
-        winnerName = "Player 2";
+        winnerName = playerTwoName;
     } else if (scores.bottomLeft === 3) {
-        winnerName = "Player 3";
+        winnerName = player3Name;
     } else if (scores.bottomRight === 3) {
-        winnerName = "Player 4";
+        winnerName = player4Name;
     } else {
         winnerName = playerOneName;
     }

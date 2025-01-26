@@ -30,8 +30,8 @@ function loadGameState() {
         paddle2Y = gameState.paddle2Y || 0;
         ballX = gameState.ballX || canvas.width / 2;
         ballY = gameState.ballY || canvas.height / 2;
-        ballSpeedX = gameState.ballSpeedX || 3;
-        ballSpeedY = gameState.ballSpeedY || 3;
+        ballSpeedX = gameState.ballSpeedX || 2;
+        ballSpeedY = gameState.ballSpeedY || 2;
 
         document.getElementById("left-score").innerText = leftScore;
         document.getElementById("right-score").innerText = rightScore;
@@ -119,8 +119,8 @@ function selectAvatar(avatarNumber, element) {
 }
 
 function startGame() {
-    saveCurrentPage('startGame');
-    history.pushState({ page: 'startGame' }, '', '#startGame');
+    // saveCurrentPage('startGame');
+    // history.pushState({ page: 'startGame' }, '', '#startGame');
 
     const nicknameInput1 = document.getElementById("nickname1");
     const nicknameInput2 = document.getElementById("nickname2");
@@ -154,11 +154,13 @@ function startGame() {
             <div class="left-player">
                 <img id="left-player" src="../static/${player1Avatar}" alt="player1">
                 <h3>${player1Name}</h3>
+                <p>Control: W, S</p>
                 <h1 id="left-score">0</h1>
             </div>
             <div class="right-player">
                 <img id="right-player" src="../static/${player2Avatar}" alt="player2">
                 <h3>${player2Name}</h3>
+                <p>Control: Up, Down arrows</p>
                 <h1 id="right-score">0</h1>
             </div>
             <div class="score-line"></div>
@@ -229,8 +231,8 @@ function initializeGame() {
     let paddle2Y = (canvas.height - paddleHeight) / 2;
     let ballX = canvas.width / 2;
     let ballY = canvas.height / 2;
-    let ballSpeedX = 3;
-    let ballSpeedY = 3;
+    let ballSpeedX = 2;
+    let ballSpeedY = 2;
 
     const paddleSpeed = 20;
 

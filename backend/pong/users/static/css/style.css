@@ -971,6 +971,10 @@ form .login-button:hover {
     font-family: "Sour Gummy";
 }
 
+.choose-nickname input {
+    background-color: rgba(249, 249, 249, 0.666);
+}
+
 .choose-nickname h2 {
     position: relative;
     top: 250px;
@@ -1087,14 +1091,17 @@ form .login-button:hover {
     font-size: 16px;
     text-align: center;
     font-family: "Sour Gummy";
+    background-color: rgba(249, 249, 249, 0.666);
 }
 
 .gamepage-nickname-inputs #nickname1 {
-    border: 2px solid rgb(227, 147, 0) !important;
+    border: none;
+    border-bottom: 2px solid rgb(227, 147, 0) !important;
 }
 
 .gamepage-nickname-inputs #nickname2 {
-    border: 2px solid rgb(128, 0, 255) !important;
+    border: none;
+    border-bottom: 2px solid rgb(128, 0, 255) !important;
 }
 
 .selected-avatar-player1 {
@@ -1159,6 +1166,14 @@ form .login-button:hover {
     align-items: center;
     justify-items: center;
     display: flex;
+}
+
+.left-player p {
+    position: fixed;
+    left: 110px;
+    top: 65px;
+    font-size: .6em;
+    opacity: .7;
 }
 
 .left-player img {
@@ -1244,6 +1259,14 @@ form .login-button:hover {
     font-size: 1.5em;
 }
 
+.top-left-player p {
+    position: fixed;
+    left: 110px;
+    top: 65px;
+    font-size: .5em;
+    opacity: .7;
+}
+
 .top-left-player img {
     height: 80px;
     width: auto;
@@ -1258,6 +1281,15 @@ form .login-button:hover {
     font-family: "Sour Gummy";
     color: black;
     font-size: 1.5em;
+}
+
+
+.top-right-player p {
+    position: fixed;
+    right: 110px;
+    top: 65px;
+    font-size: .5em;
+    opacity: .7;
 }
 
 .top-right-player img {
@@ -1276,6 +1308,14 @@ form .login-button:hover {
     font-size: 1.5em;
 }
 
+.bottom-left-player p {
+    position: fixed;
+    left: 110px;
+    bottom: 5px;
+    font-size: .5em;
+    opacity: .7;
+}
+
 .bottom-left-player img {
     height: 80px;
     width: auto;
@@ -1290,6 +1330,14 @@ form .login-button:hover {
     font-family: "Sour Gummy";
     color: black;
     font-size: 1.5em;
+}
+
+.bottom-right-player p {
+    position: fixed;
+    right: 110px;
+    bottom: 5px;
+    font-size: .5em;
+    opacity: .7;
 }
 
 .bottom-right-player img {
@@ -1411,6 +1459,14 @@ form .login-button:hover {
     align-items: center;
     justify-items: center;
     display: flex;
+}
+
+.right-player p {
+    position: fixed;
+    right: 110px;
+    top: 65px;
+    font-size: .6em;
+    opacity: .7;
 }
 
 .right-player img {
