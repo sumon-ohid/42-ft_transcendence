@@ -48,8 +48,8 @@ function tournamentPage() {
 }
 
 function choosePlayersForTournamentPage() {
-    saveCurrentPage('choosePlayersForTournamentPage');
-    history.pushState({ page: 'choosePlayersForTournamentPage' }, '', '#choosePlayersForTournamentPage');
+    // saveCurrentPage('choosePlayersForTournamentPage');
+    // history.pushState({ page: 'choosePlayersForTournamentPage' }, '', '#choosePlayersForTournamentPage');
 
     // NOTE: There is an error here. when page is reloaded, the selected players are not saved.
     // Check if the number of players is valid
@@ -126,8 +126,8 @@ function startTournament() {
 }
 
 function roundRobinStage(players) {
-    saveCurrentPage('roundRobinStage');
-    history.pushState({ page: 'roundRobinStage' }, '', '#roundRobinStage');
+    // saveCurrentPage('roundRobinStage');
+    // history.pushState({ page: 'roundRobinStage' }, '', '#roundRobinStage');
 
     roundRobinMatches = generateRoundRobinMatches(players);
     console.log("Round Robin Matches: ");
@@ -444,8 +444,8 @@ function semiFinalStage(players) {
         return;
     }
 
-    saveCurrentPage('semiFinalStage');
-    history.pushState({ page: 'semiFinalStage' }, '', '#semiFinalStage');
+    // saveCurrentPage('semiFinalStage');
+    // history.pushState({ page: 'semiFinalStage' }, '', '#semiFinalStage');
     const body = document.body;
 
     while (body.firstChild) {
@@ -500,8 +500,8 @@ function finalStage(players) {
         return;
     }
 
-    saveCurrentPage('finalStage');
-    history.pushState({ page: 'finalStage' }, '', '#finalStage');
+    // saveCurrentPage('finalStage');
+    // history.pushState({ page: 'finalStage' }, '', '#finalStage');
     const body = document.body;
 
     while (body.firstChild) {
@@ -586,8 +586,8 @@ let tournamentPlayer2Avatar = "../static/avatars/avatar5.png";
 let tournamentGameInterval;
 
 function tournamentGamePage() {
-    saveCurrentPage('tournamentGamePage');
-    history.pushState({ page: 'tournamentGamePage' }, '', '#tournamentGamePage');
+    // saveCurrentPage('tournamentGamePage');
+    // history.pushState({ page: 'tournamentGamePage' }, '', '#tournamentGamePage');
     const body = document.body;
 
     while (body.firstChild) {
