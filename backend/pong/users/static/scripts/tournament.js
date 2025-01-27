@@ -505,23 +505,25 @@ function proceedToSemiFinals() {
 
     console.log('Players advancing:', advancingPlayers);
     
-    if (advancingPlayers.length === 2) {
-        // for 3-4 players
-        finalStage(advancingPlayers);
-    } else if (advancingPlayers.length === 3) {
-        // for 5 players
-        semiFinalPlayers = advancingPlayers;
-        // Top player goes directly to final
-        const finalist = semiFinalPlayers[0];
-        // Other two play semi-final
-        semiFinalMatches = [[semiFinalPlayers[1], semiFinalPlayers[2]]];
-        currentSemiFinalMatchIndex = 0;
-        displayCurrentSemiFinalMatch();
-    } else if (advancingPlayers.length === 4) {
-        // Standard semi-finals for 6 players
-        semiFinalPlayers = advancingPlayers;
-        semiFinalStage(semiFinalPlayers);
-    }
+    finalStage(advancingPlayers);
+    
+    // if (advancingPlayers.length === 2) {
+    //     // for 3-4 players
+    //     finalStage(advancingPlayers);
+    // } else if (advancingPlayers.length === 3) {
+    //     // for 5 players
+    //     semiFinalPlayers = advancingPlayers;
+    //     // Top player goes directly to final
+    //     const finalist = semiFinalPlayers[0];
+    //     // Other two play semi-final
+    //     semiFinalMatches = [[semiFinalPlayers[1], semiFinalPlayers[2]]];
+    //     currentSemiFinalMatchIndex = 0;
+    //     displayCurrentSemiFinalMatch();
+    // } else if (advancingPlayers.length === 4) {
+    //     // Standard semi-finals for 6 players
+    //     semiFinalPlayers = advancingPlayers;
+    //     semiFinalStage(semiFinalPlayers);
+    // }
 }
 
 function generateSemiFinalMatches(players) {
