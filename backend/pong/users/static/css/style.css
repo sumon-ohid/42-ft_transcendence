@@ -3367,8 +3367,17 @@ form .login-button:hover {
     background-color: rgba(255, 255, 255, 0.1);
 } */
 
-.winner-container {
-
-}
 
 /*------- TOURNAMENT CONTAINER END -------*/
+
+/*------- ERROR DIV START -------*/
+
+.error-div {
+    position: fixed;
+    top: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.2em;
+}
+
+/*------- ERROR DIV END -------*/

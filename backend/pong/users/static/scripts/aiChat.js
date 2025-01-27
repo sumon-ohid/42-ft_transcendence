@@ -82,6 +82,7 @@ window.addEventListener('DOMContentLoaded', async () => {
         await aiChat.initialize(data.apiKey);
     } catch (error) {
         console.error('Failed to initialize AI chat:', error);
+        error("Failed to initialize AI chat. Please try again later.", "error");
     }
 });
 

@@ -42,7 +42,7 @@ function tournamentPage() {
 
     numberOfPlayers = document.getElementById('players').value;
     if (numberOfPlayers < 3 || numberOfPlayers > 6) {
-        error('Please choose between 3 and 6 players.');
+        error('Please choose between 3 and 6 players.', 'error');
         return;
     }
 }
@@ -55,7 +55,7 @@ function choosePlayersForTournamentPage() {
     // Check if the number of players is valid
     const numberOfPlayers = document.getElementById('players').value;
     if (numberOfPlayers < 3 || numberOfPlayers > 6) {
-        error('Please choose between 3 and 6 players.');
+        error('Please choose between 3 and 6 players.', 'error');
         return;
     }
     const players = generateRandomPlayers(numberOfPlayers);
@@ -473,7 +473,7 @@ function proceedToFinal() {
 
     const semiFinalWinners = semiFinalMatches.filter(match => match.result === 'win').map(match => match.player1);
     if (semiFinalWinners.length !== 2) {
-        error('Please complete all semi-final matches.');
+        error('Please complete all semi-final matches.', 'error');
         return;
     }
 
@@ -496,7 +496,7 @@ function finalStage(players) {
 
     if (players.length < 2) {
         console.log('Not enough players for the final.');
-        error('Not enough players to start the final match.');
+        error('Not enough players to start the final match.', 'error');
         return;
     }
 

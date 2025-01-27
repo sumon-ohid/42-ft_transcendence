@@ -324,6 +324,7 @@ function initializeGame() {
                         .then(data => {
                             if (data.status === 'success') {
                                 console.log('Score saved successfully');
+                                error("Score saved successfully", "success");
                             } else {
                                 console.error('Error saving score:', data.message);
                             }
