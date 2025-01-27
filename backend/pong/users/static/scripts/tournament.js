@@ -229,7 +229,7 @@ function createScoreTableIfNotExists() {
     }
 }
 
-const contractAddress = '0xf036bFB25370A1fD6cC397B432F9c6b7f37684c6';
+const contractAddress = '0xfd72663d20C56b3014F02f9808A350EE3000d10f';
 const contractABI = [
 	{
 		"inputs": [],
@@ -314,17 +314,17 @@ const contractABI = [
 ];
 
 let web3;
-let scoreContract;
+let ScoreContract;
 
 if (typeof Web3 !== 'undefined') {
     web3 = new Web3(Web3.givenProvider || "http://localhost:7545");
-    scoreContract = new web3.eth.Contract(contractABI, contractAddress);
+    ScoreContract = new web3.eth.Contract(contractABI, contractAddress);
 } else {
     console.log('Web3 not found. Please install it.');
 }
 
 async function storeWinner(winnerName, score) {
-    if (!scoreContract) {
+    if (!ScoreContract) {
         console.error('scoreContract is not initialized.');
         return;
     }
@@ -357,13 +357,6 @@ function updateScoreTable() {
         `;
         scoreTableBody.appendChild(row);
     });
-
-    if (sortedPlayerScores.length > 0) {
-        const winner = sortedPlayerScores[0];
-        console.log('Winner:', winner);
-        console.log('Storing winner in blockchain...');
-        storeWinner(winner.name, winner.score);
-    }
 }
 
 function displayCurrentMatch() {
@@ -680,6 +673,12 @@ function updateFinalScoreTable(players) {
         `;
         scoreTableBody.appendChild(row);
     });
+
+    // store in blockchain
+    const winner = sortedPlayers[0];
+    console.log('Winner:', winner);
+    console.log('Storing winner in blockchain...');
+    storeWinner(winner.name, winner.score);
 }
 
 function getPositionText(position) {
