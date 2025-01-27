@@ -82,6 +82,12 @@ function initializeGameScreen() {
     div.className = "multi-maingame-container";
     div.innerHTML = `
         <div class="multi-middle-line"></div>
+        <div class="info-player">
+            <span class="badge rounded-pill bg-warning text-dark">
+            <i class="fa-solid fa-circle-info"></i>
+            Warning: On reload you may lose the current game!
+            </span>
+        </div>
         <div class="multi-score-board">
             <div class="top-left-player">
                 <img id="top-left-player" src="../static/${playerOneAvatar}" alt="player1">

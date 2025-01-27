@@ -662,6 +662,12 @@ function startTournamentGame(player1, player2) {
     div.className = "maingame-container";
     div.innerHTML = /*html*/`
         <div class="middle-line"></div>
+        <div class="info-player">
+            <span class="badge rounded-pill bg-warning text-dark">
+            <i class="fa-solid fa-circle-info"></i>
+            Warning: On reload you may lose the current game!
+            </span>
+        </div>
         <div class="score-board">
             <div class="left-player">
                 <img id="left-player" src="${tournamentPlayer1Avatar}" alt="player1">

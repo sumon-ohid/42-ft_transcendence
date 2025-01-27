@@ -1132,6 +1132,11 @@ form .login-button:hover {
     box-shadow: 0 10px 6px rgba(0.5, 0, 0, 0.51); /* shadow */
 }
 
+.info-player {
+    position: fixed;
+    top: -50px;
+}
+
 .middle-line {
     background-color: var(--black-color);
     transform: translateX(-50%);
