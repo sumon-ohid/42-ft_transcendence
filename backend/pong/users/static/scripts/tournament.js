@@ -665,18 +665,20 @@ function startTournamentGame(player1, player2) {
         <div class="info-player">
             <span class="badge rounded-pill bg-warning text-dark">
             <i class="fa-solid fa-circle-info"></i>
-            Warning: On reload you may lose the current game!
+            info: on reload you may lose the current game!
             </span>
         </div>
         <div class="score-board">
             <div class="left-player">
                 <img id="left-player" src="${tournamentPlayer1Avatar}" alt="player1">
                 <h3>${tournamentPlayer1Name}</h3>
+                <p>Control: W, S</p>
                 <h1 id="left-score">0</h1>
             </div>
             <div class="right-player">
                 <img id="right-player" src="${tournamentPlayer2Avatar}" alt="player2">
                 <h3>${tournamentPlayer2Name}</h3>
+                <p>Control: Up, Down</p>
                 <h1 id="right-score">0</h1>
             </div>
             <div class="score-line"></div>

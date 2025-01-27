@@ -85,7 +85,7 @@ function initializeGameScreen() {
         <div class="info-player">
             <span class="badge rounded-pill bg-warning text-dark">
             <i class="fa-solid fa-circle-info"></i>
-            Warning: On reload you may lose the current game!
+            info: on reload you may lose the current game!
             </span>
         </div>
         <div class="multi-score-board">
