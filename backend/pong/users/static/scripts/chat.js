@@ -37,8 +37,6 @@ function connectWebSocket(username) {
 
 function displayMessage(message) {
 
-    console.log("Display Function");
-
     const chatMessages = document.getElementById("chat-messages");
     
     const messageElement = document.createElement("div");
@@ -185,7 +183,7 @@ async function chatPage() {
 
     async function sendMessage() {
         if (!selectedUser) {
-            error("Select a user to chat with first.");
+            error("Select a user to chat with first.", "warning");
             return;
         }
         
@@ -238,7 +236,7 @@ async function chatPage() {
     
             const isFriend = data.is_friend;
             if (isFriend) {
-                error("You can't chat with the user.");
+                error("You can't chat with the user.", "warning");
                 return;
             }
     

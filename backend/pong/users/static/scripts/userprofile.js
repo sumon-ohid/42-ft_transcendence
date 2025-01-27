@@ -120,6 +120,7 @@ function toggleBlock(username) {
                 addFriendButton.textContent = 'Unblock';
                 addFriendButton.classList.remove('text-bg-danger');
                 addFriendButton.classList.add('text-bg-primary');
+                error('User blocked', 'success');
             } else {
                 console.error(data.error);
             }

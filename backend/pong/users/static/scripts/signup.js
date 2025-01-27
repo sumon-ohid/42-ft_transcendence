@@ -59,7 +59,7 @@ function handleSignup() {
     const password = document.getElementById("password").value.trim();
 
     if (!email || !username || !password) {
-        error("All fields are required!");
+        error("All fields are required!", "error");
         return;
     }
 
@@ -76,42 +76,48 @@ function handleSignup() {
         .then(response => response.json())
         .then(data => {
             if (data.status === 'success') {
-                error(data.message);
+                error(data.message, "success");
                 setTimeout(function() {
                     login();
                 }, 1000);
             } else if (data.errors) {
-                error("Errors: " + JSON.stringify(data.errors));
+                error("Errors: " + JSON.stringify(data.errors), "error");
             } else {
-                error("Something went wrong!");
+                error("Something went wrong!", "error");
             }
         })
         .catch(error => {
             console.error('Error:', error);
-            error("An error occurred. Please try again.");
+            error("An error occurred. Please try again.", "error");
         });
 }
 
 
-function error(msg) {
+function error(msg, type) {
     var errorDiv = document.createElement('div');
 
-    errorDiv.innerText = msg;
-    
-    errorDiv.style.position = 'fixed';
-    errorDiv.style.top = '40px';
-    errorDiv.style.left = '50%';
-    errorDiv.style.transform = 'translate(-50%, -50%)';
-    errorDiv.style.padding = '10px';
-    errorDiv.style.backgroundColor = 'black';
-    errorDiv.style.color = 'white';
-    errorDiv.style.borderRadius = '5px';
-    errorDiv.style.zIndex = '100';
-     document.body.appendChild(errorDiv);
+    errorDiv.className = "error-div";
+    if (type === "success") {
+        errorDiv.innerHTML = `
+            <span class="badge rounded-pill bg-success">
+            <i class="fa-solid fa-check-circle"></i>
+            ${msg}
+            </span>
+        `;
+    } else {
+        errorDiv.innerHTML = `
+            <span class="badge rounded-pill bg-danger">
+            <i class="fa-solid fa-exclamation-circle"></i>
+            ${msg}
+            </span>
+        `;
+    }
+
+    document.body.appendChild(errorDiv);
     
     setTimeout(function() {
         if (document.body.contains(errorDiv)) {
             document.body.removeChild(errorDiv);
         }
-    }, 3000);
+    }, 4000);
 }

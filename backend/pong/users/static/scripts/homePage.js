@@ -266,7 +266,7 @@ function handleLogout(event) {
     localStorage.removeItem('currentPage');
 
     if (!csrfToken) {
-        error("CSRF token not found. Logout request cannot be sent.");
+        error("CSRF token not found. Logout request cannot be sent.", "error");
         return;
     }
     fetch('/api/logout/', {
@@ -278,18 +278,18 @@ function handleLogout(event) {
     })
         .then(response => {
             if (response.ok) {
-                error("You have been logged out.");
                 localStorage.removeItem('jwtToken');
+                error("You have been logged out.", "success");
                 window.location.href = 'https://localhost:8000/';
             } else {
                 return response.json().then(data => {
-                    error("Logout failed: " + (data.error || "Unknown error."));
+                    error("Logout failed: " + (data.error || "Unknown error."), "error");
                 });
             }
         })
         .catch(error => {
             console.error("Error during logout:", error);
-            error("An error occurred while logging out.");
+            error("An error occurred while logging out.", "error");
         });
 }
 

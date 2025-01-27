@@ -42,20 +42,20 @@ function tournamentPage() {
 
     numberOfPlayers = document.getElementById('players').value;
     if (numberOfPlayers < 3 || numberOfPlayers > 6) {
-        error('Please choose between 3 and 6 players.');
+        error('Please choose between 3 and 6 players.', 'error');
         return;
     }
 }
 
 function choosePlayersForTournamentPage() {
-    saveCurrentPage('choosePlayersForTournamentPage');
-    history.pushState({ page: 'choosePlayersForTournamentPage' }, '', '#choosePlayersForTournamentPage');
+    // saveCurrentPage('choosePlayersForTournamentPage');
+    // history.pushState({ page: 'choosePlayersForTournamentPage' }, '', '#choosePlayersForTournamentPage');
 
     // NOTE: There is an error here. when page is reloaded, the selected players are not saved.
     // Check if the number of players is valid
     const numberOfPlayers = document.getElementById('players').value;
     if (numberOfPlayers < 3 || numberOfPlayers > 6) {
-        error('Please choose between 3 and 6 players.');
+        error('Please choose between 3 and 6 players.', 'error');
         return;
     }
     const players = generateRandomPlayers(numberOfPlayers);
@@ -126,8 +126,8 @@ function startTournament() {
 }
 
 function roundRobinStage(players) {
-    saveCurrentPage('roundRobinStage');
-    history.pushState({ page: 'roundRobinStage' }, '', '#roundRobinStage');
+    // saveCurrentPage('roundRobinStage');
+    // history.pushState({ page: 'roundRobinStage' }, '', '#roundRobinStage');
 
     roundRobinMatches = generateRoundRobinMatches(players);
     console.log("Round Robin Matches: ");
@@ -552,8 +552,8 @@ function semiFinalStage(players) {
         return;
     }
 
-    saveCurrentPage('semiFinalStage');
-    history.pushState({ page: 'semiFinalStage' }, '', '#semiFinalStage');
+    // saveCurrentPage('semiFinalStage');
+    // history.pushState({ page: 'semiFinalStage' }, '', '#semiFinalStage');
     const body = document.body;
 
     while (body.firstChild) {
@@ -581,7 +581,7 @@ function proceedToFinal() {
 
     const semiFinalWinners = semiFinalMatches.filter(match => match.result === 'win').map(match => match.player1);
     if (semiFinalWinners.length !== 2) {
-        error('Please complete all semi-final matches.');
+        error('Please complete all semi-final matches.', 'error');
         return;
     }
 
@@ -604,12 +604,12 @@ function finalStage(players) {
 
     if (players.length < 2) {
         console.log('Not enough players for the final.');
-        error('Not enough players to start the final match.');
+        error('Not enough players to start the final match.', 'error');
         return;
     }
 
-    saveCurrentPage('finalStage');
-    history.pushState({ page: 'finalStage' }, '', '#finalStage');
+    // saveCurrentPage('finalStage');
+    // history.pushState({ page: 'finalStage' }, '', '#finalStage');
     const body = document.body;
 
     while (body.firstChild) {
@@ -700,8 +700,8 @@ let tournamentPlayer2Avatar = "../static/avatars/avatar5.png";
 let tournamentGameInterval;
 
 function tournamentGamePage() {
-    saveCurrentPage('tournamentGamePage');
-    history.pushState({ page: 'tournamentGamePage' }, '', '#tournamentGamePage');
+    // saveCurrentPage('tournamentGamePage');
+    // history.pushState({ page: 'tournamentGamePage' }, '', '#tournamentGamePage');
     const body = document.body;
 
     while (body.firstChild) {
@@ -776,15 +776,23 @@ function startTournamentGame(player1, player2) {
     div.className = "maingame-container";
     div.innerHTML = /*html*/`
         <div class="middle-line"></div>
+        <div class="info-player" hidden>
+            <span class="badge rounded-pill bg-warning text-dark">
+            <i class="fa-solid fa-circle-info"></i>
+            info: on reload or quit game you may lose the current game!
+            </span>
+        </div>
         <div class="score-board">
             <div class="left-player">
                 <img id="left-player" src="${tournamentPlayer1Avatar}" alt="player1">
                 <h3>${tournamentPlayer1Name}</h3>
+                <p>Control: W, S</p>
                 <h1 id="left-score">0</h1>
             </div>
             <div class="right-player">
                 <img id="right-player" src="${tournamentPlayer2Avatar}" alt="player2">
                 <h3>${tournamentPlayer2Name}</h3>
+                <p>Control: Up, Down</p>
                 <h1 id="right-score">0</h1>
             </div>
             <div class="score-line"></div>
@@ -807,6 +815,13 @@ function startTournamentGame(player1, player2) {
     rightScore = 0;
     document.getElementById("left-score").innerText = leftScore;
     document.getElementById("right-score").innerText = rightScore;
+
+    // Show info player for 10 seconds
+    const infoPlayer = document.querySelector('.info-player');
+    infoPlayer.hidden = false;
+    setTimeout(() => {
+        infoPlayer.hidden = true;
+    }, 10000);
 
     // Show count down before starting game.
     showTournamentCountdown();
@@ -851,8 +866,8 @@ function initializeTournamentGame() {
     let paddle2Y = (canvas.height - paddleHeight) / 2;
     let ballX = canvas.width / 2;
     let ballY = canvas.height / 2;
-    let ballSpeedX = 3;
-    let ballSpeedY = 3;
+    let ballSpeedX = 2;
+    let ballSpeedY = 2;
 
     const paddleSpeed = 20;
 

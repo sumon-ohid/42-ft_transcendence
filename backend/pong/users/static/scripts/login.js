@@ -97,7 +97,7 @@ function handleLogin(event) {
     const password = document.getElementById("password").value.trim();
 
     if (!username || !password) {
-        error("Username and password are required!");
+        error("Username and password are required!", "error");
         return;
     }
 
@@ -117,20 +117,20 @@ function handleLogin(event) {
                 if (data.two_factor_enabled) {
                     show2FAPage(); // Show the 2FA page if 2FA is enabled
                 } else {
-                    error(data.message);
+                    error(data.message, "success");
                     setTimeout(function() {
                         homePage(); // Redirect to the home page
                     }, 1000);
                 }
             } else if (data.error) {
-                error("Error: " + data.error);
+                error("Error: " + data.error, "error");
             } else {
                 error("Something went wrong!");
             }
         })
         .catch(error => {
             console.error('Error:', error);
-            error("An error occurred. Please try again.");
+            error("An error occurred. Please try again.", "error");
         });
 }
 
@@ -167,7 +167,7 @@ function handle2FAVerification(event) {
     const code = document.getElementById("2fa-code").value.trim();
 
     if (!code) {
-        error("2FA code is required!");
+        error("2FA code is required!", "error");
         return;
     }
 
@@ -184,19 +184,19 @@ function handle2FAVerification(event) {
         .then(response => response.json())
         .then(data => {
             if (data.status === 'success') {
-                error("2FA verification successful!");
+                error("2FA verification successful!", "success");
                 const token = data.token;
                 localStorage.setItem('jwtToken', token);
                 homePage(); // Redirect to the home page
             } else if (data.error) {
-                error("Error: " + data.error);
+                error("Error: " + data.error, "error");
             } else {
-                error("Something went wrong!");
+                error("Something went wrong!", "error");
             }
         })
         .catch(error => {
             console.error('Error:', error);
-            error("An error occurred. Please try again.");
+            error("An error occurred. Please try again.", "error");
         });
 }
 

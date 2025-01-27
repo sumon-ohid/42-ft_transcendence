@@ -150,6 +150,12 @@ function startGame() {
     div.className = "maingame-container";
     div.innerHTML = /*html*/ `
         <div class="middle-line"></div>
+        <div class="info-player" hidden>
+            <span class="badge rounded-pill bg-warning text-dark">
+            <i class="fa-solid fa-circle-info"></i>
+            info: on reload or quit game you may lose the current game!
+            </span>
+        </div>
         <div class="score-board">
             <div class="left-player">
                 <img id="left-player" src="../static/${player1Avatar}" alt="player1">
@@ -182,6 +188,13 @@ function startGame() {
     rightScore = 0;
     document.getElementById("left-score").innerText = leftScore;
     document.getElementById("right-score").innerText = rightScore;
+
+    // Show info player for 10 seconds
+    const infoPlayer = document.querySelector('.info-player');
+    infoPlayer.hidden = false;
+    setTimeout(() => {
+        infoPlayer.hidden = true;
+    }, 10000);
 
     // Show count down before starting game.
     showCountdown();
@@ -318,6 +331,7 @@ function initializeGame() {
                         .then(data => {
                             if (data.status === 'success') {
                                 console.log('Score saved successfully');
+                                error("Score saved successfully", "success");
                             } else {
                                 console.error('Error saving score:', data.message);
                             }

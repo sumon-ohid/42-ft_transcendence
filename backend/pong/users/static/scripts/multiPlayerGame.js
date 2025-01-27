@@ -82,6 +82,12 @@ function initializeGameScreen() {
     div.className = "multi-maingame-container";
     div.innerHTML = `
         <div class="multi-middle-line"></div>
+        <div class="info-player" hidden>
+            <span class="badge rounded-pill bg-warning text-dark">
+            <i class="fa-solid fa-circle-info"></i>
+            info: on reload or quit game you may lose the current game!
+            </span>
+        </div>
         <div class="multi-score-board">
             <div class="top-left-player">
                 <img id="top-left-player" src="../static/${playerOneAvatar}" alt="player1">
@@ -129,6 +135,13 @@ function initializeGameScreen() {
     document.getElementById("bottom-right-score").innerText = 0;
 
     displayGameCountdown();
+
+    // Show info player for 10 seconds
+    const infoPlayer = document.querySelector('.info-player');
+    infoPlayer.hidden = false;
+    setTimeout(() => {
+        infoPlayer.hidden = true;
+    }, 10000);
 }
 
 function displayGameCountdown() {
