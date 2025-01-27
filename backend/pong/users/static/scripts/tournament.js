@@ -737,8 +737,8 @@ function initializeTournamentGame() {
     let paddle2Y = (canvas.height - paddleHeight) / 2;
     let ballX = canvas.width / 2;
     let ballY = canvas.height / 2;
-    let ballSpeedX = 3;
-    let ballSpeedY = 3;
+    let ballSpeedX = 2;
+    let ballSpeedY = 2;
 
     const paddleSpeed = 20;
 
