@@ -4,45 +4,6 @@ let player1Avatar = "./avatars/avatar4.png";
 let player2Avatar = "./avatars/avatar5.png";
 let gameInterval;
 
-function saveGameState() {
-    const canvas = document.getElementById("pongCanvas");
-    if (canvas) {
-        localStorage.setItem("gameState", JSON.stringify({
-            leftScore: leftScore,
-            rightScore: rightScore,
-            paddle1Y: paddle1Y,
-            paddle2Y: paddle2Y,
-            ballX: ballX,
-            ballY: ballY,
-            ballSpeedX: ballSpeedX,
-            ballSpeedY: ballSpeedY,
-        }));
-    }
-}
-
-function loadGameState() {
-    const savedState = localStorage.getItem("gameState");
-    if (savedState) {
-        const gameState = JSON.parse(savedState);
-        leftScore = gameState.leftScore || 0;
-        rightScore = gameState.rightScore || 0;
-        paddle1Y = gameState.paddle1Y || 0;
-        paddle2Y = gameState.paddle2Y || 0;
-        ballX = gameState.ballX || canvas.width / 2;
-        ballY = gameState.ballY || canvas.height / 2;
-        ballSpeedX = gameState.ballSpeedX || 2;
-        ballSpeedY = gameState.ballSpeedY || 2;
-
-        document.getElementById("left-score").innerText = leftScore;
-        document.getElementById("right-score").innerText = rightScore;
-    }
-}
-
-function clearGameState() {
-    localStorage.removeItem("gameState");
-}
-
-
 // *** NOTE ****
 // Change later: Nickname can be max 8 character other wise truncate to 8 chars.
 function gamePage() {
@@ -213,9 +174,7 @@ function showCountdown() {
 }
 
 function initializeGame() {
-    window.addEventListener("beforeunload", saveGameState);
 
-    loadGameState();
     const canvas = document.getElementById("pongCanvas");
     const ctx = canvas.getContext("2d");
 
@@ -284,7 +243,6 @@ function initializeGame() {
         const rightPlayerNickname = player2Name;
 
         if (leftScore === 5 || rightScore === 5) {
-            clearGameState();
             clearInterval(gameInterval); // Stop the game loop
             const winner = leftScore === 5 ? leftPlayerNickname : rightPlayerNickname;
             const confirmationElement = document.querySelector('.confirmation-to-quit');
