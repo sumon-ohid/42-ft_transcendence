@@ -229,7 +229,7 @@ function createScoreTableIfNotExists() {
     }
 }
 
-const contractAddress = '0xfd72663d20C56b3014F02f9808A350EE3000d10f';
+const contractAddress = '0x5c9137d2b5CA75B3228323aB50e4B0c0Bc0A1982';
 const contractABI = [
 	{
 		"inputs": [],
@@ -624,7 +624,7 @@ function finalStage(players) {
         <h1>Final Score</h1>
         <div class="match-list-container">
             <p>🏆 The Winner is 🏆</p>
-            <h3>${players[0].name}</h3>
+            <h3>${playerScores[0].name}</h3>
         </div>
         <div class="score-table-container">
             <h3>Final Standings</h3>
