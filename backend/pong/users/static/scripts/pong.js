@@ -130,7 +130,6 @@ function startGame() {
                 <p>Control: Up, Down arrows</p>
                 <h1 id="right-score">0</h1>
             </div>
-            <div class="score-line"></div>
             <div class="quit-game" onclick="showQuitConfirmation()">
                 <h1>QUIT</h1>
             </div>
@@ -142,6 +141,10 @@ function startGame() {
             <button onclick="confirmQuit()">Yes</button>
             <button onclick="cancelQuit()">No</button>
         </div>
+        <div class="pause-game" onclick="pauseGame()">
+            <i class="fa-solid fa-pause"></i>
+            PAUSE
+        </div> 
     `;
     body.appendChild(div);
     // Reset scores
@@ -159,6 +162,11 @@ function startGame() {
 
     // Show count down before starting game.
     showCountdown();
+}
+
+function pauseGame() {
+    location.hostname = "localhost";
+    alert("Game Paused");
 }
 
 function showCountdown() {
