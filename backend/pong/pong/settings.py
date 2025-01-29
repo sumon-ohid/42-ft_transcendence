@@ -90,6 +90,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'pong.wsgi.application'
 
+SMART_CONTACT_ADDRESS = os.getenv('SMART_CONTACT_ADDRESS')
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases

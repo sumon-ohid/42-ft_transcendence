@@ -3,7 +3,8 @@ from .views import index, api_signup, api_login, api_logout, get_username, save_
     upload_profile_picture, get_profile_picture, leaderboard, get_play_history, \
     change_username, change_password, disable_2fa, verify_2fa, setup_2fa, get_2fa_status, \
     get_users, add_block, remove_block, get_user_profile, intra42_login, callback_view, \
-    redirect_to_home, get_chat_history, get_last_active, get_openrouter_key, delete_account
+    redirect_to_home, get_chat_history, get_last_active, get_openrouter_key, delete_account, \
+    get_contract_address
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -35,6 +36,7 @@ urlpatterns = [
     path('api/last-active/', get_last_active, name='get_last_active'),
     path('api/get-openrouter-key/', get_openrouter_key, name='get_openrouter_key'),
     path('api/delete-account/', delete_account, name='delete_account'),
+    path('api/get-contract-address/', get_contract_address, name='get_contract_address'),
 ]
 
 
