@@ -148,8 +148,27 @@ async function chatPage() {
     `;
     body.appendChild(div);
 
-    const [username, profile_picture] = await Promise.all([fetchUsername(), fetchProfilePicture()]);
+    async function getUsername() {
+        try {
+            const response = await fetch('/api/get-username/', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': document.querySelector('meta[name="csrf-token"]').content
+                }
+            });
+            const data = await response.json();
+            loggedInUser = data.username;
+            return data.username || "Guest";
+        } catch (error) {
+            console.error('Error fetching username:', error);
+            return "Guest";
+        }
+    }
+
+    const [username, profile_picture] = await Promise.all([getUsername(), fetchProfilePicture()]);
     currentUsername = username;
+    console.log(username);
     profilePicture = profile_picture;
 
     fetch('/api/users/')
