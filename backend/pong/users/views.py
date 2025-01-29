@@ -643,3 +643,7 @@ def delete_account(request):
             user.delete()
             return JsonResponse({'status': 'success', 'message': 'Account deleted successfully.'})
     return JsonResponse({'status': 'error', 'message': 'Invalid request method.'}, status=405)
+
+
+def get_contract_address(request):
+    return JsonResponse({'contract_address': settings.SMART_CONTACT_ADDRESS})

@@ -229,7 +229,8 @@ function createScoreTableIfNotExists() {
     }
 }
 
-const contractAddress = '0x5c9137d2b5CA75B3228323aB50e4B0c0Bc0A1982';
+
+
 const contractABI = [
 	{
 		"inputs": [],
@@ -316,12 +317,28 @@ const contractABI = [
 let web3;
 let ScoreContract;
 
-if (typeof Web3 !== 'undefined') {
-    web3 = new Web3(Web3.givenProvider || "http://localhost:7545");
-    ScoreContract = new web3.eth.Contract(contractABI, contractAddress);
-} else {
-    console.log('Web3 not found. Please install it.');
+async function getContractAddress() {
+    const response = await fetch('/api/get-contract-address');
+    const data = await response.json();
+    return data.contract_address;
 }
+
+async function initializeWeb3() {
+    if (typeof Web3 !== 'undefined') {
+        try {
+            const contractAddress = await getContractAddress();
+            console.log('Contract Address:', contractAddress);
+            web3 = new Web3(Web3.givenProvider || "http://localhost:7545");
+            ScoreContract = new web3.eth.Contract(contractABI, contractAddress);
+        } catch (error) {
+            console.error('Error fetching contract address:', error);
+        }
+    } else {
+        console.log('Web3 not found. Please install it.');
+    }
+}
+
+initializeWeb3();
 
 async function storeWinner(winnerName, score) {
     if (!ScoreContract) {
