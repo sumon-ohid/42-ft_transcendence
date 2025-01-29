@@ -36,6 +36,27 @@ body {
     z-index: -1;
 }
 
+.pause-game {
+    position: fixed;
+    bottom: -120px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--pong-color);
+    border-radius: 10px;
+    padding: 10px;
+    cursor: pointer;
+    font-family: "Share Tech Mono";
+    font-size: .8em;
+    color: white;
+    font-weight: 400;
+    border: 1px solid rgba(255, 255, 255, 0.534);
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    /* box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.5); */
+}
+
+
 /*--------------42 AD START------------------*/
 
 #ad-42vienna {

@@ -797,7 +797,6 @@ function startTournamentGame(player1, player2) {
                 <p>Control: Up, Down</p>
                 <h1 id="right-score">0</h1>
             </div>
-            <div class="score-line"></div>
             <div class="quit-game" onclick="showTournamentQuitConfirmation()">
                 <h1>QUIT</h1>
             </div>
@@ -808,6 +807,10 @@ function startTournamentGame(player1, player2) {
             <p>Are you sure you want to quit?</p>
             <button onclick="confirmTournamentQuit()">Yes</button>
             <button onclick="cancelTournamentQuit()">No</button>
+        </div>
+        <div class="pause-game" onclick="pauseGame()">
+            <i class="fa-solid fa-pause"></i>
+            PAUSE
         </div>
     `;
     body.appendChild(div);

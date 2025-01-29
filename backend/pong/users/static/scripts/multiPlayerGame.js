@@ -125,6 +125,10 @@ function initializeGameScreen() {
             <button onclick="handleQuitConfirmation()">Yes</button>
             <button onclick="cancelQuitPrompt()">No</button>
         </div>
+        <div class="pause-game" onclick="pauseGame()">
+            <i class="fa-solid fa-pause"></i>
+            PAUSE
+        </div> 
     `;
     body.appendChild(div);
     
