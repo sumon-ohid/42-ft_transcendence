@@ -638,6 +638,10 @@ def delete_account(request):
                 default_storage.delete(profile.photo.path)
             
             user.delete()
+
+            #Delete the user from leaderboard
+            PlayerScore.objects.filter(player_name=user.username).delete()
+
             return JsonResponse({'status': 'success', 'message': 'Account and profile picture deleted successfully!'})
         except Profile.DoesNotExist:
             user.delete()
