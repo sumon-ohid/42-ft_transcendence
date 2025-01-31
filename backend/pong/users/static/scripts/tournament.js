@@ -9,7 +9,7 @@ let chosenPlayers = [];
 
 function tournamentPage() {
     saveCurrentPage('tournamentPage');
-    history.pushState({ page: 'tournamentPage' }, '', '#tournamentPage');
+
     const body = document.body;
 
     while (body.firstChild) {
@@ -32,7 +32,7 @@ function tournamentPage() {
                 <p>Create Tournament</p>
             </div>
         </div>
-        <div class="quit-game" onclick="gameOptions()">
+        <div class="quit-game" onclick="navigateTo('#gameOptions')">
             <h1>BACK</h1>
         </div>
     `;
@@ -78,7 +78,7 @@ function choosePlayersForTournamentPage() {
         <div class="ready">
             <button class="gamepage-button" onclick="startTournament()">Start</button>
         </div>
-        <div class="quit-game" onclick="tournamentPage()">
+        <div class="quit-game" onclick="navigateTo('#tournamentPage')">
             <h1>BACK</h1>
         </div>
     `;
@@ -408,7 +408,7 @@ function displayCurrentMatch() {
                 </tbody>
             </table>
         </div>
-        <div class="quit-game" onclick="tournamentPage()">
+        <div class="quit-game" onclick="navigateTo('#tournamentPage')">
             <h1>BACK</h1>
         </div>
     `;
@@ -460,7 +460,7 @@ function displayCurrentSemiFinalMatch() {
                 </tbody>
             </table>
         </div>
-        <div class="quit-game" onclick="tournamentPage()">
+        <div class="quit-game" onclick="navigateTo('#tournamentPage')">
             <h1>BACK</h1>
         </div>
     `;
@@ -644,7 +644,7 @@ function finalStage(players) {
                 </tbody>
             </table>
         </div>
-        <div class="quit-game" onclick="tournamentPage()">
+        <div class="quit-game" onclick="navigateTo('#tournamentPage')">
             <h1>BACK</h1>
         </div>
     `;
@@ -726,7 +726,7 @@ function tournamentGamePage() {
         <div class="ready">
             <button class="gamepage-button" onclick="startTournamentGame()">Ready</button>
         </div>
-        <div class="quit-game" onclick="tournamentPage()">
+        <div class="quit-game" onclick="navigateTo('#tournamentPage')">
             <h1>BACK</h1>
         </div>
     `;
@@ -803,7 +803,7 @@ function startTournamentGame(player1, player2) {
         <canvas id="tournamentPongCanvas" width="700" height="400"></canvas>
         <div id="tournamentCountdown" class="countdown"></div>
         <div id="tournamentQuitConfirmation" class="confirmation-to-quit hidden">
-            <p>Are you sure you want to quit?</p>
+            <p>This will clear the tournament. <br>Are you sure?</p>
             <button onclick="confirmTournamentQuit()">Yes</button>
             <button onclick="cancelTournamentQuit()">No</button>
         </div>
@@ -984,7 +984,7 @@ function showTournamentQuitConfirmation() {
 
 function confirmTournamentQuit() {
     clearInterval(tournamentGameInterval);
-    tournamentPage();
+    navigateTo('#tournamentPage');
 }
 
 function cancelTournamentQuit() {

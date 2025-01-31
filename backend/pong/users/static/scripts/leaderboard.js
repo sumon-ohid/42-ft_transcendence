@@ -1,6 +1,5 @@
 function leaderboard() {
     saveCurrentPage('leaderboard');
-    history.pushState({ page: 'leaderboard' }, '', '#leaderboard');
 
     const body = document.body;
 
@@ -29,7 +28,7 @@ function leaderboard() {
                             <p>No data available...</p>
                         </div>
                     </div>
-                    <div class="quit-game" onclick="homePage()">
+                    <div class="quit-game" onclick="navigateTo('#homePage')">
                         <h1>BACK</h1>
                     </div>
                 `;
@@ -79,13 +78,13 @@ function leaderboard() {
                         ${data.map((player, index) => `
                             <div class="player">
                                 <span class="rank-number">Rank ${index + 1}</span>
-                                <img onclick="userProfile('${player.name}')" src="${player.avatar}" alt="${player.name}'s avatar">
+                                <img onclick="userProfile('${player.name}'); navigateTo('#userProfile');" src="${player.avatar}" alt="${player.name}'s avatar">
                                 <span class="player-name">${formatPlayerName(player.name)}</span>
                                 <span class="badge text-bg-light">${player.score}</span>
                             </div>
                         `).join('')}
                     </div>
-                    <div class="quit-game" onclick="homePage()">
+                    <div class="quit-game" onclick="navigateTo('#homePage')">
                         <h1>BACK</h1>
                     </div>
                 `;

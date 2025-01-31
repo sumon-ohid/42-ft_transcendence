@@ -1,6 +1,6 @@
 function signup() {
     saveCurrentPage('signup');
-    history.pushState({ page: 'signup' }, '', '#signup');
+
     const body = document.body;
 
     // Remove all child elements of the body
@@ -23,7 +23,7 @@ function signup() {
                 </span>
             <br><br>
             <button type="button" id="signup-button" class="login-button">Signup</button>
-            <button type="button" id="login-button" class="login-button2" onclick="login()"><i class="fa-solid fa-arrow-left-long"></i> back</button>
+            <button type="button" id="login-button" class="login-button2" onclick="navigateTo('#login')"><i class="fa-solid fa-arrow-left-long"></i> back</button>
         </form>
         <div class="image"></div>
     `;

@@ -36,7 +36,6 @@ async function fetchProfilePicture() {
 
 async function homePage() {
     saveCurrentPage('homePage');
-    history.replaceState({ page: 'homePage' }, '', '#homePage');
     
     const body = document.body;
     
@@ -61,13 +60,13 @@ async function homePage() {
     nav.className = "navbar";
     nav.innerHTML = ` 
         <ul class="nav-menu">
-            <li><a href="#homePage" title="Home" onclick="homePage()"><i class="fa-solid fa-house"></i><span>Home</span></a></li>
-            <li><a href="#userList" title="Other Users" onclick="userList()" ><i class="fa-solid fa-users"></i><span>Users</span></a></li>
-            <li><a href="#settingsPage" title="Settings" onclick="settingsPage()"><i class="fa-solid fa-gear"></i><span>Settings</span></a></li>
-            <li><a href="#gameOptions" title="Game" onclick="gameOptions()"><i class="fa-solid fa-gamepad"></i><span>Game</span></a></li>
-            <li><a href="#leaderboard" title="Leaderboard" onclick="leaderboard()"><i class="fa-solid fa-trophy"></i><span>Leaderboard</span></a></li>
+            <li><a title="Home" onclick="navigateTo('#homePage')"><i class="fa-solid fa-house"></i><span>Home</span></a></li>
+            <li><a title="Users" onclick="navigateTo('#userList')"><i class="fa-solid fa-users"></i><span>Users</span></a></li>
+            <li><a title="Settings" onclick="navigateTo('#settingsPage')"><i class="fa-solid fa-gear"></i><span>Settings</span></a></li>
+            <li><a title="Game" onclick="navigateTo('#gameOptions')"><i class="fa-solid fa-gamepad"></i><span>Game</span></a></li>
+            <li><a title="Leaderboard" onclick="navigateTo('#leaderboard')"><i class="fa-solid fa-trophy"></i><span>Leaderboard</span></a></li>
             <li><a href="https://github.com/sumon-ohid/42-Ft_transcendence" title="Github Star"><i class="fa-solid fa-star"></i><span>Github Star</span></a></li>
-            <li><a href="#chatPage" title="Chat" onclick="chatPage()"><i class="fa-solid fa-message"></i><span>Chat</span></a></li>
+            <li><a title="Chat" onclick="navigateTo('#chatPage')"><i class="fa-solid fa-message"></i><span>Chat</span></a></li>
             <li><a href="" title="logout" onclick="handleLogout(event)"><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a></li>
         </ul>
     `;
@@ -97,7 +96,7 @@ async function homePage() {
                 </div>
             </div>
         </div>
-        <div class="play-container" onclick="gameOptions()">
+        <div class="play-container" onclick="navigateTo('#gameOptions')">
             <div class="yellow-badge">
                 <span class="badge rounded-pill text-bg-warning">🔥 popular</span>
             </div >
@@ -108,17 +107,17 @@ async function homePage() {
             <h1 class="play">PLAY</h1>
             <div class="play-pic"></div>
         </div>
-        <div class="account-container" onclick="settingsPage()">
+        <div class="account-container" onclick="navigateTo('#settingsPage')">
             <h1 class="settings">SETTINGS</h1>
             <div class="settings-pic"></div>
             <div class="settings-3d"></div>
         </div>
-        <div class="leader-container" onclick="leaderboard()">
+        <div class="leader-container" onclick="navigateTo('#leaderboard')">
             <div class="leader-pic"></div>
             <h1 class="leaderboard">LEADERBOARD</h1>
             <div class="leader-div"></div>
         </div>
-        <div class="chat-container" onclick="chatPage()">
+        <div class="chat-container" onclick="navigateTo('#chatPage')">
             <div class="in-chat"> </div>
             <h1 class="chat">CHAT</h1>
             <div class="chat-pic"></div>
@@ -379,69 +378,81 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+function navigateTo(path) {
+    let newPath = path.replace('#', '');
+    history.pushState({ page: newPath }, "", path);
+    renderPage(newPath);
+}
+
+function renderPage(page) {
+    switch (page) {
+        case 'homePage':
+            homePage();
+            break;
+        case 'settingsPage':
+            settingsPage();
+            break;
+        case 'gamePage':
+            gamePage();
+            break;
+        case 'leaderboard':
+            leaderboard();
+            break;
+        case 'chatPage':
+            chatPage();
+            break;
+        case 'login':
+            login();
+            break;
+        case 'signup':
+            signup();
+            break;
+        case '2fa':
+            show2FAPage();
+            break;
+        case 'userList':
+            userList();
+            break;
+        case 'userProfile':
+            userProfile();
+            break;
+        case 'gameOptions':
+            gameOptions();
+            break;
+        case 'multiGamePage':
+            multiGamePage();
+            break;
+        case 'tournamentPage':
+            tournamentPage();
+            break;
+        case 'createTournamentPage':
+            createTournamentPage();
+            break;
+        case 'choosePlayersForTournamentPage':
+            choosePlayersForTournamentPage();
+            break;
+        case 'roundRobinStage':
+            roundRobinStage();
+            break;
+        case 'semiFinalStage':
+            semiFinalStage();
+            break;
+        case 'finalStage':
+            finalStage();
+            break;
+        case 'tournamentGamePage':
+            tournamentGamePage();
+            break;
+        default:
+            homePage();
+    }
+}
+
 // Handle back and forward button, push, pop, replace states in the history.
 window.addEventListener('popstate', function(event) {
     if (event.state && event.state.page) {
-        switch (event.state.page) {
-            case 'homePage':
-                homePage();
-                break;
-            case 'settingsPage':
-                settingsPage();
-                break;
-            case 'gamePage':
-                gamePage();
-                break;
-            case 'leaderboard':
-                leaderboard();
-                break;
-            case 'chatPage':
-                chatPage();
-                break;
-            case 'login':
-                login();
-                break;
-            case 'signup':
-                signup();
-                break;
-            case '2fa':
-                show2FAPage();
-                break;
-            case 'userList':
-                userList();
-                break;
-            case 'userProfile':
-                userProfile()
-                break;
-            case 'gameOptions':
-                gameOptions();
-                break;
-            case 'multiGamePage':
-                multiGamePage();
-                break;
-            case 'tournamentPage':
-                tournamentPage();
-                break;
-            case 'createTournamentPage':
-                createTournamentPage();
-                break;
-            case 'choosePlayersForTournamentPage':
-                choosePlayersForTournamentPage();
-                break;
-            case 'roundRobinStage':
-                roundRobinStage();
-                break;
-            case 'semiFinalStage':
-                semiFinalStage();
-                break;
-            case 'finalStage':
-                finalStage();
-                break;
-            case 'tournamentGamePage':
-                tournamentGamePage();
-                break;
-            default:
-                homePage();
-        }
+        renderPage(event.state.page);
+    } else {
+        renderPage('homePage');
     }
 });

@@ -1,7 +1,6 @@
 
 function login() {
     saveCurrentPage('login');
-    history.pushState({ page: 'login' }, '', '#login');
     const body = document.body;
 
     // Remove all child elements of the body
@@ -32,7 +31,7 @@ function login() {
         <div class="forgot-passwd">Forgot Password?</div>
         <div class="signup">
             Don't have an account?
-            <button onclick="signup()" class="signup-button">
+            <button onclick="navigateTo('#signup')" class="signup-button">
                 <strong id="register">Register</strong>
             </button>
         </div>
@@ -115,11 +114,12 @@ function handleLogin(event) {
                 const token = data.token;
                 localStorage.setItem('jwtToken', token);
                 if (data.two_factor_enabled) {
-                    show2FAPage(); // Show the 2FA page if 2FA is enabled
+                    navigateTo('#2fa');
+                    //show2FAPage(); // Show the 2FA page if 2FA is enabled
                 } else {
                     error(data.message, "success");
                     setTimeout(function() {
-                        homePage(); // Redirect to the home page
+                        navigateTo('#homePage') // Redirect to the home page
                     }, 1000);
                 }
             } else if (data.error) {

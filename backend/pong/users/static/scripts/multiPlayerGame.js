@@ -13,7 +13,8 @@ const keysPressed = {};
 
 function multiGamePage() {
     saveCurrentPage('multiGamePage');
-    history.pushState({ page: 'multiGamePage' }, '', '#multiGamePage');
+
+
     const body = document.body;
 
     while (body.firstChild) {
@@ -41,7 +42,7 @@ function multiGamePage() {
         <div class="ready">
             <button class="gamepage-button" onclick="initializeGameScreen()">Ready</button>
         </div>
-        <div class="quit-game" onclick="gameOptions()">
+        <div class="quit-game" onclick="navigateTo('#gameOptions')">
             <h1>BACK</h1>
         </div>
     `;

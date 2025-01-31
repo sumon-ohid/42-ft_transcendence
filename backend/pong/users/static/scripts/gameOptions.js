@@ -1,6 +1,6 @@
 function gameOptions() {
     saveCurrentPage('gameOptions');
-    history.pushState({ page: 'gameOptions' }, '', '#gameOptions');
+
     const body = document.body;
 
     // Remove all child elements of the body
@@ -14,17 +14,17 @@ function gameOptions() {
         <div class="pong-container-options"></div>
         <div class="pong-options"></div>
         <h2>Choose Option</h2>
-        <div class="quit-game" onclick="homePage()">
+        <div class="quit-game" onclick="navigateTo('#homePage')">
             <h1>BACK</h1>
         </div>
         <div class="game-options">
-            <div class="form-check1" onclick="gamePage()">
+            <div class="form-check1" onclick="navigateTo('#gamePage')">
                 <p>2 Players Game</p>
             </div>
-            <div class="form-check2" onclick="multiGamePage()">
+            <div class="form-check2" onclick="navigateTo('#multiGamePage')">
                 <p>4 Players Game</p>
             </div>
-            <div class="form-check3" onclick="tournamentPage()">
+            <div class="form-check3" onclick="navigateTo('#tournamentPage')">
                 <p>Tournament</p>
             </div>
         </div>
