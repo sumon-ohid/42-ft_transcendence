@@ -78,7 +78,7 @@ async function homePage() {
     div.className = "main";
     div.innerHTML = ` 
         <div class="wel-container">
-            <div class="edit-pic">
+            <div class="edit-pic" onclick="document.getElementById('profile-picture-input').click();">
                 <span class="badge text-bg-primary">change</span>
             </div>
             <div class="wel-user">
