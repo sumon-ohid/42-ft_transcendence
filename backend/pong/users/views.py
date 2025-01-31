@@ -263,7 +263,9 @@ def change_username(request):
                 return JsonResponse({'status': 'error', 'error': 'Username can not be Guest.'}, status=400)
 
             try:
+                # This should change username in the database and in leaderboard
                 user = User.objects.get(username=current_username)
+                PlayerScore.objects.filter(player_name=current_username).update(player_name=new_username)
                 user.username = new_username
                 user.save()
                 return JsonResponse({'status': 'success', 'message': 'Username changed successfully!'})
