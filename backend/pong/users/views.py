@@ -263,7 +263,9 @@ def change_username(request):
                 return JsonResponse({'status': 'error', 'error': 'Username can not be Guest.'}, status=400)
 
             try:
+                # This should change username in the database and in leaderboard
                 user = User.objects.get(username=current_username)
+                PlayerScore.objects.filter(player_name=current_username).update(player_name=new_username)
                 user.username = new_username
                 user.save()
                 return JsonResponse({'status': 'success', 'message': 'Username changed successfully!'})
@@ -638,6 +640,10 @@ def delete_account(request):
                 default_storage.delete(profile.photo.path)
             
             user.delete()
+
+            #Delete the user from leaderboard
+            PlayerScore.objects.filter(player_name=user.username).delete()
+
             return JsonResponse({'status': 'success', 'message': 'Account and profile picture deleted successfully!'})
         except Profile.DoesNotExist:
             user.delete()
