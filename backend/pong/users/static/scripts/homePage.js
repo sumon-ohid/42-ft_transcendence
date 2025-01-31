@@ -452,5 +452,7 @@ function renderPage(page) {
 window.addEventListener('popstate', function(event) {
     if (event.state && event.state.page) {
         renderPage(event.state.page);
+    } else {
+        renderPage('homePage');
     }
 });

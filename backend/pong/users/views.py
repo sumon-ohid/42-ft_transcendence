@@ -557,7 +557,7 @@ def redirect_to_home(request):
                     setTimeout(function() {{
                         localStorage.setItem('jwtToken', "{token_str}");
                         window.location.href = '/#homePage';
-                        homePage();
+                        navigateTo('#homePage');
                     }}, 1000);
                 }};
             </script>
