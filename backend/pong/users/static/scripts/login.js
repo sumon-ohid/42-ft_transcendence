@@ -1,7 +1,6 @@
 
 function login() {
     saveCurrentPage('login');
-    history.pushState({ page: 'login' }, '', '#login');
     const body = document.body;
 
     // Remove all child elements of the body
@@ -32,7 +31,7 @@ function login() {
         <div class="forgot-passwd">Forgot Password?</div>
         <div class="signup">
             Don't have an account?
-            <button onclick="signup()" class="signup-button">
+            <button onclick="navigateTo('#signup')" class="signup-button">
                 <strong id="register">Register</strong>
             </button>
         </div>
@@ -119,7 +118,7 @@ function handleLogin(event) {
                 } else {
                     error(data.message, "success");
                     setTimeout(function() {
-                        homePage(); // Redirect to the home page
+                        navigateTo('#homePage') // Redirect to the home page
                     }, 1000);
                 }
             } else if (data.error) {

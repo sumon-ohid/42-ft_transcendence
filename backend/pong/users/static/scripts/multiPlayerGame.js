@@ -11,7 +11,8 @@ let lastPaddleHit = null;
 
 function multiGamePage() {
     saveCurrentPage('multiGamePage');
-    history.pushState({ page: 'multiGamePage' }, '', '#multiGamePage');
+
+
     const body = document.body;
 
     while (body.firstChild) {

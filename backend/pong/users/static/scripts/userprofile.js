@@ -9,7 +9,6 @@ function userProfile(username) {
         username = localStorage.getItem('currentUsername') || 'Guest';
     }
     saveCurrentPage('userProfile');
-    history.replaceState({ page: 'userProfile' }, '', '#userProfile');
   
     const body = document.body;
 

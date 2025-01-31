@@ -6,7 +6,7 @@ let gameInterval;
 
 function gamePage() {
     saveCurrentPage('gamePage');
-    history.pushState({ page: 'gamePage' }, '', '#gamePage');
+
     const body = document.body;
 
     while (body.firstChild) {

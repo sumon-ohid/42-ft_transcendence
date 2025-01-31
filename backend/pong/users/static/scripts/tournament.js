@@ -9,7 +9,7 @@ let chosenPlayers = [];
 
 function tournamentPage() {
     saveCurrentPage('tournamentPage');
-    history.pushState({ page: 'tournamentPage' }, '', '#tournamentPage');
+
     const body = document.body;
 
     while (body.firstChild) {

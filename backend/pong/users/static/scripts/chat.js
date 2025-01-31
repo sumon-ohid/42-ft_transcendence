@@ -112,7 +112,6 @@ async function fetchLastActiveTime(username) {
 
 async function chatPage() {
     saveCurrentPage('chatPage');
-    history.pushState({ page: 'chatPage' }, '', '#chatPage');
 
     const body = document.body;
     while (body.firstChild) {
@@ -142,7 +141,7 @@ async function chatPage() {
         <div class="send-button" id="send-button" >
             <i class="fa-solid fa-paper-plane"></i>
         </div>
-        <div class="quit-game" onclick="homePage()">
+        <div class="quit-game" onclick="navigateTo('#homePage')">
             <h1>BACK</h1>
         </div>
     `;
@@ -168,7 +167,6 @@ async function chatPage() {
 
     const [username, profile_picture] = await Promise.all([getUsername(), fetchProfilePicture()]);
     currentUsername = username;
-    console.log(username);
     profilePicture = profile_picture;
 
     fetch('/api/users/')
