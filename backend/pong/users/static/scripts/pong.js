@@ -43,7 +43,7 @@ function gamePage() {
         <div class="ready">
             <button id="game-play-button" class="gamepage-button" onclick="startGame()">Ready</button>
         </div>
-        <div class="quit-game" onclick="gameOptions()">
+        <div class="quit-game" onclick="navigateTo('#homePage')">
             <h1>BACK</h1>
         </div>
     `;

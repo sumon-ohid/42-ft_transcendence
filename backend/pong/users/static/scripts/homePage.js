@@ -61,7 +61,7 @@ async function homePage() {
     nav.innerHTML = ` 
         <ul class="nav-menu">
             <li><a title="Home" onclick="navigateTo('#homePage')"><i class="fa-solid fa-house"></i><span>Home</span></a></li>
-            <li><a title="Other Users" onclick="navigateTo('#userList')" ><i class="fa-solid fa-users"></i><span>Users</span></a></li>
+            <li><a title="Users" onclick="navigateTo('#userList')"><i class="fa-solid fa-users"></i><span>Users</span></a></li>
             <li><a title="Settings" onclick="navigateTo('#settingsPage')"><i class="fa-solid fa-gear"></i><span>Settings</span></a></li>
             <li><a title="Game" onclick="navigateTo('#gameOptions')"><i class="fa-solid fa-gamepad"></i><span>Game</span></a></li>
             <li><a title="Leaderboard" onclick="navigateTo('#leaderboard')"><i class="fa-solid fa-trophy"></i><span>Leaderboard</span></a></li>

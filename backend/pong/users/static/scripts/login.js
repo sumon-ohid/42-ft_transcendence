@@ -114,7 +114,8 @@ function handleLogin(event) {
                 const token = data.token;
                 localStorage.setItem('jwtToken', token);
                 if (data.two_factor_enabled) {
-                    show2FAPage(); // Show the 2FA page if 2FA is enabled
+                    navigateTo('#2fa');
+                    //show2FAPage(); // Show the 2FA page if 2FA is enabled
                 } else {
                     error(data.message, "success");
                     setTimeout(function() {

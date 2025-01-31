@@ -31,7 +31,7 @@ function settingsPage() {
         </div>
         <input type="file" id="profile-picture-input" name="profile_picture" accept="image/*" style="display: none;">
         <div class="inside-wel"></div>
-        <div class="quit-game" onclick="homePage()">
+        <div class="quit-game" onclick="navigateTo('#homePage')">
             <h1>BACK</h1>
         </div>
         <div class="username-container">

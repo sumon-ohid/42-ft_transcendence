@@ -192,7 +192,7 @@ async function chatPage() {
                     : '/../static/images/11475215.jpg';
                 friendDiv.innerHTML = /*html*/`
                     <img onclick="startChat('${user.username}', '${userAvatarUrl}')" src="${userAvatarUrl}" alt="${user.username}">
-                    <span onclick="userProfile('${user.username}')" class="badge text-bg-light">${formatPlayerName(user.username)}</span>
+                    <span class="badge text-bg-light">${formatPlayerName(user.username)}</span>
                     <p id="last-action" class="badge rounded-pill text-bg-info">Say Hello to ${user.username.substring(0, 6)} 👋 </p>
                 `;
                 friendsContainer.appendChild(friendDiv);
@@ -275,10 +275,12 @@ async function chatPage() {
 
                 connectWebSocket(username);
 
+                // this is removed from chat-top-bar
+                // onclick="userProfile('${username}')"
                 const chatTopBar = document.querySelector('.chat-top-bar');
                 fetchLastActiveTime(username).then(lastActiveTime => {
                     chatTopBar.innerHTML = /*html*/`
-                        <div onclick="userProfile('${username}')" class="chating-with">
+                        <div class="chating-with">
                             <div class="friend-name">
                                 <h1>${username.substring(0, 6)}.</h1>
                                 <span id="active-now" class="badge rounded-pill text-bg-warning">

@@ -14,7 +14,7 @@ function gameOptions() {
         <div class="pong-container-options"></div>
         <div class="pong-options"></div>
         <h2>Choose Option</h2>
-        <div class="quit-game" onclick="homePage()">
+        <div class="quit-game" onclick="navigateTo('#homePage')">
             <h1>BACK</h1>
         </div>
         <div class="game-options">
