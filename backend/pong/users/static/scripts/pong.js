@@ -3,7 +3,6 @@ let player2Name = "Player 2";
 let player1Avatar = "./avatars/avatar4.png";
 let player2Avatar = "./avatars/avatar5.png";
 let gameInterval;
-const keysPressed = {};
 
 function gamePage() {
     saveCurrentPage('gamePage');
@@ -211,7 +210,7 @@ function initializeGame() {
     let ballSpeedX = 2;
     let ballSpeedY = 2;
 
-    const paddleSpeed = 20;
+    const paddleSpeed = 10;
 
     const keysPressed = {};
 
