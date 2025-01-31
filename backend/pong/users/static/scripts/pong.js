@@ -3,9 +3,8 @@ let player2Name = "Player 2";
 let player1Avatar = "./avatars/avatar4.png";
 let player2Avatar = "./avatars/avatar5.png";
 let gameInterval;
+const keysPressed = {};
 
-// *** NOTE ****
-// Change later: Nickname can be max 8 character other wise truncate to 8 chars.
 function gamePage() {
     saveCurrentPage('gamePage');
     history.pushState({ page: 'gamePage' }, '', '#gamePage');
@@ -80,8 +79,6 @@ function selectAvatar(avatarNumber, element) {
 }
 
 function startGame() {
-    // saveCurrentPage('startGame');
-    // history.pushState({ page: 'startGame' }, '', '#startGame');
 
     const nicknameInput1 = document.getElementById("nickname1");
     const nicknameInput2 = document.getElementById("nickname2");
@@ -216,6 +213,8 @@ function initializeGame() {
 
     const paddleSpeed = 20;
 
+    const keysPressed = {};
+
     function drawPaddle(x, y) {
         ctx.fillStyle = "#FFFFFF";
         ctx.fillRect(x, y, paddleWidth, paddleHeight);
@@ -259,6 +258,21 @@ function initializeGame() {
                 resetBall();
             }
         }
+
+        // Update paddle positions based on keys pressed
+        if (keysPressed['w']) {
+            paddle1Y = Math.max(paddle1Y - paddleSpeed, 0);
+        }
+        if (keysPressed['s']) {
+            paddle1Y = Math.min(paddle1Y + paddleSpeed, canvas.height - paddleHeight);
+        }
+        if (keysPressed['ArrowUp']) {
+            paddle2Y = Math.max(paddle2Y - paddleSpeed, 0);
+        }
+        if (keysPressed['ArrowDown']) {
+            paddle2Y = Math.min(paddle2Y + paddleSpeed, canvas.height - paddleHeight);
+        }
+
         // Check if the game has ended
         const leftPlayerNickname = player1Name;
         const rightPlayerNickname = player2Name;
@@ -320,18 +334,15 @@ function initializeGame() {
     }
 
     function keyDownHandler(e) {
-        if (e.key == "w" || e.key == "W") {
-            paddle1Y = Math.max(paddle1Y - paddleSpeed, 0);
-        } else if (e.key == "s" || e.key == "S") {
-            paddle1Y = Math.min(paddle1Y + paddleSpeed, canvas.height - paddleHeight);
-        } else if (e.key == "ArrowUp") {
-            paddle2Y = Math.max(paddle2Y - paddleSpeed, 0);
-        } else if (e.key == "ArrowDown") {
-            paddle2Y = Math.min(paddle2Y + paddleSpeed, canvas.height - paddleHeight);
-        }
+        keysPressed[e.key] = true;
+    }
+
+    function keyUpHandler(e) {
+        keysPressed[e.key] = false;
     }
 
     document.addEventListener("keydown", keyDownHandler);
+    document.addEventListener("keyup", keyUpHandler);
 
     gameInterval = setInterval(draw, 20);
 }
