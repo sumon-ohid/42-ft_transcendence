@@ -9,6 +9,8 @@ let player4Avatar = "./avatars/avatar1.png";
 let multiGameInterval;
 let lastPaddleHit = null;
 
+const keysPressed = {};
+
 function multiGamePage() {
     saveCurrentPage('multiGamePage');
 
@@ -21,7 +23,7 @@ function multiGamePage() {
 
     const div = document.createElement("div");
     div.className = "gamepage-container";
-    div.innerHTML = `
+    div.innerHTML = /*html*/`
         <div class="choose-avatar">
             <h2>Choose Your Avatar</h2>
             <div class="avatar-options">
@@ -47,12 +49,11 @@ function multiGamePage() {
     body.appendChild(div);
 
     document.addEventListener('keydown', function(event) {
-        if (event.key === 'Enter') {
-            if (multiGameInterval) {
-                clearInterval(multiGameInterval);
-            }
-            initializeGameScreen();
-        }
+        keysPressed[event.key] = true;
+    });
+
+    document.addEventListener('keyup', function(event) {
+        keysPressed[event.key] = false;
     });
 }
 
@@ -81,7 +82,7 @@ function initializeGameScreen() {
 
     const div = document.createElement("div");
     div.className = "multi-maingame-container";
-    div.innerHTML = `
+    div.innerHTML = /*html*/`
         <div class="multi-middle-line"></div>
         <div class="info-player" hidden>
             <span class="badge rounded-pill bg-warning text-dark">
@@ -195,7 +196,7 @@ function startGameLogic() {
     let ballSpeedX = 1.5;
     let ballSpeedY = 1.5;
 
-    const paddleSpeed = 20;
+    const paddleSpeed = 15;
 
     function renderPaddle(x, y, isVertical = false) {
         ctx.fillStyle = "#FFFFFF";
@@ -226,13 +227,6 @@ function startGameLogic() {
 
         ballX += ballSpeedX;
         ballY += ballSpeedY;
-
-        //-- Ball collision with left and right walls
-        //-- If ball hits left or right wall, reverse the x direction
-        //-- Score points for the opposite side
-        // if (ballX + ballSpeedX > canvas.width - ballRadius || ballX + ballSpeedX < ballRadius) {
-        //     ballSpeedX = -ballSpeedX;
-        // }
 
         // Ball collision with paddles
         // Top paddle
@@ -289,6 +283,32 @@ function startGameLogic() {
         if (scores.some(score => score === 3)) {
             showGameOverScreen();
         }
+
+        // Update paddle positions based on keys pressed
+        if (keysPressed['a'] || keysPressed['A']) {
+            topPaddleX = Math.max(topPaddleX - paddleSpeed, 0);
+        }
+        if (keysPressed['d'] || keysPressed['D']) {
+            topPaddleX = Math.min(topPaddleX + paddleSpeed, canvas.width - paddleWidth);
+        }
+        if (keysPressed['ArrowLeft']) {
+            bottomPaddleX = Math.max(bottomPaddleX - paddleSpeed, 0);
+        }
+        if (keysPressed['ArrowRight']) {
+            bottomPaddleX = Math.min(bottomPaddleX + paddleSpeed, canvas.width - paddleWidth);
+        }
+        if (keysPressed['w'] || keysPressed['W']) {
+            leftPaddleY = Math.max(leftPaddleY - paddleSpeed, 0);
+        }
+        if (keysPressed['s'] || keysPressed['S']) {
+            leftPaddleY = Math.min(leftPaddleY + paddleSpeed, canvas.height - paddleWidth);
+        }
+        if (keysPressed['ArrowUp']) {
+            rightPaddleY = Math.max(rightPaddleY - paddleSpeed, 0);
+        }
+        if (keysPressed['ArrowDown']) {
+            rightPaddleY = Math.min(rightPaddleY + paddleSpeed, canvas.height - paddleWidth);
+        }
     }
 
     function resetBallPosition() {
@@ -298,35 +318,6 @@ function startGameLogic() {
         ballSpeedY = (Math.random() > 0.5 ? 1 : -1) * 1.5;
         lastPaddleHit = null;
     }
-
-    function handlePlayerInput(e) {
-        //- Player 1 (Top paddle) - A/D
-        if (e.key == "a" || e.key == "A") {
-            topPaddleX = Math.max(topPaddleX - paddleSpeed, 0);
-        } else if (e.key == "d" || e.key == "D") {
-            topPaddleX = Math.min(topPaddleX + paddleSpeed, canvas.width - paddleWidth);
-        }
-        //- Player 2 (Bottom paddle) - Left/Right arrows
-        else if (e.key == "ArrowLeft") {
-            bottomPaddleX = Math.max(bottomPaddleX - paddleSpeed, 0);
-        } else if (e.key == "ArrowRight") {
-            bottomPaddleX = Math.min(bottomPaddleX + paddleSpeed, canvas.width - paddleWidth);
-        }
-        //- Player 3 (Left paddle) - W/S
-        else if (e.key == "w" || e.key == "W") {
-            leftPaddleY = Math.max(leftPaddleY - paddleSpeed, 0);
-        } else if (e.key == "s" || e.key == "S") {
-            leftPaddleY = Math.min(leftPaddleY + paddleSpeed, canvas.height - paddleWidth);
-        }
-        //- Player 4 (Right paddle) - Up/Down arrows
-        else if (e.key == "ArrowUp") {
-            rightPaddleY = Math.max(rightPaddleY - paddleSpeed, 0);
-        } else if (e.key == "ArrowDown") {
-            rightPaddleY = Math.min(rightPaddleY + paddleSpeed, canvas.height - paddleWidth);
-        }
-    }
-
-    document.addEventListener("keydown", handlePlayerInput);
 
     multiGameInterval = setInterval(updateGameFrame, 20);
 }
@@ -356,7 +347,7 @@ function showGameOverScreen() {
     if (confirmationElement) {
         confirmationElement.classList.remove('hidden');
         let countdown = 3;
-        confirmationElement.innerHTML = `
+        confirmationElement.innerHTML = /*html*/`
             <span>Game Over</span><br>
             <span style="font-size: 2em; color: #007bff">${winnerName} Wins!</span><br>
             Returning to game page in ${countdown}s...
@@ -364,7 +355,7 @@ function showGameOverScreen() {
         
         const countdownInterval = setInterval(() => {
             countdown -= 1;
-            confirmationElement.innerHTML = `
+            confirmationElement.innerHTML = /*html*/`
                 <span>Game Over</span><br>
                 <span style="font-size: 2em; color: #007bff">${winnerName} Wins!</span><br>
                 Returning to game page in ${countdown}s...

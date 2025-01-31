@@ -23,8 +23,6 @@ function tournamentPage() {
         <div class="pong-container-options"></div>
         <div class="pong-options"></div>
         <div class="game-options">
-            <!-- choose players for tournment -->
-            <!-- from 3 to 6 players -->
             <div id="number_of_plyers">
                 <p>Choose Number of players</p>
                 <p>(min 3 max 6)</p>
@@ -48,11 +46,6 @@ function tournamentPage() {
 }
 
 function choosePlayersForTournamentPage() {
-    // saveCurrentPage('choosePlayersForTournamentPage');
-    // history.pushState({ page: 'choosePlayersForTournamentPage' }, '', '#choosePlayersForTournamentPage');
-
-    // NOTE: There is an error here. when page is reloaded, the selected players are not saved.
-    // Check if the number of players is valid
     const numberOfPlayers = document.getElementById('players').value;
     if (numberOfPlayers < 3 || numberOfPlayers > 6) {
         error('Please choose between 3 and 6 players.', 'error');
@@ -126,9 +119,6 @@ function startTournament() {
 }
 
 function roundRobinStage(players) {
-    // saveCurrentPage('roundRobinStage');
-    // history.pushState({ page: 'roundRobinStage' }, '', '#roundRobinStage');
-
     roundRobinMatches = generateRoundRobinMatches(players);
     console.log("Round Robin Matches: ");
     console.log(roundRobinMatches);
@@ -210,7 +200,7 @@ function createScoreTableIfNotExists() {
     if (!document.getElementById('score-table-body')) {
         const table = document.createElement('table');
         table.className = 'score-table';
-        table.innerHTML = `
+        table.innerHTML = /*html*/`
             <thead>
                 <tr>
                     <th>Player</th>
@@ -571,8 +561,6 @@ function semiFinalStage(players) {
         return;
     }
 
-    // saveCurrentPage('semiFinalStage');
-    // history.pushState({ page: 'semiFinalStage' }, '', '#semiFinalStage');
     const body = document.body;
 
     while (body.firstChild) {
@@ -627,8 +615,6 @@ function finalStage(players) {
         return;
     }
 
-    // saveCurrentPage('finalStage');
-    // history.pushState({ page: 'finalStage' }, '', '#finalStage');
     const body = document.body;
 
     while (body.firstChild) {
@@ -663,8 +649,6 @@ function finalStage(players) {
         </div>
     `;
     body.appendChild(div);
-
-
 
     // Update the score table with current scores and positions
     updateFinalScoreTable(players);
@@ -719,8 +703,6 @@ let tournamentPlayer2Avatar = "../static/avatars/avatar5.png";
 let tournamentGameInterval;
 
 function tournamentGamePage() {
-    // saveCurrentPage('tournamentGamePage');
-    // history.pushState({ page: 'tournamentGamePage' }, '', '#tournamentGamePage');
     const body = document.body;
 
     while (body.firstChild) {
@@ -891,7 +873,9 @@ function initializeTournamentGame() {
     let ballSpeedX = 2;
     let ballSpeedY = 2;
 
-    const paddleSpeed = 20;
+    const paddleSpeed = 10;
+
+    const keysPressed = {};
 
     function drawPaddle(x, y) {
         ctx.fillStyle = "#FFFFFF";
@@ -937,6 +921,20 @@ function initializeTournamentGame() {
             }
         }
 
+        // Update paddle positions based on keys pressed
+        if (keysPressed['w']) {
+            paddle1Y = Math.max(paddle1Y - paddleSpeed, 0);
+        }
+        if (keysPressed['s']) {
+            paddle1Y = Math.min(paddle1Y + paddleSpeed, canvas.height - paddleHeight);
+        }
+        if (keysPressed['ArrowUp']) {
+            paddle2Y = Math.max(paddle2Y - paddleSpeed, 0);
+        }
+        if (keysPressed['ArrowDown']) {
+            paddle2Y = Math.min(paddle2Y + paddleSpeed, canvas.height - paddleHeight);
+        }
+
         // Check if the game has ended
         if (leftScore === 3 || rightScore === 3) {
             clearInterval(tournamentGameInterval); // Stop the game loop
@@ -966,18 +964,15 @@ function initializeTournamentGame() {
     }
 
     function keyDownHandler(e) {
-        if (e.key == "w" || e.key == "W") {
-            paddle1Y = Math.max(paddle1Y - paddleSpeed, 0);
-        } else if (e.key == "s" || e.key == "S") {
-            paddle1Y = Math.min(paddle1Y + paddleSpeed, canvas.height - paddleHeight);
-        } else if (e.key == "ArrowUp") {
-            paddle2Y = Math.max(paddle2Y - paddleSpeed, 0);
-        } else if (e.key == "ArrowDown") {
-            paddle2Y = Math.min(paddle2Y + paddleSpeed, canvas.height - paddleHeight);
-        }
+        keysPressed[e.key] = true;
+    }
+
+    function keyUpHandler(e) {
+        keysPressed[e.key] = false;
     }
 
     document.addEventListener("keydown", keyDownHandler);
+    document.addEventListener("keyup", keyUpHandler);
 
     tournamentGameInterval = setInterval(draw, 20);
 }
