@@ -67,7 +67,7 @@ async function homePage() {
             <li><a title="Settings" onclick="navigateTo('#settingsPage')"><i class="fa-solid fa-gear"></i><span>Settings</span></a></li>
             <li><a title="Game" onclick="navigateTo('#gameOptions')"><i class="fa-solid fa-gamepad"></i><span>Game</span></a></li>
             <li><a title="Leaderboard" onclick="navigateTo('#leaderboard')"><i class="fa-solid fa-trophy"></i><span>Leaderboard</span></a></li>
-            <li><a href="https://github.com/sumon-ohid/42-Ft_transcendence" title="Github Star"><i class="fa-solid fa-star"></i><span>Github Star</span></a></li>
+            <li><a title="Dashboard" onclick="navigateTo('#userDashboard')"><i class="fa-solid fa-chart-line"></i><span>Dashboard</span></a></li>
             <li><a title="Chat" onclick="navigateTo('#chatPage')"><i class="fa-solid fa-message"></i><span>Chat</span></a></li>
             <li><a href="" title="logout" onclick="handleLogout(event)"><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a></li>
         </ul>
@@ -375,6 +375,9 @@ document.addEventListener('DOMContentLoaded', () => {
             case 'startGame':
                 startGame();
                 break;
+            case 'userDashboard':
+                userDashboard();
+                break;
             default:
                 homePage();
         }
@@ -447,6 +450,9 @@ function renderPage(page) {
             break;
         case 'tournamentGamePage':
             tournamentGamePage();
+            break;
+        case 'userDashboard':
+            userDashboard();
             break;
         default:
             homePage();

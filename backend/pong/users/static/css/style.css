@@ -3411,3 +3411,40 @@ form .login-button:hover {
 }
 
 /*------- ERROR DIV END -------*/
+
+
+/*------- Dashboard CONTAINER START -------*/
+
+#gamePlayChart {
+    position: fixed;
+    top: 0px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    height: 100%;
+    background-color: var(--pong-color);
+    border-radius: 15px;
+    /* box-shadow: 0 10px 6px rgba(0.5, 0, 0, 0.51); */
+    padding: 20px;
+    color: white;
+    /* border: 1px solid rgba(255, 255, 255, 0.288); */
+    font-family: "Sour Gummy";
+}
+
+#winLoseChart {
+    position: fixed;
+    top: 150px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    height: 100%;
+    background-color: var(--pong-color);
+    border-radius: 15px;
+    /* box-shadow: 0 10px 6px rgba(0.5, 0, 0, 0.51); */
+    padding: 20px;
+    color: white;
+    /* border: 1px solid rgba(255, 255, 255, 0.288); */
+    font-family: "Sour Gummy";
+}
+
+/*------- Dashboard CONTAINER End -------*/
