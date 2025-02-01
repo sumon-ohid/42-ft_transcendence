@@ -591,6 +591,23 @@ def redirect_to_home(request):
     return HttpResponse(f"""
         <html>
         <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>The Pong</title>
+
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <!-- Font Awesome for icons -->
+            <!--GOOGLE FONT-->
+            <link rel="preconnect" href="https://fonts.googleapis.com">
+            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+            <link href="https://fonts.googleapis.com/css2?family=Modak&family=Pacifico&family=Cutive Mono&family=Cookie&family=Sour Gummy&family=Monomaniac One&family=Share Tech Mono&display=swap" rel="stylesheet">
+            <!--using boostrap-->
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+            <script src="https://cdn.jsdelivr.net/npm/web3@1.6.0/dist/web3.min.js"></script>
+            <!-- for charts -->
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
+            <!--Polyfill is for charts to support in older browsers too -->
+            <script src="https://cdn.jsdelivr.net/npm/@babel/polyfill/dist/polyfill.min.js"></script>
             <script src="/static/scripts/homePage.js" defer></script>
             <link rel="stylesheet" href="/static/css/style.css">
             <link rel="icon" type="image/png" href="/static/images/favicon.ico">
