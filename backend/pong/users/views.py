@@ -484,7 +484,7 @@ def get_user_profile(request, username):
     try:
         user = User.objects.get(username=username)
         profile = user.profile
-        is_friend = Friendship.objects.filter(user=request.user, friend=user).exists()
+        is_friend = Friendship.objects.filter(user=request.user, friend=user).exists() if request.user.is_authenticated else False
         data = {
             'username': user.username,
             'profile__photo': profile.photo.url if profile.photo else None,

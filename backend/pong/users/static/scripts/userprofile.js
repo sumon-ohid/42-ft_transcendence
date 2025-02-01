@@ -32,7 +32,7 @@ function userProfile(username) {
 
             const avatarUrl = data.profile__photo ? `${data.profile__photo}` : '/../static/images/11475215.jpg';
             const isFriend = data.is_friend;
-            const friendButtonText = isFriend ? 'Add Friend' : 'Remove Friend';
+            const friendButtonText = isFriend ? 'Remove Friend' : 'Add Friend';
             const friendButtonClass = isFriend ? 'badge text-bg-warning' : 'badge text-bg-warning';
 
             const div = document.createElement("div");
@@ -110,7 +110,7 @@ function userProfile(username) {
 // Handle block, unblock user
 function toggleBlock(username) {
     const addFriendButton = document.getElementById('block');
-    if (addFriendButton.textContent === 'Remove Friend') {
+    if (addFriendButton.textContent === 'Add Friend') {
         fetch(`/api/add-block/${username}/`, {
             method: 'POST',
             headers: {
@@ -121,12 +121,16 @@ function toggleBlock(username) {
         .then(response => response.json())
         .then(data => {
             if (data.status === 'Friend added') {
-                addFriendButton.textContent = 'Add Friend';
+                addFriendButton.textContent = 'Remove Friend';
                 addFriendButton.classList.remove('text-bg-warning');
                 addFriendButton.classList.add('text-bg-warning');
-                // reload the page
-                window.location.reload();
-                error('User is unfriended. You can not see user online status anymore.', 'success');
+                // reload the page after 2 seconds
+
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1000);
+
+                error('User is now Friend. You can chat and view their online status', 'success');
             } else {
                 console.error(data.error);
             }
@@ -143,11 +147,13 @@ function toggleBlock(username) {
         .then(response => response.json())
         .then(data => {
             if (data.status === 'Friend removed') {
-                addFriendButton.textContent = 'Remove Friend';
+                addFriendButton.textContent = 'Add Friend';
                 addFriendButton.classList.remove('text-bg-warning');
                 addFriendButton.classList.add('text-bg-warning');
-                window.location.reload();
-                error('User is now Friend. You can chat and view their online status', 'success');
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1000);
+                error('User is unfriended. You can not see user online status anymore.', 'success');
             } else {
                 console.error(data.error);
             }

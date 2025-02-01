@@ -269,7 +269,7 @@ async function chatPage() {
                     return;
                 }
                 const isFriend = data.is_friend;
-                if (isFriend) {
+                if (!isFriend) {
                     error("You can't chat with this user.", "warning");
                     return;
                 }
