@@ -11,6 +11,11 @@ function gameOptions() {
         gameInterval = null;
     }
 
+    if (multiGameInterval !== null) {
+        clearInterval(multiGameInterval);
+        multiGameInterval = null;
+    }
+
     const body = document.body;
 
     // Remove all child elements of the body

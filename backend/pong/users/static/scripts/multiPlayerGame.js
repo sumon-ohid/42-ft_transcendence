@@ -68,11 +68,18 @@ function handleAvatarSelection(avatarNumber, element) {
     element.classList.add('selected-avatar');
 }
 
-function initializeGameScreen() {
-    const nicknameInput = document.getElementById("nickname");
-    if (!nicknameInput)
-        return;
-    playerOneName = nicknameInput.value || "Player 1";
+async function initializeGameScreen() {
+    saveCurrentPage('multiGamePage');
+    document.addEventListener('keydown', function(event) {
+        keysPressed[event.key] = true;
+    });
+
+    document.addEventListener('keyup', function(event) {
+        keysPressed[event.key] = false;
+    });
+    const [username, profilePicture] = await Promise.all([fetchUsername(), fetchProfilePicture()]);
+    playerOneName = username;
+    playerOneAvatar = profilePicture;
 
     if (playerOneName.length > 8) {
         playerOneName = playerOneName.substring(0, 8) + '.';
@@ -96,7 +103,7 @@ function initializeGameScreen() {
         </div>
         <div class="multi-score-board">
             <div class="top-left-player">
-                <img id="top-left-player" src="../static/${playerOneAvatar}" alt="player1">
+                <img id="top-left-player" src="${playerOneAvatar}" alt="player1">
                 <h3>${playerOneName}</h3>
                 <p>Control: A and D</p>
                 <h1 id="top-left-score">0</h1>
@@ -367,7 +374,7 @@ function showGameOverScreen() {
 
             if (countdown === 0) {
                 clearInterval(countdownInterval);
-                multiGamePage();
+                navigateTo('#gameOptions');
             }
         }, 1000);
     }
@@ -380,7 +387,7 @@ function displayQuitPrompt() {
 
 function handleQuitConfirmation() {
     clearInterval(multiGameInterval);
-    multiGamePage();
+    navigateTo('#gameOptions');
 }
 
 function cancelQuitPrompt() {
