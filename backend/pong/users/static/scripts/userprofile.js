@@ -32,8 +32,8 @@ function userProfile(username) {
 
             const avatarUrl = data.profile__photo ? `${data.profile__photo}` : '/../static/images/11475215.jpg';
             const isFriend = data.is_friend;
-            const friendButtonText = isFriend ? 'Unblock' : 'Block';
-            const friendButtonClass = isFriend ? 'badge text-bg-primary' : 'badge text-bg-danger';
+            const friendButtonText = isFriend ? 'Add Friend' : 'Remove Friend';
+            const friendButtonClass = isFriend ? 'badge text-bg-warning' : 'badge text-bg-warning';
 
             const div = document.createElement("div");
             div.className = "settings-container";
@@ -110,7 +110,7 @@ function userProfile(username) {
 // Handle block, unblock user
 function toggleBlock(username) {
     const addFriendButton = document.getElementById('block');
-    if (addFriendButton.textContent === 'Block') {
+    if (addFriendButton.textContent === 'Remove Friend') {
         fetch(`/api/add-block/${username}/`, {
             method: 'POST',
             headers: {
@@ -121,10 +121,12 @@ function toggleBlock(username) {
         .then(response => response.json())
         .then(data => {
             if (data.status === 'Friend added') {
-                addFriendButton.textContent = 'Unblock';
-                addFriendButton.classList.remove('text-bg-danger');
-                addFriendButton.classList.add('text-bg-primary');
-                error('User blocked', 'success');
+                addFriendButton.textContent = 'Add Friend';
+                addFriendButton.classList.remove('text-bg-warning');
+                addFriendButton.classList.add('text-bg-warning');
+                // reload the page
+                window.location.reload();
+                error('User is unfriended. You can not see user online status anymore.', 'success');
             } else {
                 console.error(data.error);
             }
@@ -141,9 +143,11 @@ function toggleBlock(username) {
         .then(response => response.json())
         .then(data => {
             if (data.status === 'Friend removed') {
-                addFriendButton.textContent = 'Block';
-                addFriendButton.classList.remove('text-bg-primary');
-                addFriendButton.classList.add('text-bg-danger');
+                addFriendButton.textContent = 'Remove Friend';
+                addFriendButton.classList.remove('text-bg-warning');
+                addFriendButton.classList.add('text-bg-warning');
+                window.location.reload();
+                error('User is now Friend. You can chat and view their online status', 'success');
             } else {
                 console.error(data.error);
             }
