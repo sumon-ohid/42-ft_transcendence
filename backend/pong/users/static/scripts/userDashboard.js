@@ -17,7 +17,7 @@ function userDashboard() {
   div.className = "settings-container";
   div.innerHTML = `
         <h2>Dashboard</h2>
-        <canvas id="gamePlayChart" width="300" height="200"></canvas>
+        <canvas id="gamePlayChart" width="250" height="100"></canvas>
         <canvas id="winLoseChart" width="300" height="200"></canvas>
         <div class="quit-game" onclick="navigateTo('#homePage')">
             <h1>BACK</h1>
@@ -52,7 +52,7 @@ function renderGamePlayChart(data) {
           label: "Game Scores",
           data: scores,
           borderColor: "rgb(0, 183, 255)",
-          backgroundColor: "rgb(0, 183, 255)",
+          backgroundColor: "rgba(0, 183, 255, 0.2)",
           borderWidth: 1,
         },
       ],
@@ -78,6 +78,12 @@ function renderGamePlayChart(data) {
             font: {
               family: "Sour Gummy",
             },
+            stepSize: 1, // Ensure full numbers only
+            callback: function (value) {
+              if (value % 1 === 0) {
+                return value;
+              }
+            },
           },
         },
       },
@@ -99,18 +105,18 @@ function renderWinLoseChart(data) {
   const ctx = document.getElementById("winLoseChart").getContext("2d");
   const winCount = data.filter((entry) => entry.win).length;
   const loseCount = data.filter((entry) => entry.lose).length;
+  const totalCount = winCount + loseCount;
+  const winPercent = ((winCount / totalCount) * 100).toFixed(2);
+  const losePercent = ((loseCount / totalCount) * 100).toFixed(2);
 
   new Chart(ctx, {
     type: "pie",
     data: {
-      labels: ["Wins", "Loses"],
+      labels: [`Wins (${winPercent}%)`, `Loses (${losePercent}%)`],
       datasets: [
         {
           data: [winCount, loseCount],
-          backgroundColor: [
-            "rgb(86, 230, 230)",
-            "rgb(255, 99, 133)",
-          ],
+          backgroundColor: ["rgb(86, 230, 230)", "rgb(255, 99, 133)"],
           borderColor: ["rgba(75, 192, 192, 1)", "rgba(255, 99, 132, 1)"],
           borderWidth: 1,
         },
@@ -131,7 +137,9 @@ function renderWinLoseChart(data) {
         tooltip: {
           callbacks: {
             label: function (tooltipItem) {
-              return tooltipItem.label + ": " + tooltipItem.raw;
+              const label = tooltipItem.label || "";
+              const value = tooltipItem.raw || 0;
+              return `${label}: ${value}`;
             },
           },
         },
