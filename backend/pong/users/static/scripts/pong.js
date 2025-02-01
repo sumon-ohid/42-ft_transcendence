@@ -349,7 +349,8 @@ function initializeGame() {
                             console.error('Error:', error);
                         });
         
-                        gamePage();
+                        // navigateTo('#gameOptions');
+                        navigateTo('#gamePage');
                     }
                 }, 1000);
             }

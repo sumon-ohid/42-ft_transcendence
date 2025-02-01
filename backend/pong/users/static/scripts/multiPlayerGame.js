@@ -196,6 +196,8 @@ function displayGameCountdown() {
     }, 1000);
 }
 
+let topLeftScore = 0;
+
 function startGameLogic() {
     const canvas = document.getElementById("pongCanvas");
     const ctx = canvas.getContext("2d");
@@ -204,7 +206,6 @@ function startGameLogic() {
     const paddleHeight = 8;
     const ballRadius = 8;
 
-    let topLeftScore = 0;
     let topRightScore = 0;
     let bottomLeftScore = 0;
     let bottomRightScore = 0;
@@ -303,7 +304,7 @@ function startGameLogic() {
 
         //-- Check for winner
         const scores = [topLeftScore, topRightScore, bottomLeftScore, bottomRightScore];
-        if (scores.some(score => score === 3)) {
+        if (scores.some(score => score === 5)) {
             showGameOverScreen();
         }
 
@@ -355,11 +356,11 @@ function showGameOverScreen() {
     };
 
     let winnerName = playerOneName;
-    if (scores.topRight === 3) {
+    if (scores.topRight === 5) {
         winnerName = playerTwoName;
-    } else if (scores.bottomLeft === 3) {
+    } else if (scores.bottomLeft === 5) {
         winnerName = player3Name;
-    } else if (scores.bottomRight === 3) {
+    } else if (scores.bottomRight === 5) {
         winnerName = player4Name;
     } else {
         winnerName = playerOneName;
@@ -386,6 +387,35 @@ function showGameOverScreen() {
 
             if (countdown === 0) {
                 clearInterval(countdownInterval);
+
+                const jwtToken = localStorage.getItem('jwtToken');
+                const result = winnerName === playerOneName ? 'win' : 'lose';
+                
+                fetch('/api/save-score/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getCSRFToken(),
+                        'Authorization': `Bearer ${jwtToken}`
+                    },
+                    body: JSON.stringify({
+                        score: topLeftScore, // Always send player 1's score
+                        result: result 
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        console.log('Score saved successfully');
+                        error("Score saved successfully", "success");
+                    } else {
+                        console.error('Error saving score:', data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+
                 navigateTo('#gameOptions');
             }
         }, 1000);
