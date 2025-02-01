@@ -528,37 +528,26 @@ def callback_view(request):
     headers = {'Authorization': f'Bearer {access_token}'}
     user_info = requests.get(user_info_url, headers=headers).json()
 
+    #print user info in the logs
+    ## write api response to a log file
+    # logging.info(user_info)
+    # log_file_path = os.path.join(settings.BASE_DIR, 'logs', 'user_info.log')
+    # os.makedirs(os.path.dirname(log_file_path), exist_ok=True)
+    # with open(log_file_path, 'a') as f:
+    #     f.write(json.dumps(user_info) + '\n')
+
     # get user data
     username = user_info['login']
     photo_url = user_info.get('image', {}).get('link', '')
-
-    # check if the username already exists
-    # if User.objects.filter(username=username).exists():
-    #     return HttpResponse("""
-    #         <html>
-    #         <head>
-    #             <script src="/static/scripts/homePage.js" defer></script>
-    #             <link rel="stylesheet" href="/static/css/style.css">
-    #         </head>
-    #         <body style="justify-content: center; align-items: center; display: flex; height: 100vh;">
-    #             <div>
-    #                 <h1 style="color: white; text-align: center;">Error !!<br> User name already exists.<br></h1>
-    #                 <h2 style="color: white; text-align: center;">Redirecting....</h2>
-    #             </div>
-    #             <script type="text/javascript">
-    #                 window.onload = function() {
-    #                     setTimeout(function() {
-    #                         window.location.href = '/#homePage';
-    #                         login();
-    #                     }, 1000);
-    #                 };
-    #             </script>
-    #         </body>
-    #         </html>
-    #     """)
-
-    user, created = User.objects.get_or_create(username=username)
-    if created:
+    user_id = user_info['id']
+    # set username = username+user_id
+    username = f"{username}{user_id}"
+    email = user_info.get('email', '')
+    # Check if user with the same id exists
+    try:
+        user = User.objects.get(id=user_id)
+    except User.DoesNotExist:
+        user = User(id=user_id, username=username, email=email)
         user.set_unusable_password()
         user.save()
 

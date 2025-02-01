@@ -1,43 +1,47 @@
 function userProfile(username) {
-    if (username == loggedInUser) {
-        navigateTo('#settings');
+//   if (username == loggedInUser) {
+//     navigateTo("#settings");
+//     return;
+//   }
+  if (username && username != loggedInUser) {
+    localStorage.setItem("currentUsername", username);
+  } else {
+    username = localStorage.getItem("currentUsername") || "Guest";
+  }
+  saveCurrentPage("userProfile");
+
+  if (!userIsLoggedIn()) {
+    navigateTo("#login");
+    return;
+  }
+
+  const body = document.body;
+
+  // Remove all child elements of the body
+  while (body.firstChild) {
+    body.removeChild(body.firstChild);
+  }
+
+  fetch(`/api/user-profile/${username}/`)
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.error) {
+        console.error(data.error);
         return;
-    }
-    if (username && username != loggedInUser) {
-        localStorage.setItem('currentUsername', username);
-    } else {
-        username = localStorage.getItem('currentUsername') || 'Guest';
-    }
-    saveCurrentPage('userProfile');
-  
-    if (!userIsLoggedIn()) {
-        navigateTo('#login');
-        return;
-    }
+      }
 
-    const body = document.body;
+      const avatarUrl = data.profile__photo
+        ? `${data.profile__photo}`
+        : "/../static/images/11475215.jpg";
+      const isFriend = data.is_friend;
+      const friendButtonText = isFriend ? "Remove Friend" : "Add Friend";
+      const friendButtonClass = isFriend
+        ? "badge text-bg-warning"
+        : "badge text-bg-warning";
 
-    // Remove all child elements of the body
-    while (body.firstChild) {
-        body.removeChild(body.firstChild);
-    }
-
-    fetch(`/api/user-profile/${username}/`)
-        .then(response => response.json())
-        .then(data => {
-            if (data.error) {
-                console.error(data.error);
-                return;
-            }
-
-            const avatarUrl = data.profile__photo ? `${data.profile__photo}` : '/../static/images/11475215.jpg';
-            const isFriend = data.is_friend;
-            const friendButtonText = isFriend ? 'Remove Friend' : 'Add Friend';
-            const friendButtonClass = isFriend ? 'badge text-bg-warning' : 'badge text-bg-warning';
-
-            const div = document.createElement("div");
-            div.className = "settings-container";
-            div.innerHTML = ` 
+      const div = document.createElement("div");
+      div.className = "settings-container";
+      div.innerHTML = ` 
                 <div class="user-profile-design"> </div>
                 <div class="round">
                     <div class="profile-pic">
@@ -61,110 +65,121 @@ function userProfile(username) {
                     chat
                 </span>
             `;
-            body.appendChild(div);
+      body.appendChild(div);
 
-            // Player history
-            fetch(`/api/get-play-history/${username}/`)
-                .then(response => response.json())
-                .then(data => {
-                    const historyContainer = document.querySelector('.inside-wel');
-                    
-                    if (data.length != 0) {
-                        historyContainer.innerHTML = '';
-                        data.slice(-5).forEach(record => {
-                            const recordElement = document.createElement('div');
-                            recordElement.className = 'history-record';
-                            let result = record.win ? 'Win' : 'Lose';
-                            const resultClass = result === 'Win' ? 'badge text-bg-info' : 'badge text-bg-warning';
-                            recordElement.innerHTML = `
-                            <div>
-                                <span class="badge text-bg-light">
-                                    <p>Date: ${new Date(record.date).toLocaleDateString()}</p>
-                                </span>
-                            </div>
-                            <div>
-                                <span class="badge text-bg-primary">
-                                    <p>Score: ${record.score}</p>
-                                </span>
-                            </div>
-                            <div>
-                                <span class="${resultClass}">
-                                    <p>Result: ${result}</p>
-                                </span>
-                            </div>
-                            `;
-                            historyContainer.appendChild(recordElement);
-                        });
+      // Player history
+    fetch(`/api/get-play-history/${username}/`)
+        .then((response) => response.json())
+        .then((data) => {
+          const historyContainer = document.querySelector(".inside-wel");
 
-                    }
-                })
-                .catch(error => {
-                    console.error('Error fetching play history:', error);
-                });
+          if (data.length != 0) {
+            historyContainer.innerHTML = "";
+            data.slice(-5).forEach((record) => {
+              const recordElement = document.createElement("div");
+              recordElement.className = "history-record";
+              let result = record.win ? "Win" : "Lose";
+              const resultClass =
+                result === "Win"
+                  ? "badge text-bg-info"
+                  : "badge text-bg-warning";
+              recordElement.innerHTML = `
+                    <div>
+                        <span class="badge text-bg-light">
+                            <p>Date: ${new Date(
+                                record.date
+                            ).toLocaleDateString()}</p>
+                        </span>
+                    </div>
+                    <div>
+                        <span class="badge text-bg-primary">
+                            <p>Score: ${record.score}</p>
+                        </span>
+                    </div>
+                    <div>
+                        <span class="${resultClass}">
+                            <p>Result: ${result}</p>
+                        </span>
+                    </div>
+                    `;
+              historyContainer.appendChild(recordElement);
+              div.appendChild(historyContainer);
+            });
+          }
         })
-        .catch(error => {
-            console.error('Error fetching user profile:', error);
+        .catch((error) => {
+          console.error("Error fetching play history:", error);
         });
+    })
+    .catch((error) => {
+      console.error("Error fetching user profile:", error);
+    });
 }
 
 // Handle block, unblock user
 function toggleBlock(username) {
-    const addFriendButton = document.getElementById('block');
-    if (addFriendButton.textContent === 'Add Friend') {
-        fetch(`/api/add-block/${username}/`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRFToken': getCSRFToken()
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.status === 'Friend added') {
-                addFriendButton.textContent = 'Remove Friend';
-                addFriendButton.classList.remove('text-bg-warning');
-                addFriendButton.classList.add('text-bg-warning');
-                // reload the page after 2 seconds
+  const addFriendButton = document.getElementById("block");
+  if (addFriendButton.textContent === "Add Friend") {
+    fetch(`/api/add-block/${username}/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRFToken": getCSRFToken(),
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.status === "Friend added") {
+          addFriendButton.textContent = "Remove Friend";
+          addFriendButton.classList.remove("text-bg-warning");
+          addFriendButton.classList.add("text-bg-warning");
+          // reload the page after 2 seconds
 
-                setTimeout(() => {
-                    window.location.reload();
-                }, 1000);
+          setTimeout(() => {
+            window.location.reload();
+          }, 1000);
 
-                error('User is now Friend. You can chat and view their online status', 'success');
-            } else {
-                console.error(data.error);
-            }
-        })
-        .catch(error => console.error('Error adding friend:', error));
-    } else {
-        fetch(`/api/remove-block/${username}/`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRFToken': getCSRFToken()
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.status === 'Friend removed') {
-                addFriendButton.textContent = 'Add Friend';
-                addFriendButton.classList.remove('text-bg-warning');
-                addFriendButton.classList.add('text-bg-warning');
-                setTimeout(() => {
-                    window.location.reload();
-                }, 1000);
-                error('User is unfriended. You can not see user online status anymore.', 'success');
-            } else {
-                console.error(data.error);
-            }
-        })
-        .catch(error => console.error('Error removing friend:', error));
-    }
+          error(
+            "User is now Friend. You can chat and view their online status",
+            "success"
+          );
+        } else {
+          console.error(data.error);
+        }
+      })
+      .catch((error) => console.error("Error adding friend:", error));
+  } else {
+    fetch(`/api/remove-block/${username}/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRFToken": getCSRFToken(),
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.status === "Friend removed") {
+          addFriendButton.textContent = "Add Friend";
+          addFriendButton.classList.remove("text-bg-warning");
+          addFriendButton.classList.add("text-bg-warning");
+          setTimeout(() => {
+            window.location.reload();
+          }, 1000);
+          error(
+            "User is unfriended. You can not see user online status anymore.",
+            "success"
+          );
+        } else {
+          console.error(data.error);
+        }
+      })
+      .catch((error) => console.error("Error removing friend:", error));
+  }
 }
 
 function getCSRFToken() {
-    const csrfCookie = document.cookie
-        .split('; ')
-        .find(row => row.startsWith('csrftoken='));
-    return csrfCookie ? csrfCookie.split('=')[1] : null;
+  const csrfCookie = document.cookie
+    .split("; ")
+    .find((row) => row.startsWith("csrftoken="));
+  return csrfCookie ? csrfCookie.split("=")[1] : null;
 }
