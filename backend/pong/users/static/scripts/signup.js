@@ -53,6 +53,14 @@ function signup() {
     });
 }
 
+function handleErrors(errors) {
+    let errorMessage = "Errors: ";
+    for (const [field, messages] of Object.entries(errors)) {
+        errorMessage += `${field}: ${messages.join(', ')}; `;
+    }
+    return errorMessage;
+}
+
 function handleSignup() {
     const email = document.getElementById("email").value.trim();
     const username = document.getElementById("username").value.trim();
@@ -81,9 +89,10 @@ function handleSignup() {
                     login();
                 }, 1000);
             } else if (data.errors) {
-                error("Errors: " + JSON.stringify(data.errors), "error");
+                const errorMessage = handleErrors(data.errors);
+                error(errorMessage, "error");
             } else {
-                error("Something went wrong!", "error");
+                error(data.message, "error");
             }
         })
         .catch(error => {

@@ -7,6 +7,16 @@ let gameInterval;
 function gamePage() {
     saveCurrentPage('gamePage');
 
+    if (!userIsLoggedIn()) {
+        navigateTo('#login');
+        return;
+    }
+
+    if (gameInterval !== null) {
+        clearInterval(gameInterval);
+        gameInterval = null;
+    }
+
     const body = document.body;
 
     while (body.firstChild) {
@@ -41,7 +51,7 @@ function gamePage() {
             </div>
         </div>
         <div class="ready">
-            <button id="game-play-button" class="gamepage-button" onclick="startGame()">Ready</button>
+            <button id="game-play-button" class="gamepage-button" onclick="startGamePlay()">Ready</button>
         </div>
         <div class="quit-game" onclick="navigateTo('#homePage')">
             <h1>BACK</h1>
@@ -53,10 +63,19 @@ function gamePage() {
         if (event.key === 'Enter') {
             if (gameInterval) {
                 clearInterval(gameInterval);
+                gameInterval = null;
             }
             startGame();
         }
     });
+}
+
+function startGamePlay() {
+    if (gameInterval !== null) {
+        clearInterval(gameInterval);
+        gameInterval = null;
+    }
+    startGame();
 }
 
 let avatarSelectionCount = 0;
@@ -161,11 +180,14 @@ function startGame() {
 }
 
 function pauseGame() {
-    location.hostname = "localhost";
     alert("Game Paused");
 }
 
 function showCountdown() {
+    if (gameInterval !== null) {
+        clearInterval(gameInterval);
+        gameInterval = null;
+    }
     const countdownElement = document.getElementById("countdown");
     const middleLineElement = document.querySelector(".middle-line");
     middleLineElement.classList.add("hidden");
@@ -173,7 +195,15 @@ function showCountdown() {
     let countdown = 3;
 
     const countdownInterval = setInterval(() => {
+        if (gameInterval !== null) {
+            clearInterval(gameInterval);
+            gameInterval = null;
+        }
         if (countdown > 0) {
+            if (gameInterval !== null) {
+                clearInterval(gameInterval);
+                gameInterval = null;
+            }
             countdownElement.innerHTML = countdown;
             countdown--;
         } else {
@@ -319,7 +349,8 @@ function initializeGame() {
                             console.error('Error:', error);
                         });
         
-                        gamePage();
+                        // navigateTo('#gameOptions');
+                        navigateTo('#gamePage');
                     }
                 }, 1000);
             }

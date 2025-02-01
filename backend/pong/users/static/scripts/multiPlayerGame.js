@@ -14,6 +14,10 @@ const keysPressed = {};
 function multiGamePage() {
     saveCurrentPage('multiGamePage');
 
+    if (!userIsLoggedIn()) {
+        navigateTo('#login');
+        return;
+    }
 
     const body = document.body;
 
@@ -64,11 +68,22 @@ function handleAvatarSelection(avatarNumber, element) {
     element.classList.add('selected-avatar');
 }
 
-function initializeGameScreen() {
-    const nicknameInput = document.getElementById("nickname");
-    if (!nicknameInput)
-        return;
-    playerOneName = nicknameInput.value || "Player 1";
+async function initializeGameScreen() {
+    // saveCurrentPage('multiGamePage');
+    if (multiGameInterval !== null) {
+        clearInterval(multiGameInterval);
+        multiGameInterval = null;
+    }
+    document.addEventListener('keydown', function(event) {
+        keysPressed[event.key] = true;
+    });
+
+    document.addEventListener('keyup', function(event) {
+        keysPressed[event.key] = false;
+    });
+    const [username, profilePicture] = await Promise.all([fetchUsername(), fetchProfilePicture()]);
+    playerOneName = username;
+    playerOneAvatar = profilePicture;
 
     if (playerOneName.length > 8) {
         playerOneName = playerOneName.substring(0, 8) + '.';
@@ -92,7 +107,7 @@ function initializeGameScreen() {
         </div>
         <div class="multi-score-board">
             <div class="top-left-player">
-                <img id="top-left-player" src="../static/${playerOneAvatar}" alt="player1">
+                <img id="top-left-player" src="${playerOneAvatar}" alt="player1">
                 <h3>${playerOneName}</h3>
                 <p>Control: A and D</p>
                 <h1 id="top-left-score">0</h1>
@@ -151,6 +166,10 @@ function initializeGameScreen() {
 }
 
 function displayGameCountdown() {
+    if (multiGameInterval !== null) {
+        clearInterval(multiGameInterval);
+        multiGameInterval = null;
+    }
     const countdownElement = document.getElementById("countdown");
     const middleLineElement = document.querySelector(".multi-middle-line");
     middleLineElement.classList.add("hidden");
@@ -158,6 +177,10 @@ function displayGameCountdown() {
     let countdown = 3;
 
     const countdownInterval = setInterval(() => {
+        if (multiGameInterval !== null) {
+            clearInterval(multiGameInterval);
+            multiGameInterval = null;
+        }
         if (countdown > 0) {
             countdownElement.innerHTML = countdown;
             countdown--;
@@ -173,6 +196,8 @@ function displayGameCountdown() {
     }, 1000);
 }
 
+let topLeftScore = 0;
+
 function startGameLogic() {
     const canvas = document.getElementById("pongCanvas");
     const ctx = canvas.getContext("2d");
@@ -181,7 +206,6 @@ function startGameLogic() {
     const paddleHeight = 8;
     const ballRadius = 8;
 
-    let topLeftScore = 0;
     let topRightScore = 0;
     let bottomLeftScore = 0;
     let bottomRightScore = 0;
@@ -280,7 +304,7 @@ function startGameLogic() {
 
         //-- Check for winner
         const scores = [topLeftScore, topRightScore, bottomLeftScore, bottomRightScore];
-        if (scores.some(score => score === 3)) {
+        if (scores.some(score => score === 5)) {
             showGameOverScreen();
         }
 
@@ -332,11 +356,11 @@ function showGameOverScreen() {
     };
 
     let winnerName = playerOneName;
-    if (scores.topRight === 3) {
+    if (scores.topRight === 5) {
         winnerName = playerTwoName;
-    } else if (scores.bottomLeft === 3) {
+    } else if (scores.bottomLeft === 5) {
         winnerName = player3Name;
-    } else if (scores.bottomRight === 3) {
+    } else if (scores.bottomRight === 5) {
         winnerName = player4Name;
     } else {
         winnerName = playerOneName;
@@ -363,7 +387,36 @@ function showGameOverScreen() {
 
             if (countdown === 0) {
                 clearInterval(countdownInterval);
-                multiGamePage();
+
+                const jwtToken = localStorage.getItem('jwtToken');
+                const result = winnerName === playerOneName ? 'win' : 'lose';
+                
+                fetch('/api/save-score/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getCSRFToken(),
+                        'Authorization': `Bearer ${jwtToken}`
+                    },
+                    body: JSON.stringify({
+                        score: topLeftScore, // Always send player 1's score
+                        result: result 
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        console.log('Score saved successfully');
+                        error("Score saved successfully", "success");
+                    } else {
+                        console.error('Error saving score:', data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+
+                navigateTo('#gameOptions');
             }
         }, 1000);
     }
@@ -376,7 +429,7 @@ function displayQuitPrompt() {
 
 function handleQuitConfirmation() {
     clearInterval(multiGameInterval);
-    multiGamePage();
+    navigateTo('#gameOptions');
 }
 
 function cancelQuitPrompt() {

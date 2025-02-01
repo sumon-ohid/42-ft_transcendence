@@ -1,6 +1,11 @@
 function leaderboard() {
     saveCurrentPage('leaderboard');
 
+    if (!userIsLoggedIn()) {
+        navigateTo('#login');
+        return;
+    }
+
     const body = document.body;
 
     while (body.firstChild) {
@@ -78,7 +83,7 @@ function leaderboard() {
                         ${data.map((player, index) => `
                             <div class="player">
                                 <span class="rank-number">Rank ${index + 1}</span>
-                                <img onclick="userProfile('${player.name}'); navigateTo('#userProfile');" src="${player.avatar}" alt="${player.name}'s avatar">
+                                <img onclick="" src="${player.avatar}" alt="${player.name}'s avatar">
                                 <span class="player-name">${formatPlayerName(player.name)}</span>
                                 <span class="badge text-bg-light">${player.score}</span>
                             </div>

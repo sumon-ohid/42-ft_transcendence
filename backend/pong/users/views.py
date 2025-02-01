@@ -50,6 +50,35 @@ def api_signup(request):
     if request.method == 'POST':
         try:
             data = json.loads(request.body)
+            username = data.get('username')
+            password = data.get('password')
+            email = data.get('email')
+
+            if not username or not password:
+                return JsonResponse({'status': 'error', 'message': 'Username or password is missing.'}, status=400)
+
+            #username can not be Guest
+            if username == 'Guest':
+                return JsonResponse({'status': 'error', 'message': 'Username can not be Guest.'}, status=400)
+            #rulrs for username and password
+            if len(username) < 4 or len(username) > 20:
+                return JsonResponse({'status': 'error', 'message': 'Username must be between 4 and 20 characters.'}, status=400)
+            #username must be have at least one alphabet
+            if not any(char.isalpha() for char in username):
+                return JsonResponse({'status': 'error', 'message': 'Username must contain at least one alphabet.'}, status=400)
+            
+            #secure password rules
+            #must contain at least one number one alphabet and one special character
+            #password can not be same as username
+            if password == username:
+                return JsonResponse({'status': 'error', 'message': 'Password can not be same as username.'}, status=400)
+            if not any(char.isdigit() for char in password):
+                return JsonResponse({'status': 'error', 'message': 'Password must contain at least one number.'}, status=400)
+            if not any(char.isalpha() for char in password):
+                return JsonResponse({'status': 'error', 'message': 'Password must contain at least one alphabet.'}, status=400)
+            if not any(char in string.punctuation for char in password):
+                return JsonResponse({'status': 'error', 'message': 'Password must contain at least one special character.'}, status=400)
+
         except json.JSONDecodeError:
             return JsonResponse({'status': 'error', 'message': 'Invalid JSON data.'}, status=400)
 
@@ -255,12 +284,18 @@ def change_username(request):
 
             if not new_username or not current_username:
                 return JsonResponse({'status': 'error', 'error': 'Both current and new usernames are required.'}, status=400)
+            
+            if new_username == 'Guest':
+                return JsonResponse({'status': 'error', 'error': 'Username can not be Guest.'}, status=400)
+             #rulrs for username and password
+            if len(new_username) < 4 or len(new_username) > 20:
+                return JsonResponse({'status': 'error', 'error': 'Username must be between 4 and 20 characters.'}, status=400)
+            #username must be have at least one alphabet
+            if not any(char.isalpha() for char in new_username):
+                return JsonResponse({'status': 'error', 'error': 'Username must contain at least one alphabet.'}, status=400)
 
             if User.objects.filter(username=new_username).exists():
                 return JsonResponse({'status': 'error', 'error' : 'New username already exists.'}, status=400)
-
-            if new_username == 'Guest':
-                return JsonResponse({'status': 'error', 'error': 'Username can not be Guest.'}, status=400)
 
             try:
                 # This should change username in the database and in leaderboard
@@ -288,6 +323,14 @@ def change_password(request):
 
             if not current_password or not new_password:
                 return JsonResponse({'status': 'error', 'error': 'Both current and new passwords are required.'}, status=400)
+            #secure password rules
+            #must contain at least one number one alphabet and one special character
+            if not any(char.isdigit() for char in new_password):
+                return JsonResponse({'status': 'error', 'error': 'Password must contain at least one number.'}, status=400)
+            if not any(char.isalpha() for char in new_password):
+                return JsonResponse({'status': 'error', 'error': 'Password must contain at least one alphabet.'}, status=400)
+            if not any(char in string.punctuation for char in new_password):
+                return JsonResponse({'status': 'error', 'error': 'Password must contain at least one special character.'}, status=400)
 
             user = authenticate(username=request.user.username, password=current_password)
             if user is not None:
@@ -441,7 +484,7 @@ def get_user_profile(request, username):
     try:
         user = User.objects.get(username=username)
         profile = user.profile
-        is_friend = Friendship.objects.filter(user=request.user, friend=user).exists()
+        is_friend = Friendship.objects.filter(user=request.user, friend=user).exists() if request.user.is_authenticated else False
         data = {
             'username': user.username,
             'profile__photo': profile.photo.url if profile.photo else None,

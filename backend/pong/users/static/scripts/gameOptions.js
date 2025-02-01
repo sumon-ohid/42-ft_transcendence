@@ -1,6 +1,21 @@
 function gameOptions() {
     saveCurrentPage('gameOptions');
 
+    if (!userIsLoggedIn()) {
+        navigateTo('#login');
+        return;
+    }
+
+    if (gameInterval !== null) {
+        clearInterval(gameInterval);
+        gameInterval = null;
+    }
+
+    if (multiGameInterval !== null) {
+        clearInterval(multiGameInterval);
+        multiGameInterval = null;
+    }
+
     const body = document.body;
 
     // Remove all child elements of the body
@@ -21,7 +36,7 @@ function gameOptions() {
             <div class="form-check1" onclick="navigateTo('#gamePage')">
                 <p>2 Players Game</p>
             </div>
-            <div class="form-check2" onclick="navigateTo('#multiGamePage')">
+            <div class="form-check2" onclick="initializeGameScreen()">
                 <p>4 Players Game</p>
             </div>
             <div class="form-check3" onclick="navigateTo('#tournamentPage')">
@@ -70,3 +85,13 @@ function gameOptions() {
     
 //     body.appendChild(div);
 // }
+
+
+// Check if the user is logged in
+function userIsLoggedIn() {
+    if (localStorage.getItem('loggedInUser') === null || localStorage.getItem('jwtToken') === null || localStorage.getItem('loggedInUser') === 'Guest') {
+        return false;
+    } else {
+        return true;
+    }
+}

@@ -10,6 +10,11 @@ let chosenPlayers = [];
 function tournamentPage() {
     saveCurrentPage('tournamentPage');
 
+    if (!userIsLoggedIn()) {
+        navigateTo('#login');
+        return;
+    }
+
     const body = document.body;
 
     while (body.firstChild) {
@@ -317,7 +322,7 @@ async function initializeWeb3() {
     if (typeof Web3 !== 'undefined') {
         try {
             const contractAddress = await getContractAddress();
-            console.log('Contract Address:', contractAddress);
+            // console.log('Contract Address:', contractAddress);
             web3 = new Web3(Web3.givenProvider || "http://localhost:7545");
             ScoreContract = new web3.eth.Contract(contractABI, contractAddress);
         } catch (error) {
@@ -703,6 +708,10 @@ let tournamentPlayer2Avatar = "../static/avatars/avatar5.png";
 let tournamentGameInterval;
 
 function tournamentGamePage() {
+    if (tournamentGameInterval !== null) {
+        clearInterval(tournamentGameInterval);
+        tournamentGameInterval = null;
+    }
     const body = document.body;
 
     while (body.firstChild) {
@@ -750,6 +759,10 @@ function selectTournamentAvatar(avatarNumber, element) {
 }
 
 function startTournamentGame(player1, player2) {
+    if (tournamentGameInterval !== null) {
+        clearInterval(tournamentGameInterval);
+        tournamentGameInterval = null;
+    }
     if (!player1 || !player2) {
         console.error('Player objects are undefined');
         return;
@@ -832,6 +845,10 @@ function startTournamentGame(player1, player2) {
 }
 
 function showTournamentCountdown() {
+    if (tournamentGameInterval !== null) {
+        clearInterval(tournamentGameInterval);
+        tournamentGameInterval = null;
+    }
     const countdownElement = document.getElementById("tournamentCountdown");
     const middleLineElement = document.querySelector(".middle-line");
     middleLineElement.classList.add("hidden");

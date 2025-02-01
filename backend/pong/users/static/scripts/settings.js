@@ -1,6 +1,10 @@
 function settingsPage() {
     saveCurrentPage('settingsPage');
 
+    if (!userIsLoggedIn()) {
+        navigateTo('#login');
+        return;
+    }
 
     const body = document.body;
 
@@ -326,6 +330,22 @@ function changeUserName() {
         error('Please enter a new username.', 'error');
         return;
     }
+    if (newUsername === currentUsername) {
+        error('New username cannot be the same as the current username.', 'error');
+        return;
+    }
+
+    // Check if the new username is valid
+    if (newUsername.length < 4 || newUsername.length > 20) {
+        error('Username must be between 4 and 20 characters.', 'error');
+        return;
+    }
+
+    // Check if the new username contains at least one letter
+    if (!/[a-zA-Z]/.test(newUsername)) {
+        error('Username must contain at least one letter.', 'error');
+        return;
+    }
 
     const csrfToken = getCSRFToken();
 
@@ -374,6 +394,16 @@ function changePassword() {
       error('New password and confirm password do not match.', 'error');
       return;
     }
+
+    if (newPassword === loggedInUser) {
+        error('New password cannot be the same as the username.', 'error');
+        return;
+    }
+
+    if (newPassword === currentPassword) {
+        error('New password cannot be the same as the current password.', 'error');
+        return;
+    }
   
     const csrfToken = getCSRFToken();
   
@@ -393,7 +423,11 @@ function changePassword() {
       .then(data => {
         if (data.status === 'success') {
           error('Password changed successfully!', 'success');
-          login();
+            setTimeout(() => {
+                localStorage.removeItem('jwtToken');
+                localStorage.removeItem('loggedInUser');
+                navigateTo('#login');
+            }, 1000);
         } else {
           error(`Error: ${data.error}`, 'error');
         }

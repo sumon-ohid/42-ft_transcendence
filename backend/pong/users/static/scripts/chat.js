@@ -113,6 +113,11 @@ async function fetchLastActiveTime(username) {
 async function chatPage() {
     saveCurrentPage('chatPage');
 
+    if (!userIsLoggedIn()) {
+        navigateTo('#login');
+        return;
+    }
+
     const body = document.body;
     while (body.firstChild) {
         body.removeChild(body.firstChild);
@@ -264,7 +269,7 @@ async function chatPage() {
                     return;
                 }
                 const isFriend = data.is_friend;
-                if (isFriend) {
+                if (!isFriend) {
                     error("You can't chat with this user.", "warning");
                     return;
                 }
