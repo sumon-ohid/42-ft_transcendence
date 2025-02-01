@@ -1,6 +1,6 @@
 function userProfile(username) {
     if (username == loggedInUser) {
-        homePage();
+        navigateTo('#settings');
         return;
     }
     if (username && username != loggedInUser) {
