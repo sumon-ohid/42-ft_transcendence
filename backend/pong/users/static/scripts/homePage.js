@@ -349,7 +349,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 gameOptions();
                 break;
             case 'multiGamePage':
-                initializeGameScreen();
+                multiGamePage();
                 break;
             case 'tournamentPage':
                 tournamentPage();
@@ -425,7 +425,7 @@ function renderPage(page) {
             gameOptions();
             break;
         case 'multiGamePage':
-            initializeGameScreen();
+            multiGamePage();
             break;
         case 'tournamentPage':
             tournamentPage();

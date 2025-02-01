@@ -36,7 +36,7 @@ function gameOptions() {
             <div class="form-check1" onclick="navigateTo('#gamePage')">
                 <p>2 Players Game</p>
             </div>
-            <div class="form-check2" onclick="navigateTo('#multiGamePage')">
+            <div class="form-check2" onclick="initializeGameScreen()">
                 <p>4 Players Game</p>
             </div>
             <div class="form-check3" onclick="navigateTo('#tournamentPage')">

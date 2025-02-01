@@ -69,7 +69,11 @@ function handleAvatarSelection(avatarNumber, element) {
 }
 
 async function initializeGameScreen() {
-    saveCurrentPage('multiGamePage');
+    // saveCurrentPage('multiGamePage');
+    if (multiGameInterval !== null) {
+        clearInterval(multiGameInterval);
+        multiGameInterval = null;
+    }
     document.addEventListener('keydown', function(event) {
         keysPressed[event.key] = true;
     });
@@ -162,6 +166,10 @@ async function initializeGameScreen() {
 }
 
 function displayGameCountdown() {
+    if (multiGameInterval !== null) {
+        clearInterval(multiGameInterval);
+        multiGameInterval = null;
+    }
     const countdownElement = document.getElementById("countdown");
     const middleLineElement = document.querySelector(".multi-middle-line");
     middleLineElement.classList.add("hidden");
@@ -169,6 +177,10 @@ function displayGameCountdown() {
     let countdown = 3;
 
     const countdownInterval = setInterval(() => {
+        if (multiGameInterval !== null) {
+            clearInterval(multiGameInterval);
+            multiGameInterval = null;
+        }
         if (countdown > 0) {
             countdownElement.innerHTML = countdown;
             countdown--;

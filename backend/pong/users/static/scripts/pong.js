@@ -12,6 +12,11 @@ function gamePage() {
         return;
     }
 
+    if (gameInterval !== null) {
+        clearInterval(gameInterval);
+        gameInterval = null;
+    }
+
     const body = document.body;
 
     while (body.firstChild) {
@@ -58,6 +63,7 @@ function gamePage() {
         if (event.key === 'Enter') {
             if (gameInterval) {
                 clearInterval(gameInterval);
+                gameInterval = null;
             }
             startGame();
         }
@@ -65,8 +71,9 @@ function gamePage() {
 }
 
 function startGamePlay() {
-    if (gameInterval) {
+    if (gameInterval !== null) {
         clearInterval(gameInterval);
+        gameInterval = null;
     }
     startGame();
 }
@@ -177,6 +184,10 @@ function pauseGame() {
 }
 
 function showCountdown() {
+    if (gameInterval !== null) {
+        clearInterval(gameInterval);
+        gameInterval = null;
+    }
     const countdownElement = document.getElementById("countdown");
     const middleLineElement = document.querySelector(".middle-line");
     middleLineElement.classList.add("hidden");
@@ -184,7 +195,15 @@ function showCountdown() {
     let countdown = 3;
 
     const countdownInterval = setInterval(() => {
+        if (gameInterval !== null) {
+            clearInterval(gameInterval);
+            gameInterval = null;
+        }
         if (countdown > 0) {
+            if (gameInterval !== null) {
+                clearInterval(gameInterval);
+                gameInterval = null;
+            }
             countdownElement.innerHTML = countdown;
             countdown--;
         } else {
