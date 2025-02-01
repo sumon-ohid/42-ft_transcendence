@@ -1,6 +1,11 @@
 function leaderboard() {
     saveCurrentPage('leaderboard');
 
+    if (!userIsLoggedIn()) {
+        navigateTo('#login');
+        return;
+    }
+
     const body = document.body;
 
     while (body.firstChild) {

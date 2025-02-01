@@ -10,6 +10,11 @@ let chosenPlayers = [];
 function tournamentPage() {
     saveCurrentPage('tournamentPage');
 
+    if (!userIsLoggedIn()) {
+        navigateTo('#login');
+        return;
+    }
+
     const body = document.body;
 
     while (body.firstChild) {
@@ -317,7 +322,7 @@ async function initializeWeb3() {
     if (typeof Web3 !== 'undefined') {
         try {
             const contractAddress = await getContractAddress();
-            console.log('Contract Address:', contractAddress);
+            // console.log('Contract Address:', contractAddress);
             web3 = new Web3(Web3.givenProvider || "http://localhost:7545");
             ScoreContract = new web3.eth.Contract(contractABI, contractAddress);
         } catch (error) {

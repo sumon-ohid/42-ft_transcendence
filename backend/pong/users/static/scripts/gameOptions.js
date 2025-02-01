@@ -1,6 +1,11 @@
 function gameOptions() {
     saveCurrentPage('gameOptions');
 
+    if (!userIsLoggedIn()) {
+        navigateTo('#login');
+        return;
+    }
+
     const body = document.body;
 
     // Remove all child elements of the body
@@ -70,3 +75,13 @@ function gameOptions() {
     
 //     body.appendChild(div);
 // }
+
+
+// Check if the user is logged in
+function userIsLoggedIn() {
+    if (localStorage.getItem('loggedInUser') === null || localStorage.getItem('jwtToken') === null || localStorage.getItem('loggedInUser') === 'Guest') {
+        return false;
+    } else {
+        return true;
+    }
+}

@@ -7,6 +7,11 @@ let gameInterval;
 function gamePage() {
     saveCurrentPage('gamePage');
 
+    if (!userIsLoggedIn()) {
+        navigateTo('#login');
+        return;
+    }
+
     const body = document.body;
 
     while (body.firstChild) {

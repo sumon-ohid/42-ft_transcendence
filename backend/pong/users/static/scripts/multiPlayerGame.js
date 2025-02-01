@@ -14,6 +14,10 @@ const keysPressed = {};
 function multiGamePage() {
     saveCurrentPage('multiGamePage');
 
+    if (!userIsLoggedIn()) {
+        navigateTo('#login');
+        return;
+    }
 
     const body = document.body;
 

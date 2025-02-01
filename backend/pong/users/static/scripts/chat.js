@@ -113,6 +113,11 @@ async function fetchLastActiveTime(username) {
 async function chatPage() {
     saveCurrentPage('chatPage');
 
+    if (!userIsLoggedIn()) {
+        navigateTo('#login');
+        return;
+    }
+
     const body = document.body;
     while (body.firstChild) {
         body.removeChild(body.firstChild);

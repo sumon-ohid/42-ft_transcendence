@@ -10,6 +10,11 @@ function userProfile(username) {
     }
     saveCurrentPage('userProfile');
   
+    if (!userIsLoggedIn()) {
+        navigateTo('#login');
+        return;
+    }
+
     const body = document.body;
 
     // Remove all child elements of the body

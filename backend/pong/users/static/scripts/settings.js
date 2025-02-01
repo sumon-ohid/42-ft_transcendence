@@ -1,6 +1,10 @@
 function settingsPage() {
     saveCurrentPage('settingsPage');
 
+    if (!userIsLoggedIn()) {
+        navigateTo('#login');
+        return;
+    }
 
     const body = document.body;
 

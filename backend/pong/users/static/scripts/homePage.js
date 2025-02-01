@@ -1,4 +1,4 @@
-let loggedInUser = "Guest";
+let loggedInUser = '';
 
 async function fetchUsername() {
     try {
@@ -13,10 +13,10 @@ async function fetchUsername() {
         loggedInUser = data.username;
         if (data.username.length > 6)
           data.username = data.username.substring(0, 6) + '.';
-        return data.username || "Guest";
+        return data.username || "";
     } catch (error) {
         console.error('Error fetching username:', error);
-        return "Guest";
+        return "";
     }
 }
 
@@ -48,7 +48,9 @@ async function homePage() {
     // This solves the reload problem which was showing 
     // default value first the fetch value from user.
     const [username, profilePicture] = await Promise.all([fetchUsername(), fetchProfilePicture()]);
-  
+    
+    localStorage.setItem('loggedInUser', username);
+
     // if (loggedInUser === 'Guest') {
     //     saveCurrentPage('login');
     //     login();
@@ -278,6 +280,7 @@ function handleLogout(event) {
         .then(response => {
             if (response.ok) {
                 localStorage.removeItem('jwtToken');
+                localStorage.removeItem('loggedInUser');
                 error("You have been logged out.", "success");
                 window.location.href = 'https://localhost:8000/';
             } else {

@@ -1,6 +1,9 @@
 function userList() {
     saveCurrentPage('userList');
-
+    if (!userIsLoggedIn()) {
+        navigateTo('#login');
+        return;
+    }
     const body = document.body;
 
     // Clear existing content
