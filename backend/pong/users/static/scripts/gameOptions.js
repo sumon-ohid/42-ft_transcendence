@@ -6,6 +6,11 @@ function gameOptions() {
         return;
     }
 
+    if (gameInterval !== null) {
+        clearInterval(gameInterval);
+        gameInterval = null;
+    }
+
     const body = document.body;
 
     // Remove all child elements of the body

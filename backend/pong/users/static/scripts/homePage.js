@@ -382,6 +382,8 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function navigateTo(path) {
+    // if (gameInterval)
+    //     clearInterval(gameInterval);
     let newPath = path.replace('#', '');
     history.pushState({ page: newPath }, "", path);
     renderPage(newPath);

@@ -46,7 +46,7 @@ function gamePage() {
             </div>
         </div>
         <div class="ready">
-            <button id="game-play-button" class="gamepage-button" onclick="startGame()">Ready</button>
+            <button id="game-play-button" class="gamepage-button" onclick="startGamePlay()">Ready</button>
         </div>
         <div class="quit-game" onclick="navigateTo('#homePage')">
             <h1>BACK</h1>
@@ -62,6 +62,13 @@ function gamePage() {
             startGame();
         }
     });
+}
+
+function startGamePlay() {
+    if (gameInterval) {
+        clearInterval(gameInterval);
+    }
+    startGame();
 }
 
 let avatarSelectionCount = 0;
@@ -166,7 +173,6 @@ function startGame() {
 }
 
 function pauseGame() {
-    location.hostname = "localhost";
     alert("Game Paused");
 }
 
