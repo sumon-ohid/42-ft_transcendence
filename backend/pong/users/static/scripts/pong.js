@@ -96,8 +96,7 @@ function selectAvatar(avatarNumber, element) {
     }
 }
 
-function startGame() {
-
+function startGame() {    
     const nicknameInput1 = document.getElementById("nickname1");
     const nicknameInput2 = document.getElementById("nickname2");
     player1Name = nicknameInput1.value || "Player 1";
@@ -108,6 +107,16 @@ function startGame() {
     }
     if (player2Name.length > 8) {
         player2Name = player2Name.substring(0, 8) + '.';
+    }
+
+    // player name should be at least 1 alphabet
+    if (!player1Name.match(/[a-zA-Z]/)) {
+        error("Player 1 nickname should contain at least 1 alphabet", "error");
+        return;
+    }
+    if (!player2Name.match(/[a-zA-Z]/)) {
+        error("Player 2 nickname should contain at least 1 alphabet", "error");
+        return;
     }
 
     // Save player data to localStorage

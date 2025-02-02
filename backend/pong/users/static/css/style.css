@@ -182,6 +182,7 @@ body {
 
     .nav-menu a i {
         display: inline-block;
+        color: rgba(255, 255, 255, 0.729);
     }
 
     .nav-menu li {
