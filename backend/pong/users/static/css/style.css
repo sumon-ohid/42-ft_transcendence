@@ -3626,9 +3626,18 @@ form .login-button:hover {
         box-shadow: 0 2px 6px rgba(0.5, 0, 0, 0.51);
         border: 2px solid rgb(0, 194, 238);
     }
-    
-}
 
+    form .login-button {
+        color: rgba(0, 0, 0, 0.627);
+    }
+    
+    /* I will add game with ai for mobile */
+    /* other games should not be visible */
+
+    .form-check1, .form-check2, .form-check3 {
+        display: none;
+    }
+}
 
 /* this is for the mobile rotation */
 @media screen and (max-width: 768px) and (orientation: landscape) {
