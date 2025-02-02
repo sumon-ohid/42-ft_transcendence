@@ -54,20 +54,29 @@ function gamePage() {
             <button id="game-play-button" class="gamepage-button" onclick="startGamePlay()">Ready</button>
         </div>
         <div class="quit-game" onclick="navigateTo('#homePage')">
-            <h1>BACK</h1>
+        <h1>BACK</h1>
+        </div>
+        <div class="ai-opponent">
+            <label for="ai-checkbox">Enable AI Opponent</label>
+            <input type="checkbox" id="ai-checkbox" onclick="toggleAI()">
         </div>
     `;
     body.appendChild(div);
+}
 
-    document.addEventListener('keydown', function(event) {
-        if (event.key === 'Enter') {
-            if (gameInterval) {
-                clearInterval(gameInterval);
-                gameInterval = null;
-            }
-            startGame();
-        }
-    });
+let isAIEnabled = false;
+
+function toggleAI() {
+    isAIEnabled = document.getElementById('ai-checkbox').checked;
+    if (isAIEnabled) {
+        player2Name = "AI Gamer";
+        document.getElementById('nickname2').value = player2Name;
+        document.getElementById('nickname2').disabled = true;
+    } else {
+        player2Name = "Player 2";
+        document.getElementById('nickname2').value = player2Name;
+        document.getElementById('nickname2').disabled = false;
+    }
 }
 
 function startGamePlay() {
@@ -295,11 +304,20 @@ function initializeGame() {
         if (keysPressed['s']) {
             paddle1Y = Math.min(paddle1Y + paddleSpeed, canvas.height - paddleHeight);
         }
-        if (keysPressed['ArrowUp']) {
-            paddle2Y = Math.max(paddle2Y - paddleSpeed, 0);
-        }
-        if (keysPressed['ArrowDown']) {
-            paddle2Y = Math.min(paddle2Y + paddleSpeed, canvas.height - paddleHeight);
+        if (!isAIEnabled) {
+            if (keysPressed['ArrowUp']) {
+                paddle2Y = Math.max(paddle2Y - paddleSpeed, 0);
+            }
+            if (keysPressed['ArrowDown']) {
+                paddle2Y = Math.min(paddle2Y + paddleSpeed, canvas.height - paddleHeight);
+            }
+        } else {
+            // AI logic to control the paddle
+            if (ballY < paddle2Y + paddleHeight / 2) {
+                paddle2Y = Math.max(paddle2Y - paddleSpeed, 0);
+            } else if (ballY > paddle2Y + paddleHeight / 2) {
+                paddle2Y = Math.min(paddle2Y + paddleSpeed, canvas.height - paddleHeight);
+            }
         }
 
         // Check if the game has ended
