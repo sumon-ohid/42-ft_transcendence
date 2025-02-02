@@ -124,8 +124,8 @@ body {
         height: 600px;
         width: 50px;
     }
+    
 }
-
 .nav-menu {
     list-style: none;
     padding: 0;
@@ -182,6 +182,7 @@ body {
 
     .nav-menu a i {
         display: inline-block;
+        color: rgba(255, 255, 255, 0.729);
     }
 
     .nav-menu li {
@@ -2106,8 +2107,8 @@ form .login-button:hover {
 }
 
 .chat-message:focus{
-    border: none;
     outline: none;
+    border: none;
 }
 
 .chat-messages::-webkit-scrollbar {
@@ -3448,3 +3449,235 @@ form .login-button:hover {
 }
 
 /*------- Dashboard CONTAINER End -------*/
+
+
+/*------- MOBILE RESPONSIVE START -------*/
+@media (max-width: 400px) {
+
+    /* .main {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        width: 100%;
+        position: fixed;
+        top: 55%;
+        overflow-y: auto;
+        z-index: -1;
+    } */
+
+    body {
+        overflow-x: hidden;
+        overflow-y: auto;
+        z-index: 1;
+    }
+
+    .navbar {
+        background: linear-gradient(135deg, #2a66c6, #114394);
+        backdrop-filter: blur(10px);
+        position: fixed;
+        z-index: 1;
+        width: 440px;
+        height: 50px;
+        top: 35px;
+        left: 51%;
+        transform: translateX(-50%);
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0.5, 0, 0, 0.51); /* shadow */
+        gap: 1px;
+    }
+
+    .nav-menu {
+        top: 0;
+        left: 0;
+        transform: none;
+        height: 600px;
+        width: 50px;
+        flex-direction: row;
+        gap: 5px;
+    }
+
+    .login-container {
+        width: 350px;
+    }
+
+    .login-button {
+        z-index: 5;
+    }
+
+    .toggle-password, .toggle-password-signup {
+        right: 40px;
+    }
+    
+    .toggle-password-signup {
+        top: 58%;
+    }
+
+    .chat-to-hide {
+        display: none;
+    }
+
+    .settings-container {
+        width: 100%;
+        /* height: 80%; */
+    }
+
+    .quit-game {
+        display: none;
+    }
+
+    .play-container, .account-container, .leader-container, .chat-container {
+        position: fixed;
+        left: 50%;
+    }
+
+    .password-container {
+        top: 270px;
+    }
+
+    .leaderboard-container {
+        height: auto;
+        width: 90%;
+    }
+
+    #chat-from-userlist {
+        display: none;
+    }
+
+    .inside-wel2 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 450px;
+        width: 90%;
+        position: fixed;
+        left: 50%;
+        top: 150px;
+        transform: translateX(-50%);
+        background-color: rgba(0, 0, 0, 0.156);
+        backdrop-filter: blur(10px);
+        bottom: 40px;
+        border-radius: 20px;
+    }
+
+    .top-player {
+        width: 70%;
+        height: 200px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background-color: var(--pong-color);
+        padding: 20px;
+        border-radius: 30px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        color: white;
+    }
+
+    .chatpage-container {
+        background-color: var(--pong-color);
+        position: fixed;
+        top: 90px;
+        left: 52%;
+        transform: translateX(-50%);
+        height: 550px;
+        width: 350px;
+        align-items: center;
+        justify-items: center;
+        display: flex;
+        flex-direction: column;
+        border-radius: 15px;
+        box-shadow: 0 10px 6px rgba(0.5, 0, 0, 0.51); /* shadow */
+    }
+
+    .chat-top-bar {
+        background-color: var(--container-background);
+        height: 60px;
+        width: 250px;
+        position: relative;
+        top: -60px;
+        left: 20px;
+        border-radius: 10px;
+        box-shadow: 0 1px 6px rgba(0.5, 0, 0, 0.51); /* shadow */
+        border: 1px solid rgba(249, 249, 249, 0.563);
+    }
+
+    .chat-box-holder {
+        position: fixed;
+        bottom: 30px;
+        right: -55px;
+        transform: translateX(-50%);
+        height: 50px;
+        width: 225px;
+        border-radius: 25px;
+        box-shadow: 0 2px 6px rgba(0.5, 0, 0, 0.51);
+        border: 2px solid rgba(255, 255, 255, 0.315);
+        color: #000000a5;
+    }
+
+    .send-button {
+        background-color: var(--container-background);
+        position: fixed;
+        bottom: 30px;
+        right: -20px;
+        transform: translateX(-50%);
+        height: 50px;
+        width: 50px;
+        border-radius: 50%;
+        box-shadow: 0 2px 6px rgba(0.5, 0, 0, 0.51);
+        border: 2px solid rgb(0, 194, 238);
+    }
+
+    form .login-button {
+        color: rgba(0, 0, 0, 0.627);
+    }
+    
+    /* I will add game with ai for mobile */
+    /* other games should not be visible */
+
+    .form-check1, .form-check2, .form-check3 {
+        display: none;
+    }
+
+    .chat-box {
+        background-color: transparent;
+        color: white;
+        border: none;
+        padding: 10px 10px;
+        border-radius: 5px;
+        box-sizing: border-box;
+        height: 30px;
+        width: 170px;
+        position: relative;
+        top: 8px;
+        left: 10px;
+    }
+
+    .attachment {
+        display: none;
+    }
+}
+
+/* this is for the mobile rotation */
+@media screen and (max-width: 768px) and (orientation: landscape) {
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: black;
+      color: white;
+      font-size: 20px;
+    }
+  
+    .navbar, .nav-menu, .login-container, .settings-container, .play-container, .account-container, .leader-container, .chat-container, .inside-wel2, .top-player {
+        display: none;
+    }
+  
+    .rotate-message {
+      display: block;
+      text-align: center;
+    }
+  }
+  
+/*------- MOBILE RESPONSIVE END -------*/

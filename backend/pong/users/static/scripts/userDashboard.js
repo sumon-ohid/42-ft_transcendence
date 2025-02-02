@@ -1,4 +1,4 @@
-function userDashboard() {
+async function userDashboard() {
   saveCurrentPage("userDashboard");
 
   if (!userIsLoggedIn()) {
