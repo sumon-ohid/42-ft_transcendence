@@ -2107,8 +2107,8 @@ form .login-button:hover {
 }
 
 .chat-message:focus{
-    border: none;
     outline: none;
+    border: none;
 }
 
 .chat-messages::-webkit-scrollbar {
@@ -3636,6 +3636,24 @@ form .login-button:hover {
     /* other games should not be visible */
 
     .form-check1, .form-check2, .form-check3 {
+        display: none;
+    }
+
+    .chat-box {
+        background-color: transparent;
+        color: white;
+        border: none;
+        padding: 10px 10px;
+        border-radius: 5px;
+        box-sizing: border-box;
+        height: 30px;
+        width: 170px;
+        position: relative;
+        top: 8px;
+        left: 10px;
+    }
+
+    .attachment {
         display: none;
     }
 }
