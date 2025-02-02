@@ -3575,4 +3575,26 @@ form .login-button:hover {
     
 }
 
+
+@media screen and (max-width: 768px) and (orientation: landscape) {
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: black;
+      color: white;
+      font-size: 20px;
+    }
+  
+    .navbar, .nav-menu, .login-container, .settings-container, .play-container, .account-container, .leader-container, .chat-container, .inside-wel2, .top-player {
+        display: none;
+    }
+  
+    .rotate-message {
+      display: block;
+      text-align: center;
+    }
+  }
+  
 /*------- MOBILE RESPONSIVE END -------*/

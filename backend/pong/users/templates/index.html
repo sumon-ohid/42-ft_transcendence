@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, orientation=portrait">
     <title>The Pong</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
@@ -25,7 +25,9 @@
     <script src="https://cdn.jsdelivr.net/npm/@babel/polyfill/dist/polyfill.min.js"></script>
 </head>
 <body data-static-url="{% static '' %}">
-    <div class="warning-message" style="display: none;">Please rotate your device to portrait mode.</div>
+    <div class="rotate-message" style="display: none;">
+        <h2>Please rotate your device to portrait mode</h2>
+    </div>
     <!-- Main Content -->
     <div class="pong-container"></div>
     <div class="pong"></div>
@@ -34,6 +36,23 @@
         <h1>continue</h1>
     </button>
 
+    <script>
+        function isMobileDevice() {
+            return /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+        }
+
+        function checkOrientation() {
+            if (isMobileDevice()) {
+                if (window.innerHeight < window.innerWidth) {
+                document.body.innerHTML =
+                    "<h2 style='text-align:center; margin-top:50vh;'>Please use portrait mode</h2>";
+                } else {
+                location.reload(); // Reload content when rotated back
+                }
+            }
+        }
+        window.addEventListener("resize", checkOrientation);
+    </script>
     <!--JS SCRIPTS-->
     <!-- defer is for document to be completly parsed first the execute script-->
     <script src="{% static 'scripts/homePage.js' %}" defer></script>
