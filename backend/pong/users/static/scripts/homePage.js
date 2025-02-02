@@ -49,7 +49,7 @@ async function homePage() {
     // default value first the fetch value from user.
     const [username, profilePicture] = await Promise.all([fetchUsername(), fetchProfilePicture()]);
     
-    localStorage.setItem('loggedInUser', username);
+    localStorage.setItem('loggedInUser', loggedInUser);
 
     // if (loggedInUser === 'Guest') {
     //     saveCurrentPage('login');
@@ -68,7 +68,7 @@ async function homePage() {
             <li><a title="Game" onclick="navigateTo('#gameOptions')"><i class="fa-solid fa-gamepad"></i><span>Game</span></a></li>
             <li><a title="Leaderboard" onclick="navigateTo('#leaderboard')"><i class="fa-solid fa-trophy"></i><span>Leaderboard</span></a></li>
             <li><a title="Dashboard" onclick="navigateTo('#userDashboard')"><i class="fa-solid fa-chart-line"></i><span>Dashboard</span></a></li>
-            <li><a title="Chat" onclick="navigateTo('#chatPage')"><i class="fa-solid fa-message"></i><span>Chat</span></a></li>
+            <li class="chat-to-hide"><a title="Chat" onclick="navigateTo('#chatPage')"><i class="fa-solid fa-message"></i><span>Chat</span></a></li>
             <li><a href="" title="logout" onclick="handleLogout(event)"><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></a></li>
         </ul>
     `;

@@ -29,7 +29,7 @@ OPENROUTER_API = os.getenv('OPENROUTER_API')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '34.123.215.222', '192.168.122.1']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '192.168.178.63', '192.168.122.1', '0.0.0.0']
 
 
 # Application definition

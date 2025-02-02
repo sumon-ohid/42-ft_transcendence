@@ -124,8 +124,8 @@ body {
         height: 600px;
         width: 50px;
     }
+    
 }
-
 .nav-menu {
     list-style: none;
     padding: 0;
@@ -3448,3 +3448,131 @@ form .login-button:hover {
 }
 
 /*------- Dashboard CONTAINER End -------*/
+
+
+/*------- MOBILE RESPONSIVE START -------*/
+@media (max-width: 400px) {
+
+    /* .main {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        width: 100%;
+        position: fixed;
+        top: 55%;
+        overflow-y: auto;
+        z-index: -1;
+    } */
+
+    body {
+        overflow-x: hidden;
+        overflow-y: auto;
+        z-index: 1;
+    }
+
+    .navbar {
+        background: linear-gradient(135deg, #2a66c6, #114394);
+        backdrop-filter: blur(10px);
+        position: fixed;
+        z-index: 1;
+        width: 440px;
+        height: 50px;
+        top: 35px;
+        left: 51%;
+        transform: translateX(-50%);
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0.5, 0, 0, 0.51); /* shadow */
+        gap: 1px;
+    }
+
+    .nav-menu {
+        top: 0;
+        left: 0;
+        transform: none;
+        height: 600px;
+        width: 50px;
+        flex-direction: row;
+        gap: 5px;
+    }
+
+    .login-container {
+        width: 350px;
+    }
+
+    .login-button {
+        z-index: 5;
+    }
+
+    .toggle-password, .toggle-password-signup {
+        right: 40px;
+    }
+    
+    .toggle-password-signup {
+        top: 58%;
+    }
+
+    .chat-to-hide {
+        display: none;
+    }
+
+    .settings-container {
+        width: 100%;
+        /* height: 80%; */
+    }
+
+    .quit-game {
+        display: none;
+    }
+
+    .play-container, .account-container, .leader-container, .chat-container {
+        position: fixed;
+        left: 50%;
+    }
+
+    .password-container {
+        top: 270px;
+    }
+
+    .leaderboard-container {
+        height: auto;
+        width: 90%;
+    }
+
+    #chat-from-userlist {
+        display: none;
+    }
+
+    .inside-wel2 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 450px;
+        width: 90%;
+        position: fixed;
+        left: 50%;
+        top: 150px;
+        transform: translateX(-50%);
+        background-color: rgba(0, 0, 0, 0.156);
+        backdrop-filter: blur(10px);
+        bottom: 40px;
+        border-radius: 20px;
+    }
+
+    .top-player {
+        width: 70%;
+        height: 200px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background-color: var(--pong-color);
+        padding: 20px;
+        border-radius: 30px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        color: white;
+    }
+    
+}
+
+/*------- MOBILE RESPONSIVE END -------*/

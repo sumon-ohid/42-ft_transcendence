@@ -42,6 +42,7 @@ function userProfile(username) {
       const div = document.createElement("div");
       div.className = "settings-container";
       div.innerHTML = ` 
+                <h2>User Profile</h2>
                 <div class="user-profile-design"> </div>
                 <div class="round">
                     <div class="profile-pic">
