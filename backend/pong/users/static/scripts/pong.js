@@ -54,20 +54,29 @@ function gamePage() {
             <button id="game-play-button" class="gamepage-button" onclick="startGamePlay()">Ready</button>
         </div>
         <div class="quit-game" onclick="navigateTo('#homePage')">
-            <h1>BACK</h1>
+        <h1>BACK</h1>
+        </div>
+        <div class="ai-opponent">
+            <label for="ai-checkbox">Enable AI Opponent</label>
+            <input type="checkbox" id="ai-checkbox" onclick="toggleAI()">
         </div>
     `;
     body.appendChild(div);
+}
 
-    document.addEventListener('keydown', function(event) {
-        if (event.key === 'Enter') {
-            if (gameInterval) {
-                clearInterval(gameInterval);
-                gameInterval = null;
-            }
-            startGame();
-        }
-    });
+let isAIEnabled = false;
+
+function toggleAI() {
+    isAIEnabled = document.getElementById('ai-checkbox').checked;
+    if (isAIEnabled) {
+        player2Name = "AI Gamer";
+        document.getElementById('nickname2').value = player2Name;
+        document.getElementById('nickname2').disabled = true;
+    } else {
+        player2Name = "Player 2";
+        document.getElementById('nickname2').value = player2Name;
+        document.getElementById('nickname2').disabled = false;
+    }
 }
 
 function startGamePlay() {
@@ -250,6 +259,9 @@ function initializeGame() {
     let ballSpeedY = 2;
 
     const paddleSpeed = 10;
+    const smoothSpeed = 0.2;
+    const aiMoveDelay = 2;
+    let aiMoveCounter = 0;
 
     const keysPressed = {};
 
@@ -264,6 +276,10 @@ function initializeGame() {
         ctx.fillStyle = "#FFFFFF";
         ctx.fill();
         ctx.closePath();
+    }
+
+    function linearsmooth(current, target, alpha) {
+        return current + (target - current) * alpha;
     }
 
     function draw() {
@@ -297,18 +313,32 @@ function initializeGame() {
             }
         }
 
-        // Update paddle positions based on keys pressed
+        // Update player paddle positions based on keys pressed
         if (keysPressed['w']) {
             paddle1Y = Math.max(paddle1Y - paddleSpeed, 0);
         }
         if (keysPressed['s']) {
             paddle1Y = Math.min(paddle1Y + paddleSpeed, canvas.height - paddleHeight);
         }
-        if (keysPressed['ArrowUp']) {
-            paddle2Y = Math.max(paddle2Y - paddleSpeed, 0);
-        }
-        if (keysPressed['ArrowDown']) {
-            paddle2Y = Math.min(paddle2Y + paddleSpeed, canvas.height - paddleHeight);
+        if (!isAIEnabled) {
+            if (keysPressed['ArrowUp']) {
+                paddle2Y = Math.max(paddle2Y - paddleSpeed, 0);
+            }
+            if (keysPressed['ArrowDown']) {
+                paddle2Y = Math.min(paddle2Y + paddleSpeed, canvas.height - paddleHeight);
+            }
+        } else {
+            // AI logic to move the paddle only at intervals more smoothly
+            aiMoveCounter++;
+
+            if (aiMoveCounter >= aiMoveDelay) {
+                aiMoveCounter = 0;
+                const targetY = ballY - paddleHeight / 2;
+                if (Math.abs(paddle2Y - targetY) > 1) {
+                    paddle2Y = linearsmooth(paddle2Y, targetY, smoothSpeed);
+                }
+                paddle2Y = Math.max(0, Math.min(paddle2Y, canvas.height - paddleHeight));
+            }
         }
 
         // Check if the game has ended
@@ -323,17 +353,17 @@ function initializeGame() {
                 confirmationElement.classList.remove('hidden');
                 let countdown = 3;
                 confirmationElement.innerHTML = `<span>Game Over</span><br><span style="font-size: 2em; color: #007bff">${winner} Wins!</span><br>Returning to game page in ${countdown}s...`;
-                
+
                 const countdownInterval = setInterval(() => {
                     countdown -= 1;
                     confirmationElement.innerHTML = `<span>Game Over</span><br><span style="font-size: 2em; color: #007bff">${winner} Wins!</span><br>Returning to game page in ${countdown}s...`;
-        
+
                     if (countdown === 0) {
                         clearInterval(countdownInterval);
-        
+
                         const csrfToken = getCSRFToken();
                         const result = winner === leftPlayerNickname ? 'win' : 'lose';
-                        
+
                         fetch('/api/save-score/', {
                             method: 'POST',
                             headers: {
@@ -342,7 +372,7 @@ function initializeGame() {
                             },
                             body: JSON.stringify({
                                 score: leftScore, // Always send player 1's score
-                                result: result 
+                                result: result
                             })
                         })
                         .then(response => response.json())
@@ -357,7 +387,7 @@ function initializeGame() {
                         .catch(error => {
                             console.error('Error:', error);
                         });
-        
+
                         // navigateTo('#gameOptions');
                         navigateTo('#gamePage');
                     }
@@ -365,7 +395,7 @@ function initializeGame() {
             }
         }
     }
-    
+
     function resetBall() {
         ballX = canvas.width / 2;
         ballY = canvas.height / 2;
