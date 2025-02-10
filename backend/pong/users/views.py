@@ -540,8 +540,13 @@ def callback_view(request):
     username = user_info['login']
     photo_url = user_info.get('image', {}).get('link', '')
     user_id = user_info['id']
-    # set username = username+user_id
     username = f"{username}{user_id}"
+    # if username exists, add 1 to the user_id and concatenate it to the username with user id from api
+    if User.objects.filter(username=username).exists():
+        user_id = user_id + 1
+        username = f"{username}{user_id}"
+    # set username = username+user_id
+
     email = user_info.get('email', '')
     # Check if user with the same id exists
     try:
