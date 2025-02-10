@@ -62,6 +62,9 @@ function gamePage() {
         </div>
     `;
     body.appendChild(div);
+
+    document.getElementById('ai-checkbox').checked = false;
+    isAIEnabled = false;
 }
 
 let isAIEnabled = false;
