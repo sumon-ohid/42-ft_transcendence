@@ -106,8 +106,14 @@ function renderWinLoseChart(data) {
   const winCount = data.filter((entry) => entry.win).length;
   const loseCount = data.filter((entry) => entry.lose).length;
   const totalCount = winCount + loseCount;
-  const winPercent = ((winCount / totalCount) * 100).toFixed(2);
-  const losePercent = ((loseCount / totalCount) * 100).toFixed(2);
+
+  let winPercent = 0;
+  let losePercent = 0;
+
+  if (totalCount > 0) {
+    winPercent = ((winCount / totalCount) * 100).toFixed(2);
+    losePercent = ((loseCount / totalCount) * 100).toFixed(2);
+  }
 
   new Chart(ctx, {
     type: "pie",
