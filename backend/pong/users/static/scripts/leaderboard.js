@@ -24,7 +24,7 @@ function leaderboard() {
         })
         .then(data => {
             if (!data || data.length === 0) {
-                div.innerHTML = `
+                div.innerHTML = /*html*/ `
                     <div class="title-all-rank">
                         <h2>Leaderboard</h2>
                     </div>
@@ -66,7 +66,7 @@ function leaderboard() {
             }
             data.sort((a, b) => b.score - a.score);
             const topPlayer = data[0];
-            div.innerHTML = `
+            div.innerHTML = /*html*/ `
                  <div class="top-player">
                         <div class="top-badge"></div>
                         <h2>Rank 1</h2>
@@ -97,7 +97,7 @@ function leaderboard() {
         })
         .catch(error => {
             console.error('Error fetching leaderboard data:', error);
-            div.innerHTML = `<p>Failed to load leaderboard data. Please try again later.</p>`;
+            div.innerHTML = /*html*/ `<p>Failed to load leaderboard data. Please try again later.</p>`;
             body.appendChild(div);
         });
 }

@@ -94,7 +94,7 @@ startAIChat = async function() {
     
     //-- Set up AI chat interface
     const chatTopBar = document.querySelector('.chat-top-bar');
-    chatTopBar.innerHTML = `
+    chatTopBar.innerHTML = /*html*/ `
         <div class="chating-with">
             <div class="friend-name">
                 <h1>Marvin</h1>

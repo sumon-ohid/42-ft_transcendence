@@ -25,7 +25,7 @@ function gameOptions() {
 
     const div = document.createElement("div");
     div.className = "settings-container";
-    div.innerHTML = `
+    div.innerHTML = /*html*/ `
         <div class="pong-container-options"></div>
         <div class="pong-options"></div>
         <h2>Choose Option</h2>
@@ -64,7 +64,7 @@ function gameOptions() {
 
 //     const div = document.createElement("div");
 //     div.className = "settings-container";
-//     div.innerHTML = `
+//     div.innerHTML = /*html*/ `
 //         <div class="pong-container-options"></div>
 //         <h2>Customization</h2>
 //         <div class="quit-game" onclick="gameOptions()">

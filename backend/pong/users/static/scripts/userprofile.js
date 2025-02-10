@@ -41,7 +41,7 @@ function userProfile(username) {
 
       const div = document.createElement("div");
       div.className = "settings-container";
-      div.innerHTML = ` 
+      div.innerHTML = /*html*/ ` 
                 <h2>User Profile</h2>
                 <div class="user-profile-design"> </div>
                 <div class="round">
@@ -84,7 +84,7 @@ function userProfile(username) {
                 result === "Win"
                   ? "badge text-bg-info"
                   : "badge text-bg-warning";
-              recordElement.innerHTML = `
+              recordElement.innerHTML = /*html*/ `
                     <div>
                         <span class="badge text-bg-light">
                             <p>Date: ${new Date(

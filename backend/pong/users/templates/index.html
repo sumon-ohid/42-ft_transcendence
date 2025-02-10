@@ -56,7 +56,7 @@
         function checkOrientation() {
             if (isMobileDevice()) {
                 if (window.innerHeight < window.innerWidth) {
-                    document.body.innerHTML = "<h2 style='text-align:center; margin-top:50vh;'>Please use portrait mode</h2>";
+                    document.body.innerHTML = /*html*/ `<h2 style='text-align:center; margin-top:50vh;'>Please use portrait mode</h2>`;
                 } else {
                     location.reload(); // Reload content when rotated back
                 }

@@ -15,7 +15,7 @@ function settingsPage() {
 
     const div = document.createElement("div");
     div.className = "settings-container";
-    div.innerHTML = `
+    div.innerHTML = /*html*/ `
         <div class="delete-account" onclick="deleteAccount()">
             <div class="icon"><i class="fa-solid fa-trash"></i></div>
             <div class="tooltiptext">⚠️ Delete Account</div>
@@ -165,7 +165,7 @@ function authentication() {
 
     const div = document.createElement('div');
     div.className = 'authentication-page';
-    div.innerHTML = `
+    div.innerHTML = /*html*/ `
         <div class="authentication-Inpage">
             <h3>Authentication</h3>
             <p id="2fa-status">Status: Not Enabled</p>
@@ -250,7 +250,7 @@ function setup2FA() {
                     qrCodeContainer.style.transform = 'translate(-50%, -50%)';
                     document.body.appendChild(qrCodeContainer);
                 }
-                qrCodeContainer.innerHTML = `
+                qrCodeContainer.innerHTML = /*html*/ `
                     <img src="${data.qr_code_url}" alt="2FA QR Code" style="width: 150px; height: 150px;">
                     <p style="color: white; ">Scan in authenticator app!</p>
                 `;

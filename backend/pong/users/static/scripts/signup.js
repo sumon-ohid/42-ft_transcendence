@@ -10,7 +10,7 @@ function signup() {
 
     const div = document.createElement("div");
     div.className = "login-container";
-    div.innerHTML = ` 
+    div.innerHTML = /*html*/ ` 
         <div class="login-text">
             <p>Register</p>
         </div>
@@ -107,14 +107,14 @@ function error(msg, type) {
 
     errorDiv.className = "error-div";
     if (type === "success") {
-        errorDiv.innerHTML = `
+        errorDiv.innerHTML = /*html*/ `
             <span class="badge rounded-pill bg-success">
             <i class="fa-solid fa-check-circle"></i>
             ${msg}
             </span>
         `;
     } else {
-        errorDiv.innerHTML = `
+        errorDiv.innerHTML = /*html*/ `
             <span class="badge rounded-pill bg-danger">
             <i class="fa-solid fa-exclamation-circle"></i>
             ${msg}

@@ -15,7 +15,7 @@ async function userDashboard() {
 
   const div = document.createElement("div");
   div.className = "settings-container";
-  div.innerHTML = `
+  div.innerHTML = /*html*/ `
         <h2>Dashboard</h2>
         <canvas id="gamePlayChart" width="250" height="100"></canvas>
         <canvas id="winLoseChart" width="300" height="200"></canvas>
