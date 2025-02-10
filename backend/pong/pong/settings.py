@@ -33,7 +33,6 @@ ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '192.168.178.63', '192.168.122.1', '0
 
 
 # Application definition
-
 ASGI_APPLICATION = 'pong.asgi.application'
 
 INSTALLED_APPS = [
