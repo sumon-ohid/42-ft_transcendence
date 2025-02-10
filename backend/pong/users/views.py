@@ -542,9 +542,9 @@ def callback_view(request):
     user_id = user_info['id']
     username = f"{username}{user_id}"
     # if username exists, add 1 to the user_id and concatenate it to the username with user id from api
-    if User.objects.filter(username=username).exists():
-        user_id = user_id + 1
-        username = f"{username}{user_id}"
+    # if User.objects.filter(username=username).exists():
+    #     user_id = user_id + 1
+    #     username = f"{username}{user_id}"
     # set username = username+user_id
 
     email = user_info.get('email', '')
@@ -552,6 +552,9 @@ def callback_view(request):
     try:
         user = User.objects.get(id=user_id)
     except User.DoesNotExist:
+        # if user exists then add a random string at the end
+        if User.objects.filter(username=username).exists():
+            username = f"{username}{get_random_string(6)}"
         user = User(id=user_id, username=username, email=email)
         user.set_unusable_password()
         user.save()
