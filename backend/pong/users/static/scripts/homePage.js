@@ -60,7 +60,7 @@ async function homePage() {
     // nav bar and add content for navigation
     const nav = document.createElement("nav");
     nav.className = "navbar";
-    nav.innerHTML = ` 
+    nav.innerHTML = /*html*/ ` 
         <ul class="nav-menu">
             <li><a title="Home" onclick="navigateTo('#homePage')"><i class="fa-solid fa-house"></i><span>Home</span></a></li>
             <li><a title="Users" onclick="navigateTo('#userList')"><i class="fa-solid fa-users"></i><span>Users</span></a></li>
@@ -77,7 +77,7 @@ async function homePage() {
     // a new div element and add content , this is the left side 4 conatiners.
     const div = document.createElement("div");
     div.className = "main";
-    div.innerHTML = ` 
+    div.innerHTML = /*html*/ ` 
         <div class="wel-container">
             <div class="edit-pic" onclick="document.getElementById('profile-picture-input').click();">
                 <span class="badge text-bg-primary">change</span>
@@ -213,7 +213,7 @@ async function homePage() {
                     recordElement.className = 'history-record';
                     let result = record.win ? 'Win' : 'Lose';
                     const resultClass = result === 'Win' ? 'badge text-bg-info' : 'badge text-bg-warning';
-                    recordElement.innerHTML = `
+                    recordElement.innerHTML = /*html*/ `
                     <div>
                         <span class="badge text-bg-light">
                             <p>Date: ${new Date(record.date).toLocaleDateString()}</p>

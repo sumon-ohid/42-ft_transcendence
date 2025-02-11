@@ -216,7 +216,7 @@ function createScoreTableIfNotExists() {
         `;
         const container = document.createElement('div');
         container.className = 'score-table-container';
-        container.innerHTML = `
+        container.innerHTML = /*html*/ `
             <h3>Tournament Standings</h3>
             ${table.outerHTML}
         `;
@@ -363,7 +363,7 @@ function updateScoreTable() {
 
     sortedPlayerScores.forEach(player => {
         const row = document.createElement('tr');
-        row.innerHTML = `
+        row.innerHTML = /*html*/ `
             <td>${player.name}</td>
             <td>${player.score}</td>
         `;
@@ -674,7 +674,7 @@ function updateFinalScoreTable(players) {
 
     sortedPlayers.forEach((player, index) => {
         const row = document.createElement('tr');
-        row.innerHTML = `
+        row.innerHTML = /*html*/ `
             <td>${player.name}</td>
             <td>${player.score}</td>
             <td>${getPositionText(index + 1)}</td>
@@ -960,10 +960,10 @@ function initializeTournamentGame() {
             if (confirmationElement) {
                 confirmationElement.classList.remove('hidden');
                 let countdown = 3;
-                confirmationElement.innerHTML = `<span>Game Over</span><br><span style="font-size: 2em; color: #007bff">${winner} Wins!</span><br>Returning to game page in ${countdown}s...`;
+                confirmationElement.innerHTML = /*html*/ `<span>Game Over</span><br><span style="font-size: 2em; color: #007bff">${winner} Wins!</span><br>Returning to game page in ${countdown}s...`;
                 const countdownInterval = setInterval(() => {
                     countdown -= 1;
-                    confirmationElement.innerHTML = `<span>Game Over</span><br><span style="font-size: 2em; color: #007bff">${winner} Wins!</span><br>Returning to game page in ${countdown}s...`;
+                    confirmationElement.innerHTML = /*html*/ `<span>Game Over</span><br><span style="font-size: 2em; color: #007bff">${winner} Wins!</span><br>Returning to game page in ${countdown}s...`;
 
                     if (countdown === 0) {
                         clearInterval(countdownInterval);

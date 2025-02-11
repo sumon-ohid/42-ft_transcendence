@@ -24,7 +24,7 @@ function userList() {
         .then(users => {
             if (!users || users.length === 0) {
                 // empty user list
-                div.innerHTML = `
+                div.innerHTML = /*html*/ `
                     <div class="title-all-rank">
                         <h2>Users list</h2>
                     </div>
@@ -45,7 +45,7 @@ function userList() {
             const filteredData = users.filter(user => user.username !== loggedInUser);
 
             // Render user list except logged in user
-            div.innerHTML = `
+            div.innerHTML = /*html*/ `
                 <div class="title-all-rank">
                     <h2>User List</h2>
                 </div>
@@ -77,7 +77,7 @@ function userList() {
         })
         .catch(error => {
             console.error('Error fetching leaderboard data:', error);
-            div.innerHTML = `<p>Failed to load leaderboard data. Please try again later.</p>`;
+            div.innerHTML = /*html*/ `<p>Failed to load leaderboard data. Please try again later.</p>`;
             body.appendChild(div);
         });
 }

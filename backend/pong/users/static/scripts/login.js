@@ -11,7 +11,7 @@ function login() {
     // Create a new div element and add content to it
     const div = document.createElement("div");
     div.className = "login-container";
-    div.innerHTML = ` 
+    div.innerHTML = /*html*/ ` 
         <div class="login-text">
             <p>Login</p>
         </div>
@@ -64,7 +64,7 @@ function showGDPRMessage() {
     const body = document.body;
     const div = document.createElement("div");
     div.className = "cookie-container";
-    div.innerHTML = `
+    div.innerHTML = /*html*/ `
         <div class="cookie-icon">
             <p>🍪</p>
         </div>
@@ -145,7 +145,7 @@ function show2FAPage() {
 
     const div = document.createElement("div");
     div.className = "two-fa-container";
-    div.innerHTML = ` 
+    div.innerHTML = /*html*/ ` 
         <div>
             <h1>Enter 2FA Code</h1>
             <p>(eg: Google Authenticator)</p>

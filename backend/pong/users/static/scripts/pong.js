@@ -54,7 +54,7 @@ function gamePage() {
             <button id="game-play-button" class="gamepage-button" onclick="startGamePlay()">Ready</button>
         </div>
         <div class="quit-game" onclick="navigateTo('#homePage')">
-        <h1>BACK</h1>
+            <h1>BACK</h1>
         </div>
         <div class="ai-opponent">
             <label for="ai-checkbox">Enable AI Opponent</label>
@@ -355,11 +355,11 @@ function initializeGame() {
             if (confirmationElement) {
                 confirmationElement.classList.remove('hidden');
                 let countdown = 3;
-                confirmationElement.innerHTML = `<span>Game Over</span><br><span style="font-size: 2em; color: #007bff">${winner} Wins!</span><br>Returning to game page in ${countdown}s...`;
+                confirmationElement.innerHTML = /*html*/ `<span>Game Over</span><br><span style="font-size: 2em; color: #007bff">${winner} Wins!</span><br>Returning to game page in ${countdown}s...`;
 
                 const countdownInterval = setInterval(() => {
                     countdown -= 1;
-                    confirmationElement.innerHTML = `<span>Game Over</span><br><span style="font-size: 2em; color: #007bff">${winner} Wins!</span><br>Returning to game page in ${countdown}s...`;
+                    confirmationElement.innerHTML = /*html*/ `<span>Game Over</span><br><span style="font-size: 2em; color: #007bff">${winner} Wins!</span><br>Returning to game page in ${countdown}s...`;
 
                     if (countdown === 0) {
                         clearInterval(countdownInterval);
