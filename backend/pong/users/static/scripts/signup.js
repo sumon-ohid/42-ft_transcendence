@@ -86,7 +86,7 @@ function handleSignup() {
             if (data.status === 'success') {
                 error(data.message, "success");
                 setTimeout(function() {
-                    login();
+                    navigateTo('#login');
                 }, 1000);
             } else if (data.errors) {
                 const errorMessage = handleErrors(data.errors);
