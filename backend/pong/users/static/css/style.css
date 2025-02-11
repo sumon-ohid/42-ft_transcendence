@@ -1153,6 +1153,33 @@ form .login-button:hover {
     border: 2px solid rgb(128, 0, 255);
 }
 
+#difficulty-level {
+    margin-left: 5px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-family: "Sour Gummy";
+    background-color: rgba(249, 249, 249, 0.666);
+    height: 22px;
+    display: none;
+}
+
+#difficulty-level:enabled {
+    display: inline-block;
+}
+
+#difficulty-level option {
+    background-color:  #4e8cea;
+    color: white;
+    font-family: "Sour Gummy", sans-serif;
+    border-radius: 5px;
+    font-size: 13px;
+}
+
+#difficulty-level:focus {
+    outline: none;
+    border-color: #777;
+}
+
 /*------- GAME PAGE END -------*/
 
 /*------- MAIN GAME START -------*/
