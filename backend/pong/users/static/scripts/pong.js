@@ -4,6 +4,14 @@ let player1Avatar = "./avatars/avatar4.png";
 let player2Avatar = "./avatars/avatar5.png";
 let gameInterval;
 
+let aiPauseDuration = 60; // Difficulty (0 - hard, 20 - medium, 60 - easy)
+
+function setDifficultyLevel() {
+    const difficultySelect = document.getElementById('difficulty-level');
+    aiPauseDuration = parseInt(difficultySelect.value);
+    // console.log('Difficulty level set to:', aiPauseDuration);
+}
+
 function gamePage() {
     saveCurrentPage('gamePage');
 
@@ -57,9 +65,14 @@ function gamePage() {
             <h1>BACK</h1>
         </div>
         <div class="ai-opponent">
-            <label for="ai-checkbox">Enable AI Opponent</label>
-            <input type="checkbox" id="ai-checkbox" onclick="toggleAI()">
-        </div>
+        <label for="ai-checkbox">Enable AI Opponent</label>
+        <input type="checkbox" id="ai-checkbox" onclick="toggleAI()">
+        <select id="difficulty-level" style="display:none" onchange="setDifficultyLevel()">
+            <option value="60">Easy</option>
+            <option value="20">Medium</option>
+            <option value="0">Hard</option>
+        </select>
+    </div>
     `;
     body.appendChild(div);
 
@@ -71,14 +84,19 @@ let isAIEnabled = false;
 
 function toggleAI() {
     isAIEnabled = document.getElementById('ai-checkbox').checked;
+    const difficultySelect = document.getElementById('difficulty-level');
     if (isAIEnabled) {
         player2Name = "AI Gamer";
         document.getElementById('nickname2').value = player2Name;
         document.getElementById('nickname2').disabled = true;
+        difficultySelect.disabled = false;
+        difficultySelect.style.display = 'inline-block';
     } else {
         player2Name = "Player 2";
         document.getElementById('nickname2').value = player2Name;
         document.getElementById('nickname2').disabled = false;
+        difficultySelect.disabled = true;
+        difficultySelect.style.display = 'none';
     }
 }
 
@@ -285,6 +303,56 @@ function initializeGame() {
         return current + (target - current) * alpha;
     }
 
+    function predictBallPosition() {
+        let predictedBallY = ballY + ballSpeedY;
+
+        const timeToPredict = 1; // +1 sec
+        predictedBallY += ballSpeedY * timeToPredict;
+
+        if (predictedBallY > canvas.height - ballRadius || predictedBallY < ballRadius) {
+            ballSpeedY = -ballSpeedY;
+            predictedBallY = Math.max(ballRadius, Math.min(predictedBallY, canvas.height - ballRadius));
+        }
+
+        return predictedBallY;
+    }
+
+    let aiPauseCounter = 0;
+    const aiPauseChance = 0.05; // 5%
+
+    function updateAIPaddle() {
+        aiMoveCounter++;
+
+        if (aiMoveCounter >= aiMoveDelay) {
+            aiMoveCounter = 0;
+
+            if (aiPauseCounter > 0) {
+                aiPauseCounter--;
+                return;
+            }
+
+            const mistakeChance = 0.2; // 20%
+            const makeMistake = Math.random() < mistakeChance;
+
+            let predictedBallY = predictBallPosition();
+
+            if (makeMistake) {
+                const errorRange = 10;
+                predictedBallY += (Math.random() - 0.5) * errorRange;
+            }
+
+            const targetY = predictedBallY - paddleHeight / 2;
+
+            paddle2Y = linearsmooth(paddle2Y, targetY, smoothSpeed);
+
+            paddle2Y = Math.max(0, Math.min(paddle2Y, canvas.height - paddleHeight));
+
+            if (Math.random() < aiPauseChance) {
+                aiPauseCounter = aiPauseDuration;
+            }
+        }
+    }
+
     function draw() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         drawPaddle(0, paddle1Y);
@@ -331,17 +399,7 @@ function initializeGame() {
                 paddle2Y = Math.min(paddle2Y + paddleSpeed, canvas.height - paddleHeight);
             }
         } else {
-            // AI logic to move the paddle only at intervals more smoothly
-            aiMoveCounter++;
-
-            if (aiMoveCounter >= aiMoveDelay) {
-                aiMoveCounter = 0;
-                const targetY = ballY - paddleHeight / 2;
-                if (Math.abs(paddle2Y - targetY) > 1) {
-                    paddle2Y = linearsmooth(paddle2Y, targetY, smoothSpeed);
-                }
-                paddle2Y = Math.max(0, Math.min(paddle2Y, canvas.height - paddleHeight));
-            }
+            updateAIPaddle();
         }
 
         // Check if the game has ended
