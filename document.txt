@@ -50,3 +50,5 @@ for score in player_scores:
 # In case of duplicate scores
 python manage.py remove_duplicate_scores
 
+# Show certificates
+openssl s_client -connect localhost:8000 -showcerts
