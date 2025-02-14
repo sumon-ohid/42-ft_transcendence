@@ -4,8 +4,7 @@ The last project of 42 Common Core.
 
 ## Online Pong Game
 
-This project is about famous classic online pong game. In game you can 2 players can play using same keyboard. Can play tournament againt each other. Can choose custom avatar and nickname before game starts.
-
+This project is about famous classic online pong game. In game we have 2 Players, 4 Players, Tournament and AI Game play. Play against AI. Can play tournament againt each other. Can choose custom avatar and nickname before game starts. AI chatbot and much more.
 
 ## Tech Stack
 
